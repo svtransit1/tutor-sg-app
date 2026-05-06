@@ -142,6 +142,7 @@
     "recentSessions": {
       "title": "最近学习记录",
       "empty": "还没有学习记录。快来拍下第一份功课吧！",
+      "viewAll": "查看全部 >",
       "timeAgo": {
         "justNow": "刚刚",
         "minutesAgo": "{{minutes}}分钟前",
@@ -153,7 +154,8 @@
     },
     "accessibility": {
       "subjectTile": "{{subject}} 科目",
-      "recentSession": "{{subject}}，{{time}}前，{{questions}} 道题"
+      "recentSession": "{{subject}}，{{time}}前，{{questions}} 道题",
+      "viewAll": "查看全部学习记录"
     },
     "firstSession": {
       "welcomeTitle": "欢迎来到 tutor-sg！",

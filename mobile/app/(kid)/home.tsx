@@ -427,13 +427,11 @@ export default function KidHomeScreen() {
                 <TouchableOpacity
                   onPress={handleViewAllHistory}
                   accessibilityRole="button"
-                  accessibilityLabel={t('kidHome.accessibility.subjectTile', {
-                    subject: t('kidHome.recentSessions.title'),
-                  })}
+                  accessibilityLabel={t('kidHome.accessibility.viewAll')}
                   hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                 >
                   <Text style={[styles.viewAllLink, { color: isDark ? '#90CAF9' : '#2563EB' }]}>
-                    View all &gt;
+                    {t('kidHome.recentSessions.viewAll')}
                   </Text>
                 </TouchableOpacity>
               )}

@@ -142,6 +142,7 @@
     "recentSessions": {
       "title": "Recent Sessions",
       "empty": "No sessions yet. Snap your first homework!",
+      "viewAll": "View all >",
       "timeAgo": {
         "justNow": "Just now",
         "minutesAgo": "{{minutes}}m ago",
@@ -153,7 +154,8 @@
     },
     "accessibility": {
       "subjectTile": "{{subject}} subject",
-      "recentSession": "Session {{subject}}, {{time}} ago, {{questions}} questions"
+      "recentSession": "Session {{subject}}, {{time}} ago, {{questions}} questions",
+      "viewAll": "View all recent sessions"
     },
     "firstSession": {
       "welcomeTitle": "Welcome to tutor-sg!",
