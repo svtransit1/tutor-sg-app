@@ -4,6 +4,12 @@
   "onboarding": {
     "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
     "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language." },
+    "parentGate": {
+      "title": "Parent setup",
+      "body": "This app needs a parent or guardian to set things up first. Please pass the phone to a grown-up.",
+      "continue": "I'm a parent / guardian",
+      "goBack": "I'm not — go back"
+    },
     "siblingPrompt": {
       "title": "Got another child who could use this too?",
       "subtitle": "Add them now and they'll have their own learning log.",
