@@ -2,8 +2,13 @@
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴" },
-    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧" }
+    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
+    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。" },
+    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧" },
+    "progress": {
+      "step": "第 {{current}} 步，共 {{total}} 步",
+      "accessibility": "第 {{current}} 步，共 {{total}} 步"
+    }
   },
   "network.offline": "你已离线",
   "network.offline.description": "拍照做作业仍然可用。下载需要 Wi-Fi。",
