@@ -8,7 +8,6 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.test.(ts|tsx|js)'],
   testPathIgnorePatterns: [
     '<rootDir>/src/home/',
-    '<rootDir>/src/onboarding/',
   ],
   transformIgnorePatterns: [
     'node_modules/(?!(jest-)?react-native|@react-native(-community)?|expo(-.*)?|@expo(-.*)?|react-native-.*)/',
@@ -54,7 +53,6 @@ module.exports = {
     '!src/**/*.types.ts',
     '!src/**/__tests__/**',
     '!src/i18n/**',
-    '!src/onboarding/**',
     '!src/components/**',
     '!src/services/**',
   ],
