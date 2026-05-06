@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "node ../../node_modules/jest/bin/jest.js --passWithNoTests --maxWorkers=2"
+    "test": "pnpm exec jest --passWithNoTests --maxWorkers=2"
   },
   "dependencies": {
     "@tutor-sg/device-tier": "*",

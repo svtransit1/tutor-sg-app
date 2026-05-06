@@ -13,9 +13,9 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "npm run test --workspaces --if-present",
-    "test:mobile": "npm run test --workspace=mobile",
-    "test:shared": "npm run test --workspace=packages/shared",
+    "test": "pnpm -r --if-present test",
+    "test:mobile": "cd mobile && pnpm exec jest --passWithNoTests --maxWorkers=2",
+    "test:shared": "cd packages/shared && pnpm exec jest --passWithNoTests --maxWorkers=2",
     "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "lint-staged": {

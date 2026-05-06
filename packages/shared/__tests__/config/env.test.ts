@@ -1,67 +1,96 @@
+/**
+ * Tests for shared config/env module.
+ *
+ * Covers:
+ * - Default values for createEnv()
+ * - EXPO_PUBLIC_ environment variable prefix resolution
+ * - Override passthrough
+ * - App environment validation (invalid values throw)
+ * - validateEnv() with placeholder detection
+ * - validateEnv() with proper configuration (no errors)
+ */
+
 import { createEnv, validateEnv } from '../../src/config/env';
 
-let passed = 0; let failed = 0;
-function assert(c: boolean, msg: string) {
-  if (c) { console.log('  ✓ ' + msg); passed++; }
-  else { console.error('  ✗ ' + msg); failed++; }
-}
-function assertThrows(fn: () => unknown, msg: string) {
-  try { fn(); console.error('  ✗ ' + msg + ' — no throw'); failed++; }
-  catch { console.log('  ✓ ' + msg); passed++; }
-}
-
-console.log('\ncreateEnv — defaults');
-{
-  const cfg = createEnv();
-  assert(cfg.APP_ENV === 'development', 'APP_ENV defaults to development');
-  assert(cfg.ENABLE_DEV_TOOLS === false, 'ENABLE_DEV_TOOLS defaults false');
-  assert(cfg.LOG_LEVEL === 'info', 'LOG_LEVEL defaults to info');
-  assert(cfg.CDN_BASE_URL === 'https://cdn.example.com/models/', 'CDN_BASE_URL has default');
-}
-
-console.log('\ncreateEnv — EXPO_PUBLIC_ prefix');
-{
-  process.env['EXPO_PUBLIC_APP_ENV'] = 'staging';
-  process.env['EXPO_PUBLIC_ENABLE_DEV_TOOLS'] = 'true';
-  process.env['EXPO_PUBLIC_CDN_BASE_URL'] = 'https://cdn.test.dev/models/';
-  const cfg = createEnv();
-  assert(cfg.APP_ENV === 'staging', 'picks up EXPO_PUBLIC_APP_ENV');
-  assert(cfg.ENABLE_DEV_TOOLS === true, 'parses true');
-  assert(cfg.CDN_BASE_URL === 'https://cdn.test.dev/models/', 'picks up CDN URL');
-  delete process.env['EXPO_PUBLIC_APP_ENV'];
-  delete process.env['EXPO_PUBLIC_ENABLE_DEV_TOOLS'];
-  delete process.env['EXPO_PUBLIC_CDN_BASE_URL'];
-}
-
-console.log('\ncreateEnv — overrides');
-{
-  const cfg = createEnv({ APP_ENV: 'production', SUPABASE_URL: 'https://real.supabase.co' });
-  assert(cfg.APP_ENV === 'production', 'overrides APP_ENV');
-  assert(cfg.SUPABASE_URL === 'https://real.supabase.co', 'overrides SUPABASE_URL');
-}
-
-console.log('\ncreateEnv — validation');
-{
-  assertThrows(() => createEnv({ APP_ENV: 'no_such_env' as 'development' }), 'throws on invalid APP_ENV');
-}
-
-console.log('\nvalidateEnv');
-{
-  const cfg = createEnv();
-  const errors = validateEnv(cfg);
-  assert(errors.length >= 2, 'returns errors for placeholders');
-  assert(errors.some(e => e.includes('Supabase URL')), 'flags missing Supabase URL');
-  assert(errors.some(e => e.includes('Supabase anon key')), 'flags missing Supabase anon key');
-
-  const good = createEnv({
-    SUPABASE_URL: 'https://abcd.supabase.co',
-    SUPABASE_ANON_KEY: 'real-key',
-    CDN_BASE_URL: 'https://cdn.real.dev/models/',
+describe('createEnv — defaults', () => {
+  it('APP_ENV defaults to development', () => {
+    const cfg = createEnv();
+    expect(cfg.APP_ENV).toBe('development');
   });
-  const noErrors = validateEnv(good);
-  assert(noErrors.length === 0, 'returns no errors when configured');
-}
 
-console.log('\n' + '─'.repeat(40));
-console.log('Results: ' + passed + ' passed, ' + failed + ' failed');
-if (failed > 0) process.exit(1);
+  it('ENABLE_DEV_TOOLS defaults to false', () => {
+    const cfg = createEnv();
+    expect(cfg.ENABLE_DEV_TOOLS).toBe(false);
+  });
+
+  it('LOG_LEVEL defaults to info', () => {
+    const cfg = createEnv();
+    expect(cfg.LOG_LEVEL).toBe('info');
+  });
+
+  it('CDN_BASE_URL has a default', () => {
+    const cfg = createEnv();
+    expect(cfg.CDN_BASE_URL).toBe('https://cdn.example.com/models/');
+  });
+});
+
+describe('createEnv — EXPO_PUBLIC_ prefix', () => {
+  beforeEach(() => {
+    // Clear any test env vars
+    delete process.env['EXPO_PUBLIC_APP_ENV'];
+    delete process.env['EXPO_PUBLIC_ENABLE_DEV_TOOLS'];
+    delete process.env['EXPO_PUBLIC_CDN_BASE_URL'];
+  });
+
+  it('picks up EXPO_PUBLIC_APP_ENV', () => {
+    process.env['EXPO_PUBLIC_APP_ENV'] = 'staging';
+    expect(createEnv().APP_ENV).toBe('staging');
+  });
+
+  it('parses EXPO_PUBLIC_ENABLE_DEV_TOOLS as boolean', () => {
+    process.env['EXPO_PUBLIC_ENABLE_DEV_TOOLS'] = 'true';
+    expect(createEnv().ENABLE_DEV_TOOLS).toBe(true);
+  });
+
+  it('picks up EXPO_PUBLIC_CDN_BASE_URL', () => {
+    process.env['EXPO_PUBLIC_CDN_BASE_URL'] = 'https://cdn.test.dev/models/';
+    expect(createEnv().CDN_BASE_URL).toBe('https://cdn.test.dev/models/');
+  });
+});
+
+describe('createEnv — overrides', () => {
+  it('overrides APP_ENV via parameter', () => {
+    const cfg = createEnv({ APP_ENV: 'production' });
+    expect(cfg.APP_ENV).toBe('production');
+  });
+
+  it('overrides SUPABASE_URL via parameter', () => {
+    const cfg = createEnv({ SUPABASE_URL: 'https://real.supabase.co' });
+    expect(cfg.SUPABASE_URL).toBe('https://real.supabase.co');
+  });
+});
+
+describe('createEnv — validation', () => {
+  it('throws on invalid APP_ENV', () => {
+    expect(() => createEnv({ APP_ENV: 'no_such_env' as 'development' })).toThrow();
+  });
+});
+
+describe('validateEnv', () => {
+  it('returns errors for placeholder values', () => {
+    const cfg = createEnv();
+    const errors = validateEnv(cfg);
+    expect(errors.length).toBeGreaterThanOrEqual(2);
+    expect(errors.some((e: string) => e.includes('Supabase URL'))).toBe(true);
+    expect(errors.some((e: string) => e.includes('Supabase anon key'))).toBe(true);
+  });
+
+  it('returns no errors when properly configured', () => {
+    const good = createEnv({
+      SUPABASE_URL: 'https://abcd.supabase.co',
+      SUPABASE_ANON_KEY: 'real-key',
+      CDN_BASE_URL: 'https://cdn.real.dev/models/',
+    });
+    expect(validateEnv(good)).toHaveLength(0);
+  });
+});
