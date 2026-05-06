@@ -4,6 +4,23 @@
   "onboarding": {
     "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
     "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "privacyPromise": {
+      "title": "Your privacy is our promise",
+      "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
+      "badgeText": "Your child's data never leaves this device",
+      "bullet1": "Photos and homework scans stay private — they never leave this device",
+      "bullet2": "Answers, chat, and voice recordings stay on-device — no one else can see them",
+      "bullet3": "Only you (the parent) can view the learning log and progress summary",
+      "learnMore": "Learn more",
+      "learnLess": "Show less",
+      "learnMoreShow": "Expand to learn more about privacy",
+      "learnMoreHide": "Collapse privacy details",
+      "learnMoreBody": "All AI processing happens right on your device using a small but powerful AI model. No cloud servers, no uploads, no data collection. Your child's photos, typed answers, voice recordings, and chat history stay on this device at all times. Even anonymized usage stats are only sent after you explicitly opt in.",
+      "headline": "Before we start — a quick promise about privacy",
+      "continue": "I understand — continue",
+      "reassurance": "You can review your privacy settings anytime in the Parent area.",
+      "accessibility": "Privacy promise: your child's data never leaves this device."
+    },
     "siblingPrompt": {
       "title": "Got another child who could use this too?",
       "subtitle": "Add them now and they'll have their own learning log.",
