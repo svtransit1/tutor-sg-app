@@ -13,3 +13,6 @@ export {
   CAPABILITY_BUDGETS,
   resolveModel,
 } from './routing';
+
+export type { ClassificationResult } from './classifier';
+export { classify, normalizeScores } from './classifier';
