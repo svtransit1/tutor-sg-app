@@ -27,9 +27,15 @@ const ReactNative = {
   useColorScheme: () => 'light',
   StyleSheet: { create: <T extends Record<string, unknown>>(styles: T): T => styles, flatten: (styles: any) => styles },
   View: 'View', Text: 'Text', Pressable: 'View', useWindowDimensions: () => ({ width: 390, height: 844 }),
-  ActivityIndicator: 'ActivityIndicator', TouchableOpacity: 'TouchableOpacity', ScrollView: 'ScrollView',
+  ActivityIndicator: 'ActivityIndicator', TouchableOpacity: 'TouchableOpacity',
+  TextInput: 'TextInput', ScrollView: 'ScrollView', KeyboardAvoidingView: 'KeyboardAvoidingView',
   SafeAreaView: 'SafeAreaView',
   Linking: { openURL: jest.fn() },
+  PanResponder: {
+    create: () => ({
+      panHandlers: {},
+    }),
+  },
   Animated: {
     Value: jest.fn(() => mockAnimatedValue), View: 'View', Text: 'Text',
     spring: jest.fn(() => mockAnimatedNode), timing: jest.fn(() => mockAnimatedNode),
