@@ -150,6 +150,7 @@ export function KidProfileScreen() {
                   style={styles.editBtn}
                   onPress={() => handleEdit(kid)}
                   testID={`kid-edit-${kid.id}`}
+                  accessibilityRole="button"
                 >
                   <Text style={styles.editBtnText}>{t('onboarding.kidProfile.edit', 'Edit')}</Text>
                 </TouchableOpacity>
@@ -157,6 +158,7 @@ export function KidProfileScreen() {
                   style={styles.deleteBtn}
                   onPress={() => handleDelete(kid)}
                   testID={`kid-delete-${kid.id}`}
+                  accessibilityRole="button"
                 >
                   <Text style={styles.deleteBtnText}>{t('onboarding.kidProfile.delete', 'Delete')}</Text>
                 </TouchableOpacity>
@@ -203,6 +205,7 @@ export function KidProfileScreen() {
                 style={[styles.levelChip, level === l && styles.levelChipActive]}
                 onPress={() => setLevel(l)}
                 testID={`kidProfile-level-${l}`}
+                accessibilityRole="button"
               >
                 <Text style={[styles.levelText, level === l && styles.levelTextActive]}>
                   {levelLabel(l)}
@@ -219,6 +222,7 @@ export function KidProfileScreen() {
               style={[styles.langChip, language === 'en' && styles.langChipActive]}
               onPress={() => setLanguage('en')}
               testID="kidProfile-lang-en"
+              accessibilityRole="button"
             >
               <Text style={[styles.langText, language === 'en' && styles.langTextActive]}>
                 {t('onboarding.kidProfile.languageEN', 'English')}
@@ -228,6 +232,7 @@ export function KidProfileScreen() {
               style={[styles.langChip, language === 'zh-Hans' && styles.langChipActive]}
               onPress={() => setLanguage('zh-Hans')}
               testID="kidProfile-lang-zh"
+              accessibilityRole="button"
             >
               <Text style={[styles.langText, language === 'zh-Hans' && styles.langTextActive]}>
                 {t('onboarding.kidProfile.languageZH', '简体中文')}
@@ -236,7 +241,7 @@ export function KidProfileScreen() {
           </View>
 
           <View style={styles.formButtons}>
-            <TouchableOpacity style={styles.cancelBtn} onPress={resetForm}>
+            <TouchableOpacity style={styles.cancelBtn} onPress={resetForm} accessibilityRole="button">
               <Text style={styles.cancelBtnText}>{t('onboarding.common.cancel', 'Cancel')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -244,6 +249,7 @@ export function KidProfileScreen() {
               onPress={handleSave}
               disabled={!canSave}
               testID="kidProfile-save"
+              accessibilityRole="button"
             >
               <Text style={styles.saveBtnText}>{t('onboarding.common.save', 'Save')}</Text>
             </TouchableOpacity>
@@ -260,6 +266,7 @@ export function KidProfileScreen() {
             setShowForm(true);
           }}
           testID="kidProfile-add"
+          accessibilityRole="button"
         >
           <Text style={styles.addBtnText}>
             {kids.length === 0
@@ -276,6 +283,7 @@ export function KidProfileScreen() {
           onPress={handleContinue}
           disabled={!canContinue}
           testID="kidProfile-continue"
+          accessibilityRole="button"
         >
           <Text style={styles.buttonText}>
             {t('onboarding.common.next', 'Next')}

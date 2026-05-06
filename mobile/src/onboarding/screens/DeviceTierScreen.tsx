@@ -107,6 +107,7 @@ export function DeviceTierScreen() {
           style={styles.backButton}
           onPress={goBack}
           testID="deviceTier-back"
+          accessibilityRole="button"
         >
           <Text style={styles.backButtonText}>
             {t('onboarding.common.back', 'Back')}
@@ -116,6 +117,7 @@ export function DeviceTierScreen() {
           style={styles.button}
           onPress={goNext}
           testID="deviceTier-continue"
+          accessibilityRole="button"
         >
           <Text style={styles.buttonText}>
             {t('onboarding.common.next', 'Next')}

@@ -86,6 +86,7 @@ export function ConsentScreen() {
       <TouchableOpacity
         onPress={() => Linking.openURL(PRIVACY_POLICY_URL)}
         testID="privacy-policy-link"
+        accessibilityRole="button"
       >
         <Text style={styles.policyLink}>
           {t('onboarding.consent.policyLink', 'Read the full privacy policy')}
@@ -93,7 +94,7 @@ export function ConsentScreen() {
       </TouchableOpacity>
 
       <View style={styles.row}>
-        <TouchableOpacity style={styles.backButton} onPress={goBack} testID="consent-back">
+        <TouchableOpacity style={styles.backButton} onPress={goBack} testID="consent-back" accessibilityRole="button">
           <Text style={styles.backButtonText}>{t('onboarding.common.back', 'Back')}</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -101,6 +102,7 @@ export function ConsentScreen() {
           onPress={continueWithConsent}
           disabled={!consented}
           testID="consent-continue"
+          accessibilityRole="button"
         >
           <Text style={styles.buttonText}>{t('onboarding.common.next', 'Next')}</Text>
         </TouchableOpacity>

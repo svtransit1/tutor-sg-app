@@ -13,7 +13,7 @@ export function WelcomeScreen() {
       <Text style={styles.subtitle}>
         {t('onboarding.welcome.subtitle', 'Your AI tutor is ready to help')}
       </Text>
-      <TouchableOpacity style={styles.button} onPress={goNext} testID="welcome-continue">
+      <TouchableOpacity style={styles.button} onPress={goNext} testID="welcome-continue" accessibilityRole="button">
         <Text style={styles.buttonText}>{t('onboarding.common.next', 'Next')}</Text>
       </TouchableOpacity>
     </View>

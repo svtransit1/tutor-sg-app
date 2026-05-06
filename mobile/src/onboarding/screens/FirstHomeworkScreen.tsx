@@ -29,7 +29,7 @@ export function FirstHomeworkScreen() {
           {t('onboarding.firstHomework.step3', '3. Get hints and guidance — not just answers!')}
         </Text>
       </View>
-      <TouchableOpacity style={styles.button} onPress={goNext} testID="firstHomework-start">
+      <TouchableOpacity style={styles.button} onPress={goNext} testID="firstHomework-start" accessibilityRole="button">
         <Text style={styles.buttonText}>
           {t('onboarding.firstHomework.cta', "Let's go!")}
         </Text>
