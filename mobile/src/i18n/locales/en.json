@@ -244,6 +244,29 @@
       "notFound": "This result is no longer available. Please take a new photo."
     }
   },
+  "tutorChat": {
+    "title": "Ask Tutor",
+    "subtitle": "I'm here to help! 💪",
+    "inputPlaceholder": "Type your question…",
+    "inputAccessibility": "Type your question here",
+    "send": "Send",
+    "thinking": "Thinking",
+    "hint": "💡 Hint",
+    "showSteps": "Show me the steps",
+    "steps": "Step-by-step guide",
+    "showSolution": "Show me the full answer",
+    "fullSolution": "✅ Full solution",
+    "errorResponse": "I'm having trouble understanding. Could you rephrase your question?",
+    "emptyState": {
+      "title": "Ask me anything!",
+      "body": "Got a homework question? Just type it below and I'll help you step by step."
+    },
+    "suggestion": {
+      "math": "🧮 Help with math",
+      "english": "📖 Help with English",
+      "science": "🔬 Help with science"
+    }
+  },
   "modelDownload": {
     "title": "Setting up your tutor...",
     "progress": "Downloading {{fileName}}…",
