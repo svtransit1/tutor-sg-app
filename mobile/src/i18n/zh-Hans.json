@@ -30,6 +30,16 @@
       "continue": "继续",
       "skip": "稍后设置"
     },
+    "kidSetup": {
+      "title": "设置孩子档案",
+      "editTitle": "编辑档案",
+      "deleteProfile": "删除档案",
+      "save": "保存"
+    },
+    "kidList": {
+      "confirmDelete": "删除这个档案？",
+      "confirmDeleteDesc": "此操作无法撤销。"
+    },
     "common": {
       "cancel": "取消",
       "delete": "删除",
@@ -64,7 +74,16 @@
       "done": "完成",
       "processing": "处理中...",
       "processingFailed": "处理失败，请重试",
-      "pageCount": "共 {{count}} 页"
+      "captureFailed": "拍照失败，请重试",
+      "pageCount": "共 {{count}} 页",
+      "readyTitleScanner": "扫描作业页面",
+      "readyTitleCamera": "拍摄作业页面",
+      "readyInstructions": "请确保作业页面平整且光线充足",
+      "startScan": "打开扫描仪",
+      "openCamera": "打开相机",
+      "lowLightVeryDark": "照片非常暗。请在更亮的地方扫描以获得更好的效果。",
+      "lowLightDim": "照片有点暗。建议改善光线条件。",
+      "lowLightViewfinder": "请移至光线充足的地方以获得最佳效果"
     },
     "feedback": {
       "title": "作业反馈",

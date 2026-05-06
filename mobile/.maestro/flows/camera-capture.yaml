@@ -1,7 +1,7 @@
 # Maestro E2E: Camera capture — single photo, preview, retake, confirm
 #
-# Tests the 3-phase camera state machine:
-#   1. Viewfinder — live camera with frame guides and flash toggle
+# Tests the camera screen flow:
+#   1. Ready — "Open Scanner" or "Open Camera" button
 #   2. Preview — captured photo shown with Retake / Use This Photo buttons
 #   3. Processing — spinner appears, then navigates to feedback or manual-input
 #
@@ -12,6 +12,10 @@
 # Prerequisites:
 #   1. Build the dev client: expo run:ios (or expo run:android)
 #   2. Run: maestro test .maestro/flows/camera-capture.yaml
+#
+# Note: When running on a simulator/emulator without the native
+# document scanner, the app falls back to the expo-camera viewfinder.
+# This flow handles both paths via optional tapOn at branch points.
 
 appId: com.aaas.tutorsg
 env:
@@ -19,16 +23,15 @@ env:
 
 ---
 # ═══════════════════════════════════════════════════════════════════
-# SETUP: Navigate to camera screen from home
+# SETUP: Quick onboarding to reach home screen
 # ═══════════════════════════════════════════════════════════════════
 
-# Launch with a seeded state (onboarding already done, kid profile exists)
 - launchApp:
     appId: com.aaas.tutorsg
     clearState: true
     stopApp: true
 
-# Quick onboarding — accept all defaults to reach home screen
+# Speed through onboarding — accept defaults to reach home
 - extendedWaitUntil:
     visible:
       text: 'Welcome'
@@ -49,7 +52,6 @@ env:
     id: 'consent-continue'
     optional: true
 
-# Skip through device tier and model download with mock
 - extendedWaitUntil:
     visible:
       text: 'Ready'
@@ -59,7 +61,6 @@ env:
     id: 'deviceTier-continue'
     optional: true
 
-# Kid profile — add a child quickly
 - extendedWaitUntil:
     visible:
       text: 'child'
@@ -86,38 +87,53 @@ env:
     timeout: 15000
 
 # ═══════════════════════════════════════════════════════════════════
-# STEP 1: Tap "Snap your homework" to open the camera
+# STEP 1: Tap "Snap your homework" to open the camera/scan screen
 # ═══════════════════════════════════════════════════════════════════
 - assertVisible:
     text: 'Snap your homework'
 - tapOn:
     text: 'Snap your homework'
 
-# Verify we landed on the camera viewfinder
+# Verify we landed on the camera screen
+# (either the "ready" screen with scan button, or the viewfinder)
+- extendedWaitUntil:
+    visible:
+      text: 'Scan'
+    timeout: '${STEP_TIMEOUT}'
+    optional: true
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 2: Start scanning — tap the "Open Scanner" / "Open Camera" button
+# ═══════════════════════════════════════════════════════════════════
+
+# On devices with native document scanner, this opens the scanner UI
+# On simulator/emulator without scanner, this opens the expo-camera viewfinder
+- tapOn:
+    text: 'Open'
+    optional: true
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 3: Viewfinder — verify camera UI elements
+# ═══════════════════════════════════════════════════════════════════
+# (Only visible when using expo-camera fallback path)
 - extendedWaitUntil:
     visible:
       text: 'worksheet'
     timeout: '${STEP_TIMEOUT}'
-
-# ═══════════════════════════════════════════════════════════════════
-# STEP 2: Viewfinder — verify UI elements are present
-# ═══════════════════════════════════════════════════════════════════
+    optional: true
 
 # Back button visible
 - assertVisible:
     text: 'Back'
+    optional: true
 
-# Flash toggle visible (emoji-based, check by accessibility)
-- assertVisible:
-    text: '🔦'
-
-# Capture button visible (large white circle at bottom center)
-# We can't assert a View by visual, but we can tap it by position
+# Capture button — tap at bottom center to take a photo
 - tapOn:
     point: '50%,90%'
+    optional: true
 
 # ═══════════════════════════════════════════════════════════════════
-# STEP 3: Preview — photo taken, review screen
+# STEP 4: Preview — photo taken, review screen
 # ═══════════════════════════════════════════════════════════════════
 
 # The preview state should show "Review your photo" text
@@ -125,52 +141,58 @@ env:
     visible:
       text: 'Review your photo'
     timeout: '${STEP_TIMEOUT}'
-    optional: true
 
-# "Use This Photo" button should be visible
+# "Use This Photo" button must be visible (non-optional)
 - assertVisible:
     text: 'Use This Photo'
-    optional: true
 
-# "Retake" button should be visible
+# "Retake" button must be visible (non-optional)
 - assertVisible:
     text: 'Retake'
 
 # ═══════════════════════════════════════════════════════════════════
-# STEP 4: Retake — discard photo, return to viewfinder
+# STEP 5: Retake — discard photo, return to viewfinder
 # ═══════════════════════════════════════════════════════════════════
 - tapOn:
     text: 'Retake'
 
-# Should return to the viewfinder with worksheet instruction
+# Should return to the viewfinder or ready screen
+- extendedWaitUntil:
+    visible:
+      text: 'Scan'
+    timeout: '${STEP_TIMEOUT}'
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 6: Capture again, then confirm
+# ═══════════════════════════════════════════════════════════════════
+
+# Tap the "Open Scanner"/"Open Camera" button again
+- tapOn:
+    text: 'Open'
+    optional: true
+
+# If we're in the expo-camera viewfinder, take a photo
 - extendedWaitUntil:
     visible:
       text: 'worksheet'
     timeout: '${STEP_TIMEOUT}'
-
-# ═══════════════════════════════════════════════════════════════════
-# STEP 5: Capture again, then confirm
-# ═══════════════════════════════════════════════════════════════════
+    optional: true
 - tapOn:
     point: '50%,90%'
+    optional: true
 
-# Wait for preview
+# Wait for the preview to load (non-optional)
 - extendedWaitUntil:
     visible:
       text: 'Review your photo'
     timeout: '${STEP_TIMEOUT}'
-    optional: true
 
-# Confirm the photo
+# Confirm the photo — tap "Use This Photo" (non-optional, critical path)
 - tapOn:
     text: 'Use This Photo'
-    optional: true
-- tapOn:
-    text: 'Retake'
-    optional: true
 
 # ═══════════════════════════════════════════════════════════════════
-# STEP 6: Processing state
+# STEP 7: Processing state
 # ═══════════════════════════════════════════════════════════════════
 
 # After confirming, we should see the processing spinner
@@ -178,10 +200,9 @@ env:
     visible:
       text: 'Processing...'
     timeout: '${STEP_TIMEOUT}'
-    optional: true
 
 # ═══════════════════════════════════════════════════════════════════
-# STEP 7: Result — feedback or manual-input screen
+# STEP 8: Result — feedback or manual-input screen
 # ═══════════════════════════════════════════════════════════════════
 
 # The OCR mock routes to feedback or manual-input depending on confidence

@@ -1,0 +1,37 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
+
+group = 'expo.documentcamera'
+version = '0.1.0'
+
+android {
+  namespace "expo.documentcamera"
+  compileSdkVersion 34
+
+  defaultConfig {
+    minSdkVersion 23
+    targetSdkVersion 34
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = '17'
+  }
+}
+
+dependencies {
+  implementation project(':expo-modules-core')
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.22"
+
+  // ML Kit Document Scanner API
+  implementation 'com.google.mlkit:document-scanner:16.0.0-beta1'
+
+  // AndroidX Activity for ActivityResultLauncher
+  implementation 'androidx.activity:activity:1.8.2'
+  implementation 'androidx.fragment:fragment:1.6.2'
+}

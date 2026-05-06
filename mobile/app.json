@@ -29,7 +29,8 @@
     },
     "plugins": [
       "expo-router",
-      "expo-localization"
+      "expo-localization",
+      "./modules/expo-document-camera"
     ],
     "experiments": {
       "typedRoutes": true

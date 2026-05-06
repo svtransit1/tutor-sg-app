@@ -1,15 +1,24 @@
 import { View, Text, StyleSheet, Pressable, ActivityIndicator, Image, Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { CameraView, CameraType, FlashMode, useCameraPermissions } from 'expo-camera';
+import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import * as FileSystem from 'expo-file-system';
 import { useState, useRef, useCallback, useEffect } from 'react';
+import {
+  scanDocumentAsync,
+  isDocumentScannerAvailable,
+  checkImageBrightnessAsync,
+} from '../../modules/expo-document-camera/src/index';
 import { MockOcrService } from '../../src/services/ocr';
 import type { OcrResult } from '../../src/types/homework';
 
 const ocrService = new MockOcrService();
 
-type CameraPhase = 'viewfinder' | 'preview' | 'processing';
+type CameraPhase = 'ready' | 'viewfinder' | 'preview' | 'processing';
+
+/** Brightness thresholds for low-light hint (0–255 scale). */
+const BRIGHTNESS_VERY_DARK = 50;
+const BRIGHTNESS_DIM = 100;
 
 export default function CameraScreen() {
   const { t } = useTranslation();
@@ -20,13 +29,22 @@ export default function CameraScreen() {
 
   const [permission, requestPermission] = useCameraPermissions();
   const [cameraType] = useState<CameraType>('back');
-  const [phase, setPhase] = useState<CameraPhase>('viewfinder');
+  const [phase, setPhase] = useState<CameraPhase>('ready');
   const [photoUri, setPhotoUri] = useState<string | null>(null);
-  const [flashMode, setFlashMode] = useState<FlashMode>('auto');
   const [isCameraReady, setIsCameraReady] = useState(false);
+  const [lowLightHint, setLowLightHint] = useState<string | null>(null);
+  const [docScannerAvailable, setDocScannerAvailable] = useState<boolean | null>(null);
+  const [scanError, setScanError] = useState<string | null>(null);
 
   const cameraRef = useRef<CameraView>(null);
   const photoUriRef = useRef<string | null>(null);
+
+  // Check if native document scanner is available on mount
+  useEffect(() => {
+    isDocumentScannerAvailable()
+      .then((available) => setDocScannerAvailable(available))
+      .catch(() => setDocScannerAvailable(false));
+  }, []);
 
   /**
    * Delete a photo file from the app sandbox.
@@ -64,33 +82,102 @@ export default function CameraScreen() {
   }, []);
 
   /**
-   * Capture a single photo and move to preview phase.
+   * Analyze the captured image for low-light conditions.
+   * Sets a bilingual hint string if the image is too dark.
+   */
+  const checkLowLight = useCallback(async (uri: string) => {
+    try {
+      const brightness = await checkImageBrightnessAsync(uri);
+
+      if (brightness < BRIGHTNESS_VERY_DARK) {
+        setLowLightHint(t('onboarding.camera.lowLightVeryDark'));
+      } else if (brightness < BRIGHTNESS_DIM) {
+        setLowLightHint(t('onboarding.camera.lowLightDim'));
+      } else {
+        setLowLightHint(null);
+      }
+    } catch {
+      // Brightness check is best-effort; proceed without hint
+      setLowLightHint(null);
+    }
+  }, [t]);
+
+  /**
+   * Open the native document scanner or fall back to the manual camera.
    *
-   * TODO(M2-6): Replace with native document scanner for auto-crop +
-   * perspective correction (Apple VNDocumentCameraViewController on iOS,
-   * ML Kit Document Scanner on Android). The expo-camera takePictureAsync
-   * is a placeholder until the vision pipeline lands.
+   * On devices with VNDocumentCameraViewController (iOS 13+) or
+   * ML Kit Document Scanner (Android), this opens the native scanner
+   * which provides auto-crop + perspective correction automatically.
+   *
+   * On other devices, falls back to the manual expo-camera viewfinder.
+   */
+  const handleStartScan = useCallback(async () => {
+    setScanError(null);
+    setLowLightHint(null);
+
+    // Path A: Native document scanner (auto-crop + perspective correction)
+    if (docScannerAvailable) {
+      try {
+        const result = await scanDocumentAsync();
+        if (result) {
+          setPhotoUri(result.uri);
+          setPhase('preview');
+          // Check brightness after scan
+          await checkLowLight(result.uri);
+        }
+        // User cancelled — stay on ready screen
+        return;
+      } catch (err) {
+        // Native scanner failed — fall through to expo-camera
+        console.warn('Native document scanner failed, falling back to camera:', err);
+      }
+    }
+
+    // Path B: Fall back to expo-camera viewfinder
+    // Check camera permission first
+    if (!permission?.granted) {
+      const result = await requestPermission();
+      if (!result.granted) return;
+    }
+
+    setPhase('viewfinder');
+  }, [docScannerAvailable, permission, requestPermission, checkLowLight]);
+
+  /**
+   * Capture a single photo using expo-camera and move to preview phase.
+   *
+   * This path is used when the native document scanner is unavailable.
+   * Without the native scanner, auto-crop and perspective correction
+   * are not applied (these require VNDocumentCameraViewController on iOS
+   * or ML Kit Document Scanner on Android).
    */
   const handleCapture = useCallback(async () => {
     if (!cameraRef.current) return;
-    const photo = await cameraRef.current.takePictureAsync({
-      quality: 0.8,
-      base64: false,
-      exif: false,
-    });
-    if (photo?.uri) {
-      // Delete previous photo if retaking
-      await deletePhoto(photoUriRef.current);
-      setPhotoUri(photo.uri);
-      setPhase('preview');
+    try {
+      const photo = await cameraRef.current.takePictureAsync({
+        quality: 0.8,
+        base64: false,
+        exif: false,
+      });
+      if (photo?.uri) {
+        // Delete previous photo if retaking
+        await deletePhoto(photoUriRef.current);
+        setPhotoUri(photo.uri);
+        setPhase('preview');
+        await checkLowLight(photo.uri);
+      }
+    } catch {
+      Alert.alert(t('onboarding.common.error'), t('onboarding.camera.captureFailed'));
     }
-  }, [deletePhoto]);
+  }, [deletePhoto, checkLowLight, t]);
 
-  /** Discard the current photo and go back to the viewfinder. */
+  /** Discard the current photo and go back to the ready screen. */
   const handleRetake = useCallback(async () => {
     await deletePhoto(photoUriRef.current);
     setPhotoUri(null);
-    setPhase('viewfinder');
+    setLowLightHint(null);
+    setScanError(null);
+    setPhase('ready');
   }, [deletePhoto]);
 
   /** Confirm the photo and start OCR processing. */
@@ -134,35 +221,14 @@ export default function CameraScreen() {
     }
   }, [photoUri, subject, level, router, t]);
 
-  /** Toggle flash between off → on → auto → off */
-  const handleToggleFlash = useCallback(() => {
-    setFlashMode((prev) => {
-      const cycle: FlashMode[] = ['off', 'on', 'auto'];
-      const idx = cycle.indexOf(prev);
-      return cycle[(idx + 1) % cycle.length];
-    });
-  }, []);
+  // Show a dismissible low-light hint banner
+  const dismissLowLight = useCallback(() => setLowLightHint(null), []);
 
-  /* ── Permission loading ──────────────────────────────────── */
-  if (!permission) {
+  /* ── Permission loading (for expo-camera fallback path) ─── */
+  if (!permission && phase === 'viewfinder') {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color="#4A90D9" />
-      </View>
-    );
-  }
-
-  if (!permission.granted) {
-    return (
-      <View style={styles.center}>
-        <Text style={styles.permissionText}>
-          {t('onboarding.camera.permissionDenied')}
-        </Text>
-        <Pressable style={styles.permissionButton} onPress={requestPermission}>
-          <Text style={styles.permissionButtonText}>
-            {t('onboarding.camera.requestPermission')}
-          </Text>
-        </Pressable>
       </View>
     );
   }
@@ -184,6 +250,16 @@ export default function CameraScreen() {
     return (
       <View style={styles.container}>
         <Image source={{ uri: photoUri }} style={styles.previewImage} resizeMode="contain" />
+
+        {/* Low-light hint banner */}
+        {lowLightHint && (
+          <View style={styles.lowLightBanner}>
+            <Text style={styles.lowLightText}>{lowLightHint}</Text>
+            <Pressable onPress={dismissLowLight} style={styles.lowLightDismiss}>
+              <Text style={styles.lowLightDismissText}>✕</Text>
+            </Pressable>
+          </View>
+        )}
 
         <View style={styles.previewOverlay}>
           <Text style={styles.previewTitle}>
@@ -210,55 +286,110 @@ export default function CameraScreen() {
     );
   }
 
-  /* ── Viewfinder state (live camera) ─────────────────────── */
-  return (
-    <View style={styles.container}>
-      <CameraView
-        ref={cameraRef}
-        style={styles.camera}
-        facing={cameraType}
-        flash={flashMode}
-        onCameraReady={() => setIsCameraReady(true)}
-      >
-        <View style={styles.overlay}>
-          <View style={styles.topBar}>
-            <Pressable style={styles.backButton} onPress={() => router.back()}>
-              <Text style={styles.backButtonText}>{t('onboarding.common.back')}</Text>
-            </Pressable>
-          </View>
-
-          {/* Viewfinder frame guides — visual aid for framing the worksheet */}
-          <View style={styles.frameGuide}>
-            <View style={styles.frameCornerTopLeft} />
-            <View style={styles.frameCornerTopRight} />
-            <View style={styles.frameCornerBottomLeft} />
-            <View style={styles.frameCornerBottomRight} />
-          </View>
-
-          {/* Flash toggle — help in low-light environments */}
-          <Pressable style={styles.flashToggle} onPress={handleToggleFlash}>
-            <Text style={styles.flashIcon}>
-              {flashMode === 'off' ? '☀️' : flashMode === 'on' ? '⚡' : '🔦'}
+  /* ── Viewfinder state (expo-camera fallback) ────────────── */
+  if (phase === 'viewfinder') {
+    if (!permission?.granted) {
+      return (
+        <View style={styles.center}>
+          <Text style={styles.permissionText}>
+            {t('onboarding.camera.permissionDenied')}
+          </Text>
+          <Pressable style={styles.permissionButton} onPress={requestPermission}>
+            <Text style={styles.permissionButtonText}>
+              {t('onboarding.camera.requestPermission')}
             </Text>
           </Pressable>
-
-          <View style={styles.instructionsBox}>
-            <Text style={styles.instructionsText}>
-              {t('onboarding.camera.instructions')}
-            </Text>
-          </View>
-
-          <View style={styles.bottomBar}>
-            <Pressable
-              style={[styles.captureButton, !isCameraReady && styles.captureButtonDisabled]}
-              onPress={handleCapture}
-              disabled={!isCameraReady}
-            >
-              <View style={styles.captureInner} />
-            </Pressable>
-          </View>
         </View>
-      </CameraView>
+      );
+    }
+
+    return (
+      <View style={styles.container}>
+        <CameraView
+          ref={cameraRef}
+          style={styles.camera}
+          facing={cameraType}
+          flash="auto"
+          onCameraReady={() => setIsCameraReady(true)}
+        >
+          <View style={styles.overlay}>
+            <View style={styles.topBar}>
+              <Pressable style={styles.backButton} onPress={() => { setPhase('ready'); }}>
+                <Text style={styles.backButtonText}>{t('onboarding.common.back')}</Text>
+              </Pressable>
+            </View>
+
+            {/* Viewfinder frame guides — visual aid for framing the worksheet */}
+            <View style={styles.frameGuide}>
+              <View style={styles.frameCornerTopLeft} />
+              <View style={styles.frameCornerTopRight} />
+              <View style={styles.frameCornerBottomLeft} />
+              <View style={styles.frameCornerBottomRight} />
+            </View>
+
+            {/* Low-light info text */}
+            <View style={styles.lowLightNote}>
+              <Text style={styles.lowLightNoteText}>
+                {t('onboarding.camera.lowLightViewfinder')}
+              </Text>
+            </View>
+
+            <View style={styles.instructionsBox}>
+              <Text style={styles.instructionsText}>
+                {t('onboarding.camera.instructions')}
+              </Text>
+            </View>
+
+            <View style={styles.bottomBar}>
+              <Pressable
+                style={[styles.captureButton, !isCameraReady && styles.captureButtonDisabled]}
+                onPress={handleCapture}
+                disabled={!isCameraReady}
+              >
+                <View style={styles.captureInner} />
+              </Pressable>
+            </View>
+          </View>
+        </CameraView>
+      </View>
+    );
+  }
+
+  /* ── Ready state (initial, choose scan method) ──────────── */
+  return (
+    <View style={styles.container}>
+      {/* Simple instruction screen */}
+      <View style={styles.readyContainer}>
+        <Text style={styles.readyTitle}>
+          {docScannerAvailable
+            ? t('onboarding.camera.readyTitleScanner')
+            : t('onboarding.camera.readyTitleCamera')}
+        </Text>
+        <Text style={styles.readyInstructions}>
+          {t('onboarding.camera.readyInstructions')}
+        </Text>
+
+        {/* Show scan error if previous attempt failed */}
+        {scanError && (
+          <View style={styles.errorBanner}>
+            <Text style={styles.errorText}>{scanError}</Text>
+          </View>
+        )}
+
+        <Pressable style={styles.readyScanButton} onPress={handleStartScan}>
+          <Text style={styles.readyScanButtonText}>
+            {docScannerAvailable
+              ? t('onboarding.camera.startScan')
+              : t('onboarding.camera.openCamera')}
+          </Text>
+        </Pressable>
+
+        <Pressable style={styles.readyBackButton} onPress={() => router.back()}>
+          <Text style={styles.readyBackButtonText}>
+            {t('onboarding.common.back')}
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -301,20 +432,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  /* ── Flash toggle ──────────────────────────── */
-  flashToggle: {
+  /* ── Low-light hint (viewfinder) ──────────── */
+  lowLightNote: {
     position: 'absolute',
-    top: 48,
-    right: 16,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    top: '12%',
+    alignSelf: 'center',
+    backgroundColor: 'rgba(255, 200, 0, 0.2)',
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    borderRadius: 8,
   },
-  flashIcon: {
-    fontSize: 20,
+  lowLightNoteText: {
+    color: 'rgba(255,255,200,0.9)',
+    fontSize: 13,
+    textAlign: 'center',
   },
   /* ── Viewfinder frame guides ──────────────── */
   frameGuide: {
@@ -402,6 +533,50 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'rgba(0,0,0,0.15)',
   },
+  /* ── Ready state ──────────────────────────── */
+  readyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 32,
+  },
+  readyTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#1a1a2e',
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  readyInstructions: {
+    fontSize: 16,
+    color: '#555',
+    textAlign: 'center',
+    lineHeight: 24,
+    marginBottom: 32,
+  },
+  readyScanButton: {
+    backgroundColor: '#4A90D9',
+    paddingHorizontal: 40,
+    paddingVertical: 16,
+    borderRadius: 14,
+    minWidth: 200,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  readyScanButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  readyBackButton: {
+    paddingVertical: 12,
+  },
+  readyBackButtonText: {
+    color: '#4A90D9',
+    fontSize: 16,
+    fontWeight: '600',
+  },
   /* ── Preview state ────────────────────────── */
   previewImage: {
     flex: 1,
@@ -467,6 +642,52 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  /* ── Low-light banner (preview) ───────────── */
+  lowLightBanner: {
+    position: 'absolute',
+    top: 100,
+    left: 16,
+    right: 16,
+    backgroundColor: 'rgba(255, 180, 0, 0.9)',
+    borderRadius: 12,
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  lowLightText: {
+    flex: 1,
+    color: '#1a1a2e',
+    fontSize: 14,
+    fontWeight: '600',
+    lineHeight: 20,
+  },
+  lowLightDismiss: {
+    marginLeft: 8,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: 'rgba(0,0,0,0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  lowLightDismissText: {
+    color: '#1a1a2e',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  /* ── Error banner ─────────────────────────── */
+  errorBanner: {
+    backgroundColor: '#ffebee',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 16,
+    width: '100%',
+  },
+  errorText: {
+    color: '#c62828',
+    fontSize: 14,
+    textAlign: 'center',
   },
   /* ── Shared ───────────────────────────────── */
   permissionText: {

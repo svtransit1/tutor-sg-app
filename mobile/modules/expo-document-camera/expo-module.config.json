@@ -1,0 +1,9 @@
+{
+  "platforms": ["ios", "android"],
+  "ios": {
+    "modules": ["DocumentCameraModule"]
+  },
+  "android": {
+    "modules": ["expo.documentcamera.DocumentCameraModule"]
+  }
+}

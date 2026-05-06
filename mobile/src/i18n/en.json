@@ -30,6 +30,16 @@
       "continue": "Continue",
       "skip": "Skip for now"
     },
+    "kidSetup": {
+      "title": "Set up child profile",
+      "editTitle": "Edit profile",
+      "deleteProfile": "Delete profile",
+      "save": "Save"
+    },
+    "kidList": {
+      "confirmDelete": "Delete profile?",
+      "confirmDeleteDesc": "This cannot be undone."
+    },
     "common": {
       "cancel": "Cancel",
       "delete": "Delete",
@@ -64,7 +74,16 @@
       "done": "Done",
       "processing": "Processing...",
       "processingFailed": "Processing failed. Please try again.",
-      "pageCount": "{{count}} page(s)"
+      "captureFailed": "Failed to capture photo. Please try again.",
+      "pageCount": "{{count}} page(s)",
+      "readyTitleScanner": "Scan your worksheet",
+      "readyTitleCamera": "Take a photo of your worksheet",
+      "readyInstructions": "Make sure the worksheet is flat and well-lit.",
+      "startScan": "Open Scanner",
+      "openCamera": "Open Camera",
+      "lowLightVeryDark": "The photo is very dark. Try scanning in a brighter area for better results.",
+      "lowLightDim": "The photo is a bit dark. Consider improving the lighting.",
+      "lowLightViewfinder": "Move to a well-lit area for best results"
     },
     "feedback": {
       "title": "Homework Feedback",
