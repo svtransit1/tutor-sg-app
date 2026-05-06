@@ -14,7 +14,7 @@ const SUBJECTS = [
 ];
 
 export default function AppHome() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const router = useRouter();
   const [kids, setKids] = useState<KidProfile[]>([]);
   const [selectedSubject, setSelectedSubject] = useState('math');
@@ -33,8 +33,6 @@ export default function AppHome() {
     const translated = t(key);
     return translated === key ? level : translated;
   };
-
-  const isZh = i18n.language === 'zh-Hans';
 
   const handleCameraPress = () => {
     const kid = kids[0];

@@ -10,8 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 const llmService = new MockLlmService();
 
 export default function FeedbackScreen() {
-  const { t, i18n } = useTranslation();
-  const isZh = i18n.language === 'zh-Hans';
+  const { t } = useTranslation();
   const router = useRouter();
   const params = useLocalSearchParams();
   const subject = (params.subject as string) ?? 'math';
@@ -68,7 +67,7 @@ export default function FeedbackScreen() {
     };
 
     runFeedback();
-  }, [params.ocrJson, subject, isZh, sessionRef]);
+  }, [params.ocrJson, subject, sessionRef]);
 
   const labelForType = (type: string) => {
     const key = `onboarding.feedback.${type}`;
