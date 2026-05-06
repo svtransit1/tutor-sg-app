@@ -68,6 +68,126 @@
     "loading": "正在检测你的设备…",
     "error": "无法检测设备性能，请重试。"
   },
+  "kidHome": {
+    "header": {
+      "greeting": "{{name}}，你好！",
+      "levelBadge": "等级 {{level}}",
+      "switchLanguage": "Switch to English"
+    },
+    "subjects": {
+      "math": "数学",
+      "english": "英语",
+      "science": "科学",
+      "chinese": "华文"
+    },
+    "subjectsDescriptions": {
+      "math": "数字、图形与解题",
+      "english": "语法、阅读与写作",
+      "science": "探索我们周围的世界",
+      "chinese": "听、说、读、写"
+    },
+    "camera": {
+      "title": "拍照问功课",
+      "subtitle": "拍张照片，立即获取帮助",
+      "accessibility": "用相机拍下你的功课"
+    },
+    "recentSessions": {
+      "title": "最近学习记录",
+      "empty": "还没有学习记录。快来拍下第一份功课吧！",
+      "timeAgo": {
+        "justNow": "刚刚",
+        "minutesAgo": "{{minutes}}分钟前",
+        "hoursAgo": "{{hours}}小时前",
+        "yesterday": "昨天"
+      },
+      "questions": "{{count}} 道题",
+      "questions_plural": "{{count}} 道题"
+    },
+    "accessibility": {
+      "subjectTile": "{{subject}} 科目",
+      "recentSession": "{{subject}}，{{time}}前，{{questions}} 道题"
+    }
+  },
+  "kidHome": {
+    "header": {
+      "greeting": "{{name}}，你好！",
+      "levelBadge": "等级 {{level}}",
+      "switchLanguage": "Switch to English"
+    },
+    "subjects": {
+      "math": "数学",
+      "english": "英语",
+      "science": "科学",
+      "chinese": "华文"
+    },
+    "subjectsDescriptions": {
+      "math": "数字、图形与解题",
+      "english": "语法、阅读与写作",
+      "science": "探索我们周围的世界",
+      "chinese": "听、说、读、写"
+    },
+    "camera": {
+      "title": "拍照问功课",
+      "subtitle": "拍张照片，立即获取帮助",
+      "accessibility": "用相机拍下你的功课"
+    },
+    "recentSessions": {
+      "title": "最近学习记录",
+      "empty": "还没有学习记录。快来拍下第一份功课吧！",
+      "timeAgo": {
+        "justNow": "刚刚",
+        "minutesAgo": "{{minutes}}分钟前",
+        "hoursAgo": "{{hours}}小时前",
+        "yesterday": "昨天"
+      },
+      "questions": "{{count}} 道题",
+      "questions_plural": "{{count}} 道题"
+    },
+    "accessibility": {
+      "subjectTile": "{{subject}} 科目",
+      "recentSession": "{{subject}}，{{time}}前，{{questions}} 道题"
+    }
+  },
+  "kidHome": {
+    "header": {
+      "greeting": "{{name}}，你好！",
+      "levelBadge": "等级 {{level}}",
+      "switchLanguage": "Switch to English"
+    },
+    "subjects": {
+      "math": "数学",
+      "english": "英语",
+      "science": "科学",
+      "chinese": "华文"
+    },
+    "subjectsDescriptions": {
+      "math": "数字、图形与解题",
+      "english": "语法、阅读与写作",
+      "science": "探索我们周围的世界",
+      "chinese": "听、说、读、写"
+    },
+    "camera": {
+      "title": "拍照问功课",
+      "subtitle": "拍张照片，立即获取帮助",
+      "accessibility": "用相机拍下你的功课"
+    },
+    "recentSessions": {
+      "title": "最近学习记录",
+      "empty": "还没有学习记录。快来拍下第一份功课吧！",
+      "timeAgo": {
+        "justNow": "刚刚",
+        "minutesAgo": "{{minutes}}分钟前",
+        "hoursAgo": "{{hours}}小时前",
+        "yesterday": "昨天"
+      },
+      "questions": "{{count}} 道题",
+      "questions_plural": "{{count}} 道题"
+    },
+    "accessibility": {
+      "subjectTile": "{{subject}} 科目",
+      "recentSession": "{{subject}}，{{time}}前，{{questions}} 道题"
+    }
+  },
   "modelDownload": {
     "title": "正在设置你的导师...",
     "progress": "正在下载 {{fileName}}...",
