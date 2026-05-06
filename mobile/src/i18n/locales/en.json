@@ -4,6 +4,29 @@
   "onboarding": {
     "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
     "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language." },
+    "gradePick": {
+      "title": "What grade is your child in?",
+      "gradeP1": "P1",
+      "gradeP2": "P2",
+      "gradeP3": "P3",
+      "gradeP4": "P4",
+      "gradeP5": "P5",
+      "gradeP6": "P6",
+      "subjectTitle": "Which subjects?",
+      "subjectMath": "Math",
+      "subjectEnglish": "English",
+      "subjectChinese": "中文 (Chinese)",
+      "subjectScience": "Science",
+      "continue": "Continue",
+      "subjectHint": "We'll only show questions for selected subjects.",
+      "accessibility": {
+        "gradeOption": "Grade {{grade}}",
+        "gradeSelected": "Grade {{grade}} selected",
+        "subjectToggle": "{{subject}} - {{state}}",
+        "subjectOn": "selected",
+        "subjectOff": "not selected"
+      }
+    },
     "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
     "progress": {
       "step": "Step {{current}} of {{total}}",

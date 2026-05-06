@@ -11,13 +11,13 @@ import { router } from 'expo-router';
 
 export default function ParentSignInRoute() {
   const handleSignedIn = () => {
-    // Navigate to the next onboarding step (step 6 — grade/subject pick)
-    router.replace('/(onboarding)/grade-pick');
+    // Navigate to the final onboarding step (step 7 — ready landing)
+    router.replace('/(onboarding)/done');
   };
 
   const handleSkip = () => {
-    // Skip sign-in, go to next step
-    router.replace('/(onboarding)/grade-pick');
+    // Skip sign-in, go to the final onboarding step
+    router.replace('/(onboarding)/done');
   };
 
   return (

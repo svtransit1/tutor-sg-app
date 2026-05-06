@@ -4,6 +4,29 @@
   "onboarding": {
     "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
     "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。" },
+    "gradePick": {
+      "title": "孩子读几年级？",
+      "gradeP1": "小一",
+      "gradeP2": "小二",
+      "gradeP3": "小三",
+      "gradeP4": "小四",
+      "gradeP5": "小五",
+      "gradeP6": "小六",
+      "subjectTitle": "选择科目",
+      "subjectMath": "数学",
+      "subjectEnglish": "英文",
+      "subjectChinese": "中文",
+      "subjectScience": "科学",
+      "continue": "继续",
+      "subjectHint": "我们只会显示已选科目的题目。",
+      "accessibility": {
+        "gradeOption": "{{grade}}",
+        "gradeSelected": "已选择 {{grade}}",
+        "subjectToggle": "{{subject}} - {{state}}",
+        "subjectOn": "已选",
+        "subjectOff": "未选"
+      }
+    },
     "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",

@@ -6,6 +6,8 @@ export default function OnboardingLayout() {
       <Stack.Screen name="welcome" />
       <Stack.Screen name="consent" />
       <Stack.Screen name="device-tier-result" />
+      <Stack.Screen name="grade-pick" />
+      <Stack.Screen name="parent-sign-in" />
       <Stack.Screen name="done" />
     </Stack>
   );
