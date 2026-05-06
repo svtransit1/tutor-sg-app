@@ -1,17 +1,14 @@
-import { ensureSettingsTable, saveDeviceTier, loadDeviceTier } from '../src/persistence';
-import { __getMockDb, __resetMockDb } from '../__mocks__/expo-sqlite';
+import * as SQLite from 'expo-sqlite';
+import { ensureSettingsTable, saveDeviceTier, loadDeviceTier } from '../persistence';
+import { __getMockDb, __resetMockDb } from '../../__mocks__/expo-sqlite';
 
 describe('persistence', () => {
-  const db = __getMockDb();
-
-  beforeEach(() => {
-    __resetMockDb();
-  });
+  beforeEach(() => __resetMockDb());
 
   describe('ensureSettingsTable', () => {
     it('creates settings table if not exists', async () => {
-      await ensureSettingsTable(db);
-      expect(db.execAsync).toHaveBeenCalledWith(
+      await ensureSettingsTable(__getMockDb() as unknown as SQLite.SQLiteDatabase);
+      expect(__getMockDb().execAsync).toHaveBeenCalledWith(
         expect.stringContaining('CREATE TABLE IF NOT EXISTS settings'),
       );
     });
@@ -19,8 +16,8 @@ describe('persistence', () => {
 
   describe('saveDeviceTier', () => {
     it('upserts the tier value', async () => {
-      await saveDeviceTier(db, 'high');
-      expect(db.runAsync).toHaveBeenCalledWith(
+      await saveDeviceTier(__getMockDb() as unknown as SQLite.SQLiteDatabase, 'high');
+      expect(__getMockDb().runAsync).toHaveBeenCalledWith(
         expect.stringContaining('INSERT OR REPLACE'),
         'device_tier',
         'high',
@@ -30,14 +27,12 @@ describe('persistence', () => {
 
   describe('loadDeviceTier', () => {
     it('returns null when no row exists', async () => {
-      const result = await loadDeviceTier(db);
-      expect(result).toBeNull();
+      expect(await loadDeviceTier(__getMockDb() as unknown as SQLite.SQLiteDatabase)).toBeNull();
     });
 
     it('returns the stored tier', async () => {
-      db.getFirstAsync.mockResolvedValue({ value: 'mid' });
-      const result = await loadDeviceTier(db);
-      expect(result).toBe('mid');
+      __getMockDb().getFirstAsync.mockResolvedValue({ value: 'mid' });
+      expect(await loadDeviceTier(__getMockDb() as unknown as SQLite.SQLiteDatabase)).toBe('mid');
     });
   });
 });

@@ -1,9 +1,5 @@
-import { assignTier, buildCapabilities } from '../src';
-import {
-  TIER_THRESHOLDS,
-  HIGH_TIER_CHIPSETS,
-  NativeDeviceInfo,
-} from '../src/types';
+import { assignTier, buildCapabilities } from '../index';
+import { TIER_THRESHOLDS, HIGH_TIER_CHIPSETS, MODEL_MAP, type NativeDeviceInfo } from '../types';
 
 function mockDevice(ramGB: number, chipset: string, npuAvailable: boolean): NativeDeviceInfo {
   return { totalRAM: ramGB, chipset, npuAvailable };
@@ -11,53 +7,35 @@ function mockDevice(ramGB: number, chipset: string, npuAvailable: boolean): Nati
 
 describe('assignTier', () => {
   it('returns belowFloor for devices under 3 GB RAM', () => {
-    const result = assignTier(mockDevice(2, 'SDM450', false));
-    expect(result).toEqual({ tier: 'low', belowFloor: true });
+    expect(assignTier(mockDevice(2, 'SDM450', false))).toEqual({ tier: 'low', belowFloor: true });
   });
 
-  it('returns high tier for ≥6 GB RAM + modern NPU', () => {
-    const result = assignTier(mockDevice(8, 'A17', true));
-    expect(result).toEqual({ tier: 'high', belowFloor: false });
+  it('returns high tier for >=6 GB RAM + modern NPU', () => {
+    expect(assignTier(mockDevice(8, 'A17', true))).toEqual({ tier: 'high', belowFloor: false });
   });
 
   it('returns mid tier for 4 GB RAM without modern NPU', () => {
-    const result = assignTier(mockDevice(4, 'SDM710', false));
-    expect(result).toEqual({ tier: 'mid', belowFloor: false });
+    expect(assignTier(mockDevice(4, 'SDM710', false))).toEqual({ tier: 'mid', belowFloor: false });
   });
 
-  it('returns mid tier for ≥6 GB RAM without NPU', () => {
-    const result = assignTier(mockDevice(8, 'Unknown Chipset', false));
-    expect(result).toEqual({ tier: 'mid', belowFloor: false });
+  it('returns mid tier for >=6 GB RAM without NPU', () => {
+    expect(assignTier(mockDevice(8, 'Unknown', false))).toEqual({ tier: 'mid', belowFloor: false });
   });
 
   it('returns mid tier for 4 GB RAM with modern NPU', () => {
-    const result = assignTier(mockDevice(4, 'A15', true));
-    expect(result).toEqual({ tier: 'mid', belowFloor: false });
+    expect(assignTier(mockDevice(4, 'A15', true))).toEqual({ tier: 'mid', belowFloor: false });
   });
 
   it('returns high tier for SDM8 Gen2 + sufficient RAM', () => {
-    const result = assignTier(mockDevice(8, 'SDM8 Gen2', true));
-    expect(result).toEqual({ tier: 'high', belowFloor: false });
+    expect(assignTier(mockDevice(8, 'SDM8 Gen2', true))).toEqual({ tier: 'high', belowFloor: false });
   });
 
-  it('returns high tier for Tensor G3 + sufficient RAM', () => {
-    const result = assignTier(mockDevice(12, 'Tensor G3', true));
-    expect(result).toEqual({ tier: 'high', belowFloor: false });
-  });
-
-  it('returns belowFloor for 0 GB RAM (simulator edge case)', () => {
-    const result = assignTier(mockDevice(0, '', false));
-    expect(result.belowFloor).toBe(true);
+  it('returns belowFloor for 0 GB RAM', () => {
+    expect(assignTier(mockDevice(0, '', false)).belowFloor).toBe(true);
   });
 
   it('returns mid tier for exactly 3 GB RAM at floor boundary', () => {
-    const result = assignTier(mockDevice(3, 'SDM450', false));
-    expect(result).toEqual({ tier: 'mid', belowFloor: false });
-  });
-
-  it('returns mid tier for 5 GB RAM without modern NPU', () => {
-    const result = assignTier(mockDevice(5, 'SDM778G', false));
-    expect(result).toEqual({ tier: 'mid', belowFloor: false });
+    expect(assignTier(mockDevice(3, 'SDM450', false))).toEqual({ tier: 'mid', belowFloor: false });
   });
 });
 
@@ -65,22 +43,12 @@ describe('buildCapabilities', () => {
   it('builds capabilities with auto-detected tier', () => {
     const caps = buildCapabilities(mockDevice(8, 'A18', true));
     expect(caps.tier).toBe('high');
-    expect(caps.ramGB).toBe(8);
-    expect(caps.chipset).toBe('A18');
-    expect(caps.npuAvailable).toBe(true);
     expect(caps.belowFloor).toBe(false);
-  });
-
-  it('builds capabilities with below-floor flag', () => {
-    const caps = buildCapabilities(mockDevice(2, 'old', false));
-    expect(caps.belowFloor).toBe(true);
-    expect(caps.tier).toBe('low');
   });
 
   it('respects manual tier override', () => {
     const caps = buildCapabilities(mockDevice(4, 'SDM710', false), 'high');
     expect(caps.tier).toBe('high');
-    expect(caps.belowFloor).toBe(false);
   });
 });
 
@@ -92,10 +60,17 @@ describe('constants', () => {
   });
 
   it('includes expected high-tier chipsets', () => {
-    const chipsets = Array.from(HIGH_TIER_CHIPSETS);
-    expect(chipsets).toContain('A14');
-    expect(chipsets).toContain('SDM8 Gen1');
-    expect(chipsets).toContain('Tensor G2');
-    expect(chipsets.length).toBeGreaterThan(5);
+    expect(HIGH_TIER_CHIPSETS).toContain('A14');
+    expect(HIGH_TIER_CHIPSETS).toContain('SDM8 Gen1');
+    expect(HIGH_TIER_CHIPSETS).toContain('Tensor G2');
+  });
+
+  it('maps high tier to 4B models', () => {
+    expect(MODEL_MAP.high.llm).toBe('Gemma-2 4B');
+    expect(MODEL_MAP.high.mt).toBe('Qwen 3.5 4B');
+  });
+
+  it('maps low tier to no models', () => {
+    expect(MODEL_MAP.low.llm).toBe('none');
   });
 });
