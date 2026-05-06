@@ -235,6 +235,8 @@ export default function KidHomeScreen() {
                 {
                   backgroundColor: isDark ? subject.darkColor : subject.color,
                   borderColor: isDark ? 'transparent' : '#E5E7EB',
+                  // Dim subject tiles on first visit — activate after first session
+                  opacity: showWelcome ? 0.45 : 1,
                 },
               ]}
               onPress={() => handleSubjectPress(subject.id)}
@@ -257,6 +259,19 @@ export default function KidHomeScreen() {
             </TouchableOpacity>
           ))}
         </View>
+
+        {/* Hint text when subject tiles are dimmed (first visit) */}
+        {showWelcome && (
+          <Text
+            style={[
+              styles.subjectsHint,
+              { color: isDark ? '#888888' : '#9CA3AF' },
+            ]}
+            accessibilityRole="text"
+          >
+            {t('kidHome.firstSession.subjectsHint')}
+          </Text>
+        )}
 
         {/* Hero Camera Button */}
         <TouchableOpacity
@@ -519,6 +534,13 @@ const styles = StyleSheet.create({
   langText: { fontSize: 14, fontWeight: '700' },
 
   // ── Subject Tiles ──
+
+  subjectsHint: {
+    fontSize: 13,
+    textAlign: 'center',
+    marginTop: -8,
+    marginBottom: 12,
+  },
 
   subjectsGrid: {
     flexDirection: 'row',
