@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { useState, useRef, useCallback } from 'react';
+import { CameraView, CameraType, FlashMode, useCameraPermissions } from 'expo-camera';
+import * as FileSystem from 'expo-file-system';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { MockOcrService } from '../../src/services/ocr';
 import type { OcrResult } from '../../src/types/homework';
 
@@ -21,24 +22,76 @@ export default function CameraScreen() {
   const [cameraType] = useState<CameraType>('back');
   const [phase, setPhase] = useState<CameraPhase>('viewfinder');
   const [photoUri, setPhotoUri] = useState<string | null>(null);
+  const [flashMode, setFlashMode] = useState<FlashMode>('auto');
+  const [isCameraReady, setIsCameraReady] = useState(false);
 
   const cameraRef = useRef<CameraView>(null);
+  const photoUriRef = useRef<string | null>(null);
 
-  /** Capture a single photo and move to preview phase. */
-  const handleCapture = useCallback(async () => {
-    if (!cameraRef.current) return;
-    const photo = await cameraRef.current.takePictureAsync({ quality: 0.8 });
-    if (photo?.uri) {
-      setPhotoUri(photo.uri);
-      setPhase('preview');
+  /**
+   * Delete a photo file from the app sandbox.
+   * Photos are stored in the app cache/temp dir — never camera roll, never uploaded.
+   */
+  const deletePhoto = useCallback(async (uri: string | null) => {
+    if (!uri) return;
+    try {
+      const info = await FileSystem.getInfoAsync(uri);
+      if (info.exists) {
+        await FileSystem.deleteAsync(uri, { idempotent: true });
+      }
+    } catch {
+      // Best-effort cleanup — swallow errors
     }
   }, []);
 
+  // Keep ref in sync so cleanup always has the latest URI
+  useEffect(() => {
+    photoUriRef.current = photoUri;
+  }, [photoUri]);
+
+  // Cleanup: delete captured photo when the screen unmounts (navigation away)
+  useEffect(() => {
+    return () => {
+      const uri = photoUriRef.current;
+      if (uri) {
+        FileSystem.getInfoAsync(uri).then((info) => {
+          if (info.exists) {
+            FileSystem.deleteAsync(uri, { idempotent: true });
+          }
+        }).catch(() => {});
+      }
+    };
+  }, []);
+
+  /**
+   * Capture a single photo and move to preview phase.
+   *
+   * TODO(M2-6): Replace with native document scanner for auto-crop +
+   * perspective correction (Apple VNDocumentCameraViewController on iOS,
+   * ML Kit Document Scanner on Android). The expo-camera takePictureAsync
+   * is a placeholder until the vision pipeline lands.
+   */
+  const handleCapture = useCallback(async () => {
+    if (!cameraRef.current) return;
+    const photo = await cameraRef.current.takePictureAsync({
+      quality: 0.8,
+      base64: false,
+      exif: false,
+    });
+    if (photo?.uri) {
+      // Delete previous photo if retaking
+      await deletePhoto(photoUriRef.current);
+      setPhotoUri(photo.uri);
+      setPhase('preview');
+    }
+  }, [deletePhoto]);
+
   /** Discard the current photo and go back to the viewfinder. */
-  const handleRetake = useCallback(() => {
+  const handleRetake = useCallback(async () => {
+    await deletePhoto(photoUriRef.current);
     setPhotoUri(null);
     setPhase('viewfinder');
-  }, []);
+  }, [deletePhoto]);
 
   /** Confirm the photo and start OCR processing. */
   const handleConfirm = useCallback(async () => {
@@ -80,6 +133,15 @@ export default function CameraScreen() {
       alert(t('onboarding.camera.processingFailed'));
     }
   }, [photoUri, subject, level, router, t]);
+
+  /** Toggle flash between off → on → auto → off */
+  const handleToggleFlash = useCallback(() => {
+    setFlashMode((prev) => {
+      const cycle: FlashMode[] = ['off', 'on', 'auto'];
+      const idx = cycle.indexOf(prev);
+      return cycle[(idx + 1) % cycle.length];
+    });
+  }, []);
 
   /* ── Permission loading ──────────────────────────────────── */
   if (!permission) {
@@ -155,6 +217,8 @@ export default function CameraScreen() {
         ref={cameraRef}
         style={styles.camera}
         facing={cameraType}
+        flash={flashMode}
+        onCameraReady={() => setIsCameraReady(true)}
       >
         <View style={styles.overlay}>
           <View style={styles.topBar}>
@@ -163,13 +227,20 @@ export default function CameraScreen() {
             </Pressable>
           </View>
 
-          {/* Viewfinder frame guides */}
+          {/* Viewfinder frame guides — visual aid for framing the worksheet */}
           <View style={styles.frameGuide}>
             <View style={styles.frameCornerTopLeft} />
             <View style={styles.frameCornerTopRight} />
             <View style={styles.frameCornerBottomLeft} />
             <View style={styles.frameCornerBottomRight} />
           </View>
+
+          {/* Flash toggle — help in low-light environments */}
+          <Pressable style={styles.flashToggle} onPress={handleToggleFlash}>
+            <Text style={styles.flashIcon}>
+              {flashMode === 'off' ? '☀️' : flashMode === 'on' ? '⚡' : '🔦'}
+            </Text>
+          </Pressable>
 
           <View style={styles.instructionsBox}>
             <Text style={styles.instructionsText}>
@@ -179,8 +250,9 @@ export default function CameraScreen() {
 
           <View style={styles.bottomBar}>
             <Pressable
-              style={styles.captureButton}
+              style={[styles.captureButton, !isCameraReady && styles.captureButtonDisabled]}
               onPress={handleCapture}
+              disabled={!isCameraReady}
             >
               <View style={styles.captureInner} />
             </Pressable>
@@ -228,6 +300,21 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  /* ── Flash toggle ──────────────────────────── */
+  flashToggle: {
+    position: 'absolute',
+    top: 48,
+    right: 16,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  flashIcon: {
+    fontSize: 20,
   },
   /* ── Viewfinder frame guides ──────────────── */
   frameGuide: {
@@ -303,6 +390,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.3)',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  captureButtonDisabled: {
+    opacity: 0.4,
   },
   captureInner: {
     width: 62,
