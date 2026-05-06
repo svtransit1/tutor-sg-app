@@ -226,11 +226,23 @@ describe('KidHomeScreen — empty state + first-session CTA', () => {
     expect(screen.getByRole('header')).toBeTruthy();
   });
 
-  it('renders at least one button role', async () => {
+  it('has accessibilityRole button on touchable elements', async () => {
     render(<KidHomeScreen />);
     await act(() => Promise.resolve());
 
-    const buttons = screen.getAllByRole('button');
-    expect(buttons.length).toBeGreaterThan(0);
+    // TouchableOpacity elements with accessibilityRole="button" are present
+    // on the language switcher, subject tiles, camera CTA, and welcome banner CTAs.
+    // Use accessibilityLabel to verify buttons since RNTL's getAllByRole('button')
+    // behaviour varies across versions with TouchableOpacity.
+    const langBtn = screen.getByLabelText('kidHome.header.switchLanguage');
+    const cameraBtn = screen.getByLabelText('kidHome.camera.accessibility');
+    const welcomeCta = screen.getByLabelText('kidHome.firstSession.ctaCamera');
+
+    expect(langBtn).toBeTruthy();
+    expect(cameraBtn).toBeTruthy();
+    expect(welcomeCta).toBeTruthy();
+    expect(langBtn.props.accessibilityRole).toBe('button');
+    expect(cameraBtn.props.accessibilityRole).toBe('button');
+    expect(welcomeCta.props.accessibilityRole).toBe('button');
   });
 });
