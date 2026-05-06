@@ -7,12 +7,11 @@ import { saveSession } from '../../src/db/sessions';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function ManualInputScreen() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const router = useRouter();
   const params = useLocalSearchParams();
   const subject = (params.subject as string) ?? 'math';
   const level = (params.level as string) ?? 'P3';
-  const isZh = i18n.language === 'zh-Hans';
 
   const ocrResult: OcrResult = params.ocrJson ? JSON.parse(params.ocrJson as string) : { blocks: [], lowConfidenceBlocks: [], imageUri: '', pageCount: 0, timestamp: 0 };
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -71,7 +70,7 @@ export default function ManualInputScreen() {
     >
       <View style={styles.header}>
         <Pressable style={styles.backButton} onPress={() => router.back()}>
-          <Text style={styles.backButtonText}>{isZh ? '返回' : 'Back'}</Text>
+          <Text style={styles.backButtonText}>{t('onboarding.common.back')}</Text>
         </Pressable>
         <Text style={styles.counter}>
           {currentIndex + 1} / {correctedBlocks.length}
@@ -80,19 +79,17 @@ export default function ManualInputScreen() {
 
       <View style={styles.content}>
         <Text style={styles.title}>
-          {isZh
-            ? t('manualInput.titleZh', { number: currentIndex + 1 })
-            : t('manualInput.title', { number: currentIndex + 1 })}
+          {t('onboarding.manualInput.title', { number: currentIndex + 1 })}
         </Text>
         <Text style={styles.instructions}>
-          {isZh ? t('manualInput.instructionsZh') : t('manualInput.instructions')}
+          {t('onboarding.manualInput.instructions')}
         </Text>
 
         <TextInput
           style={styles.input}
           value={inputText}
           onChangeText={setInputText}
-          placeholder={isZh ? t('manualInput.placeholderZh') : t('manualInput.placeholder')}
+          placeholder={t('onboarding.manualInput.placeholder')}
           placeholderTextColor="#999"
           multiline
           autoFocus
@@ -103,8 +100,8 @@ export default function ManualInputScreen() {
           <Pressable style={styles.saveButton} onPress={handleSave}>
             <Text style={styles.saveButtonText}>
               {correctedBlocks.length > 1 && currentIndex < correctedBlocks.length - 1
-                ? isZh ? t('onboarding.common.save') : 'Save'
-                : isZh ? t('onboarding.common.done') : 'Done'}
+                ? t('onboarding.common.save')
+                : t('onboarding.common.done')}
             </Text>
           </Pressable>
         </View>
@@ -112,7 +109,7 @@ export default function ManualInputScreen() {
         {currentIndex >= correctedBlocks.length - 1 && inputText.length > 0 && (
           <Pressable style={styles.continueButton} onPress={handleContinue}>
             <Text style={styles.continueButtonText}>
-              {isZh ? t('manualInput.continueZh') : t('manualInput.continue')}
+              {t('onboarding.manualInput.continue')}
             </Text>
           </Pressable>
         )}

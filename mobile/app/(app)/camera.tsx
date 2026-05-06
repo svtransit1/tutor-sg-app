@@ -10,6 +10,7 @@ const ocrService = new MockOcrService();
 
 export default function CameraScreen() {
   const { t, i18n } = useTranslation();
+  const isZh = i18n.language === 'zh-Hans';
   const router = useRouter();
   const params = useLocalSearchParams();
   const subject = (params.subject as string) ?? 'math';
@@ -21,7 +22,6 @@ export default function CameraScreen() {
   const [capturedUris, setCapturedUris] = useState<string[]>([]);
 
   const cameraRef = useRef<CameraView>(null);
-  const isZh = i18n.language === 'zh-Hans';
 
   const handleCapture = useCallback(async () => {
     if (!cameraRef.current) return;
@@ -70,7 +70,7 @@ export default function CameraScreen() {
         });
       }
     } catch {
-      alert(isZh ? '处理失败，请重试' : 'Processing failed. Please try again.');
+      alert(t('onboarding.camera.processingFailed'));
     } finally {
       setIsProcessing(false);
     }
@@ -88,11 +88,11 @@ export default function CameraScreen() {
     return (
       <View style={styles.center}>
         <Text style={styles.permissionText}>
-          {isZh ? t('camera.permissionDeniedZh') : t('camera.permissionDenied')}
+          {t('onboarding.camera.permissionDenied')}
         </Text>
         <Pressable style={styles.permissionButton} onPress={requestPermission}>
           <Text style={styles.permissionButtonText}>
-            {isZh ? t('camera.requestPermissionZh') : t('camera.requestPermission')}
+            {t('onboarding.camera.requestPermission')}
           </Text>
         </Pressable>
       </View>
@@ -104,7 +104,7 @@ export default function CameraScreen() {
       <View style={styles.center}>
         <ActivityIndicator size="large" color="#4A90D9" />
         <Text style={styles.processingText}>
-          {isZh ? t('camera.processingZh') : t('camera.processing')}
+          {t('onboarding.camera.processing')}
         </Text>
       </View>
     );
@@ -120,16 +120,16 @@ export default function CameraScreen() {
         <View style={styles.overlay}>
           <View style={styles.topBar}>
             <Pressable style={styles.backButton} onPress={() => router.back()}>
-              <Text style={styles.backButtonText}>{isZh ? '返回' : 'Back'}</Text>
+              <Text style={styles.backButtonText}>{t('onboarding.common.back')}</Text>
             </Pressable>
             <Text style={styles.pageIndicator}>
-              {capturedUris.length > 0 ? `${capturedUris.length} page${capturedUris.length > 1 ? 's' : ''}` : ''}
+              {capturedUris.length > 0 ? t('onboarding.camera.pageCount', { count: capturedUris.length }) : ''}
             </Text>
           </View>
 
           <View style={styles.instructionsBox}>
             <Text style={styles.instructionsText}>
-              {isZh ? t('camera.instructionsZh') : t('camera.instructions')}
+              {t('onboarding.camera.instructions')}
             </Text>
           </View>
 
@@ -145,14 +145,14 @@ export default function CameraScreen() {
               <View style={styles.actionRow}>
                 <Pressable style={styles.retakeButton} onPress={() => setCapturedUris([])}>
                   <Text style={styles.retakeButtonText}>
-                    {isZh ? t('camera.retakeZh') : t('camera.retake')}
+                    {t('onboarding.camera.retake')}
                   </Text>
                 </Pressable>
                 <Pressable style={styles.processButton} onPress={handleProcess}>
                   <Text style={styles.processButtonText}>
                     {capturedUris.length > 1
-                      ? isZh ? t('camera.doneZh') : t('camera.done')
-                      : isZh ? t('camera.usePhotoZh') : t('camera.usePhoto')}
+                      ? t('onboarding.camera.done')
+                      : t('onboarding.camera.usePhoto')}
                   </Text>
                 </Pressable>
               </View>

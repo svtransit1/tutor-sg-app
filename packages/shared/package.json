@@ -1,0 +1,17 @@
+{
+  "name": "@tutor-sg/shared",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "node --experimental-specifier-resolution=node --loader ts-node/esm __tests__/registry.test.ts"
+  },
+  "devDependencies": {
+    "ajv": "^8.20.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "ajv-formats": "^3.0.1"
+  }
+}

@@ -11,11 +11,11 @@ const llmService = new MockLlmService();
 
 export default function FeedbackScreen() {
   const { t, i18n } = useTranslation();
+  const isZh = i18n.language === 'zh-Hans';
   const router = useRouter();
   const params = useLocalSearchParams();
   const subject = (params.subject as string) ?? 'math';
   const level = (params.level as string) ?? 'P3';
-  const isZh = i18n.language === 'zh-Hans';
 
   const [isLoading, setIsLoading] = useState(true);
   const [blocks, setBlocks] = useState<FeedbackBlock[]>([]);
@@ -60,7 +60,7 @@ export default function FeedbackScreen() {
         setStreamingText('');
         sessionRef(resultBlocks, rawResponse, 'feedback');
       } catch {
-        setError(isZh ? '生成反馈时出错，请重试' : 'Error generating feedback. Please try again.');
+        setError(t('onboarding.feedback.errorDetail'));
         sessionRef([], '', 'error');
       } finally {
         setIsLoading(false);
@@ -71,7 +71,7 @@ export default function FeedbackScreen() {
   }, [params.ocrJson, subject, isZh, sessionRef]);
 
   const labelForType = (type: string) => {
-    const key = `feedback.${type}`;
+    const key = `onboarding.feedback.${type}`;
     const translated = t(key);
     return translated === key ? type : translated;
   };
@@ -92,7 +92,7 @@ export default function FeedbackScreen() {
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#4A90D9" />
         <Text style={styles.loadingText}>
-          {isZh ? t('feedback.loadingZh') : t('feedback.loading')}
+          {t('onboarding.feedback.loading')}
         </Text>
         {streamingText.length > 0 && (
           <View style={styles.streamingBox}>
@@ -110,7 +110,7 @@ export default function FeedbackScreen() {
           <Text style={styles.errorText}>{error}</Text>
           <Pressable style={styles.retryButton} onPress={handleNewHomework}>
             <Text style={styles.retryButtonText}>
-              {isZh ? t('camera.retakeZh') : t('camera.retake')}
+              {t('onboarding.camera.retake')}
             </Text>
           </Pressable>
         </View>
@@ -122,7 +122,7 @@ export default function FeedbackScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>
-          {isZh ? '作业反馈' : 'Homework Feedback'}
+          {t('onboarding.feedback.title')}
         </Text>
       </View>
 
@@ -151,7 +151,7 @@ export default function FeedbackScreen() {
 
         <Pressable style={styles.hintButton}>
           <Text style={styles.hintButtonText}>
-            {isZh ? t('feedback.askHintZh') : t('feedback.askHint')}
+            {t('onboarding.feedback.askHint')}
           </Text>
         </Pressable>
       </ScrollView>
@@ -159,12 +159,12 @@ export default function FeedbackScreen() {
       <View style={styles.footer}>
         <Pressable style={styles.secondaryButton} onPress={handleHome}>
           <Text style={styles.secondaryButtonText}>
-            {isZh ? t('feedback.newHomeworkZh') : t('feedback.newHomework')}
+            {t('onboarding.feedback.newHomework')}
           </Text>
         </Pressable>
         <Pressable style={styles.primaryButton} onPress={handleNewHomework}>
           <Text style={styles.primaryButtonText}>
-            {isZh ? t('feedback.sessionSavedZh') : t('feedback.sessionSaved')}
+            {t('onboarding.feedback.sessionSaved')}
           </Text>
         </Pressable>
       </View>

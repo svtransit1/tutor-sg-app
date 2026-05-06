@@ -3,7 +3,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
 import type { KidProfile } from '../../src/storage';
-import { getKids } from '../../src/storage';
+import { getKids, deleteKid } from '../../src/storage';
+import { MAX_KIDS } from '../../src/constants';
 
 const SUBJECTS = [
   { key: 'math', label: 'Mathematics', labelZh: '数学' },
@@ -50,24 +51,51 @@ export default function AppHome() {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.greeting}>
-          {isZh ? t('onboarding.home.greetingZh') : t('onboarding.home.greeting')}
+          {t('onboarding.home.greeting')}
         </Text>
       </View>
 
       {/* Active kid profile summary */}
       <View style={styles.profileSection}>
-        <Text style={styles.sectionTitle}>{isZh ? '孩子' : 'Children'}</Text>
+        <Text style={styles.sectionTitle}>
+          {t('onboarding.kidProfile.children')} ({kids.length}/{MAX_KIDS})
+        </Text>
         {kids.length === 0 ? (
-          <Text style={styles.noKids}>{isZh ? '还没有添加孩子' : 'No children added yet'}</Text>
+          <TouchableOpacity
+            style={styles.addKidFromHome}
+            onPress={() => router.push('/(onboarding)/kid-setup')}
+          >
+            <Text style={styles.addKidFromHomeText}>
+              {t('onboarding.kidProfile.addFirst')}
+            </Text>
+          </TouchableOpacity>
         ) : (
           kids.map((kid) => (
-            <View key={kid.id} style={styles.kidCard}>
-              <Text style={styles.kidName}>{kid.name}</Text>
-              <Text style={styles.kidLevel}>
-                {levelLabel(kid.level)} &middot; {kid.language === 'en' ? 'English' : '简体中文'}
-              </Text>
-            </View>
+            <TouchableOpacity
+              key={kid.id}
+              style={styles.kidCard}
+              onPress={() => router.push(`/(onboarding)/kid-setup?id=${kid.id}`)}
+              accessibilityLabel={`${t('onboarding.kidProfile.edit')} ${kid.name}`}
+            >
+              <View style={styles.kidCardContent}>
+                <Text style={styles.kidName}>{kid.name}</Text>
+                <Text style={styles.kidLevel}>
+                  {levelLabel(kid.level)} &middot; {kid.language === 'en' ? 'English' : '简体中文'}
+                </Text>
+              </View>
+              <Text style={styles.kidEditCaret}>{'>'}</Text>
+            </TouchableOpacity>
           ))
+        )}
+        {kids.length > 0 && kids.length < MAX_KIDS && (
+          <TouchableOpacity
+            style={styles.addKidButton}
+            onPress={() => router.push('/(onboarding)/kid-setup')}
+          >
+            <Text style={styles.addKidButtonText}>
+              {t('onboarding.kidProfile.addAnother')}
+            </Text>
+          </TouchableOpacity>
         )}
       </View>
 
@@ -76,7 +104,7 @@ export default function AppHome() {
         <TouchableOpacity style={styles.tile} onPress={handleCameraPress}>
           <Text style={styles.tileIcon}>📷</Text>
           <Text style={styles.tileTitle}>
-            {isZh ? t('onboarding.home.snapHomeworkZh') : t('onboarding.home.snapHomework')}
+            {t('onboarding.home.snapHomework')}
           </Text>
         </TouchableOpacity>
 
@@ -96,7 +124,7 @@ export default function AppHome() {
                   selectedSubject === subject.key && styles.subjectTextSelected,
                 ]}
               >
-                {isZh ? subject.labelZh : subject.label}
+                {t(`onboarding.subjects.${subject.key}`)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -106,7 +134,7 @@ export default function AppHome() {
       {/* Parent area link */}
       <TouchableOpacity style={styles.parentLink}>
         <Text style={styles.parentLinkText}>
-          {isZh ? t('onboarding.home.parentAreaZh') : t('onboarding.home.parentArea')}
+          {t('onboarding.home.parentArea')}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -148,6 +176,41 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  kidCardContent: {
+    flex: 1,
+  },
+  kidEditCaret: {
+    fontSize: 18,
+    color: '#999',
+    marginLeft: 8,
+  },
+  addKidButton: {
+    marginTop: 8,
+    paddingVertical: 12,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#4A90D9',
+    borderStyle: 'dashed',
+    alignItems: 'center',
+  },
+  addKidButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#4A90D9',
+  },
+  addKidFromHome: {
+    backgroundColor: '#f0f4f8',
+    borderRadius: 12,
+    padding: 20,
+    alignItems: 'center',
+  },
+  addKidFromHomeText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#4A90D9',
   },
   kidName: {
     fontSize: 16,
