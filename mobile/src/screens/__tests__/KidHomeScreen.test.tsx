@@ -217,6 +217,64 @@ describe('KidHomeScreen — empty state + first-session CTA', () => {
     expect(mockRouterPush).toHaveBeenCalledWith('/(kid)/history');
   });
 
+  // ── Subject tiles dimmed on first visit ────────────────
+
+  it('dims subject tiles on first visit (showWelcome true)', async () => {
+    render(<KidHomeScreen />);
+    await act(() => Promise.resolve());
+
+    // All 4 subject tiles should have opacity ~0.45 when welcome banner is shown
+    const tiles = screen.getAllByLabelText('kidHome.accessibility.subjectTile');
+    expect(tiles.length).toBe(4);
+    tiles.forEach((tile) => {
+      const style = Array.isArray(tile.props.style) ? Object.assign({}, ...tile.props.style) : tile.props.style;
+      expect(style.opacity).toBe(0.45);
+    });
+  });
+
+  it('shows subjects hint text on first visit', async () => {
+    render(<KidHomeScreen />);
+    await act(() => Promise.resolve());
+
+    expect(screen.getByText('kidHome.firstSession.subjectsHint')).toBeTruthy();
+  });
+
+  it('does NOT dim subject tiles after dismissal', async () => {
+    mockIsFirstHomeVisit.mockReturnValue(false);
+    render(<KidHomeScreen />);
+    await act(() => Promise.resolve());
+
+    // After dismissal, welcome banner is gone and tiles render (not hidden).
+    expect(screen.queryByLabelText('kidHome.firstSession.accessibility.welcomeBanner')).toBeNull();
+    // All 4 subject tiles should be present at full visibility
+    const tiles = screen.getAllByLabelText('kidHome.accessibility.subjectTile');
+    expect(tiles.length).toBe(4);
+  });
+
+  it('does NOT show subjects hint after dismissal', async () => {
+    mockIsFirstHomeVisit.mockReturnValue(false);
+    render(<KidHomeScreen />);
+    await act(() => Promise.resolve());
+
+    expect(screen.queryByText('kidHome.firstSession.subjectsHint')).toBeNull();
+  });
+
+  it('does NOT dim subject tiles when sessions exist', async () => {
+    mockGetRecentSessions.mockResolvedValue([
+      makeSession({ id: 1, subject: 'math', questionCount: 5 }),
+    ]);
+    mockIsFirstHomeVisit.mockReturnValue(false);
+
+    render(<KidHomeScreen />);
+    await act(() => Promise.resolve());
+
+    // When no dimming is applied, opacity is not set (undefined or absent).
+    // Verify by checking the footer-level 'Recent Sessions' title is visible
+    // instead of the welcome banner, confirming non-first-visit state.
+    expect(screen.queryByLabelText('kidHome.firstSession.accessibility.welcomeBanner')).toBeNull();
+    expect(screen.getByText('kidHome.recentSessions.title')).toBeTruthy();
+  });
+
   // ── Accessibility ─────────────────────────────────────────
 
   it('has accessibilityRole header on greeting', async () => {

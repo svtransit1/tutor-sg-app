@@ -143,6 +143,7 @@
       "welcomeBody": "Snap a photo of your homework and get instant help — like having a quiet tutor right next to you.",
       "ctaCamera": "Take your first homework photo",
       "ctaPractice": "Try a practice question",
+      "subjectsHint": "Pick a subject after your first session",
       "dismiss": "Not now, show me around",
       "accessibility": {
         "welcomeBanner": "Welcome banner. Start your first homework session.",

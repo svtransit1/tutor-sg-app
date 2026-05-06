@@ -143,6 +143,7 @@
       "welcomeBody": "拍下你的作业照片，马上就能得到帮助——就像身边有一位安静的小老师。",
       "ctaCamera": "拍下第一份功课",
       "ctaPractice": "试试练习题",
+      "subjectsHint": "完成第一次作业后即可选择科目",
       "dismiss": "先看看，等会儿再拍",
       "accessibility": {
         "welcomeBanner": "欢迎横幅。开始你的第一次作业辅导。",
