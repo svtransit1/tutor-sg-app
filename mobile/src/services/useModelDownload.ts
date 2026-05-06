@@ -16,10 +16,11 @@ import {
   clearSessionState,
   verifyFileIntegrity,
   pickCdnUrl,
+  getRetryDelayMs,
+  isMockCdnEnabled,
   type DownloadSessionState,
   type DownloadProgress,
   type DownloadStatus,
-  type ModelDownloadState,
 } from './modelDownload';
 import type { DeviceTier } from '@tutor-sg/shared';
 
@@ -42,6 +43,13 @@ async function getModelDir(): Promise<string> {
   } catch { /* fall through */ }
   const LegacyFS = await import('expo-file-system/legacy');
   return `${LegacyFS.documentDirectory ?? ''}models/`;
+}
+
+function getRuntimeEnv(): Record<string, string | undefined> {
+  const maybeGlobal = globalThis as {
+    process?: { env?: Record<string, string | undefined> };
+  };
+  return maybeGlobal.process?.env ?? {};
 }
 
 interface UseModelDownloadReturn {
@@ -81,20 +89,11 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
 
   // Keep a ref to the active DownloadResumable so we can cancel/pause
   const downloadRef = useRef<DownloadResumable | null>(null);
+  const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Track whether download was cancelled during the active download
   const cancelledRef = useRef(false);
   // Track whether we're currently in a download operation
   const downloadingRef = useRef(false);
-
-  // ── Load persisted session on mount ─────────────────────────────
-  useEffect(() => {
-    (async () => {
-      const saved = await loadSessionState();
-      if (saved && saved.sessionStatus === 'paused') {
-        setSession(saved);
-      }
-    })();
-  }, []);
 
   // ── Persist session changes ────────────────────────────────────
   useEffect(() => {
@@ -142,9 +141,34 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
       ...state,
       models: updatingModels,
       sessionStatus: 'running',
+      startedAtMs: state.startedAtMs ?? Date.now(),
     };
     setSession(updatedState);
     sessionRef.current = updatedState;
+
+    if (isMockCdnEnabled(getRuntimeEnv())) {
+      await new Promise((resolve) => setTimeout(resolve, 250));
+      const mockModels = updatedState.models.map((m) => ({
+        ...m,
+        status: 'completed' as DownloadStatus,
+        downloadedBytes: m.totalBytes,
+        verified: true,
+        retryAttempt: 0,
+      }));
+      const mockState: DownloadSessionState = {
+        ...updatedState,
+        models: mockModels,
+        currentIndex: mockModels.length,
+        sessionStatus: 'completed',
+        downloadedBytes: mockModels.reduce((sum, m) => sum + m.downloadedBytes, 0),
+        overallProgress: 1,
+        startedAtMs: undefined,
+      };
+      setSession(mockState);
+      sessionRef.current = mockState;
+      await clearSessionState();
+      return mockState;
+    }
 
     // Create resumable download with progress callback
     const downloadResumable = LegacyFS.createDownloadResumable(
@@ -158,6 +182,7 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
         const models = [...current.models];
         const m = { ...models[current.currentIndex]! };
         m.downloadedBytes = progress.totalBytesWritten;
+        m.resumeData = downloadResumable.savable().resumeData ?? m.resumeData;
         models[current.currentIndex] = m;
 
         const totalDownloaded = models.reduce((sum, mod) => sum + mod.downloadedBytes, 0);
@@ -170,9 +195,11 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
           models,
           downloadedBytes: totalDownloaded,
           overallProgress,
+          startedAtMs: current.startedAtMs ?? Date.now(),
         };
         sessionRef.current = next;
         setSession(next);
+        saveSessionState(next).catch(() => {});
       },
       model.resumeData,
     );
@@ -228,6 +255,7 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
         status: 'completed' as DownloadStatus,
         verified: true,
         downloadedBytes: completeModels[sessionRef.current.currentIndex]!.totalBytes,
+        retryAttempt: 0,
       };
 
       // Move to next model or mark session complete
@@ -241,6 +269,7 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
         downloadedBytes: completeModels.reduce((sum, m) => sum + m.downloadedBytes, 0),
         overallProgress: allDone ? 1 : completeModels.reduce((sum, m) => sum + m.downloadedBytes, 0) /
           (sessionRef.current.totalBytes || 1),
+        startedAtMs: allDone ? undefined : sessionRef.current.startedAtMs,
       };
 
       setSession(completeState);
@@ -272,10 +301,13 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
       }
 
       const errorModels = [...sessionRef.current.models];
+      const failedModel = errorModels[sessionRef.current.currentIndex]!;
+      const retryAttempt = failedModel.retryAttempt ?? 0;
       errorModels[sessionRef.current.currentIndex] = {
-        ...errorModels[sessionRef.current.currentIndex]!,
+        ...failedModel,
         status: 'error' as DownloadStatus,
         error: String(err),
+        retryAttempt,
       };
       const errorState: DownloadSessionState = {
         ...sessionRef.current,
@@ -285,21 +317,74 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
       setSession(errorState);
       sessionRef.current = errorState;
       await saveSessionState(errorState);
+
+      if (retryAttempt < 3) {
+        const delayMs = getRetryDelayMs(retryAttempt);
+        retryTimerRef.current = setTimeout(() => {
+          const models = [...sessionRef.current.models];
+          const retryModel = models[sessionRef.current.currentIndex];
+          if (!retryModel || retryModel.status !== 'error') return;
+
+          models[sessionRef.current.currentIndex] = {
+            ...retryModel,
+            status: 'idle',
+            error: undefined,
+            retryAttempt: retryAttempt + 1,
+          };
+          const retryState: DownloadSessionState = {
+            ...sessionRef.current,
+            models,
+            sessionStatus: 'running',
+            startedAtMs: Date.now(),
+          };
+          setSession(retryState);
+          sessionRef.current = retryState;
+          downloadCurrentModel(retryState).catch(() => {});
+        }, delayMs);
+        return errorState;
+      }
+
       throw err;
     }
   }, []);
+
+  // ── Load persisted session on mount ─────────────────────────────
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      const saved = await loadSessionState();
+      if (!saved || cancelled) return;
+      if (saved.sessionStatus === 'completed' || saved.sessionStatus === 'cancelled') return;
+
+      setSession(saved);
+      sessionRef.current = saved;
+
+      if (saved.sessionStatus === 'running') {
+        downloadCurrentModel(saved).catch(() => {});
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [downloadCurrentModel]);
 
   // ── Public API ──────────────────────────────────────────────────
 
   const start = useCallback(() => {
     if (session.sessionStatus === 'running' || session.sessionStatus === 'completed') return;
+    if (retryTimerRef.current) {
+      clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = null;
+    }
     cancelledRef.current = false;
     setPendingAction('starting');
 
     // If resuming from paused, start from current state
     const stateToUse = session.sessionStatus === 'paused'
       ? session
-      : createDownloadSession(deviceTier);
+      : { ...createDownloadSession(deviceTier), startedAtMs: Date.now() };
 
     setSession(stateToUse);
     sessionRef.current = stateToUse;
@@ -317,6 +402,10 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
     if (downloadRef.current) {
       setPendingAction('pausing');
       try {
+        if (retryTimerRef.current) {
+          clearTimeout(retryTimerRef.current);
+          retryTimerRef.current = null;
+        }
         const pauseState = await downloadRef.current.pauseAsync();
         if (pauseState && pauseState.resumeData !== undefined) {
           const models = [...sessionRef.current.models];
@@ -353,6 +442,10 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
 
   const cancel = useCallback(async () => {
     cancelledRef.current = true;
+    if (retryTimerRef.current) {
+      clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = null;
+    }
     setPendingAction('cancelling');
 
     if (downloadRef.current) {
@@ -381,6 +474,10 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
 
   const retry = useCallback(() => {
     if (session.sessionStatus !== 'error') return;
+    if (retryTimerRef.current) {
+      clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = null;
+    }
     cancelledRef.current = false;
     setPendingAction('retrying');
 
@@ -392,6 +489,7 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
         ...models[errIdx]!,
         status: 'idle',
         error: undefined,
+        retryAttempt: 0,
         downloadedBytes: 0,
       };
     }
@@ -403,6 +501,7 @@ export function useModelDownload(deviceTier: DeviceTier): UseModelDownloadReturn
       models,
       currentIndex: errIdx >= 0 ? errIdx : sessionRef.current.currentIndex,
       sessionStatus: 'idle',
+      startedAtMs: Date.now(),
     };
     setSession(retryState);
     sessionRef.current = retryState;

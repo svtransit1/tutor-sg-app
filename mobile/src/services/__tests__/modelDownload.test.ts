@@ -15,8 +15,12 @@ import {
   selectModelsForTier,
   createDownloadSession,
   getProgress,
+  estimateEtaMinutes,
   formatModelName,
   formatBytes,
+  getNetworkDownloadPolicy,
+  getRetryDelayMs,
+  isMockCdnEnabled,
   pickCdnUrl,
   saveSessionState,
   loadSessionState,
@@ -320,6 +324,86 @@ describe('formatBytes', () => {
   it('formats GB range', () => {
     expect(formatBytes(1024 * 1024 * 1024)).toBe('1.00 GB');
     expect(formatBytes(2.5 * 1024 * 1024 * 1024)).toBe('2.50 GB');
+  });
+});
+
+// ── estimateEtaMinutes ────────────────────────────────────────────
+
+describe('estimateEtaMinutes', () => {
+  it('returns null before download speed is known', () => {
+    expect(estimateEtaMinutes({
+      downloadedBytes: 0,
+      totalBytes: 1_000_000_000,
+      elapsedMs: 1_000,
+    })).toBeNull();
+  });
+
+  it('rounds up remaining time to whole minutes', () => {
+    expect(estimateEtaMinutes({
+      downloadedBytes: 300_000_000,
+      totalBytes: 900_000_000,
+      elapsedMs: 60_000,
+    })).toBe(2);
+  });
+
+  it('returns 0 when the download is complete', () => {
+    expect(estimateEtaMinutes({
+      downloadedBytes: 900_000_000,
+      totalBytes: 900_000_000,
+      elapsedMs: 60_000,
+    })).toBe(0);
+  });
+});
+
+// ── getRetryDelayMs ───────────────────────────────────────────────
+
+describe('getRetryDelayMs', () => {
+  it('uses exponential backoff with a bounded maximum', () => {
+    expect(getRetryDelayMs(0)).toBe(1_000);
+    expect(getRetryDelayMs(1)).toBe(2_000);
+    expect(getRetryDelayMs(2)).toBe(4_000);
+    expect(getRetryDelayMs(10)).toBe(30_000);
+  });
+});
+
+// ── getNetworkDownloadPolicy ──────────────────────────────────────
+
+describe('getNetworkDownloadPolicy', () => {
+  it('allows Wi-Fi when Wi-Fi only is enabled', () => {
+    expect(getNetworkDownloadPolicy({ networkType: 'wifi', wifiOnly: true })).toEqual({
+      canDownload: true,
+      showCellularWarning: false,
+      status: 'wifi',
+    });
+  });
+
+  it('waits and warns on cellular when Wi-Fi only is enabled', () => {
+    expect(getNetworkDownloadPolicy({ networkType: 'cellular', wifiOnly: true })).toEqual({
+      canDownload: false,
+      showCellularWarning: true,
+      status: 'cellular-blocked',
+    });
+  });
+
+  it('allows cellular after explicit Wi-Fi-only override', () => {
+    expect(getNetworkDownloadPolicy({ networkType: 'cellular', wifiOnly: false })).toEqual({
+      canDownload: true,
+      showCellularWarning: true,
+      status: 'cellular-allowed',
+    });
+  });
+});
+
+// ── isMockCdnEnabled ──────────────────────────────────────────────
+
+describe('isMockCdnEnabled', () => {
+  it('accepts Maestro and Expo public mock flags', () => {
+    expect(isMockCdnEnabled({ MODEL_DOWNLOAD_MOCK_CDN: '1' })).toBe(true);
+    expect(isMockCdnEnabled({ EXPO_PUBLIC_MODEL_DOWNLOAD_MOCK_CDN: 'true' })).toBe(true);
+  });
+
+  it('is disabled by default', () => {
+    expect(isMockCdnEnabled({})).toBe(false);
   });
 });
 

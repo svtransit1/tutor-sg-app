@@ -1,15 +1,22 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
+  Switch,
 } from 'react-native';
+import * as Network from 'expo-network';
 import { useOnboarding } from '../OnboardingProvider';
 import { useTranslation } from 'react-i18next';
 import { useModelDownload } from '../../services/useModelDownload';
-import { formatBytes } from '../../services/modelDownload';
+import {
+  formatBytes,
+  getNetworkDownloadPolicy,
+  type NetworkType,
+} from '../../services/modelDownload';
 import type { DeviceTier } from '@tutor-sg/shared';
 
 /** Kid-friendly colors */
@@ -28,9 +35,11 @@ const COLORS = {
 };
 
 export function ModelDownloadScreen() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { goNext, state: onboardingState } = useOnboarding();
   const deviceTier = (onboardingState.deviceTier ?? 'mid') as DeviceTier;
+  const [networkType, setNetworkType] = useState<NetworkType>('unknown');
+  const [wifiOnly, setWifiOnly] = useState(true);
 
   const {
     progress,
@@ -46,12 +55,47 @@ export function ModelDownloadScreen() {
     currentModelName,
   } = useModelDownload(deviceTier);
 
-  // Start download automatically on mount if idle
+  const networkPolicy = useMemo(
+    () => getNetworkDownloadPolicy({ networkType, wifiOnly }),
+    [networkType, wifiOnly],
+  );
+
+  const refreshNetworkType = useCallback(async () => {
+    try {
+      const state = await Network.getNetworkStateAsync();
+      const rawType = String(state.type ?? '').toLowerCase();
+      if (!state.isConnected) {
+        setNetworkType('none');
+      } else if (rawType.includes('wifi')) {
+        setNetworkType('wifi');
+      } else if (rawType.includes('cellular')) {
+        setNetworkType('cellular');
+      } else {
+        setNetworkType('unknown');
+      }
+    } catch {
+      setNetworkType('unknown');
+    }
+  }, []);
+
   useEffect(() => {
-    if (status === 'idle') {
+    refreshNetworkType();
+    const timer = setInterval(refreshNetworkType, 5000);
+    return () => clearInterval(timer);
+  }, [refreshNetworkType]);
+
+  // Start download automatically when policy allows it.
+  useEffect(() => {
+    if (status === 'idle' && networkPolicy.canDownload) {
       start();
     }
-  }, [status, start]);
+  }, [networkPolicy.canDownload, status, start]);
+
+  useEffect(() => {
+    if (status === 'running' && !networkPolicy.canDownload) {
+      pause();
+    }
+  }, [networkPolicy.canDownload, pause, status]);
 
   // Auto-advance when complete
   useEffect(() => {
@@ -76,6 +120,54 @@ export function ModelDownloadScreen() {
       resume();
     }
   }, [status, currentStatus, pause, resume]);
+
+  const handleWifiOnlyChange = useCallback((nextValue: boolean) => {
+    if (!nextValue && networkPolicy.showCellularWarning) {
+      Alert.alert(
+        t('onboarding.modelDownload.cellularTitle', 'Use mobile data?'),
+        t(
+          'onboarding.modelDownload.cellularBody',
+          'This download may use more than 1 GB. Continue only if your parent or guardian is okay with mobile data charges.',
+        ),
+        [
+          {
+            text: t('onboarding.modelDownload.keepWifiOnly', 'Keep Wi-Fi only'),
+            style: 'cancel',
+          },
+          {
+            text: t('onboarding.modelDownload.useMobileData', 'Use mobile data'),
+            style: 'destructive',
+            onPress: () => setWifiOnly(false),
+          },
+        ],
+      );
+      return;
+    }
+
+    setWifiOnly(nextValue);
+  }, [networkPolicy.showCellularWarning, t]);
+
+  const networkLabel = useMemo(() => {
+    switch (networkPolicy.status) {
+      case 'wifi':
+        return t('onboarding.modelDownload.networkWifi', 'Wi-Fi');
+      case 'cellular-blocked':
+        return t('onboarding.modelDownload.networkCellularBlocked', 'Mobile data blocked');
+      case 'cellular-allowed':
+        return t('onboarding.modelDownload.networkCellularAllowed', 'Mobile data');
+      case 'offline':
+        return t('onboarding.modelDownload.networkOffline', 'Offline');
+      default:
+        return t('onboarding.modelDownload.networkUnknown', 'Network unknown');
+    }
+  }, [networkPolicy.status, t]);
+
+  const etaLabel = progress.etaMinutes === null
+    ? t('onboarding.modelDownload.etaCalculating', 'Calculating time remaining...')
+    : t('onboarding.modelDownload.eta', {
+        count: progress.etaMinutes,
+        defaultValue: 'About {{count}} minutes on Wi-Fi',
+      });
 
   // ── Determine the main action button ────────────────────────────
 
@@ -175,9 +267,16 @@ export function ModelDownloadScreen() {
     switch (status) {
       case 'idle':
         return (
-          <Text style={styles.statusText}>
-            {t('onboarding.modelDownload.preparing', 'Preparing download...')}
-          </Text>
+          <>
+            <Text style={styles.statusText}>
+              {t('onboarding.modelDownload.preparing', 'Preparing download...')}
+            </Text>
+            {!networkPolicy.canDownload ? (
+              <Text style={styles.hintText}>
+                {t('onboarding.modelDownload.waitingWifi', 'Waiting for Wi-Fi to continue download.')}
+              </Text>
+            ) : null}
+          </>
         );
 
       case 'running':
@@ -203,6 +302,7 @@ export function ModelDownloadScreen() {
                 {formatBytes(progress.overallBytes.downloaded)} /{' '}
                 {formatBytes(progress.overallBytes.total)}
               </Text>
+              <Text style={styles.etaText}>{etaLabel}</Text>
             </>
           );
         }
@@ -215,10 +315,12 @@ export function ModelDownloadScreen() {
               {t('onboarding.modelDownload.paused', 'Download paused')}
             </Text>
             <Text style={styles.hintText}>
-              {t(
-                'onboarding.modelDownload.pausedHint',
-                'Connect to Wi-Fi to continue. Downloads resume automatically.',
-              )}
+              {networkPolicy.canDownload
+                ? t(
+                    'onboarding.modelDownload.pausedHint',
+                    'Connect to Wi-Fi to continue. Downloads resume automatically.',
+                  )
+                : t('onboarding.modelDownload.waitingWifi', 'Waiting for Wi-Fi to continue download.')}
             </Text>
           </>
         );
@@ -333,6 +435,35 @@ export function ModelDownloadScreen() {
       {/* Status message */}
       <View style={styles.statusArea}>{renderStatusMessage()}</View>
 
+      <View style={styles.networkPanel}>
+        <Text style={styles.networkLabel}>
+          {t('onboarding.modelDownload.networkType', 'Network')}: {networkLabel}
+        </Text>
+        <View style={styles.switchRow}>
+          <Text style={styles.switchLabel}>
+            {t('onboarding.modelDownload.wifiOnly', 'Wi-Fi only')}
+          </Text>
+          <Switch
+            value={wifiOnly}
+            onValueChange={handleWifiOnlyChange}
+            accessibilityLabel={t('onboarding.modelDownload.wifiOnly', 'Wi-Fi only')}
+          />
+        </View>
+        {networkPolicy.showCellularWarning ? (
+          <Text style={styles.warningText}>
+            {wifiOnly
+              ? t(
+                  'onboarding.modelDownload.cellularBlocked',
+                  'Mobile data is available, but downloads wait for Wi-Fi by default.',
+                )
+              : t(
+                  'onboarding.modelDownload.cellularAllowed',
+                  'Mobile data is on for this download.',
+                )}
+          </Text>
+        ) : null}
+      </View>
+
       {/* Action buttons */}
       <View style={styles.actionArea}>{renderActionButton()}</View>
 
@@ -419,6 +550,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 2,
   },
+  etaText: {
+    fontSize: 13,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
+    marginTop: 2,
+  },
   hintText: {
     fontSize: 13,
     color: COLORS.textSecondary,
@@ -442,6 +579,37 @@ const styles = StyleSheet.create({
   actionArea: {
     width: '100%',
     alignItems: 'center',
+    marginTop: 8,
+  },
+  networkPanel: {
+    width: '100%',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    marginBottom: 16,
+  },
+  networkLabel: {
+    fontSize: 14,
+    color: COLORS.text,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  switchRow: {
+    minHeight: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  switchLabel: {
+    fontSize: 16,
+    color: COLORS.text,
+  },
+  warningText: {
+    fontSize: 13,
+    color: COLORS.warning,
     marginTop: 8,
   },
   actionRow: {

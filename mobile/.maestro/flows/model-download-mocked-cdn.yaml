@@ -1,0 +1,16 @@
+appId: ${APP_ID}
+name: Model download completes with mocked CDN
+env:
+  MODEL_DOWNLOAD_MOCK_CDN: "1"
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Setting up your tutor..."
+    timeout: 10000
+- assertVisible: "Wi-Fi only"
+- assertVisible: "Network"
+- extendedWaitUntil:
+    visible: "Ready!"
+    timeout: 60000
+- assertVisible: "All set!"

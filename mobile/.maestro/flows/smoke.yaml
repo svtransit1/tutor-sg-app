@@ -1,0 +1,4 @@
+appId: ${APP_ID}
+name: Smoke - mocked model download
+---
+- runFlow: model-download-mocked-cdn.yaml

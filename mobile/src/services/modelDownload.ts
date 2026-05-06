@@ -51,6 +51,8 @@ export interface ModelDownloadState {
   verified?: boolean;
   /** Resume data for pause/resume (opaque string from expo-file-system). */
   resumeData?: string;
+  /** Number of automatic retry attempts already used for this model. */
+  retryAttempt?: number;
 }
 
 export interface DownloadSessionState {
@@ -66,6 +68,8 @@ export interface DownloadSessionState {
   totalBytes: number;
   /** Total bytes downloaded across all models. */
   downloadedBytes: number;
+  /** Timestamp when the current active download attempt started. */
+  startedAtMs?: number;
 }
 
 export interface DownloadProgress {
@@ -79,6 +83,16 @@ export interface DownloadProgress {
   overallBytes: { downloaded: number; total: number };
   /** Human-readable current file name. */
   currentFileName: string;
+  /** Rounded-up ETA in minutes, or null until speed is known. */
+  etaMinutes: number | null;
+}
+
+export type NetworkType = 'wifi' | 'cellular' | 'none' | 'unknown';
+
+export interface NetworkDownloadPolicy {
+  canDownload: boolean;
+  showCellularWarning: boolean;
+  status: 'wifi' | 'cellular-blocked' | 'cellular-allowed' | 'offline' | 'unknown';
 }
 
 // ── Persistence keys ──────────────────────────────────────────────
@@ -358,7 +372,82 @@ export function getProgress(state: DownloadSessionState): DownloadProgress {
     currentFileBytes: { downloaded: fileDownloaded, total: fileTotal },
     overallBytes: { downloaded: state.downloadedBytes, total: state.totalBytes },
     currentFileName: formatModelName(currentModel?.entry),
+    etaMinutes: estimateEtaMinutes({
+      downloadedBytes: state.downloadedBytes,
+      totalBytes: state.totalBytes,
+      elapsedMs: state.startedAtMs ? Date.now() - state.startedAtMs : 0,
+    }),
   };
+}
+
+/**
+ * Estimate remaining download time from observed aggregate speed.
+ */
+export function estimateEtaMinutes({
+  downloadedBytes,
+  totalBytes,
+  elapsedMs,
+}: {
+  downloadedBytes: number;
+  totalBytes: number;
+  elapsedMs: number;
+}): number | null {
+  if (totalBytes <= 0) return null;
+  if (downloadedBytes >= totalBytes) return 0;
+  if (downloadedBytes <= 0 || elapsedMs <= 0) return null;
+
+  const bytesPerMs = downloadedBytes / elapsedMs;
+  if (bytesPerMs <= 0) return null;
+
+  const remainingMs = (totalBytes - downloadedBytes) / bytesPerMs;
+  return Math.max(1, Math.ceil(remainingMs / 60_000));
+}
+
+/**
+ * Exponential retry delay for transient download failures.
+ */
+export function getRetryDelayMs(attemptIndex: number): number {
+  const safeAttempt = Math.max(0, attemptIndex);
+  return Math.min(30_000, 1_000 * 2 ** safeAttempt);
+}
+
+/**
+ * Decide whether the downloader may use the current network.
+ */
+export function getNetworkDownloadPolicy({
+  networkType,
+  wifiOnly,
+}: {
+  networkType: NetworkType;
+  wifiOnly: boolean;
+}): NetworkDownloadPolicy {
+  if (networkType === 'none') {
+    return { canDownload: false, showCellularWarning: false, status: 'offline' };
+  }
+
+  if (networkType === 'cellular') {
+    return {
+      canDownload: !wifiOnly,
+      showCellularWarning: true,
+      status: wifiOnly ? 'cellular-blocked' : 'cellular-allowed',
+    };
+  }
+
+  if (networkType === 'wifi') {
+    return { canDownload: true, showCellularWarning: false, status: 'wifi' };
+  }
+
+  return { canDownload: !wifiOnly, showCellularWarning: false, status: 'unknown' };
+}
+
+/**
+ * Whether model downloads should use the deterministic mocked CDN path.
+ */
+export function isMockCdnEnabled(env: Record<string, string | undefined> = {}): boolean {
+  return env.MODEL_DOWNLOAD_MOCK_CDN === '1' ||
+    env.MODEL_DOWNLOAD_MOCK_CDN === 'true' ||
+    env.EXPO_PUBLIC_MODEL_DOWNLOAD_MOCK_CDN === '1' ||
+    env.EXPO_PUBLIC_MODEL_DOWNLOAD_MOCK_CDN === 'true';
 }
 
 /**
