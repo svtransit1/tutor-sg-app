@@ -77,6 +77,18 @@
       "instructions": "We couldn't recognise this item. Please type or write it.",
       "placeholder": "Type here...",
       "continue": "Continue"
+    },
+    "consent": {
+      "title": "Your Privacy Matters",
+      "subtitle": "Before we begin, here is how we protect your child's data.",
+      "deviceOnlyTitle": "Everything stays on this device",
+      "deviceOnlyBody": "Photos, homework questions, and answers are processed entirely on your device. Nothing is uploaded to any server. Your child's data never leaves this phone.",
+      "telemetryTitle": "Help us improve (optional)",
+      "telemetryBody": "You can choose to send anonymous crash reports and usage data. This helps us fix bugs faster. No personal information is ever sent.",
+      "telemetryToggleOn": "Send anonymous crash reports",
+      "telemetryToggleOff": "No crash reports will be sent",
+      "privacyPolicyLink": "Read full privacy policy",
+      "continue": "Continue"
     }
   }
 }

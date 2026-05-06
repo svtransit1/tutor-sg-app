@@ -77,6 +77,18 @@
       "instructions": "我们无法识别这一项。请输入或书写。",
       "placeholder": "在这里输入...",
       "continue": "继续"
+    },
+    "consent": {
+      "title": "我们重视您的隐私",
+      "subtitle": "在开始之前，以下是我们如何保护您孩子的数据。",
+      "deviceOnlyTitle": "所有数据都在这台设备上",
+      "deviceOnlyBody": "照片、作业题目和答案都在您的设备上处理，不会上传到任何服务器。您孩子的数据永远不会离开这部手机。",
+      "telemetryTitle": "帮助我们改进（可选）",
+      "telemetryBody": "您可以选择发送匿名崩溃报告和使用数据。这能帮助我们更快地修复问题。绝不会发送任何个人信息。",
+      "telemetryToggleOn": "发送匿名崩溃报告",
+      "telemetryToggleOff": "不会发送崩溃报告",
+      "privacyPolicyLink": "阅读完整隐私政策",
+      "continue": "继续"
     }
   }
 }
