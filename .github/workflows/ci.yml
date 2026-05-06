@@ -17,8 +17,32 @@ env:
   PNPM_VERSION: '9'
 
 jobs:
+  lockfile-guard:
+    name: Lockfile guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Check lockfile is pristine
+        run: |
+          if ! git diff --exit-code pnpm-lock.yaml; then
+            echo "❌ pnpm-lock.yaml has uncommitted changes after pnpm install."
+            echo "Run 'pnpm install' from repo root and commit the updated lockfile."
+            exit 1
+          fi
+          echo "✅ pnpm-lock.yaml is pristine."
+
   typecheck:
     name: Typecheck
+    needs: [lockfile-guard]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -35,6 +59,7 @@ jobs:
 
   lint:
     name: Lint
+    needs: [lockfile-guard]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -110,13 +135,13 @@ jobs:
           ram-size: 4096M
           script: |
             # The emulator is running at this point.
-            # Build the Expo dev client APK
+            # Install workspace deps from root, then build the Expo dev client APK
+            pnpm install --frozen-lockfile
             cd mobile
-            npm install
             npx expo run:android --no-install --variant release
+            cd ..
 
             # Run the full E2E flow with timing capture
-            cd ..
             chmod +x scripts/ci-e2e.sh
             ./scripts/ci-e2e.sh android onboarding-to-feedback.yaml || true
 
@@ -170,19 +195,20 @@ jobs:
       # Build iOS dev client and run E2E
       - name: Build & run E2E
         run: |
-          cd mobile
-          npm install
+          # Install workspace deps from root
+          pnpm install --frozen-lockfile
 
           # Install CocoaPods deps
-          cd ios
+          cd mobile/ios
           pod install --repo-update
-          cd ..
+          cd ../..
 
           # Build the dev client for the simulator
+          cd mobile
           npx expo run:ios --no-install --scheme tutor-sg
+          cd ..
 
           # Run the full E2E flow with timing capture
-          cd ..
           chmod +x scripts/ci-e2e.sh
           ./scripts/ci-e2e.sh ios onboarding-to-feedback.yaml || true
 

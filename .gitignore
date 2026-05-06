@@ -20,6 +20,12 @@ node_modules/
 **/Pods/
 .gradle/
 
+# Only pnpm lockfile is allowed — reject npm/yarn lockfiles
+package-lock.json
+yarn.lock
+yarn-error.log
+npm-shrinkwrap.json
+
 # Build outputs
 build/
 dist/
@@ -47,3 +53,6 @@ coverage/
 private/
 sample-data/
 *.heic
+
+# pnpm lockfile is version-controlled (see pnpm-workspace.yaml) — keep it tracked
+# (pnpm-lock.yaml is NOT gitignored; only package-lock.json / yarn.lock are)
