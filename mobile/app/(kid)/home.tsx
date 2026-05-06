@@ -145,6 +145,15 @@ export default function KidHomeScreen() {
     router.push('/(kid)/camera');
   };
 
+  const handleChatPress = () => {
+    // Dismiss welcome when user takes action
+    if (showWelcome) {
+      setShowWelcome(false);
+      markFirstHomeVisitComplete();
+    }
+    router.push('/(kid)/tutor-chat');
+  };
+
   const handleSubjectPress = (_subjectId: string) => {
     handleCameraPress();
   };
@@ -211,6 +220,17 @@ export default function KidHomeScreen() {
           <Text style={[styles.langText, { color: isDark ? '#90CAF9' : '#2563EB' }]}>
             {i18n.language === 'zh-Hans' ? 'EN' : '中文'}
           </Text>
+        </TouchableOpacity>
+
+        {/* Profile management link */}
+        <TouchableOpacity
+          style={styles.settingsButton}
+          onPress={() => router.push('/(kid)/profiles')}
+          accessibilityRole="button"
+          accessibilityLabel="Manage children"
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
+          <Text style={styles.settingsIcon}>⚙️</Text>
         </TouchableOpacity>
       </View>
 
@@ -279,6 +299,34 @@ export default function KidHomeScreen() {
               <Text style={styles.cameraTitle}>{t('kidHome.camera.title')}</Text>
               <Text style={styles.cameraSubtitle}>{t('kidHome.camera.subtitle')}</Text>
             </View>
+          </View>
+        </TouchableOpacity>
+
+        {/* Chat with Tutor Button */}
+        <TouchableOpacity
+          style={[
+            styles.chatButton,
+            {
+              backgroundColor: isDark ? '#1E3A5F' : '#E8F4FD',
+              borderColor: isDark ? '#2A4A7A' : '#D1E5F5',
+            },
+          ]}
+          onPress={handleChatPress}
+          accessibilityRole="button"
+          accessibilityLabel={t('kidHome.chat.accessibility')}
+          activeOpacity={0.8}
+        >
+          <View style={styles.chatButtonContent}>
+            <Text style={styles.chatIcon}>💬</Text>
+            <View style={styles.chatTextBlock}>
+              <Text style={[styles.chatTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
+                {t('kidHome.chat.title')}
+              </Text>
+              <Text style={[styles.chatSubtitle, { color: isDark ? '#90CAF9' : '#2563EB' }]}>
+                {t('kidHome.chat.subtitle')}
+              </Text>
+            </View>
+            <Text style={[styles.chatArrow, { color: isDark ? '#90CAF9' : '#2563EB' }]}>→</Text>
           </View>
         </TouchableOpacity>
 
@@ -517,6 +565,15 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   langText: { fontSize: 14, fontWeight: '700' },
+  settingsButton: {
+    marginLeft: 8,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  settingsIcon: { fontSize: 20 },
 
   // ── Subject Tiles ──
 
@@ -558,6 +615,33 @@ const styles = StyleSheet.create({
   cameraTextBlock: { flex: 1 },
   cameraTitle: { fontSize: 20, fontWeight: '700', color: '#FFFFFF', marginBottom: 2 },
   cameraSubtitle: { fontSize: 14, color: '#FFFFFF', opacity: 0.85 },
+
+  // ── Chat Button ──
+  chatButton: {
+    borderRadius: 14,
+    borderWidth: 1.5,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    marginBottom: 20,
+    minHeight: 56,
+  },
+  chatButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  chatIcon: { fontSize: 26 },
+  chatTextBlock: { flex: 1 },
+  chatTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 2,
+  },
+  chatSubtitle: {
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  chatArrow: { fontSize: 20, fontWeight: '700' },
 
   // ── Welcome Hero (first-session empty state) ──
 

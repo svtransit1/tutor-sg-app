@@ -172,6 +172,11 @@
       "science": "探索我们周围的世界",
       "chinese": "听、说、读、写"
     },
+    "chat": {
+      "title": "问问AI老师",
+      "subtitle": "输入问题，AI老师帮你解答",
+      "accessibility": "向AI老师提问"
+    },
     "camera": {
       "title": "拍照问功课",
       "subtitle": "拍张照片，立即获取帮助",
@@ -248,6 +253,14 @@
       "inferenceFailed": "AI 老师暂时无法处理，请重试。",
       "retake": "重新拍照"
     },
+    "primer": {
+      "title": "用相机拍照吧！",
+      "body": "拍下作业照片，我来帮你解答。照片只存在这台设备上，安全又隐私。",
+      "cta": "允许使用相机",
+      "secondary": "暂时不要",
+      "privacyNote": "你的照片不会离开这台设备",
+      "accessibility": "相机权限说明。允许使用相机来拍摄作业照片。"
+    },
     "accessibility": {
       "cancel": "返回首页",
       "capture": "拍下作业照片"
@@ -290,6 +303,29 @@
     },
     "generic": {
       "description": "发生了意外情况，请重试。"
+    }
+  },
+  "tutorChat": {
+    "title": "请教AI老师",
+    "subtitle": "我在这里帮你！💪",
+    "inputPlaceholder": "输入你的问题…",
+    "inputAccessibility": "在此输入问题",
+    "send": "发送",
+    "thinking": "思考中",
+    "hint": "💡 提示",
+    "showSteps": "显示解题步骤",
+    "steps": "分步指导",
+    "showSolution": "显示完整答案",
+    "fullSolution": "✅ 完整解答",
+    "errorResponse": "我有点不太明白，能换个说法再问一次吗？",
+    "emptyState": {
+      "title": "随便问！",
+      "body": "有作业问题？直接输入，我会一步步帮你解答。"
+    },
+    "suggestion": {
+      "math": "🧮 数学提问",
+      "english": "📖 英文提问",
+      "science": "🔬 科学提问"
     }
   },
   "modelDownload": {

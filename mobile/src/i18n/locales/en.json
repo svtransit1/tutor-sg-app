@@ -172,6 +172,11 @@
       "science": "Explore the world around us",
       "chinese": "华文听说读写"
     },
+    "chat": {
+      "title": "Ask Tutor",
+      "subtitle": "Type a question, get AI help",
+      "accessibility": "Ask the AI tutor a question"
+    },
     "camera": {
       "title": "Snap Homework",
       "subtitle": "Take a photo to get help",
@@ -248,6 +253,14 @@
       "inferenceFailed": "The tutor couldn't process this right now. Please try again.",
       "retake": "Try again"
     },
+    "primer": {
+      "title": "Let's use the camera!",
+      "body": "Take a photo of your homework and I'll help you solve it. Your photos stay on this device — safe and private.",
+      "cta": "Allow Camera",
+      "secondary": "Not now",
+      "privacyNote": "Your photos never leave this device",
+      "accessibility": "Camera permission primer. Allow camera access to take homework photos."
+    },
     "accessibility": {
       "cancel": "Go back to home screen",
       "capture": "Take a photo of your homework"
@@ -290,6 +303,29 @@
     },
     "generic": {
       "description": "Something unexpected happened. Please try again."
+    }
+  },
+  "tutorChat": {
+    "title": "Ask Tutor",
+    "subtitle": "I'm here to help! 💪",
+    "inputPlaceholder": "Type your question…",
+    "inputAccessibility": "Type your question here",
+    "send": "Send",
+    "thinking": "Thinking",
+    "hint": "💡 Hint",
+    "showSteps": "Show me the steps",
+    "steps": "Step-by-step guide",
+    "showSolution": "Show me the full answer",
+    "fullSolution": "✅ Full solution",
+    "errorResponse": "I'm having trouble understanding. Could you rephrase your question?",
+    "emptyState": {
+      "title": "Ask me anything!",
+      "body": "Got a homework question? Just type it below and I'll help you step by step."
+    },
+    "suggestion": {
+      "math": "🧮 Help with math",
+      "english": "📖 Help with English",
+      "science": "🔬 Help with science"
     }
   },
   "modelDownload": {
