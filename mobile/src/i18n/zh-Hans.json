@@ -1,0 +1,82 @@
+{
+  "onboarding": {
+    "kidProfile": {
+      "title": "设置孩子档案",
+      "nameLabel": "孩子姓名",
+      "namePlaceholder": "输入名字（最多30个字符）",
+      "nameError": "名字必须是1-30个字符",
+      "levelLabel": "年级",
+      "levels": {
+        "P1": "小一",
+        "P2": "小二",
+        "P3": "小三",
+        "P4": "小四",
+        "P5": "小五",
+        "P6": "小六"
+      },
+      "languageLabel": "主要语言",
+      "languageEN": "English",
+      "languageZH": "简体中文",
+      "children": "孩子",
+      "addFirst": "添加第一个孩子",
+      "addAnother": "添加另一个孩子",
+      "addTitle": "添加另一个孩子",
+      "editTitle": "编辑档案",
+      "edit": "编辑",
+      "delete": "删除",
+      "deleteTitle": "删除这个档案？",
+      "deleteDesc": "此操作无法撤销。",
+      "maxKids": "最多只能添加4个孩子。",
+      "continue": "继续",
+      "skip": "稍后设置"
+    },
+    "common": {
+      "cancel": "取消",
+      "delete": "删除",
+      "back": "返回",
+      "next": "下一步",
+      "save": "保存",
+      "done": "完成"
+    },
+    "subjects": {
+      "math": "数学",
+      "english": "英文",
+      "science": "科学",
+      "chinese_mt": "华文"
+    },
+    "home": {
+      "greeting": "你好！准备好了吗？",
+      "snapHomework": "拍一下作业",
+      "parentArea": "家长专区"
+    },
+    "camera": {
+      "title": "扫描作业",
+      "instructions": "将摄像头对准作业",
+      "permissionDenied": "相机权限被拒绝",
+      "requestPermission": "授予权限",
+      "capture": "拍照",
+      "retake": "重拍",
+      "usePhoto": "使用照片",
+      "addPage": "添加页面",
+      "done": "完成",
+      "processing": "处理中..."
+    },
+    "feedback": {
+      "loading": "思考中...",
+      "hint": "提示",
+      "step": "步骤",
+      "solution": "解答",
+      "error": "再试一次",
+      "askHint": "请求提示",
+      "done": "完成",
+      "newHomework": "新作业",
+      "sessionSaved": "会话已保存到家长日志"
+    },
+    "manualInput": {
+      "title": "输入第 {{number}} 项",
+      "instructions": "我们无法识别这一项。请输入或书写。",
+      "placeholder": "在这里输入...",
+      "continue": "继续"
+    }
+  }
+}
