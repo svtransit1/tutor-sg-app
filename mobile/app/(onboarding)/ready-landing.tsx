@@ -76,7 +76,7 @@ export default function ReadyLandingRoute() {
           <Text style={styles.subjectsTitle}>
             {t('onboarding.done.practicePrompt')}
           </Text>
-          <View style={styles.subjectsRow}>
+          <View style={styles.subjectsRow} accessibilityRole="list">
             {subjects.map((subject) => {
               const labels: Record<string, string> = {
                 math: t('kidHome.subjects.math'),
@@ -95,6 +95,7 @@ export default function ReadyLandingRoute() {
                   key={subject}
                   style={styles.subjectTile}
                   onPress={() => handlePracticeQuestion(subject)}
+                  accessibilityRole="listitem"
                   activeOpacity={0.7}
                 >
                   <Text style={styles.subjectIcon}>{icons[subject] ?? '📚'}</Text>

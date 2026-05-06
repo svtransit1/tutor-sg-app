@@ -132,10 +132,10 @@ export default function DeviceTierScreen({ onComplete, _testCellular }: DeviceTi
     const models = MODEL_MAP[tier];
     const size = TIER_DISPLAY[tier]?.size ?? '';
     return (
-      <View style={styles.card}>
-        <View style={styles.cardRow}><Text style={styles.cardIcon}>🧠</Text><Text style={styles.cardLabel}>{t('deviceTierResult.modelNames', { models: models ? `${models.llm} + ${models.mt}` : '' })}</Text></View>
-        <View style={styles.cardRow}><Text style={styles.cardIcon}>📦</Text><Text style={styles.cardLabel}>{t('deviceTierResult.downloadSize', { size })}</Text></View>
-        <View style={[styles.cardRow, styles.cardRowLast]}><Text style={styles.cardIcon}>🔒</Text><Text style={styles.cardConsent}>{t('deviceTierResult.consentText')}</Text></View>
+      <View style={styles.card} accessibilityRole="list">
+        <View style={styles.cardRow} accessibilityRole="listitem"><Text style={styles.cardIcon}>🧠</Text><Text style={styles.cardLabel}>{t('deviceTierResult.modelNames', { models: models ? `${models.llm} + ${models.mt}` : '' })}</Text></View>
+        <View style={styles.cardRow} accessibilityRole="listitem"><Text style={styles.cardIcon}>📦</Text><Text style={styles.cardLabel}>{t('deviceTierResult.downloadSize', { size })}</Text></View>
+        <View style={[styles.cardRow, styles.cardRowLast]} accessibilityRole="listitem"><Text style={styles.cardIcon}>🔒</Text><Text style={styles.cardConsent}>{t('deviceTierResult.consentText')}</Text></View>
       </View>
     );
   }
