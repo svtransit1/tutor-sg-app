@@ -18,6 +18,7 @@
       "subjectChinese": "中文 (Chinese)",
       "subjectScience": "Science",
       "continue": "Continue",
+      "allSubjects": "All subjects",
       "subjectHint": "We'll only show questions for selected subjects.",
       "accessibility": {
         "gradeOption": "Grade {{grade}}",

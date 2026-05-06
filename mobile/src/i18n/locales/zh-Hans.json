@@ -18,6 +18,7 @@
       "subjectChinese": "中文",
       "subjectScience": "科学",
       "continue": "继续",
+      "allSubjects": "全部科目",
       "subjectHint": "我们只会显示已选科目的题目。",
       "accessibility": {
         "gradeOption": "{{grade}}",

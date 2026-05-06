@@ -1,21 +1,21 @@
 import { Redirect } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { isOnboardingCompleted } from '@/storage/onboarding-state';
 
 /**
  * Entry point — checks onboarding completion state.
  * Redirects to onboarding if not completed, otherwise to kid home.
- * Onboarding state persistence will be wired in M2 (AsyncStorage/MMKV).
+ * Reads from MMKV-persisted onboarding state.
  */
 export default function EntryPoint() {
   const [ready, setReady] = useState(false);
   const [hasOnboarding, setHasOnboarding] = useState(false);
 
   useEffect(() => {
-    // TODO: Replace with actual onboarding state check (MMKV/AsyncStorage)
-    // const completed = storage.get('onboarding_completed');
-    // setHasOnboarding(!!completed);
-    setHasOnboarding(false);
+    // Check MMKV-persisted onboarding state
+    const completed = isOnboardingCompleted();
+    setHasOnboarding(completed);
     setReady(true);
   }, []);
 

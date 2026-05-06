@@ -35,6 +35,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import OnboardingProgressIndicator from '@/components/OnboardingProgressIndicator';
+import { markOnboardingCompleted } from '@/storage/onboarding-state';
 
 // ── Subject Tile Config ─────────────────────────────────────────
 
@@ -60,18 +61,18 @@ export default function DoneScreen() {
   const insets = useSafeAreaInsets();
   const isDark = useColorScheme() === 'dark';
 
-  // TODO: Replace with actual kid name from onboarding state/profile store
+  // TODO: Replace with actual kid name when a kid-name capture step is added to onboarding
   const kidName = 'Alex';
 
   const handleCameraPress = () => {
-    // Mark onboarding complete and navigate to camera
-    // TODO: Persist onboarding completed flag via MMKV
+    // Mark onboarding complete (persisted via MMKV) and navigate to camera
+    markOnboardingCompleted();
     router.replace('/(kid)/camera');
   };
 
   const handleSubjectPress = (_subjectId: string) => {
-    // Mark onboarding complete and navigate to kid home
-    // TODO: Persist onboarding completed flag via MMKV
+    // Mark onboarding complete (persisted via MMKV) and navigate to kid home
+    markOnboardingCompleted();
     router.replace('/(kid)/home');
   };
 

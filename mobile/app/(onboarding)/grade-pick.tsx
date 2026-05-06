@@ -8,15 +8,17 @@
  * 2. Title: "What grade is your child in?"
  * 3. Horizontal segmented control: P1 / P2 / P3 / P4 / P5 / P6 (required)
  * 4. Subtitle: "Which subjects?"
- * 5. 4 toggle chips: Math · English · Chinese · Science (all ON by default)
- * 6. Inline hint about subject selection
- * 7. "Continue" CTA button (disabled until grade picked)
+ * 5. "All subjects" meta-toggle (toggles all on/off)
+ * 6. 4 toggle chips: Math · English · Chinese · Science (all ON by default)
+ * 7. Inline hint about subject selection
+ * 8. "Continue" CTA button (disabled until grade picked)
  *
  * Behaviour:
  * - Grade selection is required (single pick from P1–P6)
  * - Subject selection is multi-select, all ON by default
+ * - "All subjects" toggle selects/deselects all 4 at once
  * - "Continue" is disabled until a grade is selected
- * - On continue, persist to child profile and navigate to parent-sign-in (step 5/7)
+ * - On continue, persists to onboarding state store and navigates to parent-sign-in (step 5/7)
  *
  * Bilingual: all strings via i18n (EN + zh-Hans).
  * Accessibility: VoiceOver/TalkBack labels on all interactive elements.
@@ -38,6 +40,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import OnboardingProgressIndicator from '@/components/OnboardingProgressIndicator';
+import { persistGrade, persistSubjects } from '@/storage/onboarding-state';
 
 // ── Constants ──────────────────────────────────────────────────────
 
@@ -45,6 +48,7 @@ type Grade = 'P1' | 'P2' | 'P3' | 'P4' | 'P5' | 'P6';
 type SubjectId = 'math' | 'english' | 'chinese' | 'science';
 
 const GRADES: Grade[] = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
+const ALL_SUBJECTS: SubjectId[] = ['math', 'english', 'chinese', 'science'];
 
 interface SubjectConfig {
   id: SubjectId;
@@ -69,10 +73,12 @@ export default function GradePickScreen() {
 
   const [selectedGrade, setSelectedGrade] = useState<Grade | null>(null);
   const [selectedSubjects, setSelectedSubjects] = useState<Set<SubjectId>>(
-    new Set(['math', 'english', 'chinese', 'science']),
+    new Set(ALL_SUBJECTS),
   );
 
   const isContinueDisabled = selectedGrade === null;
+  const allSubjectsSelected = ALL_SUBJECTS.every((s) => selectedSubjects.has(s));
+  const noSubjectsSelected = ALL_SUBJECTS.every((s) => !selectedSubjects.has(s));
 
   // ── Toggle grade ────────────────────────────────────────────
 
@@ -86,6 +92,8 @@ export default function GradePickScreen() {
     setSelectedSubjects((prev) => {
       const next = new Set(prev);
       if (next.has(subjectId)) {
+        // Don't allow deselecting all subjects — at least one must remain
+        if (next.size <= 1) return prev;
         next.delete(subjectId);
       } else {
         next.add(subjectId);
@@ -94,13 +102,26 @@ export default function GradePickScreen() {
     });
   }, []);
 
+  // ── All subjects toggle ─────────────────────────────────────
+
+  const handleAllSubjectsToggle = useCallback(() => {
+    if (allSubjectsSelected) {
+      // Deselect all: keep at least one (math) to prevent empty state
+      setSelectedSubjects(new Set(['math']));
+    } else {
+      // Select all
+      setSelectedSubjects(new Set(ALL_SUBJECTS));
+    }
+  }, [allSubjectsSelected]);
+
   // ── Continue ────────────────────────────────────────────────
 
   const handleContinue = useCallback(() => {
     if (!selectedGrade) return;
 
-    // TODO: Persist to child_profile_0 via MMKV/state store
-    //   { grade: selectedGrade, subjects: Array.from(selectedSubjects) }
+    // Persist to onboarding state (MMKV)
+    persistGrade(selectedGrade);
+    persistSubjects(Array.from(selectedSubjects));
 
     // Navigate to parent sign-in (step 5/7)
     router.replace('/(onboarding)/parent-sign-in');
@@ -123,6 +144,8 @@ export default function GradePickScreen() {
   const buttonBg = isDark ? '#4A90D9' : '#2563EB';
   const buttonDisabledBg = isDark ? '#333333' : '#D1D5DB';
   const buttonDisabledText = isDark ? '#666666' : '#9CA3AF';
+  const allToggleBg = isDark ? '#1A2A3A' : '#EBF5FB';
+  const allToggleBorder = isDark ? '#2563EB' : '#4A90D9';
 
   return (
     <View
@@ -166,8 +189,8 @@ export default function GradePickScreen() {
                   accessibilityState={{ selected: isSelected }}
                   accessibilityLabel={
                     isSelected
-                      ? t('onboarding.gradePick.accessibility.gradeSelected', { grade })
-                      : t('onboarding.gradePick.accessibility.gradeOption', { grade })
+                      ? `${t('onboarding.gradePick.accessibility.gradeSelected', { grade })} ${t(`onboarding.gradePick.grade${grade}`)}`
+                      : `${t('onboarding.gradePick.accessibility.gradeOption', { grade })} ${t(`onboarding.gradePick.grade${grade}`)}`
                   }
                   activeOpacity={0.7}
                 >
@@ -197,6 +220,43 @@ export default function GradePickScreen() {
             {t('onboarding.gradePick.subjectTitle')}
           </Text>
 
+          {/* All subjects meta-toggle */}
+          <TouchableOpacity
+            style={[
+              styles.allSubjectsToggle,
+              {
+                backgroundColor: allToggleBg,
+                borderColor: allToggleBorder,
+              },
+            ]}
+            onPress={handleAllSubjectsToggle}
+            accessibilityRole="switch"
+            accessibilityState={{ checked: allSubjectsSelected }}
+            accessibilityLabel={`${t('onboarding.gradePick.allSubjects')} - ${allSubjectsSelected ? 'selected' : 'not selected'}`}
+            activeOpacity={0.7}
+          >
+            <Text style={[styles.allSubjectsIcon, { color: isDark ? '#90CAF9' : '#2563EB' }]}>
+              {allSubjectsSelected ? '⊞' : '⊟'}
+            </Text>
+            <Text
+              style={[
+                styles.allSubjectsText,
+                { color: isDark ? '#E0E0E0' : '#1A1A1A' },
+              ]}
+            >
+              {t('onboarding.gradePick.allSubjects')}
+            </Text>
+            <Text
+              style={[
+                styles.allSubjectsCheck,
+                { color: allSubjectsSelected ? '#4CAF50' : mutedTextColor },
+              ]}
+            >
+              {allSubjectsSelected ? '✓' : noSubjectsSelected ? '—' : '◐'}
+            </Text>
+          </TouchableOpacity>
+
+          {/* Individual subject chips (2×2 grid) */}
           <View style={styles.subjectGrid}>
             {SUBJECTS.map((subject) => {
               const isSelected = selectedSubjects.has(subject.id);
@@ -213,15 +273,7 @@ export default function GradePickScreen() {
                   onPress={() => handleSubjectToggle(subject.id)}
                   accessibilityRole="switch"
                   accessibilityState={{ checked: isSelected }}
-                  accessibilityLabel={t(
-                    'onboarding.gradePick.accessibility.subjectToggle',
-                    {
-                      subject: t(subject.i18nKey),
-                      state: isSelected
-                        ? t('onboarding.gradePick.accessibility.subjectOn')
-                        : t('onboarding.gradePick.accessibility.subjectOff'),
-                    },
-                  )}
+                  accessibilityLabel={`${t(subject.i18nKey)} - ${isSelected ? 'selected' : 'not selected'}`}
                   activeOpacity={0.7}
                 >
                   <Text style={styles.subjectIcon}>{subject.icon}</Text>
@@ -233,6 +285,9 @@ export default function GradePickScreen() {
                         fontWeight: isSelected ? '600' : '500',
                       },
                     ]}
+                    numberOfLines={2}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.8}
                   >
                     {t(subject.i18nKey)}
                   </Text>
@@ -332,6 +387,33 @@ const styles = StyleSheet.create({
     fontSize: 16,
     letterSpacing: 0.3,
   } as TextStyle,
+
+  // ── All subjects meta-toggle ──────────────────────────────────
+  allSubjectsToggle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    marginBottom: 12,
+    gap: 10,
+  },
+  allSubjectsIcon: {
+    fontSize: 20,
+    fontWeight: '700',
+    width: 24,
+    textAlign: 'center',
+  },
+  allSubjectsText: {
+    fontSize: 15,
+    fontWeight: '600',
+    flex: 1,
+  } as TextStyle,
+  allSubjectsCheck: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
 
   // ── Subject grid (2×2) ───────────────────────────────────────
   subjectGrid: {
