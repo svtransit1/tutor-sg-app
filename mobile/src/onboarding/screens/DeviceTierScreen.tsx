@@ -1,35 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useOnboarding } from '../OnboardingProvider';
 import { useTranslation } from 'react-i18next';
-
-function detectDeviceTier(): 'high' | 'mid' | 'unsupported' {
-  // TODO: Replace with native module for accurate RAM/NPU detection.
-  // iOS: NSProcessInfo.processInfo.physicalMemory via native module
-  // Android: /proc/meminfo + ActivityManager.MemoryInfo via native module
-  // For now, use a heuristic based on platform.
-  if (Platform.OS === 'ios') {
-    // iOS devices that support iOS 16+ are generally capable
-    return 'high';
-  }
-  // Android — assume mid for now; native module will refine
-  return 'mid';
-}
+import { detectDeviceTier, DeviceTier, DeviceTierResult } from '../../services/deviceTier';
 
 export function DeviceTierScreen() {
   const { t } = useTranslation();
   const { goNext, goBack, updateProgress } = useOnboarding();
   const [checking, setChecking] = useState(true);
-  const [tier, setTier] = useState<'high' | 'mid' | 'unsupported'>('mid');
+  const [tier, setTier] = useState<DeviceTier>('mid');
+  const [result, setResult] = useState<DeviceTierResult | null>(null);
 
   useEffect(() => {
-    const detected = detectDeviceTier();
-    setTier(detected);
-    const timer = setTimeout(() => {
-      updateProgress({ deviceTier: detected });
-      setChecking(false);
-    }, 1500);
-    return () => clearTimeout(timer);
+    let cancelled = false;
+    (async () => {
+      try {
+        const detected = await detectDeviceTier();
+        if (cancelled) return;
+        setTier(detected.tier);
+        setResult(detected);
+        updateProgress({ deviceTier: detected.tier });
+      } catch {
+        // Fallback to mid tier if detection fails
+        if (!cancelled) {
+          setTier('mid');
+          updateProgress({ deviceTier: 'mid' });
+        }
+      } finally {
+        if (!cancelled) setChecking(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   if (checking) {
@@ -59,20 +62,51 @@ export function DeviceTierScreen() {
     );
   }
 
+  const thermalWarning =
+    result?.capabilities.thermalHeadroom === 'poor'
+      ? t(
+          'onboarding.deviceTier.thermalWarning',
+          'Your device may slow down during long study sessions.',
+        )
+      : null;
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
         {t('onboarding.deviceTier.title', 'Device Ready!')}
       </Text>
       <Text style={styles.subtitle}>
-        {t('onboarding.deviceTier.subtitle', 'Your device can run the AI tutor.')}
+        {tier === 'high'
+          ? t(
+              'onboarding.deviceTier.highSubtitle',
+              'Your device can run the most powerful AI tutor.',
+            )
+          : t(
+              'onboarding.deviceTier.midSubtitle',
+              'Your device can run the standard AI tutor.',
+            )}
       </Text>
+      {thermalWarning && (
+        <Text style={styles.thermalWarning}>{thermalWarning}</Text>
+      )}
       <View style={styles.row}>
-        <TouchableOpacity style={styles.backButton} onPress={goBack} testID="deviceTier-back">
-          <Text style={styles.backButtonText}>{t('onboarding.common.back', 'Back')}</Text>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={goBack}
+          testID="deviceTier-back"
+        >
+          <Text style={styles.backButtonText}>
+            {t('onboarding.common.back', 'Back')}
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={goNext} testID="deviceTier-continue">
-          <Text style={styles.buttonText}>{t('onboarding.common.next', 'Next')}</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={goNext}
+          testID="deviceTier-continue"
+        >
+          <Text style={styles.buttonText}>
+            {t('onboarding.common.next', 'Next')}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -80,13 +114,49 @@ export function DeviceTierScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, justifyContent: 'center', alignItems: 'center' },
+  container: {
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   title: { fontSize: 28, fontWeight: '700', marginBottom: 8, textAlign: 'center' },
   subtitle: { fontSize: 16, marginBottom: 24, textAlign: 'center' },
   body: { fontSize: 16, lineHeight: 24, textAlign: 'center', marginBottom: 24 },
-  row: { flexDirection: 'row', justifyContent: 'space-between', gap: 12, width: '100%' },
-  button: { backgroundColor: '#4A90D9', paddingVertical: 16, paddingHorizontal: 48, borderRadius: 12, flex: 1, alignItems: 'center' },
+  thermalWarning: {
+    fontSize: 14,
+    color: '#E8A838',
+    backgroundColor: '#FFF8E7',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginBottom: 24,
+    textAlign: 'center',
+    overflow: 'hidden',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
+    width: '100%',
+  },
+  button: {
+    backgroundColor: '#4A90D9',
+    paddingVertical: 16,
+    paddingHorizontal: 48,
+    borderRadius: 12,
+    flex: 1,
+    alignItems: 'center',
+  },
   buttonText: { color: '#fff', fontSize: 18, fontWeight: '600' },
-  backButton: { paddingVertical: 16, paddingHorizontal: 24, borderRadius: 12, borderWidth: 1, borderColor: '#ccc', flex: 1, alignItems: 'center' },
+  backButton: {
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    flex: 1,
+    alignItems: 'center',
+  },
   backButtonText: { fontSize: 18, color: '#666' },
 });

@@ -78,6 +78,15 @@
       "newHomework": "New Homework",
       "sessionSaved": "Session saved to Parent Log"
     },
+    "deviceTier": {
+      "checking": "Checking your device...",
+      "title": "Device Ready!",
+      "highSubtitle": "Your device can run the most powerful AI tutor.",
+      "midSubtitle": "Your device can run the standard AI tutor.",
+      "thermalWarning": "Your device may slow down during long study sessions.",
+      "unsupported": "Device Not Supported",
+      "unsupportedBody": "Your device does not meet the minimum requirements. This app needs a device with at least 4 GB RAM."
+    },
     "manualInput": {
       "title": "Type Item {{number}}",
       "instructions": "We couldn't recognise this item. Please type or write it.",
