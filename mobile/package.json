@@ -1,32 +1,44 @@
 {
-  "name": "@tutor-sg/mobile",
-  "version": "0.0.0",
+  "name": "tutor-sg-mobile",
+  "version": "0.1.0",
   "private": true,
-  "description": "tutor-sg React Native + Expo mobile app",
-  "main": "./index.ts",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist .expo node_modules",
+    "test": "jest",
+    "lint": "eslint .",
+    "e2e:smoke": "maestro test .maestro/flows/smoke.yaml",
     "e2e": "maestro test .maestro/flows",
-    "e2e:smoke": "maestro test .maestro/flows/smoke.yaml"
+    "e2e:full": "maestro test .maestro/flows/onboarding-to-feedback.yaml"
   },
   "dependencies": {
-    "@tutor-sg/shared": "workspace:*",
+    "@react-native-async-storage/async-storage": "latest",
+    "@tutor-sg/shared": "file:../packages/shared",
     "expo": "~54.0.0",
-    "expo-localization": "^55.0.13",
-    "expo-status-bar": "~3.0.9",
-    "i18next": "^26.0.8",
+    "expo-camera": "latest",
+    "expo-constants": "latest",
+    "expo-file-system": "latest",
+    "expo-image-picker": "latest",
+    "expo-linking": "latest",
+    "expo-localization": "~17.0.0",
+    "expo-router": "latest",
+    "expo-sqlite": "latest",
+    "expo-status-bar": "~3.0.0",
+    "i18next": "^25.0.0",
     "react": "19.1.0",
-    "react-i18next": "^17.0.6",
-    "react-native": "0.81.5"
+    "react-i18next": "^16.0.0",
+    "react-native": "0.81.0",
+    "react-native-reanimated": "latest",
+    "react-native-safe-area-context": "latest",
+    "react-native-screens": "latest",
+    "typescript": "^5.8.0",
+    "uuid": "latest",
+    "zod": "latest"
   },
   "devDependencies": {
-    "@types/react": "~19.1.10",
-    "typescript": "^5.7"
+    "@types/react": "~19.1.0"
   }
 }
