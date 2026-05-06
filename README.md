@@ -177,6 +177,27 @@ tutor-sg-app/
 
 ---
 
+## EAS Build profiles
+
+| Profile | Distribution | Use case |
+|---------|-------------|----------|
+| `development` | internal | Dev client with Expo Dev Tools |
+| `internal` | internal | Ad-hoc / TestFlight-precursor builds (no simulator) |
+| `preview` | internal | Pre-release builds for QA |
+| `production` | store | App Store / Play Store submission |
+
+Bundle ID: `com.aaas.tutorsg` (iOS) / `com.aaas.tutorsg` (Android) — defined in `mobile/app.json`.
+
+### iOS internal build
+
+```bash
+pnpm --filter mobile eas:build:ios:internal
+```
+
+**Apple Account dependency:** `eas build --platform ios` requires a configured Apple Developer Program account (`eas credentials`) before it can produce a signed `.ipa`. Until an Apple Developer account is provisioned, the command will prompt for credentials. See AAAS-25 (boss-needed) for Apple account setup.
+
+---
+
 ## Troubleshooting (Mac M1/M2/M3)
 
 ### `env: node: Bad CPU type` or architecture mismatch
