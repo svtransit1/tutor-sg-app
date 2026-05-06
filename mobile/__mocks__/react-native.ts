@@ -5,8 +5,10 @@ const ReactNative = {
     Version: '18.0',
     select: (obj: Record<string, unknown>) => obj.ios ?? obj.default,
   },
+  useColorScheme: () => 'light',
   StyleSheet: {
     create: <T extends Record<string, unknown>>(styles: T): T => styles,
+    flatten: (styles: any) => styles,
   },
   View: 'View',
   Text: 'Text',

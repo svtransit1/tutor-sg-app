@@ -2,8 +2,13 @@
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion" },
-    "done": { "title": "All set!", "subtitle": "Let's start learning" }
+    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
+    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language." },
+    "done": { "title": "All set!", "subtitle": "Let's start learning" },
+    "progress": {
+      "step": "Step {{current}} of {{total}}",
+      "accessibility": "Step {{current}} of {{total}}"
+    }
   },
   "network.offline": "You're offline",
   "network.offline.description": "Camera homework still works. Downloads need Wi-Fi.",
