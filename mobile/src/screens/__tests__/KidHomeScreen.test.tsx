@@ -212,7 +212,7 @@ describe('KidHomeScreen — empty state + first-session CTA', () => {
     render(<KidHomeScreen />);
     await act(() => Promise.resolve());
 
-    const viewAll = screen.getByText(/View/);
+    const viewAll = screen.getByText('kidHome.recentSessions.viewAll');
     fireEvent.press(viewAll);
     expect(mockRouterPush).toHaveBeenCalledWith('/(kid)/history');
   });
