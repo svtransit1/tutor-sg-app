@@ -78,6 +78,15 @@
       "newHomework": "新作业",
       "sessionSaved": "会话已保存到家长日志"
     },
+    "deviceTier": {
+      "checking": "正在检查设备...",
+      "title": "设备已就绪！",
+      "highSubtitle": "您的设备可以运行最强AI导师。",
+      "midSubtitle": "您的设备可以运行标准AI导师。",
+      "thermalWarning": "长时间使用时设备可能会变慢。",
+      "unsupported": "设备不支持",
+      "unsupportedBody": "您的设备不符合最低要求。此应用需要至少4 GB内存。"
+    },
     "manualInput": {
       "title": "输入第 {{number}} 项",
       "instructions": "我们无法识别这一项。请输入或书写。",
