@@ -1,0 +1,11 @@
+{
+  "name": "tutor-sg-app",
+  "private": true,
+  "scripts": {
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "clean": "pnpm -r clean"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

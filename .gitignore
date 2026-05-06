@@ -43,6 +43,12 @@ packages/shared/src/models/*
 coverage/
 .nyc_output/
 
+# Lockfiles: only root pnpm-lock.yaml is tracked
+package-lock.json
+yarn.lock
+**/package-lock.json
+**/yarn.lock
+
 # Child-safe rule: NEVER commit anything from real users
 private/
 sample-data/

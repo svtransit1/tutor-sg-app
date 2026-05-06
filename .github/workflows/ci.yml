@@ -17,6 +17,29 @@ env:
   PNPM_VERSION: '9'
 
 jobs:
+  lockfile-guard:
+    name: Lockfile guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Check lockfile is pristine
+        run: |
+          if ! git diff --exit-code pnpm-lock.yaml; then
+            echo "❌ pnpm-lock.yaml has uncommitted changes after pnpm install."
+            echo "Run 'pnpm install' from repo root and commit the updated lockfile."
+            exit 1
+          fi
+          echo "✅ pnpm-lock.yaml is pristine."
+
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
@@ -51,7 +74,7 @@ jobs:
 
   bundle:
     name: RN Bundle
-    needs: [typecheck, lint]
+    needs: [lockfile-guard, typecheck, lint]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
