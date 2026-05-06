@@ -36,7 +36,8 @@
       "back": "返回",
       "next": "下一步",
       "save": "保存",
-      "done": "完成"
+      "done": "完成",
+      "error": "错误"
     },
     "subjects": {
       "math": "数学",

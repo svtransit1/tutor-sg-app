@@ -36,7 +36,8 @@
       "back": "Back",
       "next": "Next",
       "save": "Save",
-      "done": "Done"
+      "done": "Done",
+      "error": "Error"
     },
     "subjects": {
       "math": "Mathematics",

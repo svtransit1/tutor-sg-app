@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, ActivityIndicator, Image } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ActivityIndicator, Image, Alert } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { CameraView, CameraType, FlashMode, useCameraPermissions } from 'expo-camera';
@@ -130,7 +130,7 @@ export default function CameraScreen() {
       }
     } catch {
       setPhase('preview');
-      alert(t('onboarding.camera.processingFailed'));
+      Alert.alert(t('onboarding.common.error'), t('onboarding.camera.processingFailed'));
     }
   }, [photoUri, subject, level, router, t]);
 
