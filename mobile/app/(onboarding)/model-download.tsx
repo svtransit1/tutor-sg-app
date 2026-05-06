@@ -149,7 +149,11 @@ export default function ModelDownloadRoute() {
         {phase !== 'error' && (
           <View style={styles.progressSection}>
             {/* Progress bar */}
-            <View style={styles.progressBar}>
+            <View
+              style={styles.progressBar}
+              accessibilityRole="progressbar"
+              accessibilityValue={{ min: 0, max: 100, now: percent }}
+            >
               <View
                 style={[
                   styles.progressFill,
