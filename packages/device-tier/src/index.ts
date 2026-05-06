@@ -14,6 +14,8 @@ export {
   BELOW_FLOOR_MESSAGES,
 } from './types';
 
+export { BelowFloorModal } from './components/BelowFloorModal';
+
 import {
   DeviceTier,
   DeviceCapabilities,
