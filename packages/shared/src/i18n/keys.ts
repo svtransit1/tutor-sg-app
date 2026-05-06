@@ -22,6 +22,7 @@ export type I18nKey =
   | 'onboarding.done.cameraSubtitle'
   | 'onboarding.done.practicePrompt'
   | 'onboarding.done.parentArea'
+  | 'onboarding.done.privacyBadge'
   // ── Network status ─────────────────────────────────────
   | 'network.offline'
   | 'network.offline.description'
@@ -95,6 +96,7 @@ export const I18N_KEYS = [
   'onboarding.done.cameraSubtitle',
   'onboarding.done.practicePrompt',
   'onboarding.done.parentArea',
+  'onboarding.done.privacyBadge',
   'network.offline',
   'network.offline.description',
   'network.cellular',

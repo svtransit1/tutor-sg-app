@@ -1,4 +1,16 @@
 // Mock react-native for Jest (node environment)
+
+const mockAnimatedValue = {
+  setValue: jest.fn(),
+  interpolate: jest.fn(() => ({})),
+};
+
+const mockAnimatedNode = {
+  start: jest.fn(),
+  stop: jest.fn(),
+  reset: jest.fn(),
+};
+
 const ReactNative = {
   Platform: {
     OS: 'ios',
@@ -17,6 +29,17 @@ const ReactNative = {
   ScrollView: 'ScrollView',
   Linking: {
     openURL: jest.fn(),
+  },
+  Animated: {
+    Value: jest.fn(() => mockAnimatedValue),
+    View: 'View',
+    Text: 'Text',
+    spring: jest.fn(() => mockAnimatedNode),
+    timing: jest.fn(() => mockAnimatedNode),
+    parallel: jest.fn(() => mockAnimatedNode),
+    sequence: jest.fn(() => mockAnimatedNode),
+    stagger: jest.fn(() => mockAnimatedNode),
+    loop: jest.fn(() => mockAnimatedNode),
   },
 };
 

@@ -119,6 +119,26 @@ describe('DoneScreen (Ready Landing)', () => {
     expect(mockReplace).toHaveBeenCalledWith('/(kid)/home');
   });
 
+  it('renders privacy badge with shield icon and privacy text', () => {
+    render(<DoneScreen />);
+    expect(screen.getByLabelText('onboarding.done.privacyBadge')).toBeTruthy();
+    expect(screen.getByText('onboarding.done.privacyBadge')).toBeTruthy();
+  });
+
+  it('renders privacy badge visible without scroll (in footer, below ScrollView)', () => {
+    render(<DoneScreen />);
+    const privacyBadge = screen.getByLabelText('onboarding.done.privacyBadge');
+    expect(privacyBadge).toBeTruthy();
+    // Badge has accessibilityRole summary to differentiate from interactive elements
+    expect(privacyBadge.props.accessibilityRole).toBe('summary');
+  });
+
+  it('renders celebration star with animated container', () => {
+    render(<DoneScreen />);
+    const star = screen.getByLabelText('Celebration star');
+    expect(star).toBeTruthy();
+  });
+
   it('navigates to parent dashboard on parent area link press', () => {
     render(<DoneScreen />);
     const parentLink = screen.getByLabelText('onboarding.done.parentArea');

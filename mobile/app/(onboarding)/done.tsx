@@ -32,10 +32,12 @@ import {
   StyleSheet,
   ScrollView,
   useColorScheme,
+  Animated,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import OnboardingProgressIndicator from '@/components/OnboardingProgressIndicator';
 import { markOnboardingCompleted } from '@/storage/onboarding-state';
+import { useEffect, useRef } from 'react';
 
 // ── Subject Tile Config ─────────────────────────────────────────
 
@@ -60,6 +62,26 @@ export default function DoneScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const isDark = useColorScheme() === 'dark';
+
+  // Animated celebration values — bounce + fade on mount
+  const starScale = useRef(new Animated.Value(0)).current;
+  const starOpacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.spring(starScale, {
+        toValue: 1,
+        friction: 4,
+        tension: 60,
+        useNativeDriver: true,
+      }),
+      Animated.timing(starOpacity, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [starScale, starOpacity]);
 
   // TODO: Replace with actual kid name when a kid-name capture step is added to onboarding
   const kidName = 'Alex';
@@ -96,17 +118,21 @@ export default function DoneScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Celebration icon */}
-        <View
+        {/* Celebration icon — animated bounce + fade in */}
+        <Animated.View
           style={[
             styles.celebrationCircle,
             { backgroundColor: isDark ? '#1E3A5F' : '#E8F4FD' },
+            {
+              opacity: starOpacity,
+              transform: [{ scale: starScale }],
+            },
           ]}
           accessibilityRole="image"
           accessibilityLabel="Celebration star"
         >
           <Text style={styles.celebrationIcon}>⭐</Text>
-        </View>
+        </Animated.View>
 
         {/* Title & subtitle */}
         <Text
@@ -197,8 +223,27 @@ export default function DoneScreen() {
         </ScrollView>
       </ScrollView>
 
-      {/* Parent area link — fixed at bottom */}
+      {/* Privacy badge + Parent area — fixed at bottom, always visible */}
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, 8) }]}>
+        {/* Privacy reminder badge */}
+        <View
+          style={[
+            styles.privacyBadge,
+            { backgroundColor: isDark ? '#1A2A1A' : '#F0FDF4' },
+          ]}
+          accessibilityRole="summary"
+          accessibilityLabel={t('onboarding.done.privacyBadge')}
+        >
+          <Text style={styles.privacyShield}>🛡️</Text>
+          <Text
+            style={[
+              styles.privacyText,
+              { color: isDark ? '#86EFAC' : '#166534' },
+            ]}
+          >
+            {t('onboarding.done.privacyBadge')}
+          </Text>
+        </View>
         <TouchableOpacity
           onPress={handleParentAreaPress}
           accessibilityRole="button"
@@ -336,6 +381,26 @@ const styles = StyleSheet.create({
   footer: {
     alignItems: 'center',
     paddingVertical: 8,
+    paddingHorizontal: 24,
+    gap: 8,
+  },
+  privacyBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    width: '100%',
+  },
+  privacyShield: {
+    fontSize: 16,
+  },
+  privacyText: {
+    fontSize: 13,
+    fontWeight: '500',
+    flex: 1,
+    lineHeight: 18,
   },
   parentAreaLink: {
     fontSize: 14,
