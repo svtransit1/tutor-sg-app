@@ -25,7 +25,9 @@ export type I18nKey =
   // ── Parent auth ──────────────────────────────────────────
   | `parentAuth.${ParentAuthKey}`
   // ── Parent dashboard ─────────────────────────────────────
-  | `parent.${ParentAreaKey}`;
+  | `parent.${ParentAreaKey}`
+  // ── Model download ───────────────────────────────────────
+  | `modelDownload.${ModelDownloadKey}`;
 
 // ── Sub-key spaces ────────────────────────────────────────────────
 
@@ -49,6 +51,26 @@ export type ParentAreaKey =
 export type ParentDashboardKey = 'title' | 'placeholder';
 
 export type ParentSettingsKey = 'title' | 'placeholder';
+
+export type ModelDownloadKey =
+  | 'title'
+  | 'progress'
+  | 'progressPercent'
+  | 'retrying'
+  | 'paused'
+  | 'resuming'
+  | 'completed'
+  | 'retry'
+  | 'wifiRequired'
+  | `errors.${ModelDownloadErrorKey}`;
+
+export type ModelDownloadErrorKey =
+  | 'connectivity_lost'
+  | 'disk_insufficient'
+  | 'cdn_unreachable'
+  | 'hash_mismatch'
+  | 'download_stuck'
+  | 'unknown_error';
 
 // ── Runtime key safety ────────────────────────────────────────────
 
@@ -82,6 +104,21 @@ export const I18N_KEYS = [
   'parent.dashboard.placeholder',
   'parent.settings.title',
   'parent.settings.placeholder',
+  'modelDownload.title',
+  'modelDownload.progress',
+  'modelDownload.progressPercent',
+  'modelDownload.retrying',
+  'modelDownload.paused',
+  'modelDownload.resuming',
+  'modelDownload.completed',
+  'modelDownload.retry',
+  'modelDownload.wifiRequired',
+  'modelDownload.errors.connectivity_lost',
+  'modelDownload.errors.disk_insufficient',
+  'modelDownload.errors.cdn_unreachable',
+  'modelDownload.errors.hash_mismatch',
+  'modelDownload.errors.download_stuck',
+  'modelDownload.errors.unknown_error',
 ] as const;
 
 /** Union of all valid i18n keys. */
