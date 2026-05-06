@@ -3,9 +3,9 @@
  * Jest auto-resolves this when using jest.mock('expo-speech') without factory.
  * Also used via moduleNameMapper mapping in jest.config.js.
  */
-import { createExpoSpeechMock } from './expo-speech-factory';
+import { mockExpoSpeechFactory } from './expo-speech-factory';
 
-const mock = createExpoSpeechMock();
+const mock = mockExpoSpeechFactory();
 export const {
   speak,
   stop,

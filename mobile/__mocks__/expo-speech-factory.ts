@@ -2,7 +2,7 @@
  * Factory for expo-speech Jest mock.
  * Exported as a factory function to avoid jest.mock hoisting scope issues.
  */
-export function createExpoSpeechMock() {
+export function mockExpoSpeechFactory() {
   let mockSpeaking = false;
   let mockText = '';
   let mockCb: {
@@ -18,7 +18,9 @@ export function createExpoSpeechMock() {
     mockCb = null;
   }
 
-  function getText() { return mockText; }
+  function getText() {
+    return mockText;
+  }
 
   function simulateDone() {
     mockSpeaking = false;

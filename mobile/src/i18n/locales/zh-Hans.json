@@ -1,0 +1,13 @@
+{
+  "tts.readAloud": "朗读",
+  "tts.pause": "暂停",
+  "tts.resume": "继续",
+  "tts.stop": "停止",
+  "tts.speaking": "正在朗读…",
+  "tts.paused": "已暂停",
+  "tts.error": "抱歉，无法朗读。请重试。",
+  "tts.feedbackHintHow": "提示 — 如何逐步解决",
+  "tts.feedbackHintNext": "提示 — 下一步该想什么",
+  "tts.feedbackSolution": "完整的解答在这里",
+  "tts.feedbackExplanation": "这是答案的原因"
+}

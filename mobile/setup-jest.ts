@@ -1,6 +1,4 @@
-const { __registerMock } = jest.requireMock('expo-modules-core') as {
-  __registerMock: (moduleName: string, mock: unknown) => void;
-};
+import { __registerMock } from 'expo-modules-core';
 
 __registerMock('LitertLm', {
   getDeviceCapabilities: jest

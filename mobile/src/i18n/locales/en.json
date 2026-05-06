@@ -1,0 +1,13 @@
+{
+  "tts.readAloud": "Read aloud",
+  "tts.pause": "Pause",
+  "tts.resume": "Resume",
+  "tts.stop": "Stop",
+  "tts.speaking": "Reading aloud...",
+  "tts.paused": "Paused",
+  "tts.error": "Sorry, I couldn't read this aloud. Please try again.",
+  "tts.feedbackHintHow": "Hint — how to solve this step by step",
+  "tts.feedbackHintNext": "Hint — what to think about next",
+  "tts.feedbackSolution": "Here's the full solution",
+  "tts.feedbackExplanation": "Here's why this is the answer"
+}
