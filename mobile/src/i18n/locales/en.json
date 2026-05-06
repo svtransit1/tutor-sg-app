@@ -68,6 +68,86 @@
     "loading": "Checking your device…",
     "error": "Could not detect device capabilities. Please try again."
   },
+  "kidHome": {
+    "header": {
+      "greeting": "Hi {{name}}!",
+      "levelBadge": "Level {{level}}",
+      "switchLanguage": "Switch to 中文"
+    },
+    "subjects": {
+      "math": "Math",
+      "english": "English",
+      "science": "Science",
+      "chinese": "Chinese"
+    },
+    "subjectsDescriptions": {
+      "math": "Numbers, shapes & problem solving",
+      "english": "Grammar, reading & writing",
+      "science": "Explore the world around us",
+      "chinese": "华文听说读写"
+    },
+    "camera": {
+      "title": "Snap Homework",
+      "subtitle": "Take a photo to get help",
+      "accessibility": "Snap your homework with the camera"
+    },
+    "recentSessions": {
+      "title": "Recent Sessions",
+      "empty": "No sessions yet. Snap your first homework!",
+      "timeAgo": {
+        "justNow": "Just now",
+        "minutesAgo": "{{minutes}}m ago",
+        "hoursAgo": "{{hours}}h ago",
+        "yesterday": "Yesterday"
+      },
+      "questions": "{{count}} question",
+      "questions_plural": "{{count}} questions"
+    },
+    "accessibility": {
+      "subjectTile": "{{subject}} subject",
+      "recentSession": "Session {{subject}}, {{time}} ago, {{questions}} questions"
+    }
+  },
+  "kidHome": {
+    "header": {
+      "greeting": "Hi {{name}}!",
+      "levelBadge": "Level {{level}}",
+      "switchLanguage": "Switch to 中文"
+    },
+    "subjects": {
+      "math": "Math",
+      "english": "English",
+      "science": "Science",
+      "chinese": "Chinese"
+    },
+    "subjectsDescriptions": {
+      "math": "Numbers, shapes & problem solving",
+      "english": "Grammar, reading & writing",
+      "science": "Explore the world around us",
+      "chinese": "华文听说读写"
+    },
+    "camera": {
+      "title": "Snap Homework",
+      "subtitle": "Take a photo to get help",
+      "accessibility": "Snap your homework with the camera"
+    },
+    "recentSessions": {
+      "title": "Recent Sessions",
+      "empty": "No sessions yet. Snap your first homework!",
+      "timeAgo": {
+        "justNow": "Just now",
+        "minutesAgo": "{{minutes}}m ago",
+        "hoursAgo": "{{hours}}h ago",
+        "yesterday": "Yesterday"
+      },
+      "questions": "{{count}} question",
+      "questions_plural": "{{count}} questions"
+    },
+    "accessibility": {
+      "subjectTile": "{{subject}} subject",
+      "recentSession": "Session {{subject}}, {{time}} ago, {{questions}} questions"
+    }
+  },
   "modelDownload": {
     "title": "Setting up your tutor...",
     "progress": "Downloading {{fileName}}…",
