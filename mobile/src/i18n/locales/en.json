@@ -194,6 +194,7 @@
   "manualInputFallback": {
     "title": "Can't read all items",
     "description": "Some parts are unclear. Type the answer or write with finger or stylus.",
+    "subjectPrompt": "What subject is this?",
     "typeTab": "Type",
     "drawTab": "Draw",
     "itemLabel": "Item {{number}}",
