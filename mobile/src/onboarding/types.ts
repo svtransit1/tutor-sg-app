@@ -21,7 +21,7 @@ export type StepStatus = 'not_started' | 'in_progress' | 'completed';
 export interface OnboardingState {
   currentStep: OnboardingStep;
   steps: Record<OnboardingStep, StepStatus>;
-  deviceTier?: 'high' | 'mid' | 'unsupported';
+  deviceTier?: 'high' | 'mid' | 'low';
   privacyConsentAcceptedAt?: string;
   privacyPolicyUrl?: string;
   telemetryOptIn?: boolean;

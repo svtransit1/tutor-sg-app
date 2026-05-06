@@ -84,8 +84,9 @@
       "highSubtitle": "您的设备可以运行最强AI导师。",
       "midSubtitle": "您的设备可以运行标准AI导师。",
       "thermalWarning": "长时间使用时设备可能会变慢。",
-      "unsupported": "设备不支持",
-      "unsupportedBody": "您的设备不符合最低要求。此应用需要至少4 GB内存。"
+      "storageWarning": "存储空间不足。AI模型需要约2-5 GB可用空间。",
+      "low": "设备不支持",
+      "lowBody": "您的设备不符合最低要求。此应用需要至少4 GB内存和5 GB可用存储空间。"
     },
     "manualInput": {
       "title": "输入第 {{number}} 项",

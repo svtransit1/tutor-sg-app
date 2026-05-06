@@ -117,7 +117,7 @@ const ONBOARDING_STATE_KEY = '@tutor_sg:onboarding_state_v1';
 export interface PersistedOnboardingState {
   currentStep: string;
   steps: Record<string, StepStatus>;
-  deviceTier?: 'high' | 'mid' | 'unsupported';
+  deviceTier?: 'high' | 'mid' | 'low';
   privacyConsentAcceptedAt?: string;
   privacyPolicyUrl?: string;
   telemetryOptIn?: boolean;

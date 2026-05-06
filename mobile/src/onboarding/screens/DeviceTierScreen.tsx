@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useOnboarding } from '../OnboardingProvider';
 import { useTranslation } from 'react-i18next';
-import { detectDeviceTier, DeviceTier, DeviceTierResult } from '../../services/deviceTier';
+import { detectDeviceTier, clearDeviceTierCache, DeviceTierResult } from '../../services/deviceTier';
+import type { DeviceTier } from '@tutor-sg/shared';
 
 export function DeviceTierScreen() {
   const { t } = useTranslation();
@@ -21,7 +22,6 @@ export function DeviceTierScreen() {
         setResult(detected);
         updateProgress({ deviceTier: detected.tier });
       } catch {
-        // Fallback to mid tier if detection fails
         if (!cancelled) {
           setTier('mid');
           updateProgress({ deviceTier: 'mid' });
@@ -46,16 +46,17 @@ export function DeviceTierScreen() {
     );
   }
 
-  if (tier === 'unsupported') {
+  // Low tier = device below floor per decisions-locked
+  if (tier === 'low') {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          {t('onboarding.deviceTier.unsupported', 'Device Not Supported')}
+          {t('onboarding.deviceTier.low', 'Device Not Supported')}
         </Text>
         <Text style={styles.body}>
           {t(
-            'onboarding.deviceTier.unsupportedBody',
-            'Your device does not meet the minimum requirements. This app needs a device with at least 4 GB RAM.',
+            'onboarding.deviceTier.lowBody',
+            'Your device does not meet the minimum requirements. This app needs a device with at least 4 GB RAM and 5 GB free storage.',
           )}
         </Text>
       </View>
@@ -67,6 +68,15 @@ export function DeviceTierScreen() {
       ? t(
           'onboarding.deviceTier.thermalWarning',
           'Your device may slow down during long study sessions.',
+        )
+      : null;
+
+  const storageWarning =
+    result &&
+    result.capabilities.freeStorageBytes < 10 * 1024 * 1024 * 1024
+      ? t(
+          'onboarding.deviceTier.storageWarning',
+          'You are low on storage. The AI model needs about 2–5 GB free space.',
         )
       : null;
 
@@ -87,7 +97,10 @@ export function DeviceTierScreen() {
             )}
       </Text>
       {thermalWarning && (
-        <Text style={styles.thermalWarning}>{thermalWarning}</Text>
+        <Text style={styles.warningText}>{thermalWarning}</Text>
+      )}
+      {storageWarning && (
+        <Text style={styles.warningText}>{storageWarning}</Text>
       )}
       <View style={styles.row}>
         <TouchableOpacity
@@ -123,14 +136,14 @@ const styles = StyleSheet.create({
   title: { fontSize: 28, fontWeight: '700', marginBottom: 8, textAlign: 'center' },
   subtitle: { fontSize: 16, marginBottom: 24, textAlign: 'center' },
   body: { fontSize: 16, lineHeight: 24, textAlign: 'center', marginBottom: 24 },
-  thermalWarning: {
+  warningText: {
     fontSize: 14,
     color: '#E8A838',
     backgroundColor: '#FFF8E7',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
-    marginBottom: 24,
+    marginBottom: 12,
     textAlign: 'center',
     overflow: 'hidden',
   },

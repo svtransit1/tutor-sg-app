@@ -84,8 +84,9 @@
       "highSubtitle": "Your device can run the most powerful AI tutor.",
       "midSubtitle": "Your device can run the standard AI tutor.",
       "thermalWarning": "Your device may slow down during long study sessions.",
-      "unsupported": "Device Not Supported",
-      "unsupportedBody": "Your device does not meet the minimum requirements. This app needs a device with at least 4 GB RAM."
+      "storageWarning": "You are low on storage. The AI model needs about 2–5 GB free space.",
+      "low": "Device Not Supported",
+      "lowBody": "Your device does not meet the minimum requirements. This app needs a device with at least 4 GB RAM and 5 GB free storage."
     },
     "manualInput": {
       "title": "Type Item {{number}}",
