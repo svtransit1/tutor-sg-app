@@ -1,0 +1,44 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.keystore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Dependencies (will populate after framework decision)
+node_modules/
+**/Pods/
+.gradle/
+
+# Build outputs
+build/
+dist/
+*.ipa
+*.apk
+*.aab
+*.app
+
+# Local LLM model artefacts — never commit
+models/
+*.tflite
+*.litertlm
+*.gguf
+
+# Test outputs
+coverage/
+.nyc_output/
+
+# Child-safe rule: NEVER commit anything from real users
+private/
+sample-data/
+*.heic
