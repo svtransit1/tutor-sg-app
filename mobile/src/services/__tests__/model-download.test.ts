@@ -1,9 +1,32 @@
 import { ModelDownloadService } from '../model-download';
 import { MMKV } from 'react-native-mmkv';
 import * as FileSystem from 'expo-file-system';
-import * as NetInfo from '@react-native-community/netinfo';
+import NetInfoDefault from '@react-native-community/netinfo';
 import * as Crypto from 'expo-crypto';
+
 const TEST_PARAMS = { fileName: 'gemma-2-2b-q4_0.gguf', cdnUrl: 'https://cdn.example.com/models/gemma-2-2b-q4_0.gguf', expectedSha256: 'a'.repeat(64), totalBytes: 1_500_000_000, finalDir: '/mock/document/models/' };
+
+// Override retry delays to 1ms so tests don't wait 5+ seconds per retry.
+jest.mock('../model-download-types', () => ({
+  ...jest.requireActual('../model-download-types'),
+  RETRY_DELAYS_MS: [1, 1, 1],
+  STUCK_TIMEOUT_MS: 60000,
+  MAX_RETRIES: 3,
+}));
+
+// Reset mock module-scoped state AND MMKV before each test.
+beforeEach(() => {
+  const fs = require('expo-file-system');
+  const crypto = require('expo-crypto');
+  const netinfo = require('@react-native-community/netinfo');
+  if (typeof fs.__resetMockFs === 'function') fs.__resetMockFs();
+  if (typeof crypto.__resetMockHash === 'function') crypto.__resetMockHash();
+  if (typeof netinfo.__resetNetInfo === 'function') netinfo.__resetNetInfo();
+  // Clear MMKV persisted state (singleton survives between tests)
+  const store = new MMKV({ id: 'model_download' });
+  store.clearAll();
+});
+
 describe('ModelDownloadService — happy path', () => {
   it('downloads and verifies a model successfully', async () => {
     const svc = new ModelDownloadService();
@@ -25,11 +48,13 @@ describe('ModelDownloadService — happy path', () => {
     svc.destroy();
   });
 });
+
 describe('ModelDownloadService — connectivity loss', () => {
-  // TODO: Mock state isolation prevents NetInfo.fetch() from seeing
-  // the updated isConnected state. Fix with a real integration test.
-  it.skip('pauses when Wi-Fi is lost', async () => {
-    NetInfo.__setConnected(false);
+  it('pauses when Wi-Fi is lost', async () => {
+    // Use require() to access the same cached mock module the service uses.
+    const netinfo = require('@react-native-community/netinfo');
+    netinfo.__setConnected(false);
+
     const svc = new ModelDownloadService();
     const calls: Array<{ status: string }> = [];
     svc.onProgress((p) => calls.push({ status: p.status }));
@@ -39,25 +64,27 @@ describe('ModelDownloadService — connectivity loss', () => {
     svc.destroy();
   });
 });
+
 describe('ModelDownloadService — disk space', () => {
-  // TODO: Mock state isolation issue — the service module loads a separate
-  // instance of the mock's internal variables. Fix with a real integration test.
-  it.skip('fails when disk space is insufficient', async () => {
-    FileSystem.__setFreeDiskStorage(100 * 1024 * 1024);
+  it('fails when disk space is insufficient', async () => {
+    const fs = require('expo-file-system');
+    fs.__setFreeDiskStorage(100 * 1024 * 1024);
+
     const svc = new ModelDownloadService();
     const calls: Array<{ status: string; error?: { code: string } }> = [];
     svc.onProgress((p) => calls.push({ status: p.status, error: p.error }));
     await svc.downloadModel(TEST_PARAMS);
-    expect(calls).toContainEqual({ status: 'failed', error: { code: 'disk_insufficient' } });
+    const failCall = calls.find((c) => c.status === 'failed' && c.error?.code === 'disk_insufficient');
+    expect(failCall).toBeDefined();
     svc.destroy();
   });
 });
+
 describe('ModelDownloadService — CDN unreachable', () => {
-  // TODO: Integration test with real fetch would verify retry/backoff.
-  // The mock module state is not shared with the service in this test env.
-  // The _handleRetry path is covered by code review of model-download.ts.
-  it.skip('retries and fails when CDN returns error status', async () => {
-    FileSystem.__setDownloadStatus(503);
+  it('retries and fails when CDN returns error status', async () => {
+    const fs = require('expo-file-system');
+    fs.__setDownloadStatus(503);
+
     const svc = new ModelDownloadService();
     const calls: Array<{ status: string }> = [];
     svc.onProgress((p) => calls.push({ status: p.status }));
@@ -66,10 +93,12 @@ describe('ModelDownloadService — CDN unreachable', () => {
     svc.destroy();
   });
 });
+
 describe('ModelDownloadService — hash mismatch', () => {
-  // TODO: Integration test needed with real crypto. The mock digest
-  // state is not shared correctly between test and service modules.
-  it.skip('fails with hash_mismatch when computed hash differs', async () => {
+  it('fails with hash_mismatch when computed hash differs', async () => {
+    const crypto = require('expo-crypto');
+    crypto.__setMockHash('different_hash_value_here_12345');
+
     const badParams = { ...TEST_PARAMS, expectedSha256: 'bad'.repeat(64) };
     const svc = new ModelDownloadService();
     const calls: Array<{ status: string; error?: { code: string } }> = [];
@@ -80,6 +109,7 @@ describe('ModelDownloadService — hash mismatch', () => {
     svc.destroy();
   });
 });
+
 describe('ModelDownloadService — resume from partial', () => {
   it('loads persisted state and continues download', async () => {
     const store = new MMKV({ id: 'model_download' });
@@ -119,6 +149,7 @@ describe('ModelDownloadService — resume from partial', () => {
     svc.destroy();
   });
 });
+
 describe('i18n — model download strings', () => {
   it('has all error strings in English', () => {
     const en = require('../../i18n/locales/en.json');
