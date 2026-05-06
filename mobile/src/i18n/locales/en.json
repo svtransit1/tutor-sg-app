@@ -1,0 +1,172 @@
+{
+  "app.loading": "tutor-sg — loading...",
+  "app.name": "tutor-sg",
+  "onboarding": {
+    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
+    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language." },
+    "siblingPrompt": {
+      "title": "Got another child who could use this too?",
+      "subtitle": "Add them now and they'll have their own learning log.",
+      "addAnother": "Add another",
+      "skip": "Maybe later",
+      "added": "Added! You can add more children in settings later."
+    },
+    "gradePick": {
+      "title": "What grade is your child in?",
+      "gradeP1": "P1",
+      "gradeP2": "P2",
+      "gradeP3": "P3",
+      "gradeP4": "P4",
+      "gradeP5": "P5",
+      "gradeP6": "P6",
+      "subjectTitle": "Which subjects?",
+      "subjectMath": "Math",
+      "subjectEnglish": "English",
+      "subjectChinese": "中文 (Chinese)",
+      "subjectScience": "Science",
+      "continue": "Continue",
+      "allSubjects": "All subjects",
+      "subjectHint": "We'll only show questions for selected subjects.",
+      "accessibility": {
+        "gradeOption": "Grade {{grade}}",
+        "gradeSelected": "Grade {{grade}} selected",
+        "subjectToggle": "{{subject}} - {{state}}",
+        "subjectOn": "selected",
+        "subjectOff": "not selected"
+      }
+    },
+    "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "progress": {
+      "step": "Step {{current}} of {{total}}",
+      "accessibility": "Step {{current}} of {{total}}"
+    }
+  },
+  "network.offline": "You're offline",
+  "network.offline.description": "Camera homework still works. Downloads need Wi-Fi.",
+  "network.cellular": "On cellular data",
+  "network.cellular.description": "Large downloads are paused to save data.",
+  "parentAuth": {
+    "title": "Parent Access",
+    "enterPin": "Enter your PIN",
+    "wrongPin": "Wrong PIN. Try again.",
+    "cooldown": "Too many attempts. Please wait.",
+    "cooldownTimer": "Try again in {{seconds}}s",
+    "attemptsRemaining": "{{count}} attempt remaining",
+    "attemptsRemaining_plural": "{{count}} attempts remaining",
+    "pinsDontMatch": "PINs don't match. Try again.",
+    "setup": {
+      "title": "Set Up Parent PIN",
+      "enterPin": "Enter a 4-digit PIN",
+      "confirmPin": "Confirm your PIN"
+    },
+    "signIn": {
+      "title": "Create your account",
+      "subtitle": "Sign in to save your child's progress and access parent features. Your child's data never leaves the device.",
+      "emailPlaceholder": "Enter your email address",
+      "sendMagicLink": "Send magic link",
+      "magicLinkSent": "Magic link sent!",
+      "checkEmail": "Check your email for the sign-in link. It expires in 10 minutes.",
+      "orDivider": "or continue with",
+      "continueWithGoogle": "Continue with Google",
+      "continueWithApple": "Continue with Apple",
+      "skip": "Skip for now",
+      "errorInvalidEmail": "Please enter a valid email address",
+      "errorSendFailed": "Failed to send magic link. Please try again.",
+      "errorSignInFailed": "Sign-in failed. Please try again.",
+      "errorAuthSession": "Authentication session was cancelled or failed.",
+      "signedIn": "Signed in successfully"
+    }
+  },
+  "parent": {
+    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
+    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+  },
+  "deviceTierResult": {
+    "title": "Your device is ready!",
+    "tierLabel": "Detected performance level",
+    "highPerformance": "High Performance",
+    "standard": "Standard",
+    "highDescription": "Your device can run the full AI tutor experience with faster responses.",
+    "standardDescription": "Your device will run the AI tutor smoothly with slightly longer response times.",
+    "downloadSize": "Download size: {{size}}",
+    "modelNames": "Models: {{models}}",
+    "consentText": "Models run entirely on this device. Nothing leaves your phone.",
+    "downloadNow": "Download now",
+    "downloadLater": "Download later (Wi-Fi only)",
+    "cellularWarning": "{{size}} download over cellular. Connect to Wi-Fi to save data?",
+    "cellularProceed": "Download anyway",
+    "cellularCancel": "Wait for Wi-Fi",
+    "loading": "Checking your device…",
+    "error": "Could not detect device capabilities. Please try again."
+  },
+  "kidHome": {
+    "header": {
+      "greeting": "Hi {{name}}!",
+      "levelBadge": "Level {{level}}",
+      "switchLanguage": "Switch to 中文"
+    },
+    "subjects": {
+      "math": "Math",
+      "english": "English",
+      "science": "Science",
+      "chinese": "Chinese"
+    },
+    "subjectsDescriptions": {
+      "math": "Numbers, shapes & problem solving",
+      "english": "Grammar, reading & writing",
+      "science": "Explore the world around us",
+      "chinese": "华文听说读写"
+    },
+    "camera": {
+      "title": "Snap Homework",
+      "subtitle": "Take a photo to get help",
+      "accessibility": "Snap your homework with the camera"
+    },
+    "recentSessions": {
+      "title": "Recent Sessions",
+      "empty": "No sessions yet. Snap your first homework!",
+      "timeAgo": {
+        "justNow": "Just now",
+        "minutesAgo": "{{minutes}}m ago",
+        "hoursAgo": "{{hours}}h ago",
+        "yesterday": "Yesterday"
+      },
+      "questions": "{{count}} question",
+      "questions_plural": "{{count}} questions"
+    },
+    "accessibility": {
+      "subjectTile": "{{subject}} subject",
+      "recentSession": "Session {{subject}}, {{time}} ago, {{questions}} questions"
+    },
+    "firstSession": {
+      "welcomeTitle": "Welcome to tutor-sg!",
+      "welcomeBody": "Snap a photo of your homework and get instant help — like having a quiet tutor right next to you.",
+      "ctaCamera": "Take your first homework photo",
+      "ctaPractice": "Try a practice question",
+      "dismiss": "Not now, show me around",
+      "accessibility": {
+        "welcomeBanner": "Welcome banner. Start your first homework session.",
+        "practiceTile": "Try a {{subject}} practice question"
+      }
+    }
+  },
+  "modelDownload": {
+    "title": "Setting up your tutor...",
+    "progress": "Downloading {{fileName}}…",
+    "progressPercent": "{{percent}}%",
+    "retrying": "Retrying download ({{attempt}}/{{max}})…",
+    "paused": "Download paused",
+    "resuming": "Resuming download…",
+    "completed": "Download complete",
+    "retry": "Retry",
+    "wifiRequired": "Wi-Fi connection required",
+    "errors": {
+      "connectivity_lost": "Wi-Fi connection lost. Download will resume when reconnected.",
+      "disk_insufficient": "Not enough storage space. Need about {{needed}}GB free.",
+      "cdn_unreachable": "Cannot reach server. Please check your internet connection and try again.",
+      "hash_mismatch": "Download file corrupted. Re-downloading…",
+      "download_stuck": "Download seems stuck. Retrying…",
+      "unknown_error": "Something went wrong. Please try again."
+    }
+  }
+}
