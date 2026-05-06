@@ -20,6 +20,8 @@
       "accessibility": {
         "digitInput": "第 {{position}} 位数字",
         "confirmDigitInput": "确认第 {{position}} 位数字",
+        "keypadButton": "按键 {{value}}",
+        "backToEnter": "返回重新输入密码",
         "skipButton": "跳过密码设置"
       }
     },

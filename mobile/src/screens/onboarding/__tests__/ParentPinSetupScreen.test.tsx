@@ -18,7 +18,8 @@ import * as pinStorage from '../../../storage/pin-storage';
 // ── Mocks ──────────────────────────────────────────────────────────
 
 // Mock t() that returns display strings for known keys.
-const mockT = (k: string) => {
+// Supports {{param}} interpolation for accessibility labels.
+const mockT = (k: string, params?: Record<string, string | number>) => {
   const display: Record<string, string> = {
     'onboarding.parentPinSetup.title': 'Set your parent PIN',
     'onboarding.parentPinSetup.body': "Set a 4-digit PIN. You'll use this to see your child's learning log.",
@@ -26,11 +27,19 @@ const mockT = (k: string) => {
     'onboarding.parentPinSetup.confirmPin': 'Confirm your PIN',
     'onboarding.parentPinSetup.mismatch': "PINs don't match. Try again.",
     'onboarding.parentPinSetup.skip': 'Skip — set up later',
-    'onboarding.parentPinSetup.accessibility.digitInput': 'Digit N',
-    'onboarding.parentPinSetup.accessibility.confirmDigitInput': 'Confirm digit N',
+    'onboarding.parentPinSetup.accessibility.digitInput': 'Digit {{position}}',
+    'onboarding.parentPinSetup.accessibility.confirmDigitInput': 'Confirm digit {{position}}',
+    'onboarding.parentPinSetup.accessibility.keypadButton': 'Key {{value}}',
+    'onboarding.parentPinSetup.accessibility.backToEnter': 'Go back to enter PIN',
     'onboarding.parentPinSetup.accessibility.skipButton': 'Skip PIN setup',
   };
-  return display[k] ?? k;
+  let result = display[k] ?? k;
+  if (params) {
+    for (const [key, val] of Object.entries(params)) {
+      result = result.replace(`{{${key}}}`, String(val));
+    }
+  }
+  return result;
 };
 
 jest.mock('react-i18next', () => ({

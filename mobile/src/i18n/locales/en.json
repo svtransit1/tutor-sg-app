@@ -20,6 +20,8 @@
       "accessibility": {
         "digitInput": "Digit {{position}}",
         "confirmDigitInput": "Confirm digit {{position}}",
+        "keypadButton": "Key {{value}}",
+        "backToEnter": "Go back to enter PIN",
         "skipButton": "Skip PIN setup"
       }
     },

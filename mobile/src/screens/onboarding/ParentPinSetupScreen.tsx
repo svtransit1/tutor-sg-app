@@ -42,11 +42,11 @@ interface ParentPinSetupScreenProps {
 
 // ── Digit slot component ───────────────────────────────────────────
 
-function DigitSlot({ filled, index }: { filled: boolean; index: number }) {
+function DigitSlot({ filled, label }: { filled: boolean; label: string }) {
   return (
     <View
       style={[styles.digitSlot, filled && styles.digitSlotFilled]}
-      accessibilityLabel={filled ? `Digit ${index + 1} entered` : `Digit ${index + 1}`}
+      accessibilityLabel={label}
     >
       <Text style={[styles.digitText, filled && styles.digitTextFilled]}>
         {filled ? '●' : ''}
@@ -61,10 +61,12 @@ function KeypadButton({
   value,
   onPress,
   disabled,
+  label,
 }: {
   value: string;
   onPress: (v: string) => void;
   disabled?: boolean;
+  label: string;
 }) {
   return (
     <Pressable
@@ -75,7 +77,7 @@ function KeypadButton({
       onPress={() => onPress(value)}
       disabled={disabled}
       accessibilityRole="button"
-      accessibilityLabel={`Key ${value}`}
+      accessibilityLabel={label}
     >
       <Text style={[styles.keypadBtnText, value === '⌫' && styles.keypadBackspace]}>
         {value}
@@ -225,7 +227,17 @@ export default function ParentPinSetupScreen({
           accessibilityElementsHidden={false}
         >
           {Array.from({ length: PIN_LENGTH }).map((_, i) => (
-            <DigitSlot key={i} filled={i < currentDigits.length} index={i} />
+            <DigitSlot
+              key={i}
+              filled={i < currentDigits.length}
+              label={
+                i < currentDigits.length
+                  ? step === 'confirm'
+                    ? t('onboarding.parentPinSetup.accessibility.confirmDigitInput', { position: i + 1 })
+                    : t('onboarding.parentPinSetup.accessibility.digitInput', { position: i + 1 })
+                  : t('onboarding.parentPinSetup.accessibility.digitInput', { position: i + 1 })
+              }
+            />
           ))}
         </View>
 
@@ -237,6 +249,7 @@ export default function ParentPinSetupScreen({
               value={digit}
               onPress={handleKeyPress}
               disabled={saving}
+              label={t('onboarding.parentPinSetup.accessibility.keypadButton', { value: digit })}
             />
           ))}
           <View style={styles.keypadSpacer} />
@@ -244,11 +257,13 @@ export default function ParentPinSetupScreen({
             value="0"
             onPress={handleKeyPress}
             disabled={saving}
+            label={t('onboarding.parentPinSetup.accessibility.keypadButton', { value: '0' })}
           />
           <KeypadButton
             value="⌫"
             onPress={handleKeyPress}
             disabled={saving || currentDigits.length === 0}
+            label={t('onboarding.parentPinSetup.accessibility.keypadButton', { value: '⌫' })}
           />
         </View>
 
@@ -258,7 +273,7 @@ export default function ParentPinSetupScreen({
             style={styles.backLink}
             onPress={handleGoBackToEnter}
             accessibilityRole="button"
-            accessibilityLabel="Go back to enter PIN"
+            accessibilityLabel={t('onboarding.parentPinSetup.accessibility.backToEnter')}
             hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
           >
             <Text style={styles.backLinkText}>
