@@ -64,6 +64,7 @@ jest.mock('@/components/OnboardingProgressIndicator', () => {
 // Spy on persistence functions (they're no-ops in test via MMKV mock)
 const persistGradeSpy = jest.spyOn(OnboardingState, 'persistGrade');
 const persistSubjectsSpy = jest.spyOn(OnboardingState, 'persistSubjects');
+const persistSiblingProfileSpy = jest.spyOn(OnboardingState, 'persistSiblingProfile');
 
 // ── Tests ──────────────────────────────────────────────────────────
 
@@ -274,5 +275,77 @@ describe('GradePickScreen', () => {
       expect(chip.props.accessibilityLabel).toBeTruthy();
       expect(chip.props.accessibilityRole).toBe('switch');
     });
+  });
+
+  // ── Sibling prompt tests ─────────────────────────────────
+
+  it('renders sibling prompt card', () => {
+    const { getByText } = render(<GradePickScreen />);
+    expect(getByText('onboarding.siblingPrompt.title')).toBeTruthy();
+    expect(getByText('onboarding.siblingPrompt.subtitle')).toBeTruthy();
+    expect(getByText('onboarding.siblingPrompt.addAnother')).toBeTruthy();
+    expect(getByText('onboarding.siblingPrompt.skip')).toBeTruthy();
+  });
+
+  it('persists sibling profile when add another is pressed', () => {
+    const { getByText } = render(<GradePickScreen />);
+
+    // Select grade first
+    const p3Button = getByText('onboarding.gradePick.gradeP3').parent;
+    fireEvent.press(p3Button!);
+
+    // Press "Add another"
+    const addButton = getByText('onboarding.siblingPrompt.addAnother').parent;
+    fireEvent.press(addButton!);
+
+    expect(persistSiblingProfileSpy).toHaveBeenCalledWith(0, {
+      grade: 'P3',
+      subjects: ['math', 'english', 'chinese', 'science'],
+    });
+  });
+
+  it('shows confirmation banner after adding sibling', () => {
+    const { getByText, queryByText } = render(<GradePickScreen />);
+
+    const addButton = getByText('onboarding.siblingPrompt.addAnother').parent;
+    fireEvent.press(addButton!);
+
+    // Sibling card should be hidden
+    expect(queryByText('onboarding.siblingPrompt.title')).toBeNull();
+
+    // Confirmation banner should appear
+    expect(getByText('onboarding.siblingPrompt.added')).toBeTruthy();
+  });
+
+  it('hides sibling card when skip is pressed', () => {
+    const { getByText, queryByText } = render(<GradePickScreen />);
+
+    const skipButton = getByText('onboarding.siblingPrompt.skip');
+    fireEvent.press(skipButton);
+
+    // Sibling card should be hidden
+    expect(queryByText('onboarding.siblingPrompt.title')).toBeNull();
+    // No confirmation banner either
+    expect(queryByText('onboarding.siblingPrompt.added')).toBeNull();
+  });
+
+  it('continue button still works after sibling interaction', () => {
+    const { getByText } = render(<GradePickScreen />);
+
+    // Select grade
+    const p3Button = getByText('onboarding.gradePick.gradeP3').parent;
+    fireEvent.press(p3Button!);
+
+    // Skip sibling
+    const skipButton = getByText('onboarding.siblingPrompt.skip');
+    fireEvent.press(skipButton);
+
+    // Press continue
+    const continueButton = getByText('onboarding.gradePick.continue').parent;
+    fireEvent.press(continueButton!);
+
+    expect(persistGradeSpy).toHaveBeenCalledWith('P3');
+    expect(persistSubjectsSpy).toHaveBeenCalled();
+    expect(mockReplace).toHaveBeenCalledWith('/(onboarding)/parent-sign-in');
   });
 });

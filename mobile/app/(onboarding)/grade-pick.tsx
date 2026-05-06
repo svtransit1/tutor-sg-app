@@ -11,7 +11,8 @@
  * 5. "All subjects" meta-toggle (toggles all on/off)
  * 6. 4 toggle chips: Math · English · Chinese · Science (all ON by default)
  * 7. Inline hint about subject selection
- * 8. "Continue" CTA button (disabled until grade picked)
+ * 8. Sibling prompt card (skippable — "Add another child?")
+ * 9. "Continue" CTA button (disabled until grade picked)
  *
  * Behaviour:
  * - Grade selection is required (single pick from P1–P6)
@@ -40,7 +41,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import OnboardingProgressIndicator from '@/components/OnboardingProgressIndicator';
-import { persistGrade, persistSubjects } from '@/storage/onboarding-state';
+import { persistGrade, persistSubjects, persistSiblingProfile } from '@/storage/onboarding-state';
 
 // ── Constants ──────────────────────────────────────────────────────
 
@@ -75,6 +76,8 @@ export default function GradePickScreen() {
   const [selectedSubjects, setSelectedSubjects] = useState<Set<SubjectId>>(
     new Set(ALL_SUBJECTS),
   );
+  const [siblingAdded, setSiblingAdded] = useState(false);
+  const [showSiblingPrompt, setShowSiblingPrompt] = useState(true);
 
   const isContinueDisabled = selectedGrade === null;
   const allSubjectsSelected = ALL_SUBJECTS.every((s) => selectedSubjects.has(s));
@@ -113,6 +116,22 @@ export default function GradePickScreen() {
       setSelectedSubjects(new Set(ALL_SUBJECTS));
     }
   }, [allSubjectsSelected]);
+
+  // ── Sibling prompt ─────────────────────────────────────────
+
+  const handleAddSibling = useCallback(() => {
+    // Persist sibling profile with same grade and all subjects (parent can customise later)
+    persistSiblingProfile(0, {
+      grade: selectedGrade ?? 'P1',
+      subjects: Array.from(selectedSubjects),
+    });
+    setSiblingAdded(true);
+    setShowSiblingPrompt(false);
+  }, [selectedGrade, selectedSubjects]);
+
+  const handleSkipSibling = useCallback(() => {
+    setShowSiblingPrompt(false);
+  }, []);
 
   // ── Continue ────────────────────────────────────────────────
 
@@ -307,6 +326,97 @@ export default function GradePickScreen() {
             {t('onboarding.gradePick.subjectHint')}
           </Text>
         </View>
+
+        {/* ── Sibling prompt card ──────────────────────────────── */}
+        {showSiblingPrompt && !siblingAdded && (
+          <View
+            style={[
+              styles.siblingCard,
+              {
+                backgroundColor: isDark ? '#1A2A3A' : '#F0F4FF',
+                borderColor: isDark ? '#2563EB' : '#C7D2FE',
+              },
+            ]}
+            accessibilityRole="summary"
+            accessibilityLabel={`${t('onboarding.siblingPrompt.title')} ${t('onboarding.siblingPrompt.subtitle')}`}
+          >
+            {/* Card icon */}
+            <View style={styles.siblingIconContainer}>
+              <Text style={styles.siblingIcon}>👨‍👩‍👧‍👦</Text>
+            </View>
+
+            {/* Card text */}
+            <Text
+              style={[styles.siblingTitle, { color: textColor }]}
+              accessibilityRole="header"
+            >
+              {t('onboarding.siblingPrompt.title')}
+            </Text>
+            <Text
+              style={[styles.siblingSubtitle, { color: secondaryTextColor }]}
+            >
+              {t('onboarding.siblingPrompt.subtitle')}
+            </Text>
+
+            {/* Card actions */}
+            <View style={styles.siblingActions}>
+              <TouchableOpacity
+                style={[
+                  styles.siblingPrimaryButton,
+                  { backgroundColor: isDark ? '#2563EB' : '#4A90D9' },
+                ]}
+                onPress={handleAddSibling}
+                accessibilityRole="button"
+                accessibilityLabel={t('onboarding.siblingPrompt.addAnother')}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.siblingPrimaryButtonText}>
+                  {t('onboarding.siblingPrompt.addAnother')}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.siblingSkipButton}
+                onPress={handleSkipSibling}
+                accessibilityRole="button"
+                accessibilityLabel={t('onboarding.siblingPrompt.skip')}
+                activeOpacity={0.7}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Text
+                  style={[styles.siblingSkipText, { color: isDark ? '#90CAF9' : '#6B7280' }]}
+                >
+                  {t('onboarding.siblingPrompt.skip')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {/* Confirmation message when sibling added */}
+        {siblingAdded && (
+          <View
+            style={[
+              styles.siblingAddedBanner,
+              {
+                backgroundColor: isDark ? '#1B3D1B' : '#E8F5E9',
+                borderColor: isDark ? '#4CAF50' : '#A5D6A7',
+              },
+            ]}
+            accessibilityRole="alert"
+            accessibilityLiveRegion="assertive"
+          >
+            <Text style={styles.siblingAddedIcon}>✅</Text>
+            <Text
+              style={[
+                styles.siblingAddedText,
+                { color: isDark ? '#A5D6A7' : '#2E7D32' },
+              ]}
+            >
+              {t('onboarding.siblingPrompt.added')}
+            </Text>
+          </View>
+        )}
       </ScrollView>
 
       {/* ── Continue button — fixed at bottom ─────────────────── */}
@@ -451,6 +561,84 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     textAlign: 'center',
     paddingHorizontal: 12,
+  } as TextStyle,
+
+  // ── Sibling prompt card ───────────────────────────────────────
+  siblingCard: {
+    borderRadius: 16,
+    borderWidth: 1.5,
+    padding: 20,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  siblingIconContainer: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 12,
+  },
+  siblingIcon: {
+    fontSize: 28,
+  },
+  siblingTitle: {
+    fontSize: 17,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 6,
+  } as TextStyle,
+  siblingSubtitle: {
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: 'center',
+    marginBottom: 20,
+    paddingHorizontal: 8,
+  } as TextStyle,
+  siblingActions: {
+    flexDirection: 'row',
+    gap: 12,
+    alignItems: 'center',
+  },
+  siblingPrimaryButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 10,
+  },
+  siblingPrimaryButtonText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '600',
+  } as TextStyle,
+  siblingSkipButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  siblingSkipText: {
+    fontSize: 14,
+    fontWeight: '500',
+    textDecorationLine: 'underline',
+  } as TextStyle,
+
+  // ── Sibling added banner ─────────────────────────────────────
+  siblingAddedBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    marginBottom: 16,
+  },
+  siblingAddedIcon: {
+    fontSize: 18,
+  },
+  siblingAddedText: {
+    fontSize: 14,
+    fontWeight: '500',
+    flex: 1,
+    lineHeight: 20,
   } as TextStyle,
 
   // ── Footer / Continue button ─────────────────────────────────

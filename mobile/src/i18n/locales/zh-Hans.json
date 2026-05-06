@@ -4,6 +4,13 @@
   "onboarding": {
     "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
     "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。" },
+    "siblingPrompt": {
+      "title": "家里还有其他孩子要用吗？",
+      "subtitle": "现在添加，他/她也会有自己的学习记录。",
+      "addAnother": "添加",
+      "skip": "以后再说",
+      "added": "已添加！您之后可以在设置中添加更多孩子。"
+    },
     "gradePick": {
       "title": "孩子读几年级？",
       "gradeP1": "小一",
