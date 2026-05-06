@@ -2,18 +2,23 @@
  * Camera Screen — homework photo capture and processing pipeline.
  *
  * Flow:
- * 1. Camera preview (expo-camera)
- * 2. Kid taps capture button → photo taken
- * 3. Multi-page: "Add another page?" after each capture
- * 4. Kid taps "Done" → OCR pipeline starts
- * 5. OCR processing with progress indicator
- * 6. Low-confidence items prompt manual input
- * 7. LLM inference with progress indicator
- * 8. Navigate to result screen with response data
+ * 1. Permission primer (kid-friendly explanation before system dialog)
+ * 2. Kid taps "Allow Camera" → system permission dialog
+ * 3. Granted → Camera preview (expo-camera)
+ * 4. Kid taps capture button → photo taken
+ * 5. Multi-page: "Add another page?" after each capture
+ * 6. Kid taps "Done" → OCR pipeline starts
+ * 7. OCR processing with progress indicator
+ * 8. Low-confidence items prompt manual input
+ * 9. LLM inference with progress indicator
+ * 10. Navigate to result screen with response data
+ *
+ * Denied flow: ErrorScreen shown with option to enable via Settings.
  *
  * @see ADD §4.1 — Camera homework check flow
  * @see ADD §4.1 — Multi-page capture
  * @see ADD §4.1 — OCR fallback
+ * @see CameraPermissionPrimer — Permission primer component
  */
 
 import { useState, useRef, useCallback, useEffect } from 'react';
@@ -37,6 +42,7 @@ import { MockOcrService, type OcrService } from '@/services/ocr';
 import { loadGrade, type Grade } from '@/storage/onboarding-state';
 import { insertFullSession } from '@/storage/sessions';
 import ErrorScreen from '@/components/ErrorScreen';
+import CameraPermissionPrimer from '@/components/CameraPermissionPrimer';
 
 // ── Services (singletons, swap to real implementations later) ─────
 
@@ -90,14 +96,15 @@ export default function CameraScreen() {
     };
   }, []);
 
-  // Request camera permission on mount
-  const [permissionRequested, setPermissionRequested] = useState(false);
-  useEffect(() => {
-    if (!permission?.granted && !permissionRequested) {
-      setPermissionRequested(true);
-      requestPermission();
-    }
-  }, [permission, permissionRequested, requestPermission]);
+  // Permission primer: only request permission when user explicitly taps "Allow"
+  const [isRequestingPermission, setIsRequestingPermission] = useState(false);
+
+  const handleRequestPermission = useCallback(async () => {
+    if (isRequestingPermission) return;
+    setIsRequestingPermission(true);
+    await requestPermission();
+    setIsRequestingPermission(false);
+  }, [requestPermission, isRequestingPermission]);
 
   // Last recorded error type for ErrorScreen
   const [lastErrorVariant, setLastErrorVariant] = useState<
@@ -304,11 +311,31 @@ export default function CameraScreen() {
 
   // ── Main Render ─────────────────────────────────────────────────
 
+  // Permission primer flow:
+  //   null/undetermined → show permission primer
+  //   granted           → show camera preview
+  //   denied            → show error screen (user must enable via Settings)
   if (!permission?.granted) {
+    // If status is 'undetermined' (never asked), show the primer
+    // Fallback: if status is null (loading), also show primer defensively
+    if (
+      !permission ||
+      permission.status === 'undetermined' ||
+      permission.granted === false && permission.canAskAgain
+    ) {
+      return (
+        <CameraPermissionPrimer
+          onAllow={handleRequestPermission}
+          onSkip={handleCancel}
+        />
+      );
+    }
+
+    // Permission was denied and cannot be asked again → show error screen
     return (
       <ErrorScreen
         variant="permission_camera"
-        onAction={requestPermission}
+        onAction={handleRequestPermission}
         onSecondaryAction={handleCancel}
       />
     );
