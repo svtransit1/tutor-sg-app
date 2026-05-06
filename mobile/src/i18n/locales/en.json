@@ -169,5 +169,34 @@
       "download_stuck": "Download seems stuck. Retrying…",
       "unknown_error": "Something went wrong. Please try again."
     }
+  },
+  "common": {
+    "back": "Back",
+    "goBack": "Go back"
+  },
+  "manualInputFallback": {
+    "title": "Can't read all items",
+    "description": "Some parts are unclear. Type the answer or write with finger or stylus.",
+    "typeTab": "Type",
+    "drawTab": "Draw",
+    "itemLabel": "Item {{number}}",
+    "typePlaceholder": "Type the answer here…",
+    "drawPlaceholder": "Write your answer here",
+    "submit": "Continue",
+    "skip": "Skip this item",
+    "clear": "Clear",
+    "remaining": "{{count}} item remaining",
+    "remaining_plural": "{{count}} items remaining",
+    "error": {
+      "parseFailed": "Couldn't read the homework. Please try again.",
+      "noInputs": "Please provide at least one answer"
+    },
+    "accessibility": {
+      "back": "Go back",
+      "submit": "Submit all typed and drawn answers",
+      "skip": "Skip this item",
+      "typeInput": "Type answer for item {{number}}",
+      "drawCanvas": "Drawing area for item {{number}}"
+    }
   }
 }
