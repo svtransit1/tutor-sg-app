@@ -1,0 +1,48 @@
+{
+  "name": "tutor-sg",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "mobile",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run start --workspace=mobile",
+    "mobile": "npm run --workspace=mobile",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "npm run test --workspaces --if-present",
+    "test:mobile": "npm run test --workspace=mobile",
+    "test:shared": "npm run test --workspace=packages/shared",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yaml,yml}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-native": "^5.0.0",
+    "globals": "^15.15.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.8.3",
+    "react-test-renderer": "^19.2.6",
+    "typescript-eslint": "^8.59.2"
+  },
+  "dependencies": {
+    "expo-speech": "~14.0.8"
+  }
+}
