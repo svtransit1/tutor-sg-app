@@ -16,7 +16,8 @@
     "test": "npm run test --workspaces --if-present",
     "test:mobile": "npm run test --workspace=mobile",
     "test:shared": "npm run test --workspace=packages/shared",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,mjs,cjs}": [

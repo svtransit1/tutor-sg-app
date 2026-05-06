@@ -1,0 +1,42 @@
+# Dependencies / build outputs
+node_modules/
+dist/
+build/
+coverage/
+**/Pods/
+**/.gradle/
+**/.expo/
+
+# Generated / tooling
+mobile/expo-env.d.ts
+*.ipa
+*.apk
+*.aab
+*.app
+
+# Model artefacts
+**/models/
+*.tflite
+*.litertlm
+*.gguf
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+
+# Docs / assets (format manually if needed)
+*.svg
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.ico
+*.ttf
+*.woff
+*.woff2
+*.eot
+
+# Private data
+private/
+sample-data/
