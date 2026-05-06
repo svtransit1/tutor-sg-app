@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { KidLevel } from '../i18n';
-import { MAX_KIDS } from '../i18n';
+import type { KidLevel } from '../constants';
+import { MAX_KIDS } from '../constants';
 import type { StepStatus } from '../onboarding/types';
 
 const STORAGE_KEY = '@tutor_sg:kids';
