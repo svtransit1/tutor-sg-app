@@ -169,5 +169,34 @@
       "download_stuck": "下载似乎卡住了，正在重试...",
       "unknown_error": "出现错误，请重试。"
     }
+  },
+  "common": {
+    "back": "返回",
+    "goBack": "返回首页"
+  },
+  "manualInputFallback": {
+    "title": "有些内容看不清楚",
+    "description": "以下内容识别不清。你可以输入文字，或用手写笔/手指书写答案。",
+    "typeTab": "输入",
+    "drawTab": "手写",
+    "itemLabel": "第 {{number}} 项",
+    "typePlaceholder": "在此输入答案…",
+    "drawPlaceholder": "在此书写答案",
+    "submit": "继续",
+    "skip": "跳过此项",
+    "clear": "清除",
+    "remaining": "还剩 {{count}} 项",
+    "remaining_plural": "还剩 {{count}} 项",
+    "error": {
+      "parseFailed": "无法读取作业，请重新拍照。",
+      "noInputs": "请至少提供一项答案"
+    },
+    "accessibility": {
+      "back": "返回首页",
+      "submit": "提交所有输入和手写的答案",
+      "skip": "跳过此项",
+      "typeInput": "为第 {{number}} 项输入答案",
+      "drawCanvas": "第 {{number}} 项的手写区域"
+    }
   }
 }
