@@ -11,7 +11,8 @@
   "dependencies": {
     "@tutor-sg/device-tier": "*",
     "@tutor-sg/features": "*",
-    "@tutor-sg/llm": "*"
+    "@tutor-sg/llm": "*",
+    "zod": "^3.25.0"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
