@@ -27,21 +27,21 @@ describe('AgeGateScreen', () => {
 
   it('renders both action buttons', () => {
     render(<AgeGateScreen />);
-    expect(screen.getByText('onboarding.parentGate.continue')).toBeTruthy();
-    expect(screen.getByText('onboarding.parentGate.goBack')).toBeTruthy();
+    expect(screen.getByText(/onboarding\.parentGate\.continue/)).toBeTruthy();
+    expect(screen.getByText(/onboarding\.parentGate\.goBack/)).toBeTruthy();
   });
 
   it('calls onComplete when primary button is pressed', () => {
     const onComplete = jest.fn();
     render(<AgeGateScreen onComplete={onComplete} />);
-    fireEvent.press(screen.getByText('onboarding.parentGate.continue'));
+    fireEvent.press(screen.getByLabelText('onboarding.parentGate.continue'));
     expect(onComplete).toHaveBeenCalledTimes(1);
   });
 
   it('calls onGoBack when secondary button is pressed', () => {
     const onGoBack = jest.fn();
     render(<AgeGateScreen onGoBack={onGoBack} />);
-    fireEvent.press(screen.getByText('onboarding.parentGate.goBack'));
+    fireEvent.press(screen.getByLabelText('onboarding.parentGate.goBack'));
     expect(onGoBack).toHaveBeenCalledTimes(1);
   });
 
@@ -61,6 +61,6 @@ describe('AgeGateScreen', () => {
     render(<AgeGateScreen />);
     const btn = screen.getByLabelText('onboarding.parentGate.continue');
     expect(btn).toBeTruthy();
-    expect(screen.getByText('onboarding.parentGate.continue')).toBeTruthy();
+    expect(screen.getByText(/onboarding\.parentGate\.continue/)).toBeTruthy();
   });
 });

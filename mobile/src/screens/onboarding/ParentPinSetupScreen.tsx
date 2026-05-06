@@ -275,7 +275,7 @@ export default function ParentPinSetupScreen({
           accessibilityLabel={t('onboarding.parentPinSetup.accessibility.skipButton')}
           hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
         >
-          <Text style={styles.skipLinkText}>{skipLabel}</Text>
+          <Text style={styles.skipLinkText}>⏭️ {skipLabel}</Text>
         </Pressable>
       </View>
     </View>

@@ -66,7 +66,7 @@ export default function AgeGateScreen({ onComplete, onGoBack }: AgeGateScreenPro
           accessibilityLabel={t('onboarding.parentGate.continue')}
           activeOpacity={0.8}
         >
-          <Text style={styles.btnPrimaryText}>{t('onboarding.parentGate.continue')}</Text>
+          <Text style={styles.btnPrimaryText}>✋ {t('onboarding.parentGate.continue')}</Text>
         </TouchableOpacity>
 
         {/* Secondary action — go back */}
@@ -77,7 +77,7 @@ export default function AgeGateScreen({ onComplete, onGoBack }: AgeGateScreenPro
           accessibilityLabel={t('onboarding.parentGate.goBack')}
           activeOpacity={0.7}
         >
-          <Text style={styles.btnSecondaryText}>{t('onboarding.parentGate.goBack')}</Text>
+          <Text style={styles.btnSecondaryText}>🔙 {t('onboarding.parentGate.goBack')}</Text>
         </TouchableOpacity>
       </View>
     </View>

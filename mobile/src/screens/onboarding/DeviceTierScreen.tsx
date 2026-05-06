@@ -162,7 +162,7 @@ export default function DeviceTierScreen({ onComplete, _testCellular }: DeviceTi
           <Text style={styles.errIcon}>⚠️</Text>
           <Text style={styles.errText}>{state.message || t('deviceTierResult.error')}</Text>
           <TouchableOpacity style={styles.retryBtn} onPress={handleRetry} accessibilityRole="button" accessibilityLabel={t('modelDownload.retry')}>
-            <Text style={styles.retryText}>{t('modelDownload.retry')}</Text>
+            <Text style={styles.retryText}>🔄 {t('modelDownload.retry')}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -191,7 +191,7 @@ export default function DeviceTierScreen({ onComplete, _testCellular }: DeviceTi
                 <Text style={styles.btnPrimaryText}>⬇️ {t('deviceTierResult.downloadNow')}</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.btnSecondary} onPress={handleDownloadLater} accessibilityRole="button" accessibilityLabel={t('deviceTierResult.downloadLater')}>
-                <Text style={styles.btnSecondaryText}>{t('deviceTierResult.downloadLater')}</Text>
+                <Text style={styles.btnSecondaryText}>⏰ {t('deviceTierResult.downloadLater')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -215,7 +215,7 @@ export default function DeviceTierScreen({ onComplete, _testCellular }: DeviceTi
               <Text style={styles.btnPrimaryText}>⬇️ {t('deviceTierResult.downloadNow')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnSecondary} onPress={handleDownloadLater} accessibilityRole="button" accessibilityLabel={t('deviceTierResult.downloadLater')}>
-              <Text style={styles.btnSecondaryText}>{t('deviceTierResult.downloadLater')}</Text>
+              <Text style={styles.btnSecondaryText}>⏰ {t('deviceTierResult.downloadLater')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -227,10 +227,10 @@ export default function DeviceTierScreen({ onComplete, _testCellular }: DeviceTi
           <Text style={styles.modalTitle}>{t('deviceTierResult.cellularWarning', { size })}</Text>
           <View style={styles.modalBtns}>
             <TouchableOpacity style={styles.modalBtnSec} onPress={handleCellularCancel} accessibilityRole="button" accessibilityLabel={t('deviceTierResult.cellularCancel')}>
-              <Text style={styles.modalBtnSecText}>{t('deviceTierResult.cellularCancel')}</Text>
+              <Text style={styles.modalBtnSecText}>❌ {t('deviceTierResult.cellularCancel')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.modalBtnPri} onPress={handleCellularProceed} accessibilityRole="button" accessibilityLabel={t('deviceTierResult.cellularProceed')}>
-              <Text style={styles.modalBtnPriText}>{t('deviceTierResult.cellularProceed')}</Text>
+              <Text style={styles.modalBtnPriText}>⬇️ {t('deviceTierResult.cellularProceed')}</Text>
             </TouchableOpacity>
           </View>
         </View>

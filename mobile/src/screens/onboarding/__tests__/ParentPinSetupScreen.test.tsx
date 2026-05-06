@@ -99,7 +99,7 @@ describe('ParentPinSetupScreen', () => {
 
   it('renders skip link', () => {
     render(<ParentPinSetupScreen />);
-    expect(screen.getByText('Skip — set up later')).toBeTruthy();
+    expect(screen.getByText(/Skip — set up later/)).toBeTruthy();
   });
 
   it('entering digits stays in enter step until 4 digits are entered', () => {
@@ -178,7 +178,7 @@ describe('ParentPinSetupScreen', () => {
   it('skip link calls onSkip', () => {
     const onSkip = jest.fn();
     render(<ParentPinSetupScreen onSkip={onSkip} />);
-    fireEvent.press(screen.getByText('Skip — set up later'));
+    fireEvent.press(screen.getByLabelText('Skip PIN setup'));
     expect(onSkip).toHaveBeenCalledTimes(1);
   });
 
