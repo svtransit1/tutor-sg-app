@@ -1,0 +1,100 @@
+/**
+ * Typed i18n key registry for tutor-sg.
+ *
+ * Every key in this type MUST have a corresponding entry in both
+ * `mobile/src/i18n/locales/en.json` and `zh-Hans.json`.
+ *
+ * Generated from AAAS-13 locale bundles.
+ * Updated when new UI strings are added.
+ *
+ * @packageDocumentation
+ * @module @tutor-sg/shared/i18n
+ */
+
+// ── Top-level keys ───────────────────────────────────────────────
+
+export type I18nKey =
+  | 'app.loading'
+  | 'app.name'
+  | 'onboarding.welcome.title'
+  | 'onboarding.welcome.subtitle'
+  | 'onboarding.done.title'
+  | 'onboarding.done.subtitle'
+  // ── Parent auth ──────────────────────────────────────────
+  | `parentAuth.${ParentAuthKey}`
+  // ── Parent dashboard ─────────────────────────────────────
+  | `parent.${ParentAreaKey}`;
+
+// ── Sub-key spaces ────────────────────────────────────────────────
+
+export type ParentAuthKey =
+  | 'title'
+  | 'enterPin'
+  | 'wrongPin'
+  | 'cooldown'
+  | 'cooldownTimer'
+  | 'attemptsRemaining'
+  | 'attemptsRemaining_plural'
+  | 'pinsDontMatch'
+  | `setup.${ParentAuthSetupKey}`;
+
+export type ParentAuthSetupKey = 'title' | 'enterPin' | 'confirmPin';
+
+export type ParentAreaKey =
+  | `dashboard.${ParentDashboardKey}`
+  | `settings.${ParentSettingsKey}`;
+
+export type ParentDashboardKey = 'title' | 'placeholder';
+
+export type ParentSettingsKey = 'title' | 'placeholder';
+
+// ── Runtime key safety ────────────────────────────────────────────
+
+/**
+ * All known i18n keys as a flat string array.
+ * Use with `i18next.options.keySeparator = false`.
+ */
+export const I18N_KEYS = [
+  'app.loading',
+  'app.name',
+  'onboarding.welcome.title',
+  'onboarding.welcome.subtitle',
+  'onboarding.done.title',
+  'onboarding.done.subtitle',
+  'parentAuth.title',
+  'parentAuth.enterPin',
+  'parentAuth.wrongPin',
+  'parentAuth.cooldown',
+  'parentAuth.cooldownTimer',
+  'parentAuth.attemptsRemaining',
+  'parentAuth.attemptsRemaining_plural',
+  'parentAuth.pinsDontMatch',
+  'parentAuth.setup.title',
+  'parentAuth.setup.enterPin',
+  'parentAuth.setup.confirmPin',
+  'parent.dashboard.title',
+  'parent.dashboard.placeholder',
+  'parent.settings.title',
+  'parent.settings.placeholder',
+] as const;
+
+/** Union of all valid i18n keys. */
+export type I18nKeyLiteral = (typeof I18N_KEYS)[number];
+
+// ── Locale descriptor ─────────────────────────────────────────────
+
+/** Supported locale codes. */
+export type Locale = 'en' | 'zh-Hans';
+
+/** Locale metadata. */
+export interface LocaleDescriptor {
+  code: Locale;
+  labelEn: string;
+  labelNative: string;
+}
+
+/** All supported locales with display labels. */
+export const LOCALES: LocaleDescriptor[] = [
+  { code: 'en', labelEn: 'English', labelNative: 'English' },
+  { code: 'zh-Hans', labelEn: 'Simplified Chinese', labelNative: '简体中文' },
+];
