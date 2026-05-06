@@ -66,7 +66,7 @@ export default function KidSetup() {
       } else {
         const result = await addKid(name, level, language);
         if (!result) {
-          Alert.alert('Error', 'Maximum number of children reached.');
+          Alert.alert(t('onboarding.common.error'), t('onboarding.kidProfile.maxKids'));
           return;
         }
       }
