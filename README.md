@@ -10,6 +10,25 @@ Singapore primary school AI tutor — on-device LLM, EN + Simplified Chinese, P1
 
 Do not commit secrets, child data, or model weights. See `.gitignore`.
 
+### Docs structure
+
+| Directory | Purpose |
+|---|---|
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Full technical architecture |
+| [`docs/decisions/`](docs/decisions/README.md) | Locked-in decisions, dated |
+| [`docs/research/`](docs/research/README.md) | Investigations, comparisons |
+| [`docs/lessons/`](docs/lessons/README.md) | Postmortems, gotchas |
+| [`docs/reviews/`](docs/reviews/README.md) | Review records that survive past the issue thread |
+| [`docs/assets/`](docs/assets/README.md) | Screen-flow specs, UI handoff notes |
+
+Issue comments are for task-local status. Use `docs/` for anything that should outlive the issue.
+
+---
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for development conventions, quality bars, commit conventions, and the review protocol.
+
 ---
 
 ## Model integrity hashes
