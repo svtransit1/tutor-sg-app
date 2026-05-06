@@ -1,0 +1,102 @@
+{
+  "onboarding": {
+    "kidProfile": {
+      "title": "Set up child profile",
+      "nameLabel": "Child's name",
+      "namePlaceholder": "Enter a name (max 30 characters)",
+      "nameError": "Name must be 1-30 characters",
+      "levelLabel": "Primary level",
+      "levels": {
+        "P1": "Primary 1",
+        "P2": "Primary 2",
+        "P3": "Primary 3",
+        "P4": "Primary 4",
+        "P5": "Primary 5",
+        "P6": "Primary 6"
+      },
+      "languageLabel": "Primary language",
+      "languageEN": "English",
+      "languageZH": "简体中文",
+      "children": "Children",
+      "addFirst": "Add your first child",
+      "addAnother": "Add another child",
+      "addTitle": "Add another child",
+      "editTitle": "Edit profile",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteTitle": "Delete profile?",
+      "deleteDesc": "This cannot be undone.",
+      "maxKids": "Maximum 4 children reached.",
+      "continue": "Continue",
+      "skip": "Skip for now"
+    },
+    "common": {
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "back": "Back",
+      "next": "Next",
+      "save": "Save",
+      "done": "Done"
+    },
+    "subjects": {
+      "math": "Mathematics",
+      "english": "English",
+      "science": "Science",
+      "chinese_mt": "Chinese Mother Tongue"
+    },
+    "home": {
+      "greeting": "Hi! Ready to start?",
+      "snapHomework": "Snap your homework",
+      "parentArea": "Parent area"
+    },
+    "camera": {
+      "title": "Scan Homework",
+      "instructions": "Point your camera at the homework",
+      "permissionDenied": "Camera permission denied",
+      "requestPermission": "Grant Permission",
+      "capture": "Take Photo",
+      "retake": "Retake",
+      "usePhoto": "Use Photo",
+      "addPage": "Add Page",
+      "done": "Done",
+      "processing": "Processing..."
+    },
+    "feedback": {
+      "loading": "Thinking...",
+      "hint": "Hint",
+      "step": "Step",
+      "solution": "Solution",
+      "error": "Try Again",
+      "askHint": "Ask for a Hint",
+      "done": "Done",
+      "newHomework": "New Homework",
+      "sessionSaved": "Session saved to Parent Log"
+    },
+    "manualInput": {
+      "title": "Type Item {{number}}",
+      "instructions": "We couldn't recognise this item. Please type or write it.",
+      "placeholder": "Type here...",
+      "continue": "Continue"
+    },
+    "consent": {
+      "title": "Privacy & Consent",
+      "subtitle": "Before we begin, here is how we protect your child's data.",
+      "promiseTitle": "Your child's homework stays on this device",
+      "promiseBody": "Photos, OCR text, written answers, and AI explanations are processed on this phone or tablet. They are not sent to our servers.",
+      "detailPhotos": "• Homework photos never leave the device.",
+      "detailAnswers": "• Typed or written answers stay local.",
+      "detailTelemetry": "• Anonymous app-health telemetry is optional and starts off.",
+      "deviceOnlyTitle": "Everything stays on this device",
+      "deviceOnlyBody": "Photos, homework questions, and answers are processed entirely on your device. Nothing is uploaded to any server. Your child's data never leaves this phone.",
+      "telemetryTitle": "Share anonymous app health data",
+      "telemetryBody": "Helps us fix crashes and download issues. It never includes photos, OCR text, or your child's answers.",
+      "telemetryAccessibility": "Share anonymous app health data",
+      "telemetryToggleOn": "Send anonymous crash reports",
+      "telemetryToggleOff": "No crash reports will be sent",
+      "accept": "I agree to the privacy policy",
+      "policyLink": "Read the full privacy policy",
+      "privacyPolicyLink": "Read full privacy policy",
+      "continue": "Continue"
+    }
+  }
+}

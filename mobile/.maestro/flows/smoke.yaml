@@ -1,0 +1,140 @@
+# Smoke test: app launches, onboarding/welcome renders, homework flow accessible
+#
+# Prerequisites:
+#   1. Build the dev client:  expo run:ios  (or expo run:android)
+#   2. Then run:              npm run e2e:smoke
+#
+# This test runs against a dev build (not Expo Go), since the app will use
+# native modules (LLM runtime, camera, OCR, PencilKit).
+
+appId: com.aaas.tutorsg
+env:
+  STEP_TIMEOUT: 15000
+
+---
+# Launch the app with a fresh state
+- launchApp:
+    appId: 'com.aaas.tutorsg'
+    clearState: true
+
+# Wait for the onboarding welcome screen to render
+- waitForVisible:
+    text: 'Welcome'
+    timeout: 15000
+
+# Verify onboarding welcome subtitle
+- assertVisible:
+    text: 'Your AI tutor is ready to help'
+
+# Take a screenshot for visual verification
+- takeScreenshot: 'smoke-onboarding-welcome'
+
+# Tap "Next" to proceed through onboarding
+- tapOn:
+    testID: 'welcome-continue'
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Accept consent
+- assertVisible:
+    text: 'Privacy'
+- tapOn:
+    testID: 'consent-checkbox'
+- waitForAnimationToEnd:
+    timeout: 3000
+- tapOn:
+    testID: 'consent-continue'
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Continue through device tier check
+- extendedWaitUntil:
+    visible:
+      text: 'Ready'
+    timeout: 10000
+- tapOn:
+    testID: 'deviceTier-continue'
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Wait for model download step
+- waitForVisible:
+    text: 'Setting up your tutor'
+    timeout: 10000
+- extendedWaitUntil:
+    visible:
+      text: 'Ready'
+    timeout: 30000
+
+# Model download auto-advances to kid profile when complete
+
+# Wait for kid profile screen
+- extendedWaitUntil:
+    visible:
+      text: 'child'
+    timeout: 10000
+    optional: true
+
+# Add a child quickly
+- tapOn:
+    testID: 'kidProfile-add'
+    optional: true
+
+# Enter name and save
+- tapOn:
+    testID: 'kidProfile-name'
+    optional: true
+- inputText: 'TestKid'
+    optional: true
+
+- tapOn:
+    testID: 'kidProfile-level-P3'
+    optional: true
+
+- tapOn:
+    testID: 'kidProfile-save'
+    optional: true
+
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Continue past kid profile
+- tapOn:
+    testID: 'kidProfile-continue'
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Wait for first-homework intro then proceed
+- waitForAnimationToEnd:
+    timeout: 3000
+- tapOn:
+    testID: 'firstHomework-start'
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# Onboarding done — should redirect to app home
+- extendedWaitUntil:
+    visible:
+      text: 'Ready to start'
+    timeout: 15000
+
+# Verify the home screen renders the camera button
+- assertVisible:
+    text: 'Snap your homework'
+
+# Verify subject tiles are present
+- assertVisible:
+    text: 'Mathematics'
+- assertVisible:
+    text: 'English'
+- assertVisible:
+    text: 'Science'
+- assertVisible:
+    text: 'Chinese'
+
+# Take a screenshot of home screen
+- takeScreenshot: 'smoke-home-screen'
+
+# Stop the app cleanly
+- stopApp:
+    appId: 'com.aaas.tutorsg'

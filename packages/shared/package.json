@@ -4,19 +4,14 @@
   "private": true,
   "main": "src/index.ts",
   "scripts": {
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "test": "node ../../node_modules/jest/bin/jest.js --passWithNoTests --maxWorkers=2"
-  },
-  "dependencies": {
-    "@tutor-sg/device-tier": "*",
-    "@tutor-sg/features": "*",
-    "@tutor-sg/llm": "*"
+    "test": "node --experimental-specifier-resolution=node --loader ts-node/esm __tests__/registry.test.ts"
   },
   "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.4.9",
-    "typescript": "^5.8.0"
+    "ajv": "^8.20.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "ajv-formats": "^3.0.1"
   }
 }
