@@ -10,6 +10,19 @@
       "continue": "我是家长 / 监护人",
       "goBack": "我不是 — 返回"
     },
+    "parentPinSetup": {
+      "title": "设置家长密码",
+      "body": "设置一个 4 位数密码。以后您可以用它查看孩子的学习记录。",
+      "enterPin": "输入 4 位数字密码",
+      "confirmPin": "确认您的密码",
+      "mismatch": "密码不匹配，请重新输入。",
+      "skip": "跳过 — 稍后设置",
+      "accessibility": {
+        "digitInput": "第 {{position}} 位数字",
+        "confirmDigitInput": "确认第 {{position}} 位数字",
+        "skipButton": "跳过密码设置"
+      }
+    },
     "siblingPrompt": {
       "title": "家里还有其他孩子要用吗？",
       "subtitle": "现在添加，他/她也会有自己的学习记录。",
@@ -154,6 +167,81 @@
         "welcomeBanner": "欢迎横幅。开始你的第一次作业辅导。",
         "practiceTile": "试试{{subject}}练习题"
       }
+    }
+  },
+  "common": {
+    "cancel": "取消",
+    "back": "返回",
+    "goBack": "返回首页",
+    "loading": "加载中…",
+    "retry": "重试"
+  },
+  "cameraScreen": {
+    "snapPrompt": "把作业对齐框内",
+    "pages": "已拍摄 {{count}} 页",
+    "pages_plural": "已拍摄 {{count}} 页",
+    "addAnother": "再加一页",
+    "done": "完成 — 获取帮助",
+    "hint": {
+      "singlePage": "把作业放在取景框内，然后点击下方按钮",
+      "morePages": "很好！可以再加页，或点击完成"
+    },
+    "status": {
+      "capturing": "正在拍照…",
+      "ocr": "正在识别作业…",
+      "inferring": "正在思考题目…",
+      "ocrSubtext": "请稍候片刻",
+      "inferenceSubtext": "AI 老师正在解答每一道题"
+    },
+    "permission": {
+      "title": "需要相机权限",
+      "description": "我们需要相机权限来拍摄你的作业。照片不会离开这台设备。",
+      "cta": "开启相机权限"
+    },
+    "manualInput": {
+      "title": "有些内容看不清楚",
+      "description": "以下内容识别不清，请在下方输入你看到的文字。",
+      "placeholder": "在此输入文字…",
+      "submit": "继续",
+      "accessibility": "第 {{item}} 项手动输入"
+    },
+    "error": {
+      "title": "出了点问题",
+      "captureFailed": "拍照失败，请重试。",
+      "processingFailed": "无法识别作业，请调整光线后重试。",
+      "inferenceFailed": "AI 老师暂时无法处理，请重试。",
+      "retake": "重新拍照"
+    },
+    "accessibility": {
+      "cancel": "返回首页",
+      "capture": "拍下作业照片"
+    }
+  },
+  "cameraResult": {
+    "title": "作业辅导",
+    "retake": "重新拍照",
+    "question": "第 {{number}} 题",
+    "questions": "{{count}} 题",
+    "questions_plural": "{{count}} 道题",
+    "hint": "提示",
+    "showSteps": "显示解题步骤",
+    "steps": "分步指导",
+    "showSolution": "显示完整答案",
+    "fullSolution": "完整解答",
+    "tryThis": "试试这个",
+    "backToHome": "返回首页",
+    "encouragement": {
+      "title": "做得很好！💪",
+      "body": "先试试提示。如果还是卡住了，点击「显示解题步骤」获取分步指导。"
+    },
+    "followUp": {
+      "placeholder": "输入追问…",
+      "send": "发送",
+      "accessibility": "输入追问内容",
+      "mockResponse": "好问题！我来帮你。想想我们刚学的方法——试试用同样的思路来解决。你觉得第一步应该做什么？"
+    },
+    "error": {
+      "notFound": "这个结果已失效，请重新拍照。"
     }
   },
   "modelDownload": {
