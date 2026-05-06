@@ -1,0 +1,67 @@
+{
+  "app.loading": "tutor-sg — 加载中...",
+  "app.name": "tutor-sg",
+  "onboarding": {
+    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴" },
+    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧" }
+  },
+  "network.offline": "你已离线",
+  "network.offline.description": "拍照做作业仍然可用。下载需要 Wi-Fi。",
+  "network.cellular": "正在使用移动数据",
+  "network.cellular.description": "已暂停大文件下载以节省流量。",
+  "parentAuth": {
+    "title": "家长访问权限",
+    "enterPin": "请输入您的 PIN 码",
+    "wrongPin": "PIN 码错误，请重试。",
+    "cooldown": "尝试次数过多，请稍候。",
+    "cooldownTimer": "请等待 {{seconds}} 秒后再试",
+    "attemptsRemaining": "还剩 {{count}} 次机会",
+    "attemptsRemaining_plural": "还剩 {{count}} 次机会",
+    "pinsDontMatch": "PIN 码不匹配，请重试。",
+    "setup": {
+      "title": "设置家长 PIN 码",
+      "enterPin": "输入 4 位数字 PIN 码",
+      "confirmPin": "确认您的 PIN 码"
+    },
+    "signIn": {
+      "title": "创建您的帐户",
+      "subtitle": "登录以保存孩子的学习进度并访问家长功能。孩子的数据不会离开这台设备。",
+      "emailPlaceholder": "输入您的邮箱地址",
+      "sendMagicLink": "发送登录链接",
+      "magicLinkSent": "登录链接已发送！",
+      "checkEmail": "请查看您的邮箱中的登录链接。链接将在 10 分钟后过期。",
+      "orDivider": "或使用以下方式继续",
+      "continueWithGoogle": "使用 Google 账号继续",
+      "continueWithApple": "使用 Apple ID 继续",
+      "skip": "跳过，稍后再说",
+      "errorInvalidEmail": "请输入有效的邮箱地址",
+      "errorSendFailed": "发送登录链接失败，请重试。",
+      "errorSignInFailed": "登录失败，请重试。",
+      "errorAuthSession": "登录会话已取消或失败。",
+      "signedIn": "登录成功"
+    }
+  },
+  "parent": {
+    "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
+    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+  },
+  "modelDownload": {
+    "title": "正在设置你的导师...",
+    "progress": "正在下载 {{fileName}}...",
+    "progressPercent": "{{percent}}%",
+    "retrying": "正在重试下载 ({{attempt}}/{{max}})...",
+    "paused": "下载已暂停",
+    "resuming": "正在恢复下载...",
+    "completed": "下载完成",
+    "retry": "重试",
+    "wifiRequired": "需要 Wi-Fi 连接",
+    "errors": {
+      "connectivity_lost": "Wi-Fi 连接中断。重新连接后将恢复下载。",
+      "disk_insufficient": "存储空间不足。需要约 {{needed}}GB 可用空间。",
+      "cdn_unreachable": "无法连接服务器。请检查网络连接后重试。",
+      "hash_mismatch": "下载文件已损坏，正在重新下载...",
+      "download_stuck": "下载似乎卡住了，正在重试...",
+      "unknown_error": "出现错误，请重试。"
+    }
+  }
+}
