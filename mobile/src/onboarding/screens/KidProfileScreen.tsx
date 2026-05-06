@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
   },
   kidInfo: { marginBottom: 10 },
   kidName: { fontSize: 17, fontWeight: '600', color: '#1a1a2e' },
-  kidDetail: { fontSize: 14, color: '#666', marginTop: 2 },
+  kidDetail: { fontSize: 16, color: '#666', marginTop: 2 },
   kidActions: { flexDirection: 'row', gap: 8 },
   editBtn: {
     flex: 1,
