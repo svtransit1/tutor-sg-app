@@ -19,7 +19,9 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "latest",
+    "@sentry/react-native": "~7.0.0",
     "@tutor-sg/shared": "file:../packages/shared",
+    "tutor-sg-ocr": "file:modules/tutor-sg-ocr",
     "expo": "~54.0.0",
     "expo-camera": "latest",
     "expo-constants": "latest",

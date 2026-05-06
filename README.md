@@ -135,3 +135,20 @@ Placeholder launch assets live in `mobile/assets/`:
 | `splash.png` | variable | Launch screen splash |
 
 These are neutral placeholders with the working name `tutor-sg` — **NOT final art**. Final brand artwork is tracked under M2/Flutter design work.
+
+---
+
+## Onboarding telemetry (opt-in only)
+
+The app tracks minimum funnel events as Sentry breadcrumbs for the onboarding flow.
+
+### Events tracked
+
+`onboarding_started`, `consent_given`, `model_download_started`, `model_download_completed`, `kid_profile_created`, `first_homework_submitted`, `first_feedback_received`, `onboarding_completed`.
+
+### Privacy
+
+- **Opt-in only**: Sentry is only initialized after explicit parent consent.
+- **Anonymous**: device-tier + locale only. NO names, NO photos, NO answers, NO free-text.
+- **Zero egress when off**: With telemetry disabled, zero network requests are made during onboarding.
+- Uses Sentry breadcrumbs (no separate analytics SDK).
