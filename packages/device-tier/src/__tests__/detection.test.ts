@@ -1,9 +1,9 @@
-import { assignTier, buildCapabilities } from '../src';
+import { assignTier, buildCapabilities } from '../index';
 import {
   TIER_THRESHOLDS,
   HIGH_TIER_CHIPSETS,
   NativeDeviceInfo,
-} from '../src/types';
+} from '../types';
 
 function mockDevice(ramGB: number, chipset: string, npuAvailable: boolean): NativeDeviceInfo {
   return { totalRAM: ramGB, chipset, npuAvailable };

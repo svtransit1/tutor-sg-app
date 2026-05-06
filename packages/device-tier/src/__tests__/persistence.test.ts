@@ -1,5 +1,5 @@
-import { ensureSettingsTable, saveDeviceTier, loadDeviceTier } from '../src/persistence';
-import { __getMockDb, __resetMockDb } from '../__mocks__/expo-sqlite';
+import { ensureSettingsTable, saveDeviceTier, loadDeviceTier } from '../persistence';
+import { __getMockDb, __resetMockDb } from '../../__mocks__/expo-sqlite';
 
 describe('persistence', () => {
   const db = __getMockDb();
