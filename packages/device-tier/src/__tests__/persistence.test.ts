@@ -1,25 +1,43 @@
 import { ensureSettingsTable, saveDeviceTier, loadDeviceTier } from '../persistence';
-import { __getMockDb, __resetMockDb } from '../../__mocks__/expo-sqlite';
+import { __getMockDb, __resetMockDb } from '../__mocks__/expo-sqlite';
 
 describe('persistence', () => {
-  beforeEach(() => __resetMockDb());
+  const db = __getMockDb();
 
-  it('creates settings table', async () => {
-    await ensureSettingsTable(__getMockDb() as any);
-    expect(__getMockDb().execAsync).toHaveBeenCalledWith(expect.stringContaining('CREATE TABLE'));
+  beforeEach(() => {
+    __resetMockDb();
   });
 
-  it('upserts tier value', async () => {
-    await saveDeviceTier(__getMockDb() as any, 'high');
-    expect(__getMockDb().runAsync).toHaveBeenCalledWith(expect.stringContaining('INSERT OR REPLACE'), 'device_tier', 'high');
+  describe('ensureSettingsTable', () => {
+    it('creates settings table if not exists', async () => {
+      await ensureSettingsTable(db);
+      expect(db.execAsync).toHaveBeenCalledWith(
+        expect.stringContaining('CREATE TABLE IF NOT EXISTS settings'),
+      );
+    });
   });
 
-  it('returns null when no data', async () => {
-    expect(await loadDeviceTier(__getMockDb() as any)).toBeNull();
+  describe('saveDeviceTier', () => {
+    it('upserts the tier value', async () => {
+      await saveDeviceTier(db, 'high');
+      expect(db.runAsync).toHaveBeenCalledWith(
+        expect.stringContaining('INSERT OR REPLACE'),
+        'device_tier',
+        'high',
+      );
+    });
   });
 
-  it('returns stored tier', async () => {
-    __getMockDb().getFirstAsync.mockResolvedValue({ value: 'mid' });
-    expect(await loadDeviceTier(__getMockDb() as any)).toBe('mid');
+  describe('loadDeviceTier', () => {
+    it('returns null when no row exists', async () => {
+      const result = await loadDeviceTier(db);
+      expect(result).toBeNull();
+    });
+
+    it('returns the stored tier', async () => {
+      db.getFirstAsync.mockResolvedValue({ value: 'mid' });
+      const result = await loadDeviceTier(db);
+      expect(result).toBe('mid');
+    });
   });
 });
