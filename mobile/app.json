@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "tutor-sg",
+    "slug": "tutor-sg",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "tutor-sg",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#4A90D9"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aaas.tutorsg",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Take photos of homework for AI tutoring"
+      }
+    },
+    "android": {
+      "package": "com.aaas.tutorsg",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#4A90D9"
+      },
+      "permissions": ["android.permission.CAMERA"]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-localization"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

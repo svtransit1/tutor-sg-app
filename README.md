@@ -121,3 +121,17 @@ cd mobile && eas build --platform ios --profile internal
 - Run `eas login` and `eas build:configure` in `mobile/` on first use.
 
 Until an Apple Developer account is set up, the build scripts serve as stubs that will fail with an auth error — file a `boss-needed` issue to provision the Apple account.
+
+---
+
+## Launch assets (icon + splash)
+
+Placeholder launch assets live in `mobile/assets/`:
+
+| File | Size | Purpose |
+|------|------|---------|
+| `icon.png` | 1024x1024 | App Store icon |
+| `adaptive-icon.png` | 1024x1024 | Android adaptive icon foreground |
+| `splash.png` | variable | Launch screen splash |
+
+These are neutral placeholders with the working name `tutor-sg` — **NOT final art**. Final brand artwork is tracked under M2/Flutter design work.
