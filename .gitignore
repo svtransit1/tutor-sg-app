@@ -6,6 +6,10 @@
 *.p12
 *.keystore
 
+# Expo generated files
+.expo/
+expo-env.d.ts
+
 # OS
 .DS_Store
 Thumbs.db
@@ -23,6 +27,8 @@ node_modules/
 # Build outputs
 build/
 dist/
+# CI uses expo export --output-dir dist-{platform}
+dist-*/
 *.ipa
 *.apk
 *.aab
@@ -38,6 +44,15 @@ dist/
 # Only track JSON manifests, not actual model weights
 packages/shared/src/models/*
 !packages/shared/src/models/*.json
+
+# TypeScript incremental compilation
+*.tsbuildinfo
+
+# Lint caches
+.eslintcache
+
+# Debug logs
+*.log
 
 # Test outputs
 coverage/
