@@ -30,23 +30,30 @@
       "continue": "Continue",
       "skip": "Skip for now"
     },
+    "langPick": {
+      "title": "Choose your language",
+      "subtitle": "Your app will use this language."
+    },
     "common": {
       "cancel": "Cancel",
       "delete": "Delete",
       "back": "Back",
       "next": "Next",
       "save": "Save",
-      "done": "Done"
+      "done": "Done",
+      "error": "Error"
     },
     "subjects": {
       "math": "Mathematics",
       "english": "English",
       "science": "Science",
-      "chinese_mt": "Chinese Mother Tongue"
+      "chinese_mt": "Chinese Mother Tongue",
+      "title": "Subjects"
     },
     "home": {
       "greeting": "Hi! Ready to start?",
       "snapHomework": "Snap your homework",
+      "history": "History",
       "parentArea": "Parent area"
     },
     "camera": {
@@ -63,7 +70,8 @@
       "done": "Done",
       "processing": "Processing...",
       "processingFailed": "Processing failed. Please try again.",
-      "pageCount": "{{count}} page(s)"
+      "pageCount": "{{count}} page(s)",
+      "captureFailed": "Could not capture photo"
     },
     "feedback": {
       "title": "Homework Feedback",

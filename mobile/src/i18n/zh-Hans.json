@@ -30,23 +30,30 @@
       "continue": "继续",
       "skip": "稍后设置"
     },
+    "langPick": {
+      "title": "选择语言",
+      "subtitle": "应用将使用此语言。"
+    },
     "common": {
       "cancel": "取消",
       "delete": "删除",
       "back": "返回",
       "next": "下一步",
       "save": "保存",
-      "done": "完成"
+      "done": "完成",
+      "error": "出错"
     },
     "subjects": {
       "math": "数学",
       "english": "英文",
       "science": "科学",
-      "chinese_mt": "华文"
+      "chinese_mt": "华文",
+      "title": "科目"
     },
     "home": {
       "greeting": "你好！准备好了吗？",
       "snapHomework": "拍一下作业",
+      "history": "历史记录",
       "parentArea": "家长专区"
     },
     "camera": {
@@ -63,7 +70,8 @@
       "done": "完成",
       "processing": "处理中...",
       "processingFailed": "处理失败，请重试",
-      "pageCount": "共 {{count}} 页"
+      "pageCount": "共 {{count}} 页",
+      "captureFailed": "无法拍照"
     },
     "feedback": {
       "title": "作业反馈",

@@ -1,5 +1,5 @@
 import * as SQLite from 'expo-sqlite';
-import { HomeworkSession, FeedbackBlock, OcrResult } from '../types/homework';
+import { HomeworkSession } from '../types/homework';
 
 let db: SQLite.SQLiteDatabase | null = null;
 
