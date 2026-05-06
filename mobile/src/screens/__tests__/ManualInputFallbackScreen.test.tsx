@@ -18,7 +18,7 @@
  */
 
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react-native';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react-native';
 import ManualInputFallbackScreen from '../../../app/(kid)/manual-input';
 
 // ── Mocks ──────────────────────────────────────────────────────────
@@ -87,45 +87,62 @@ describe('ManualInputFallbackScreen', () => {
     expect(screen.getByText('manualInputFallback.drawTab')).toBeTruthy();
   });
 
-  it('shows TextInput fields in type mode', () => {
+  it('shows TextInput fields in type mode', async () => {
     render(<ManualInputFallbackScreen />);
     // Type placeholders
-    const placeholders = screen.getAllByPlaceholderText(
-      'manualInputFallback.typePlaceholder',
+    const placeholders = await waitFor(() =>
+      screen.getAllByPlaceholderText(
+        'manualInputFallback.typePlaceholder',
+      ),
     );
     expect(placeholders.length).toBe(2);
   });
 
   // ── Submit ─────────────────────────────────────────────
 
-  it('shows submit button with remaining count', () => {
+  it('shows submit button with remaining count', async () => {
     render(<ManualInputFallbackScreen />);
-    // Button shows "manualInputFallback.submit (2)" since 2 items remain
-    expect(
-      screen.getByText('manualInputFallback.submit (2)'),
-    ).toBeTruthy();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('manualInputFallback.submit (2)'),
+      ).toBeTruthy();
+    });
   });
 
-  it('validates at least one answer before submitting', () => {
+  it('validates at least one answer before submitting', async () => {
     render(<ManualInputFallbackScreen />);
-    fireEvent.press(
+
+    const submitButton = await waitFor(() =>
       screen.getByText('manualInputFallback.submit (2)'),
     );
+
+    await act(async () => {
+      fireEvent.press(submitButton);
+    });
+
     expect(
       screen.getByText('manualInputFallback.error.noInputs'),
     ).toBeTruthy();
   });
 
-  it('navigates back to camera on submit when an answer is provided', () => {
+  it('navigates back to camera on submit when an answer is provided', async () => {
     render(<ManualInputFallbackScreen />);
 
-    const textInputs = screen.getAllByPlaceholderText(
-      'manualInputFallback.typePlaceholder',
+    const textInputs = await waitFor(() =>
+      screen.getAllByPlaceholderText(
+        'manualInputFallback.typePlaceholder',
+      ),
     );
     fireEvent.changeText(textInputs[0], 'my answer');
-    fireEvent.press(
+
+    const submitButton = await waitFor(() =>
       screen.getByText('manualInputFallback.submit (1)'),
     );
+
+    await act(async () => {
+      fireEvent.press(submitButton);
+    });
 
     expect(mockRouter.push).toHaveBeenCalledWith({
       pathname: '/(kid)/camera',
@@ -135,7 +152,7 @@ describe('ManualInputFallbackScreen', () => {
     });
   });
 
-  it('includes captured page URIs when navigating back on submit', () => {
+  it('includes captured page URIs when navigating back on submit', async () => {
     mockSearchParams({
       items: VALID_ITEMS,
       capturedPageUris: JSON.stringify([
@@ -145,13 +162,21 @@ describe('ManualInputFallbackScreen', () => {
     });
 
     render(<ManualInputFallbackScreen />);
-    const textInputs = screen.getAllByPlaceholderText(
-      'manualInputFallback.typePlaceholder',
+
+    const textInputs = await waitFor(() =>
+      screen.getAllByPlaceholderText(
+        'manualInputFallback.typePlaceholder',
+      ),
     );
     fireEvent.changeText(textInputs[0], 'answer text');
-    fireEvent.press(
+
+    const submitButton = await waitFor(() =>
       screen.getByText('manualInputFallback.submit (1)'),
     );
+
+    await act(async () => {
+      fireEvent.press(submitButton);
+    });
 
     expect(mockRouter.push).toHaveBeenCalledWith({
       pathname: '/(kid)/camera',

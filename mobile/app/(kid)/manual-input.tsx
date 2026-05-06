@@ -32,10 +32,22 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import DrawingCanvas, { type Stroke } from '@/components/DrawingCanvas';
+import {
+  saveDraft,
+  loadDraft,
+  clearDraft,
+  type DraftData,
+} from '@/storage/manual-input-draft';
 
 // ── Types ──────────────────────────────────────────────────────────
 
 export type InputMode = 'type' | 'draw';
+
+export type SubjectKey =
+  | 'math'
+  | 'english'
+  | 'science'
+  | 'chinese';
 
 export interface ManualInputItem {
   /** 1-based index shown to the user */
@@ -53,6 +65,13 @@ interface ManualInputAnswer {
   textValue: string;
   strokes: Stroke[];
 }
+
+const SUBJECTS: { key: SubjectKey; icon: string }[] = [
+  { key: 'math', icon: '🧮' },
+  { key: 'english', icon: '📖' },
+  { key: 'science', icon: '🔬' },
+  { key: 'chinese', icon: '🀄' },
+];
 
 // ── Props from navigation params ──────────────────────────────────
 
@@ -166,34 +185,100 @@ export default function ManualInputFallbackScreen() {
   const isDark = useColorScheme() === 'dark';
   const params = useLocalSearchParams<ManualInputParams>();
 
-  // ── Parse navigation params ──────────────────────────────────
+  // ── Parse navigation params synchronously ──────────────────
 
-  const [items, setItems] = useState<ManualInputItem[]>([]);
-  const [answers, setAnswers] = useState<ManualInputAnswer[]>([]);
-  const [inputMode, setInputMode] = useState<InputMode>('type');
-  const [parseError, setParseError] = useState(false);
-  const [validationError, setValidationError] = useState<string | null>(null);
-
-  useEffect(() => {
+  const [items, setItems] = useState<ManualInputItem[]>(() => {
     try {
-      const parsedItems: ManualInputItem[] = JSON.parse(params.items ?? '[]');
-      if (parsedItems.length === 0) {
-        setParseError(true);
-        return;
-      }
-      setItems(parsedItems);
-      setAnswers(
-        parsedItems.map((item) => ({
-          index: item.index,
-          mode: 'type',
-          textValue: '',
-          strokes: [],
-        })),
-      );
+      return JSON.parse(params.items ?? '[]') as ManualInputItem[];
     } catch {
-      setParseError(true);
+      return [];
     }
-  }, [params.items]);
+  });
+  const [answers, setAnswers] = useState<ManualInputAnswer[]>(() => {
+    try {
+      const parsed = JSON.parse(params.items ?? '[]') as ManualInputItem[];
+      return parsed.map((item) => ({
+        index: item.index,
+        mode: 'type' as const,
+        textValue: '',
+        strokes: [],
+      }));
+    } catch {
+      return [];
+    }
+  });
+  const [inputMode, setInputMode] = useState<InputMode>('type');
+  const [parseError, setParseError] = useState(() => {
+    try {
+      JSON.parse(params.items ?? '[]');
+      return false;
+    } catch {
+      return true;
+    }
+  });
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [selectedSubject, setSelectedSubject] = useState<SubjectKey | null>(null);
+  const [draftRestored, setDraftRestored] = useState(false);
+
+  // ── Restore draft asynchronously on mount ──────────────────
+  useEffect(() => {
+    const capturedUris = params.capturedPageUris;
+    if (!capturedUris || parseError || items.length === 0) return;
+
+    (async () => {
+      try {
+        const draft = await loadDraft(capturedUris);
+        if (!draft) {
+          setDraftRestored(true);
+          return;
+        }
+
+        setAnswers(
+          items.map((item) => {
+            const saved = draft.answers.find(
+              (a) => a.index === item.index,
+            );
+            return {
+              index: item.index,
+              mode: draft.inputMode,
+              textValue: saved?.textValue ?? '',
+              strokes: saved?.strokesJSON
+                ? (JSON.parse(saved.strokesJSON) as Stroke[])
+                : [],
+            };
+          }),
+        );
+        setInputMode(draft.inputMode);
+        if (draft.subject) {
+          setSelectedSubject(draft.subject as SubjectKey);
+        }
+        setDraftRestored(true);
+      } catch {
+        setDraftRestored(true);
+      }
+    })();
+  }, []); // run once on mount
+
+  // ── Auto-save draft when answers change ─────────────────────
+  useEffect(() => {
+    if (!draftRestored || !params.capturedPageUris) return;
+
+    const timer = setTimeout(() => {
+      const data: DraftData = {
+        answers: answers.map((a) => ({
+          index: a.index,
+          textValue: a.textValue,
+          strokesJSON: JSON.stringify(a.strokes),
+        })),
+        subject: selectedSubject ?? '',
+        inputMode,
+        updatedAt: new Date().toISOString(),
+      };
+      saveDraft(params.capturedPageUris, data);
+    }, 500); // Debounce 500ms
+
+    return () => clearTimeout(timer);
+  }, [answers, selectedSubject, inputMode, draftRestored, params.capturedPageUris]);
 
   // ── Update answer for a specific item ──────────────────────────
 
@@ -221,7 +306,7 @@ export default function ManualInputFallbackScreen() {
 
   // ── Submit ─────────────────────────────────────────────────────
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
     // Validate: at least one item must have input
     const hasInput = answers.some(
       (a) => a.textValue.trim().length > 0 || a.strokes.length > 0,
@@ -229,6 +314,11 @@ export default function ManualInputFallbackScreen() {
     if (!hasInput) {
       setValidationError(t('manualInputFallback.error.noInputs'));
       return;
+    }
+
+    // Clear draft on successful submit
+    if (params.capturedPageUris) {
+      await clearDraft(params.capturedPageUris);
     }
 
     // Build the result to pass back
@@ -246,9 +336,10 @@ export default function ManualInputFallbackScreen() {
       params: {
         manualInputResult: JSON.stringify(result),
         capturedPageUris: params.capturedPageUris ?? '',
+        manualInputSubject: selectedSubject ?? '',
       },
     });
-  }, [answers, params.capturedPageUris, router, t]);
+  }, [answers, selectedSubject, params.capturedPageUris, router, t]);
 
   // ── Skip item ──────────────────────────────────────────────────
 
@@ -399,6 +490,66 @@ export default function ManualInputFallbackScreen() {
             ? t('manualInputFallback.remaining', { count: remaining })
             : t('manualInputFallback.remaining', { count: 0 })}
         </Text>
+
+        {/* Subject picker */}
+        <Text
+          style={[
+            styles.subjectPrompt,
+            { color: isDark ? '#BBBBBB' : '#6B7280' },
+          ]}
+        >
+          {t('manualInputFallback.subjectPrompt')}
+        </Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.subjectRow}
+        >
+          {SUBJECTS.map((subject) => {
+            const isSelected = selectedSubject === subject.key;
+            return (
+              <TouchableOpacity
+                key={subject.key}
+                style={[
+                  styles.subjectChip,
+                  {
+                    backgroundColor: isDark
+                      ? isSelected
+                        ? '#2563EB'
+                        : '#2A2A2A'
+                      : isSelected
+                        ? '#4A90D9'
+                        : '#F3F4F6',
+                    borderColor: isDark ? '#444' : '#D1D5DB',
+                  },
+                ]}
+                onPress={() =>
+                  setSelectedSubject(isSelected ? null : subject.key)
+                }
+                accessibilityRole="button"
+                accessibilityLabel={`${subject.key} subject`}
+                accessibilityState={{ selected: isSelected }}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.subjectChipIcon}>{subject.icon}</Text>
+                <Text
+                  style={[
+                    styles.subjectChipLabel,
+                    {
+                      color: isSelected
+                        ? '#FFFFFF'
+                        : isDark
+                          ? '#CCCCCC'
+                          : '#4A5568',
+                    },
+                  ]}
+                >
+                  {t(`kidHome.subjects.${subject.key}`)}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
 
         {/* Mode switcher */}
         <ModeSegmentedControl
@@ -627,6 +778,21 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: 17, fontWeight: '700' },
   headerDesc: { fontSize: 13, lineHeight: 18 },
   progressText: { fontSize: 12, fontWeight: '500' },
+
+  // ── Subject Picker ──
+  subjectPrompt: { fontSize: 13, fontWeight: '500', marginBottom: -4 },
+  subjectRow: { gap: 8, paddingVertical: 4 },
+  subjectChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  subjectChipIcon: { fontSize: 16 },
+  subjectChipLabel: { fontSize: 14, fontWeight: '600' },
 
   // ── Segmented Control ──
   segmentedControl: {
