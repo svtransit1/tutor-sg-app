@@ -1,6 +1,7 @@
 /**
  * Root layout — wraps the entire app in providers.
  *
+ * - DeviceTierProvider for device capability detection + below-floor guard
  * - OnboardingProvider for state machine
  * - SafeAreaProvider for safe area insets
  * - StatusBar for system UI styling
@@ -14,6 +15,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 
 import { OnboardingProvider } from '../src/onboarding';
+import { DeviceTierProvider } from '@tutor-sg/device-tier';
 import i18n from '../src/i18n';
 
 function LoadingScreen() {
@@ -43,17 +45,19 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <OnboardingProvider>
-        <StatusBar style="auto" />
-        <Stack screenOptions={{ headerShown: false }}>
-          {/* Root index handles redirect logic */}
-          <Stack.Screen name="index" />
-          {/* Onboarding group */}
-          <Stack.Screen name="(onboarding)" />
-          {/* Kid app group */}
-          <Stack.Screen name="(kid)" />
-        </Stack>
-      </OnboardingProvider>
+      <DeviceTierProvider>
+        <OnboardingProvider>
+          <StatusBar style="auto" />
+          <Stack screenOptions={{ headerShown: false }}>
+            {/* Root index handles redirect logic */}
+            <Stack.Screen name="index" />
+            {/* Onboarding group */}
+            <Stack.Screen name="(onboarding)" />
+            {/* Kid app group */}
+            <Stack.Screen name="(kid)" />
+          </Stack>
+        </OnboardingProvider>
+      </DeviceTierProvider>
     </SafeAreaProvider>
   );
 }

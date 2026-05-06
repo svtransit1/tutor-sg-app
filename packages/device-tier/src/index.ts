@@ -1,3 +1,19 @@
+/**
+ * @tutor-sg/device-tier — Device capability detection and tier assignment.
+ *
+ * Per ADD §3.4: Runtime detection at first launch.
+ * Per locked decisions: below floor → "device too old" message.
+ *
+ * Exports:
+ * - Types: DeviceTier, DeviceCapabilities, NativeDeviceInfo, etc.
+ * - Constants: TIER_THRESHOLDS, HIGH_TIER_CHIPSETS, MODEL_MAP, etc.
+ * - Functions: assignTier(), buildCapabilities()
+ * - Components: BelowFloorModal
+ * - Provider: DeviceTierProvider, useDeviceTier
+ */
+
+// ── Type exports ───────────────────────────────────────────────────
+
 export type {
   DeviceTier,
   DeviceCapabilities,
@@ -14,46 +30,14 @@ export {
   BELOW_FLOOR_MESSAGES,
 } from './types';
 
+// ── Detection logic ────────────────────────────────────────────────
+
+export { assignTier, buildCapabilities } from './detect';
+
+// ── Component exports ──────────────────────────────────────────────
+
 export { BelowFloorModal } from './components/BelowFloorModal';
 
-import {
-  DeviceTier,
-  DeviceCapabilities,
-  NativeDeviceInfo,
-  TIER_THRESHOLDS,
-  HIGH_TIER_CHIPSETS,
-} from './types';
+// ── Provider exports ───────────────────────────────────────────────
 
-function isHighTierChipset(chipset: string): boolean {
-  return HIGH_TIER_CHIPSETS.some((c) => chipset.includes(c));
-}
-
-function hasModernNPU(info: NativeDeviceInfo): boolean {
-  if (!info.npuAvailable) return false;
-  return isHighTierChipset(info.chipset);
-}
-
-export function assignTier(info: NativeDeviceInfo): { tier: DeviceTier; belowFloor: boolean } {
-  if (info.totalRAM < TIER_THRESHOLDS.FLOOR_RAM_GB) {
-    return { tier: 'low', belowFloor: true };
-  }
-
-  const modernNPU = hasModernNPU(info);
-
-  if (info.totalRAM >= TIER_THRESHOLDS.HIGH_RAM_GB && modernNPU) {
-    return { tier: 'high', belowFloor: false };
-  }
-
-  return { tier: 'mid', belowFloor: false };
-}
-
-export function buildCapabilities(info: NativeDeviceInfo, tier?: DeviceTier): DeviceCapabilities {
-  const { tier: autoTier, belowFloor } = assignTier(info);
-  return {
-    tier: tier ?? autoTier,
-    ramGB: info.totalRAM,
-    chipset: info.chipset,
-    npuAvailable: info.npuAvailable,
-    belowFloor,
-  };
-}
+export { DeviceTierProvider, useDeviceTier } from './DeviceTierProvider';

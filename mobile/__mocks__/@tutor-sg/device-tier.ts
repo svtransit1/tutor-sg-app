@@ -64,6 +64,81 @@ export function buildCapabilities(
   };
 }
 
+/**
+ * DeviceTierProvider — mock that immediately resolves to mid tier.
+ * Used so RootLayout tests don't need real detection.
+ */
+import React, {
+  createContext,
+  useContext,
+  useMemo,
+  ReactNode,
+} from 'react';
+
+interface DeviceTierContextValue {
+  tier: 'high' | 'mid' | 'low';
+  capabilities: {
+    tier: 'high' | 'mid' | 'low';
+    ramGB: number;
+    chipset: string;
+    npuAvailable: boolean;
+    belowFloor: boolean;
+  };
+  belowFloor: boolean;
+  loading: boolean;
+  error: string | null;
+  refresh: () => Promise<void>;
+}
+
+const DeviceTierContext = createContext<DeviceTierContextValue | null>(null);
+
+export function DeviceTierProvider({ children }: { children: ReactNode }) {
+  const value = useMemo<DeviceTierContextValue>(
+    () => ({
+      tier: 'mid',
+      capabilities: {
+        tier: 'mid',
+        ramGB: 4,
+        chipset: 'MockChipset',
+        npuAvailable: false,
+        belowFloor: false,
+      },
+      belowFloor: false,
+      loading: false,
+      error: null,
+      refresh: async () => {},
+    }),
+    [],
+  );
+  return (
+    <DeviceTierContext.Provider value={value}>
+      {children}
+    </DeviceTierContext.Provider>
+  );
+}
+
+export function useDeviceTier(): DeviceTierContextValue {
+  const ctx = useContext(DeviceTierContext);
+  if (!ctx) {
+    // Return a default value outside of provider (for testing fallback assertions)
+    return {
+      tier: 'mid',
+      capabilities: {
+        tier: 'mid',
+        ramGB: 4,
+        chipset: 'MockChipset',
+        npuAvailable: false,
+        belowFloor: false,
+      },
+      belowFloor: false,
+      loading: false,
+      error: null,
+      refresh: async () => {},
+    };
+  }
+  return ctx;
+}
+
 export function BelowFloorModal({
   visible,
   language = 'en',
