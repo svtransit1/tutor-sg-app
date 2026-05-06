@@ -12,6 +12,32 @@ Do not commit secrets, child data, or model weights. See `.gitignore`.
 
 ---
 
+## Quick start
+
+```bash
+git clone git@github.com:aaas-pte-ltd/tutor-sg-app.git
+cd tutor-sg-app
+npm install
+```
+
+## Environment config
+
+1. Copy the example env file:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Edit `.env.local` — all keys are documented in `.env.example`.
+
+3. The config module (`@tutor-sg/shared/config`) validates required vars at startup.
+   See `packages/shared/src/config/env.ts` for the full Zod schema.
+
+4. Build-time secrets are managed via EAS Secrets / GitHub Actions Secrets.
+   See [`docs/SECRETS.md`](docs/SECRETS.md) for step-by-step setup.
+
+---
+
 ## Model integrity hashes
 
 The app verifies downloaded model artifacts against SHA-256 checksums in `packages/shared/src/models/integrity.json`.
