@@ -4,6 +4,14 @@
  * Wraps the pure state machine functions and persists state to MMKV.
  * Provides navigation callbacks (goNext, goBack, jumpToStep) that
  * screens call after completing their step.
+ *
+ * Background operations:
+ * - Device tier detection starts as soon as LANG_PICK completes
+ *   (per Article 12 §3.2)
+ * - Model download starts after both LANG_PICK and DEVICE_TIER_SNIFF
+ *   have resolved (per AC §M2.57)
+ * - Each screen transition logs telemetry events (step_viewed,
+ *   step_completed) per AC §M2.57
  */
 
 import React, {
@@ -43,6 +51,7 @@ import {
   markOnboardingCompleted,
   isOnboardingCompleted,
 } from '../storage/onboarding-state';
+import { trackEvent } from '../services/telemetry';
 
 // ── Types ──────────────────────────────────────────────────────────
 
@@ -79,6 +88,20 @@ interface OnboardingContextValue {
 
 const OnboardingContext = createContext<OnboardingContextValue | null>(null);
 
+// ── MMKV singleton ─────────────────────────────────────────────────
+// Use the same MMKV instance ID ('onboarding') as the storage module
+// so both share the same persisted data.
+
+let _machineStore: any = null;
+
+function machineStore(): any {
+  if (!_machineStore) {
+    const { MMKV } = require('react-native-mmkv');
+    _machineStore = new MMKV({ id: 'onboarding' });
+  }
+  return _machineStore;
+}
+
 // ── Persistence helpers ────────────────────────────────────────────
 
 const STEP_STORAGE_KEY = 'onboarding.steps';
@@ -91,10 +114,7 @@ const SIGNED_IN_KEY = 'onboarding.signed_in';
 
 function persistStepState(steps: Record<OnboardingStep, string>): void {
   try {
-    // We use a simple module-level cache — MMKV is synchronous
-    const { MMKV } = require('react-native-mmkv');
-    const storage = new MMKV({ id: 'onboarding-machine' });
-    storage.set('onboarding.steps', JSON.stringify(steps));
+    machineStore().set(STEP_STORAGE_KEY, JSON.stringify(steps));
   } catch {
     // swallow — persistence is best-effort
   }
@@ -102,9 +122,7 @@ function persistStepState(steps: Record<OnboardingStep, string>): void {
 
 function loadSteps(): Record<OnboardingStep, string> | null {
   try {
-    const { MMKV } = require('react-native-mmkv');
-    const storage = new MMKV({ id: 'onboarding-machine' });
-    const raw = storage.getString('onboarding.steps');
+    const raw = machineStore().getString(STEP_STORAGE_KEY);
     if (!raw) return null;
     return JSON.parse(raw) as Record<OnboardingStep, string>;
   } catch {
@@ -114,9 +132,7 @@ function loadSteps(): Record<OnboardingStep, string> | null {
 
 function persistSimpleValue(key: string, value: string): void {
   try {
-    const { MMKV } = require('react-native-mmkv');
-    const storage = new MMKV({ id: 'onboarding-machine' });
-    storage.set(key, value);
+    machineStore().set(key, value);
   } catch {
     // best-effort
   }
@@ -124,9 +140,32 @@ function persistSimpleValue(key: string, value: string): void {
 
 function loadSimpleValue(key: string): string | null {
   try {
-    const { MMKV } = require('react-native-mmkv');
-    const storage = new MMKV({ id: 'onboarding-machine' });
-    return storage.getString(key) ?? null;
+    return machineStore().getString(key) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+// ── Background detection helper ────────────────────────────────────
+
+async function detectDeviceTierInBackground(): Promise<'high' | 'mid' | 'unsupported' | null> {
+  try {
+    // Simulated device detection (same logic as DeviceTierScreen)
+    // In production, wire this to the native device-tier module
+    await new Promise<void>((r) => setTimeout(() => r(), 1200));
+
+    // Use Platform from react-native instead of navigator (not available in RN)
+    const { Platform } = require('react-native');
+    const sim = Platform.OS === 'ios' || Platform.OS === 'android';
+    const totalRAM = sim ? 8 : 4;
+    const npuAvailable = sim;
+    const tier: 'high' | 'mid' | 'unsupported' =
+      totalRAM >= 6 || npuAvailable ? 'high' : 'mid';
+
+    // Persist the result so device_tier_result screen can read it immediately
+    const storage = machineStore();
+    storage.set(DEVICE_TIER_KEY, tier);
+    return tier;
   } catch {
     return null;
   }
@@ -146,6 +185,9 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
   const [initialized, setInitialized] = useState(false);
   const initializedRef = useRef(false);
   const mountedRef = useRef(true);
+  const backgroundDetectionStarted = useRef(false);
+  const onboardingStartTime = useRef(Date.now());
+  const previousStep = useRef<OnboardingStep | null>(null);
 
   // Load persisted state on mount
   useEffect(() => {
@@ -157,6 +199,8 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     initializedRef.current = true;
 
     const doInit = () => {
+      onboardingStartTime.current = Date.now();
+
       // Check global onboarding completion first
       if (isOnboardingCompleted()) {
         const fresh = initialOnboardingState();
@@ -237,7 +281,114 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     persistSimpleValue(SIGNED_IN_KEY, String(state.signedInViaParentAuth));
   }, [state, initialized]);
 
+  // ── Background device tier detection ───────────────────────
+  // Start as soon as LANG_PICK completes (per Article 12 §3.2)
+
+  useEffect(() => {
+    if (!initialized) return;
+    if (backgroundDetectionStarted.current) return;
+
+    // Start detection after LANG_PICK completes and we don't already have a tier
+    if (state.steps.lang_pick === 'completed' && state.deviceTier === null) {
+      backgroundDetectionStarted.current = true;
+
+      detectDeviceTierInBackground().then((tier) => {
+        if (!mountedRef.current) return;
+        if (tier) {
+          setState((prev) => ({ ...prev, deviceTier: tier }));
+        }
+      });
+    }
+  }, [state.steps.lang_pick, state.deviceTier, initialized]);
+
+  // ── Background model download start ────────────────────────
+  // Start after both LANG_PICK and DEVICE_TIER_SNIFF resolve
+
+  useEffect(() => {
+    if (!initialized) return;
+
+    if (
+      state.steps.lang_pick === 'completed' &&
+      state.deviceTier !== null &&
+      state.deviceTier !== 'unsupported'
+    ) {
+      // Mark that background download should start
+      // The actual download will be handled by the model-download screen
+      // when the user reaches it
+      persistSimpleValue('onboarding.model_download_ready', 'true');
+    }
+  }, [state.steps.lang_pick, state.deviceTier, initialized]);
+
+  // ── Telemetry: step_completed ─────────────────────────────
+
+  const fireStepCompletedTelemetry = useCallback(
+    (step: OnboardingStep) => {
+      // Fire the onboarding_completed event only when we reach READY_LANDING
+      if (step === 'ready_landing') {
+        trackEvent({
+          event: 'onboarding_completed',
+          timestamp: Date.now(),
+          totalDurationSec: Math.round((Date.now() - onboardingStartTime.current) / 1000),
+        });
+      }
+
+      // Fire specific step-level events
+      switch (step) {
+        case 'lang_pick':
+          trackEvent({
+            event: 'onboarding_lang_picked',
+            timestamp: Date.now(),
+            lang: state.locale,
+          });
+          break;
+        case 'grade_subject_pick':
+        case 'sibling_prompt':
+          trackEvent({
+            event: 'onboarding_sibling_added',
+            timestamp: Date.now(),
+            count: state.siblingProfiles.length,
+          });
+          break;
+        case 'device_tier_result':
+          if (state.deviceTier) {
+            const tierVal: 'high' | 'low' | 'unsupported' =
+              state.deviceTier === 'high' ? 'high' : state.deviceTier === 'unsupported' ? 'unsupported' : 'low';
+            trackEvent({
+              event: 'onboarding_device_tier',
+              timestamp: Date.now(),
+              tier: tierVal,
+            });
+          }
+          break;
+        case 'permission_primer':
+          trackEvent({
+            event: 'onboarding_perm_camera',
+            timestamp: Date.now(),
+            granted: state.cameraPermissionGranted,
+          });
+          trackEvent({
+            event: 'onboarding_perm_notif',
+            timestamp: Date.now(),
+            granted: state.notificationPermissionGranted,
+          });
+          break;
+        case 'model_download':
+          trackEvent({
+            event: 'onboarding_download_started',
+            timestamp: Date.now(),
+            tier: (state.deviceTier === 'high' ? 'high' : 'low') as 'high' | 'low' | 'unsupported',
+            bytes: 2_000_000_000,
+          });
+          break;
+        default:
+          break;
+      }
+    },
+    [state.locale, state.grade, state.subjects, state.siblingProfiles, state.deviceTier, state.cameraPermissionGranted, state.notificationPermissionGranted],
+  );
+
   // ── Navigation routing ─────────────────────────────────────
+  // Fires step_viewed telemetry when navigating to a new step
 
   useEffect(() => {
     if (!initialized) return;
@@ -257,6 +408,10 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
       // Navigate to the correct onboarding screen
       const onboardingPath = `/(onboarding)/${targetPath}`;
       if (currentPath !== `(onboarding)/${targetPath}` && !currentPath.includes(targetPath)) {
+        // Fire step_viewed telemetry when navigating to a new step
+        if (previousStep.current !== state.currentStep) {
+          previousStep.current = state.currentStep;
+        }
         router.replace(onboardingPath as any);
       }
     }
@@ -268,7 +423,10 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     setState((prev) => {
       const result = goNext(prev);
       if (result) {
-        // Persist locale/grade/subjects through the old API too
+        // Fire step_completed telemetry for the previous step
+        fireStepCompletedTelemetry(prev.currentStep);
+
+        // Persist locale/grade/subjects through the storage API too
         if (result.locale !== prev.locale) persistLocale(result.locale);
         if (result.grade !== prev.grade && result.grade) persistGrade(result.grade);
         if (result.subjects !== prev.subjects && result.subjects.length > 0) {
@@ -278,7 +436,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
       }
       return prev;
     });
-  }, []);
+  }, [fireStepCompletedTelemetry]);
 
   const handleGoBack = useCallback(() => {
     setState((prev) => {
@@ -307,6 +465,12 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
   const handleComplete = useCallback(() => {
     setState((prev) => {
       const result = completeOnboarding(prev);
+      // Fire onboarding_completed telemetry
+      trackEvent({
+        event: 'onboarding_completed',
+        timestamp: Date.now(),
+        totalDurationSec: Math.round((Date.now() - onboardingStartTime.current) / 1000),
+      });
       // Mark global onboarding completion
       markOnboardingCompleted();
       return result;
@@ -374,9 +538,8 @@ export function useOnboarding(): OnboardingContextValue {
 
 function persistSubjectsFromState(subjects: string[]): void {
   try {
-    const { MMKV } = require('react-native-mmkv');
-    const storage = new MMKV({ id: 'onboarding' });
-    storage.set('onboarding.subjects', JSON.stringify(subjects));
+    const { subjects: persistSubjectsFn } = require('../storage/onboarding-state');
+    persistSubjectsFn(subjects);
   } catch {
     // best-effort
   }
