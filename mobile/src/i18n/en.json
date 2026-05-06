@@ -79,14 +79,22 @@
       "continue": "Continue"
     },
     "consent": {
-      "title": "Your Privacy Matters",
+      "title": "Privacy & Consent",
       "subtitle": "Before we begin, here is how we protect your child's data.",
+      "promiseTitle": "Your child's homework stays on this device",
+      "promiseBody": "Photos, OCR text, written answers, and AI explanations are processed on this phone or tablet. They are not sent to our servers.",
+      "detailPhotos": "• Homework photos never leave the device.",
+      "detailAnswers": "• Typed or written answers stay local.",
+      "detailTelemetry": "• Anonymous app-health telemetry is optional and starts off.",
       "deviceOnlyTitle": "Everything stays on this device",
       "deviceOnlyBody": "Photos, homework questions, and answers are processed entirely on your device. Nothing is uploaded to any server. Your child's data never leaves this phone.",
-      "telemetryTitle": "Help us improve (optional)",
-      "telemetryBody": "You can choose to send anonymous crash reports and usage data. This helps us fix bugs faster. No personal information is ever sent.",
+      "telemetryTitle": "Share anonymous app health data",
+      "telemetryBody": "Helps us fix crashes and download issues. It never includes photos, OCR text, or your child's answers.",
+      "telemetryAccessibility": "Share anonymous app health data",
       "telemetryToggleOn": "Send anonymous crash reports",
       "telemetryToggleOff": "No crash reports will be sent",
+      "accept": "I agree to the privacy policy",
+      "policyLink": "Read the full privacy policy",
       "privacyPolicyLink": "Read full privacy policy",
       "continue": "Continue"
     }

@@ -1,5 +1,6 @@
 import { OnboardingState } from './types';
 
+// TODO: replace with final privacy policy URL before production launch
 export const PRIVACY_POLICY_URL = 'https://tutor-sg.example/privacy';
 
 export interface ConsentSnapshot {
