@@ -1,0 +1,14 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@tutor-sg/device-tier": ["../packages/device-tier/src"],
+      "@tutor-sg/llm": ["../packages/llm/src"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "src/**/*.ts", "src/**/*.tsx", "app/**/*.ts", "app/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
