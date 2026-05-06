@@ -1,0 +1,314 @@
+{
+  "app.loading": "tutor-sg — 加载中...",
+  "app.name": "tutor-sg",
+  "onboarding": {
+    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
+    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。" },
+    "parentGate": {
+      "title": "家长设置",
+      "body": "这个应用需要爸爸妈妈或监护人先完成设置。请把手机交给大人。",
+      "continue": "我是家长 / 监护人",
+      "goBack": "我不是 — 返回"
+    },
+    "parentPinSetup": {
+      "title": "设置家长密码",
+      "body": "设置一个 4 位数密码。以后您可以用它查看孩子的学习记录。",
+      "enterPin": "输入 4 位数字密码",
+      "confirmPin": "确认您的密码",
+      "mismatch": "密码不匹配，请重新输入。",
+      "skip": "跳过 — 稍后设置",
+      "accessibility": {
+        "digitInput": "第 {{position}} 位数字",
+        "confirmDigitInput": "确认第 {{position}} 位数字",
+        "skipButton": "跳过密码设置"
+      }
+    },
+    "kidProfileCreate": {
+      "title": "创建孩子的个人资料",
+      "subtitle": "设置孩子的学习资料，以便我们为他们提供个性化体验。",
+      "nameLabel": "昵称",
+      "namePlaceholder": "输入名字或昵称",
+      "avatarLabel": "选择一个头像",
+      "gradeLabel": "读几年级？",
+      "gradeP1": "小一",
+      "gradeP2": "小二",
+      "gradeP3": "小三",
+      "gradeP4": "小四",
+      "gradeP5": "小五",
+      "gradeP6": "小六",
+      "subjectsLabel": "选择科目",
+      "subjectsHint": "我们只会显示已选科目的题目。",
+      "subjectMath": "数学",
+      "subjectEnglish": "英文",
+      "subjectChinese": "中文",
+      "subjectScience": "科学",
+      "continue": "继续",
+      "nameRequired": "请输入名字才能继续",
+      "gradeRequired": "请选择一个年级",
+      "skip": "跳过，稍后再说",
+      "accessibility": {
+        "nameInput": "孩子姓名输入",
+        "avatarOption": "{{emoji}} 头像",
+        "avatarSelected": "已选择 {{emoji}} 头像",
+        "gradeOption": "{{grade}}",
+        "gradeSelected": "已选择 {{grade}}",
+        "subjectToggle": "{{subject}} - {{state}}",
+        "subjectOn": "已选",
+        "subjectOff": "未选",
+        "continueButton": "继续查看所有资料",
+        "skipButton": "跳过创建个人资料"
+      }
+    },
+    "siblingPrompt": {
+      "title": "家里还有其他孩子要用吗？",
+      "subtitle": "现在添加，他/她也会有自己的学习记录。",
+      "addAnother": "添加",
+      "skip": "以后再说",
+      "added": "已添加！您之后可以在设置中添加更多孩子。"
+    },
+    "gradePick": {
+      "title": "孩子读几年级？",
+      "gradeP1": "小一",
+      "gradeP2": "小二",
+      "gradeP3": "小三",
+      "gradeP4": "小四",
+      "gradeP5": "小五",
+      "gradeP6": "小六",
+      "subjectTitle": "选择科目",
+      "subjectMath": "数学",
+      "subjectEnglish": "英文",
+      "subjectChinese": "中文",
+      "subjectScience": "科学",
+      "continue": "继续",
+      "allSubjects": "全部科目",
+      "subjectHint": "我们只会显示已选科目的题目。",
+      "accessibility": {
+        "gradeOption": "{{grade}}",
+        "gradeSelected": "已选择 {{grade}}",
+        "subjectToggle": "{{subject}} - {{state}}",
+        "subjectOn": "已选",
+        "subjectOff": "未选"
+      }
+    },
+    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
+    "progress": {
+      "step": "第 {{current}} 步，共 {{total}} 步",
+      "accessibility": "第 {{current}} 步，共 {{total}} 步"
+    }
+  },
+  "network.offline": "你已离线",
+  "network.offline.description": "拍照做作业仍然可用。下载需要 Wi-Fi。",
+  "network.cellular": "正在使用移动数据",
+  "network.cellular.description": "已暂停大文件下载以节省流量。",
+  "parentAuth": {
+    "title": "家长访问权限",
+    "enterPin": "请输入您的 PIN 码",
+    "wrongPin": "PIN 码错误，请重试。",
+    "cooldown": "尝试次数过多，请稍候。",
+    "cooldownTimer": "请等待 {{seconds}} 秒后再试",
+    "attemptsRemaining": "还剩 {{count}} 次机会",
+    "attemptsRemaining_plural": "还剩 {{count}} 次机会",
+    "pinsDontMatch": "PIN 码不匹配，请重试。",
+    "setup": {
+      "title": "设置家长 PIN 码",
+      "enterPin": "输入 4 位数字 PIN 码",
+      "confirmPin": "确认您的 PIN 码"
+    },
+    "signIn": {
+      "title": "创建您的帐户",
+      "subtitle": "登录以保存孩子的学习进度并访问家长功能。孩子的数据不会离开这台设备。",
+      "emailPlaceholder": "输入您的邮箱地址",
+      "sendMagicLink": "发送登录链接",
+      "magicLinkSent": "登录链接已发送！",
+      "checkEmail": "请查看您的邮箱中的登录链接。链接将在 10 分钟后过期。",
+      "orDivider": "或使用以下方式继续",
+      "continueWithGoogle": "使用 Google 账号继续",
+      "continueWithApple": "使用 Apple ID 继续",
+      "skip": "跳过，稍后再说",
+      "errorInvalidEmail": "请输入有效的邮箱地址",
+      "errorSendFailed": "发送登录链接失败，请重试。",
+      "errorSignInFailed": "登录失败，请重试。",
+      "errorAuthSession": "登录会话已取消或失败。",
+      "signedIn": "登录成功"
+    }
+  },
+  "parent": {
+    "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
+    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+  },
+  "deviceTierResult": {
+    "title": "你的设备已就绪！",
+    "tierLabel": "检测到的性能等级",
+    "highPerformance": "高性能",
+    "standard": "标准",
+    "highDescription": "你的设备可以运行完整版 AI 家教，响应速度更快。",
+    "standardDescription": "你的设备可以流畅运行 AI 家教，响应时间稍长一些。",
+    "downloadSize": "下载大小：{{size}}",
+    "modelNames": "模型：{{models}}",
+    "consentText": "模型完全在本地运行。不会上传任何数据。",
+    "downloadNow": "立即下载",
+    "downloadLater": "稍后下载（仅 Wi-Fi）",
+    "cellularWarning": "{{size}} 的下载需要使用移动数据。是否连接 Wi-Fi 以节省流量？",
+    "cellularProceed": "继续下载",
+    "cellularCancel": "等待 Wi-Fi",
+    "loading": "正在检测你的设备…",
+    "error": "无法检测设备性能，请重试。"
+  },
+  "kidHome": {
+    "header": {
+      "greeting": "{{name}}，你好！",
+      "levelBadge": "等级 {{level}}",
+      "switchLanguage": "Switch to English"
+    },
+    "subjects": {
+      "math": "数学",
+      "english": "英语",
+      "science": "科学",
+      "chinese": "华文"
+    },
+    "subjectsDescriptions": {
+      "math": "数字、图形与解题",
+      "english": "语法、阅读与写作",
+      "science": "探索我们周围的世界",
+      "chinese": "听、说、读、写"
+    },
+    "camera": {
+      "title": "拍照问功课",
+      "subtitle": "拍张照片，立即获取帮助",
+      "accessibility": "用相机拍下你的功课"
+    },
+    "recentSessions": {
+      "title": "最近学习记录",
+      "empty": "还没有学习记录。快来拍下第一份功课吧！",
+      "timeAgo": {
+        "justNow": "刚刚",
+        "minutesAgo": "{{minutes}}分钟前",
+        "hoursAgo": "{{hours}}小时前",
+        "yesterday": "昨天"
+      },
+      "questions": "{{count}} 道题",
+      "questions_plural": "{{count}} 道题"
+    },
+    "accessibility": {
+      "subjectTile": "{{subject}} 科目",
+      "recentSession": "{{subject}}，{{time}}前，{{questions}} 道题"
+    },
+    "firstSession": {
+      "welcomeTitle": "欢迎来到 tutor-sg！",
+      "welcomeBody": "拍下你的作业照片，马上就能得到帮助——就像身边有一位安静的小老师。",
+      "ctaCamera": "拍下第一份功课",
+      "ctaPractice": "试试练习题",
+      "dismiss": "先看看，等会儿再拍",
+      "accessibility": {
+        "welcomeBanner": "欢迎横幅。开始你的第一次作业辅导。",
+        "practiceTile": "试试{{subject}}练习题"
+      }
+    }
+  },
+  "common": {
+    "cancel": "取消",
+    "back": "返回",
+    "goBack": "返回首页",
+    "loading": "加载中…",
+    "retry": "重试"
+  },
+  "cameraScreen": {
+    "snapPrompt": "把作业对齐框内",
+    "pages": "已拍摄 {{count}} 页",
+    "pages_plural": "已拍摄 {{count}} 页",
+    "addAnother": "再加一页",
+    "done": "完成 — 获取帮助",
+    "hint": {
+      "singlePage": "把作业放在取景框内，然后点击下方按钮",
+      "morePages": "很好！可以再加页，或点击完成"
+    },
+    "status": {
+      "capturing": "正在拍照…",
+      "ocr": "正在识别作业…",
+      "inferring": "正在思考题目…",
+      "ocrSubtext": "请稍候片刻",
+      "inferenceSubtext": "AI 老师正在解答每一道题"
+    },
+    "permission": {
+      "title": "需要相机权限",
+      "description": "我们需要相机权限来拍摄你的作业。照片不会离开这台设备。",
+      "cta": "开启相机权限"
+    },
+    "manualInput": {
+      "title": "有些内容看不清楚",
+      "description": "以下内容识别不清，请在下方输入你看到的文字。",
+      "placeholder": "在此输入文字…",
+      "submit": "继续",
+      "accessibility": "第 {{item}} 项手动输入"
+    },
+    "error": {
+      "title": "出了点问题",
+      "captureFailed": "拍照失败，请重试。",
+      "processingFailed": "无法识别作业，请调整光线后重试。",
+      "inferenceFailed": "AI 老师暂时无法处理，请重试。",
+      "retake": "重新拍照"
+    },
+    "accessibility": {
+      "cancel": "返回首页",
+      "capture": "拍下作业照片"
+    }
+  },
+  "cameraResult": {
+    "title": "作业辅导",
+    "retake": "重新拍照",
+    "question": "第 {{number}} 题",
+    "questions": "{{count}} 题",
+    "questions_plural": "{{count}} 道题",
+    "hint": "提示",
+    "showSteps": "显示解题步骤",
+    "steps": "分步指导",
+    "showSolution": "显示完整答案",
+    "fullSolution": "完整解答",
+    "tryThis": "试试这个",
+    "backToHome": "返回首页",
+    "encouragement": {
+      "title": "做得很好！💪",
+      "body": "先试试提示。如果还是卡住了，点击「显示解题步骤」获取分步指导。"
+    },
+    "followUp": {
+      "placeholder": "输入追问…",
+      "send": "发送",
+      "accessibility": "输入追问内容",
+      "mockResponse": "好问题！我来帮你。想想我们刚学的方法——试试用同样的思路来解决。你觉得第一步应该做什么？"
+    },
+    "error": {
+      "notFound": "这个结果已失效，请重新拍照。"
+    }
+  },
+  "errorScreen": {
+    "permission": {
+      "mic": {
+        "title": "需要麦克风权限",
+        "description": "我们需要麦克风权限，这样你可以用语音提问。不会录音或上传任何内容。",
+        "cta": "开启麦克风权限"
+      }
+    },
+    "generic": {
+      "description": "发生了意外情况，请重试。"
+    }
+  },
+  "modelDownload": {
+    "title": "正在设置你的导师...",
+    "progress": "正在下载 {{fileName}}...",
+    "progressPercent": "{{percent}}%",
+    "retrying": "正在重试下载 ({{attempt}}/{{max}})...",
+    "paused": "下载已暂停",
+    "resuming": "正在恢复下载...",
+    "completed": "下载完成",
+    "retry": "重试",
+    "wifiRequired": "需要 Wi-Fi 连接",
+    "errors": {
+      "connectivity_lost": "Wi-Fi 连接中断。重新连接后将恢复下载。",
+      "disk_insufficient": "存储空间不足。需要约 {{needed}}GB 可用空间。",
+      "cdn_unreachable": "无法连接服务器。请检查网络连接后重试。",
+      "hash_mismatch": "下载文件已损坏，正在重新下载...",
+      "download_stuck": "下载似乎卡住了，正在重试...",
+      "unknown_error": "出现错误，请重试。"
+    }
+  }
+}
