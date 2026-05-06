@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Linking, ScrollView, Switch, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useOnboarding } from '../OnboardingProvider';
 import { useTranslation } from 'react-i18next';
+import { useTelemetry } from '../../services/TelemetryProvider';
+import { trackConsentGiven } from '../useOnboardingTelemetry';
 import { PRIVACY_POLICY_URL, buildConsentSnapshot } from '../privacy-preferences';
 
 export function ConsentScreen() {
@@ -10,12 +12,21 @@ export function ConsentScreen() {
   const [consented, setConsented] = useState(false);
   const [telemetryOptIn, setTelemetryOptIn] = useState(false);
 
-  const continueWithConsent = () => {
+  const { track, setOptIn } = useTelemetry();
+
+  const continueWithConsent = useCallback(async () => {
     if (!consented) return;
 
+    // Set opt-in before firing consent_given so the event is captured
+    await setOptIn(telemetryOptIn);
+
     updateProgress(buildConsentSnapshot({ telemetryOptIn }));
+
+    // Fire consent_given event
+    await trackConsentGiven(track, telemetryOptIn);
+
     goNext();
-  };
+  }, [consented, telemetryOptIn, setOptIn, track, updateProgress, goNext]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

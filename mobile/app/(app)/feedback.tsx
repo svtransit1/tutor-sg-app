@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, ScrollView, Pressable, ActivityIndicator } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { MockLlmService } from '../../src/services/llm';
 import { saveSession } from '../../src/db/sessions';
+import { useTelemetry } from '../../src/services/TelemetryProvider';
+import { trackFirstFeedbackReceived } from '../../src/onboarding/useOnboardingTelemetry';
 import type { FeedbackBlock, HomeworkSession, OcrResult } from '../../src/types/homework';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -20,6 +22,9 @@ export default function FeedbackScreen() {
   const [blocks, setBlocks] = useState<FeedbackBlock[]>([]);
   const [streamingText, setStreamingText] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const { track } = useTelemetry();
+  const feedbackStartRef = useRef(Date.now());
+  const feedbackFiredRef = useRef(false);
 
   const sessionId = uuidv4();
   const sessionRef = useCallback(
@@ -58,6 +63,13 @@ export default function FeedbackScreen() {
         setBlocks(resultBlocks);
         setStreamingText('');
         sessionRef(resultBlocks, rawResponse, 'feedback');
+
+        // Fire first_feedback_received on first successful feedback
+        if (!feedbackFiredRef.current) {
+          feedbackFiredRef.current = true;
+          const durationSec = Math.round((Date.now() - feedbackStartRef.current) / 1000);
+          trackFirstFeedbackReceived(track, { duration_sec: durationSec });
+        }
       } catch {
         setError(t('onboarding.feedback.errorDetail'));
         sessionRef([], '', 'error');

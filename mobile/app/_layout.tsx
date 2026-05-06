@@ -5,6 +5,7 @@ import '../src/i18n';
 import i18n from '../src/i18n';
 import { getLocale } from '../src/storage';
 import { OnboardingProvider } from '../src/onboarding';
+import { TelemetryProvider } from '../src/services/TelemetryProvider';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,12 +24,14 @@ function RootContent() {
   if (!ready) return null;
 
   return (
-    <OnboardingProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(onboarding)" />
-        <Stack.Screen name="(app)" />
-      </Stack>
-    </OnboardingProvider>
+    <TelemetryProvider>
+      <OnboardingProvider>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(onboarding)" />
+          <Stack.Screen name="(app)" />
+        </Stack>
+      </OnboardingProvider>
+    </TelemetryProvider>
   );
 }
 

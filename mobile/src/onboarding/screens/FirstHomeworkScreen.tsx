@@ -2,10 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useOnboarding } from '../OnboardingProvider';
 import { useTranslation } from 'react-i18next';
+import { useTelemetry } from '../../services/TelemetryProvider';
+import { trackFirstHomeworkSubmitted } from '../useOnboardingTelemetry';
 
 export function FirstHomeworkScreen() {
   const { t } = useTranslation();
   const { goNext } = useOnboarding();
+  const { track } = useTelemetry();
+
+  const handleGoNext = async () => {
+    await trackFirstHomeworkSubmitted(track);
+    goNext();
+  };
 
   return (
     <View style={styles.container}>
@@ -29,7 +37,7 @@ export function FirstHomeworkScreen() {
           {t('onboarding.firstHomework.step3', '3. Get hints and guidance — not just answers!')}
         </Text>
       </View>
-      <TouchableOpacity style={styles.button} onPress={goNext} testID="firstHomework-start">
+      <TouchableOpacity style={styles.button} onPress={handleGoNext} testID="firstHomework-start">
         <Text style={styles.buttonText}>
           {t('onboarding.firstHomework.cta', "Let's go!")}
         </Text>

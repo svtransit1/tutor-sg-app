@@ -244,6 +244,34 @@ describe('onboarding funnel event names', () => {
     expect(svc.lastEvent()!.properties.duration_sec).toBe(120);
   });
 
+  it('tracks consent_given with telemetry preference', async () => {
+    const svc = createService();
+    await svc.setOptIn(true);
+    await svc.track('consent_given', { telemetryOptIn: true });
+
+    expect(svc.lastEvent()!.name).toBe('consent_given');
+    expect(svc.lastEvent()!.properties.telemetryOptIn).toBe(true);
+  });
+
+  it('tracks first_homework_submitted', async () => {
+    const svc = createService();
+    await svc.setOptIn(true);
+    await svc.track('first_homework_submitted', { subject: 'math', level: 'P3' });
+
+    expect(svc.lastEvent()!.name).toBe('first_homework_submitted');
+    expect(svc.lastEvent()!.properties.subject).toBe('math');
+    expect(svc.lastEvent()!.properties.level).toBe('P3');
+  });
+
+  it('tracks first_feedback_received', async () => {
+    const svc = createService();
+    await svc.setOptIn(true);
+    await svc.track('first_feedback_received', { duration_sec: 25 });
+
+    expect(svc.lastEvent()!.name).toBe('first_feedback_received');
+    expect(svc.lastEvent()!.properties.duration_sec).toBe(25);
+  });
+
   it('tracks onboarding_error with step context', async () => {
     const svc = createService();
     await svc.setOptIn(true);

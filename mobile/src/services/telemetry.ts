@@ -32,7 +32,10 @@ export type OnboardingEventName =
   | 'onboarding_kid_profile_count'
   | 'onboarding_completed'
   | 'onboarding_skipped'
-  | 'onboarding_error';
+  | 'onboarding_error'
+  | 'consent_given'
+  | 'first_homework_submitted'
+  | 'first_feedback_received';
 
 export type TelemetryEventName = OnboardingEventName | string;
 

@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useOnboarding } from '../OnboardingProvider';
 import { OnboardingStep, STEP_CONFIG } from '../types';
+import { useOnboardingTelemetry } from '../useOnboardingTelemetry';
 import { WelcomeScreen } from './WelcomeScreen';
 import { ConsentScreen } from './ConsentScreen';
 import { DeviceTierScreen } from './DeviceTierScreen';
@@ -25,7 +26,12 @@ const STEP_SCREENS: Record<OnboardingStep, React.ComponentType> = {
  * Back-navigation header is shown only for reversible steps.
  */
 export function OnboardingOrchestrator() {
-  const { state, goBack, canGoBack } = useOnboarding();
+  const { state, goBack, canGoBack, isComplete } = useOnboarding();
+  const previousStepRef = useRef<OnboardingStep | null>(null);
+
+  // Wire automatic onboarding lifecycle telemetry
+  useOnboardingTelemetry(state.currentStep, isComplete, previousStepRef);
+
   const StepScreen = useMemo(() => STEP_SCREENS[state.currentStep], [state.currentStep]);
   const config = STEP_CONFIG[state.currentStep];
 
