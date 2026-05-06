@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ActivityIndicator, Image } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
@@ -8,55 +8,61 @@ import type { OcrResult } from '../../src/types/homework';
 
 const ocrService = new MockOcrService();
 
+type CameraPhase = 'viewfinder' | 'preview' | 'processing';
+
 export default function CameraScreen() {
-  const { t, i18n } = useTranslation();
-  const isZh = i18n.language === 'zh-Hans';
+  const { t } = useTranslation();
   const router = useRouter();
   const params = useLocalSearchParams();
   const subject = (params.subject as string) ?? 'math';
   const level = (params.level as string) ?? 'P3';
 
   const [permission, requestPermission] = useCameraPermissions();
-  const [cameraType, setCameraType] = useState<CameraType>('back');
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [capturedUris, setCapturedUris] = useState<string[]>([]);
+  const [cameraType] = useState<CameraType>('back');
+  const [phase, setPhase] = useState<CameraPhase>('viewfinder');
+  const [photoUri, setPhotoUri] = useState<string | null>(null);
 
   const cameraRef = useRef<CameraView>(null);
 
+  /** Capture a single photo and move to preview phase. */
   const handleCapture = useCallback(async () => {
     if (!cameraRef.current) return;
     const photo = await cameraRef.current.takePictureAsync({ quality: 0.8 });
     if (photo?.uri) {
-      setCapturedUris((prev) => [...prev, photo.uri]);
+      setPhotoUri(photo.uri);
+      setPhase('preview');
     }
   }, []);
 
-  const handleProcess = useCallback(async () => {
-    if (capturedUris.length === 0) return;
-    setIsProcessing(true);
+  /** Discard the current photo and go back to the viewfinder. */
+  const handleRetake = useCallback(() => {
+    setPhotoUri(null);
+    setPhase('viewfinder');
+  }, []);
+
+  /** Confirm the photo and start OCR processing. */
+  const handleConfirm = useCallback(async () => {
+    if (!photoUri) return;
+    setPhase('processing');
 
     try {
-      const ocrResults: OcrResult[] = [];
-      for (const uri of capturedUris) {
-        const result = await ocrService.processImage(uri);
-        ocrResults.push(result);
-      }
+      const result = await ocrService.processImage(photoUri);
 
-      const merged: OcrResult = {
-        blocks: ocrResults.flatMap((r) => r.blocks),
-        lowConfidenceBlocks: ocrResults.flatMap((r) => r.lowConfidenceBlocks),
-        imageUri: capturedUris[0],
-        pageCount: capturedUris.length,
+      const ocrResult: OcrResult = {
+        blocks: result.blocks,
+        lowConfidenceBlocks: result.lowConfidenceBlocks,
+        imageUri: photoUri,
+        pageCount: 1,
         timestamp: Date.now(),
       };
 
-      if (merged.lowConfidenceBlocks.length > 0) {
+      if (ocrResult.lowConfidenceBlocks.length > 0) {
         router.push({
           pathname: '/(app)/manual-input',
           params: {
             subject,
             level,
-            ocrJson: JSON.stringify(merged),
+            ocrJson: JSON.stringify(ocrResult),
           },
         });
       } else {
@@ -65,17 +71,17 @@ export default function CameraScreen() {
           params: {
             subject,
             level,
-            ocrJson: JSON.stringify(merged),
+            ocrJson: JSON.stringify(ocrResult),
           },
         });
       }
     } catch {
+      setPhase('preview');
       alert(t('onboarding.camera.processingFailed'));
-    } finally {
-      setIsProcessing(false);
     }
-  }, [capturedUris, subject, level, isZh, router]);
+  }, [photoUri, subject, level, router, t]);
 
+  /* ── Permission loading ──────────────────────────────────── */
   if (!permission) {
     return (
       <View style={styles.center}>
@@ -99,7 +105,8 @@ export default function CameraScreen() {
     );
   }
 
-  if (isProcessing) {
+  /* ── Processing state ───────────────────────────────────── */
+  if (phase === 'processing') {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color="#4A90D9" />
@@ -110,6 +117,38 @@ export default function CameraScreen() {
     );
   }
 
+  /* ── Preview state (photo taken, review before confirming) ─ */
+  if (phase === 'preview' && photoUri) {
+    return (
+      <View style={styles.container}>
+        <Image source={{ uri: photoUri }} style={styles.previewImage} resizeMode="contain" />
+
+        <View style={styles.previewOverlay}>
+          <Text style={styles.previewTitle}>
+            {t('onboarding.camera.previewTitle')}
+          </Text>
+          <Text style={styles.previewInstructions}>
+            {t('onboarding.camera.previewInstructions')}
+          </Text>
+        </View>
+
+        <View style={styles.previewActions}>
+          <Pressable style={styles.retakeButton} onPress={handleRetake}>
+            <Text style={styles.retakeButtonText}>
+              {t('onboarding.camera.retake')}
+            </Text>
+          </Pressable>
+          <Pressable style={styles.confirmButton} onPress={handleConfirm}>
+            <Text style={styles.confirmButtonText}>
+              {t('onboarding.camera.usePhoto')}
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+    );
+  }
+
+  /* ── Viewfinder state (live camera) ─────────────────────── */
   return (
     <View style={styles.container}>
       <CameraView
@@ -122,9 +161,14 @@ export default function CameraScreen() {
             <Pressable style={styles.backButton} onPress={() => router.back()}>
               <Text style={styles.backButtonText}>{t('onboarding.common.back')}</Text>
             </Pressable>
-            <Text style={styles.pageIndicator}>
-              {capturedUris.length > 0 ? t('onboarding.camera.pageCount', { count: capturedUris.length }) : ''}
-            </Text>
+          </View>
+
+          {/* Viewfinder frame guides */}
+          <View style={styles.frameGuide}>
+            <View style={styles.frameCornerTopLeft} />
+            <View style={styles.frameCornerTopRight} />
+            <View style={styles.frameCornerBottomLeft} />
+            <View style={styles.frameCornerBottomRight} />
           </View>
 
           <View style={styles.instructionsBox}>
@@ -140,23 +184,6 @@ export default function CameraScreen() {
             >
               <View style={styles.captureInner} />
             </Pressable>
-
-            {capturedUris.length > 0 && (
-              <View style={styles.actionRow}>
-                <Pressable style={styles.retakeButton} onPress={() => setCapturedUris([])}>
-                  <Text style={styles.retakeButtonText}>
-                    {t('onboarding.camera.retake')}
-                  </Text>
-                </Pressable>
-                <Pressable style={styles.processButton} onPress={handleProcess}>
-                  <Text style={styles.processButtonText}>
-                    {capturedUris.length > 1
-                      ? t('onboarding.camera.done')
-                      : t('onboarding.camera.usePhoto')}
-                  </Text>
-                </Pressable>
-              </View>
-            )}
           </View>
         </View>
       </CameraView>
@@ -186,7 +213,7 @@ const styles = StyleSheet.create({
   },
   topBar: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 16,
     paddingTop: 48,
@@ -202,25 +229,68 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  pageIndicator: {
-    color: '#fff',
-    fontSize: 14,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
+  /* ── Viewfinder frame guides ──────────────── */
+  frameGuide: {
+    position: 'absolute',
+    top: '15%',
+    left: '10%',
+    right: '10%',
+    bottom: '20%',
   },
+  frameCornerTopLeft: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: 32,
+    height: 32,
+    borderTopWidth: 3,
+    borderLeftWidth: 3,
+    borderColor: 'rgba(255,255,255,0.7)',
+  },
+  frameCornerTopRight: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 32,
+    height: 32,
+    borderTopWidth: 3,
+    borderRightWidth: 3,
+    borderColor: 'rgba(255,255,255,0.7)',
+  },
+  frameCornerBottomLeft: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: 32,
+    height: 32,
+    borderBottomWidth: 3,
+    borderLeftWidth: 3,
+    borderColor: 'rgba(255,255,255,0.7)',
+  },
+  frameCornerBottomRight: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: 32,
+    height: 32,
+    borderBottomWidth: 3,
+    borderRightWidth: 3,
+    borderColor: 'rgba(255,255,255,0.7)',
+  },
+  /* ── Viewfinder instructions ──────────────── */
   instructionsBox: {
     alignSelf: 'center',
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(0,0,0,0.55)',
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 12,
+    marginHorizontal: 32,
   },
   instructionsText: {
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
+    lineHeight: 24,
   },
   bottomBar: {
     alignItems: 'center',
@@ -233,40 +303,82 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.3)',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 16,
   },
   captureInner: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 62,
+    height: 62,
+    borderRadius: 31,
     backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: 'rgba(0,0,0,0.15)',
   },
-  actionRow: {
+  /* ── Preview state ────────────────────────── */
+  previewImage: {
+    flex: 1,
+    width: '100%',
+  },
+  previewOverlay: {
+    position: 'absolute',
+    top: 48,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  previewTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#fff',
+    marginBottom: 4,
+    textShadowColor: 'rgba(0,0,0,0.6)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
+  },
+  previewInstructions: {
+    fontSize: 15,
+    color: 'rgba(255,255,255,0.9)',
+    textAlign: 'center',
+    textShadowColor: 'rgba(0,0,0,0.6)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
+  },
+  previewActions: {
+    position: 'absolute',
+    bottom: 48,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
+    justifyContent: 'center',
     gap: 16,
+    paddingHorizontal: 24,
   },
   retakeButton: {
     backgroundColor: 'rgba(255,255,255,0.2)',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingHorizontal: 28,
+    paddingVertical: 14,
     borderRadius: 12,
+    minWidth: 120,
+    alignItems: 'center',
   },
   retakeButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
   },
-  processButton: {
+  confirmButton: {
     backgroundColor: '#4A90D9',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
+    paddingHorizontal: 28,
+    paddingVertical: 14,
     borderRadius: 12,
+    minWidth: 120,
+    alignItems: 'center',
   },
-  processButtonText: {
+  confirmButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
   },
+  /* ── Shared ───────────────────────────────── */
   permissionText: {
     fontSize: 16,
     color: '#333',
