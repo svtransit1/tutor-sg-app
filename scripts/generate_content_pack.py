@@ -437,7 +437,7 @@ def generate_questions():
           tags=["voice-first"], moed_code="M-P1-N-03")
 
     # P2
-    add_q("MAT-P2-009", 2, "math", "multiple_choice", "easy",
+    add_q("MAT-P2-003", 2, "math", "multiple_choice", "easy",
           "What is 18 divided by 2?", "18除以2等于多少？",
           options=_mc_options(["9", "6", "8", "12"], ["9", "6", "8", "12"], 0),
           answer_en="9", answer_zh="9",
@@ -445,7 +445,7 @@ def generate_questions():
           explanation_zh="18÷2=9，因为2×9=18。",
           moed_code="M-P2-MD-02")
 
-    add_q("MAT-P2-010", 2, "math", "short_answer", "medium",
+    add_q("MAT-P2-006", 2, "math", "short_answer", "medium",
           "A bus arrives every 15 minutes. How many buses arrive in 1 hour?", "公交车每15分钟到一班。1小时内有多少班车？",
           answer_en="4", answer_zh="4",
           explanation_en="1 hour = 60 minutes. 60 ÷ 15 = 4 buses.",
@@ -453,7 +453,7 @@ def generate_questions():
           moed_code="M-P2-T-02")
 
     # P3
-    add_q("MAT-P3-011", 3, "math", "multiple_choice", "medium",
+    add_q("MAT-P3-006", 3, "math", "multiple_choice", "medium",
           "Which is heavier: 2 kg or 1,500 g?", "哪个更重：2公斤还是1,500克？",
           options=_mc_options(["2 kg", "1,500 g", "They are the same", "Cannot compare"], ["2公斤", "1,500克", "一样重", "无法比较"], 0),
           answer_en="2 kg", answer_zh="2公斤",
@@ -461,7 +461,7 @@ def generate_questions():
           explanation_zh="2公斤=2,000克，大于1,500克。",
           moed_code="M-P3-LMV-02")
 
-    add_q("MAT-P3-012", 3, "math", "fill_in_blank", "easy",
+    add_q("MAT-P3-003", 3, "math", "fill_in_blank", "easy",
           "81 ÷ 9 = ___", "81 ÷ 9 = ___",
           answer_en="9", answer_zh="9",
           explanation_en="9 × 9 = 81, so 81 ÷ 9 = 9.",
@@ -469,14 +469,14 @@ def generate_questions():
           moed_code="M-P3-MD-03")
 
     # P4
-    add_q("MAT-P4-011", 4, "math", "short_answer", "medium",
+    add_q("MAT-P4-002", 4, "math", "short_answer", "medium",
           "Find the LCM of 4 and 6.", "求4和6的最小公倍数。",
           answer_en="12", answer_zh="12",
           explanation_en="Multiples of 4: 4, 8, 12, 16... Multiples of 6: 6, 12, 18... LCM = 12.",
           explanation_zh="4的倍数：4、8、12、16……6的倍数：6、12、18……最小公倍数=12。",
           moed_code="M-P4-FM-02")
 
-    add_q("MAT-P4-012", 4, "math", "multiple_choice", "hard",
+    add_q("MAT-P4-006", 4, "math", "multiple_choice", "hard",
           "A rectangle has area 48 cm² and width 6 cm. What is its length?", "一个长方形面积48平方厘米，宽6厘米。它的长是多少？",
           options=_mc_options(["8 cm", "6 cm", "12 cm", "4 cm"], ["8厘米", "6厘米", "12厘米", "4厘米"], 0),
           answer_en="8 cm", answer_zh="8厘米",
@@ -485,14 +485,14 @@ def generate_questions():
           moed_code="M-P4-AP-02")
 
     # P5
-    add_q("MAT-P5-013", 5, "math", "short_answer", "medium",
+    add_q("MAT-P5-004", 5, "math", "short_answer", "medium",
           "Convert 0.6 to a fraction in simplest form.", "把0.6化成最简分数。",
           answer_en="3/5", answer_zh="3/5",
           explanation_en="0.6 = 6/10 = 3/5 (divide numerator and denominator by 2).",
           explanation_zh="0.6=6/10=3/5（分子分母同除以2）。",
           moed_code="M-P5-D-01")
 
-    add_q("MAT-P5-014", 5, "math", "multiple_choice", "hard",
+    add_q("MAT-P5-003", 5, "math", "multiple_choice", "hard",
           "A tank is 3/4 full. After using 10 litres, it is 1/2 full. What is the capacity of the tank?", "一个水箱有3/4满。用了10升后是1/2满。水箱的容量是多少？",
           options=_mc_options(["40 litres", "30 litres", "20 litres", "50 litres"], ["40升", "30升", "20升", "50升"], 0),
           answer_en="40 litres", answer_zh="40升",
@@ -501,14 +501,14 @@ def generate_questions():
           tags=["psle-format"], moed_code="M-P5-F-01")
 
     # P6
-    add_q("MAT-P6-009", 6, "math", "short_answer", "hard",
+    add_q("MAT-P6-002", 6, "math", "short_answer", "hard",
           "A shirt is sold at a 15% discount. The sale price is $68. What was the original price?", "一件衬衫打85折。售价68元。原价是多少？",
           answer_en="$80", answer_zh="80元",
           explanation_en="85% of original = $68. Original = $68 ÷ 0.85 = $80.",
           explanation_zh="原价的85%=68元。原价=68÷0.85=80元。",
           tags=["psle-format"], moed_code="M-P6-RP-02")
 
-    add_q("MAT-P6-010", 6, "math", "multiple_choice", "medium",
+    add_q("MAT-P6-004", 6, "math", "multiple_choice", "medium",
           "What is the sum of interior angles of a triangle?", "三角形内角和是多少？",
           options=_mc_options(["180°", "360°", "90°", "270°"], ["180°", "360°", "90°", "270°"], 0),
           answer_en="180°", answer_zh="180°",
@@ -516,7 +516,7 @@ def generate_questions():
           explanation_zh="任何三角形的内角和始终是180°。",
           moed_code="M-P6-G-02")
 
-    add_q("MAT-P6-011", 6, "math", "structured", "hard",
+    add_q("MAT-P6-008", 6, "math", "structured", "hard",
           "Amy and Ben share $120 in the ratio 2:3. How much more does Ben get than Amy?", "艾米和本按2:3的比例分摊120元。本比艾米多拿多少？",
           answer_en="$24", answer_zh="24元",
           explanation_en="Total parts = 2 + 3 = 5. 1 part = $120 ÷ 5 = $24. Ben gets 3 parts = $72. Amy gets 2 parts = $48. Difference = $72 - $48 = $24.",
@@ -524,7 +524,7 @@ def generate_questions():
           hints=_hints("Find the value of 1 part first.", "先求出1份的价值。"),
           tags=["psle-format"], moed_code="M-P6-RP-03")
 
-    add_q("MAT-P6-012", 6, "math", "fill_in_blank", "medium",
+    add_q("MAT-P6-003", 6, "math", "fill_in_blank", "medium",
           "Simplify: 3a + 2b - a + 4b = ___", "化简：3a + 2b - a + 4b = ___",
           answer_en="2a + 6b", answer_zh="2a + 6b",
           explanation_en="Combine like terms: 3a - a = 2a and 2b + 4b = 6b.",
@@ -586,7 +586,7 @@ def generate_questions():
           explanation_zh="'cats'结尾有's'，表示不止一只。",
           moed_code="E-P1-GB-02")
 
-    add_q("ENG-P1-007", 1, "english", "fill_in_blank", "easy",
+    add_q("ENG-P1-006", 1, "english", "fill_in_blank", "easy",
           "I ___ to school every day. (go / goes / going)", "我每天___去学校。（go/goes/going）",
           answer_en="go", answer_zh="go",
           explanation_en="'I' takes the base form of the verb: 'I go'.",
@@ -840,7 +840,7 @@ def generate_questions():
 
     # --- More English questions ---
     # P1
-    add_q("ENG-P1-008", 1, "english", "multiple_choice", "easy",
+    add_q("ENG-P1-006", 1, "english", "multiple_choice", "easy",
           "Which word rhymes with 'cat'?", "哪个单词和'cat'押韵？",
           options=_mc_options(["hat", "dog", "cup", "pen"], ["hat（帽子）", "dog（狗）", "cup（杯子）", "pen（笔）"], 0),
           answer_en="hat", answer_zh="hat（帽子）",
@@ -848,7 +848,7 @@ def generate_questions():
           explanation_zh="'hat'和'cat'都以'-at'音结尾。",
           tags=["voice-first", "phonics"], moed_code="E-P1-PW-02")
 
-    add_q("ENG-P1-009", 1, "english", "fill_in_blank", "easy",
+    add_q("ENG-P1-006", 1, "english", "fill_in_blank", "easy",
           "The bird can ___. (fly / flies / flying)", "鸟会___。（fly/flies/flying）",
           answer_en="fly", answer_zh="fly",
           explanation_en="'Can' is followed by the base form of the verb.",
@@ -856,7 +856,7 @@ def generate_questions():
           tags=["voice-first"], moed_code="E-P1-GB-04")
 
     # P2
-    add_q("ENG-P2-007", 2, "english", "multiple_choice", "easy",
+    add_q("ENG-P2-006", 2, "english", "multiple_choice", "easy",
           "Which word means 'not hard'?", "哪个词的意思是'不难'？",
           options=_mc_options(["easy", "fast", "slow", "heavy"], ["easy（容易的）", "fast（快的）", "slow（慢的）", "heavy（重的）"], 0),
           answer_en="easy", answer_zh="easy（容易的）",
@@ -864,7 +864,7 @@ def generate_questions():
           explanation_zh="'easy'是'hard'的反义词。",
           moed_code="E-P2-VB-02")
 
-    add_q("ENG-P2-008", 2, "english", "short_answer", "medium",
+    add_q("ENG-P2-006", 2, "english", "short_answer", "medium",
           "Rewrite as a question: 'The cat is sleeping.'", "改写成疑问句：'The cat is sleeping.'",
           answer_en="Is the cat sleeping?", answer_zh="猫在睡觉吗？",
           explanation_en="To make a question, move 'is' to the front and add a question mark.",
@@ -872,7 +872,7 @@ def generate_questions():
           moed_code="E-P2-SC-02")
 
     # P3
-    add_q("ENG-P3-007", 3, "english", "multiple_choice", "medium",
+    add_q("ENG-P3-006", 3, "english", "multiple_choice", "medium",
           "'She sings ___ than her sister.' Which word fits?", "'她唱得比她姐姐___。'哪个词合适？",
           options=_mc_options(["better", "good", "best", "well"], ["better（更好）", "good（好）", "best（最好）", "well（好）"], 0),
           answer_en="better", answer_zh="better（更好）",
@@ -880,7 +880,7 @@ def generate_questions():
           explanation_zh="比较两个人时，用比较级：'better'。",
           moed_code="E-P3-GT-02")
 
-    add_q("ENG-P3-008", 3, "english", "fill_in_blank", "medium",
+    add_q("ENG-P3-006", 3, "english", "fill_in_blank", "medium",
           "The children ___ playing in the park. (is / are / am / be)", "孩子们___在公园里玩。（is/are/am/be）",
           answer_en="are", answer_zh="are",
           explanation_en="'Children' is plural, so it takes 'are'.",
@@ -899,7 +899,7 @@ def generate_questions():
           explanation_zh="明喻使用'like'或'as'来比较两个事物。",
           tags=["figurative-language"], moed_code="E-P4-RC-02")
 
-    add_q("ENG-P4-007", 4, "english", "short_answer", "hard",
+    add_q("ENG-P4-006", 4, "english", "short_answer", "hard",
           "Rewrite using 'unless': 'If you do not study, you will fail.'", "用'unless'重写：'If you do not study, you will fail.'",
           answer_en="Unless you study, you will fail.", answer_zh="除非你学习，否则你会失败。",
           explanation_en="'Unless' means 'if not'. So 'unless you study' = 'if you do not study'.",
@@ -907,7 +907,7 @@ def generate_questions():
           tags=["conditional"], moed_code="E-P4-GC-03")
 
     # P5
-    add_q("ENG-P5-007", 5, "english", "multiple_choice", "hard",
+    add_q("ENG-P5-006", 5, "english", "multiple_choice", "hard",
           "What is the tone of this sentence: 'After years of struggle, the nation finally achieved independence.'", "'经过多年的奋斗，这个国家终于实现了独立。'这句话的基调是什么？",
           options=_mc_options(["Triumphant", "Humorous", "Sarcastic", "Fearful"], ["胜利的", "幽默的", "讽刺的", "恐惧的"], 0),
           answer_en="Triumphant", answer_zh="胜利的",
@@ -915,7 +915,7 @@ def generate_questions():
           explanation_zh="'终于实现了独立'传达了胜利和成功的感觉。",
           tags=["tone-analysis"], moed_code="E-P5-RC-02")
 
-    add_q("ENG-P5-008", 5, "english", "fill_in_blank", "hard",
+    add_q("ENG-P5-006", 5, "english", "fill_in_blank", "hard",
           "The book ___ I borrowed from the library is very interesting. (who / which / whose / whom)", "我从图书馆借的那本书很有趣。",
           answer_en="which", answer_zh="which",
           explanation_en="'Which' is used for things. The book is a thing.",
@@ -930,7 +930,7 @@ def generate_questions():
           explanation_zh="拟人赋予非人类事物（风）人类特质（低语）。",
           tags=["literary-device", "psle-format"], moed_code="E-P6-RC-02")
 
-    add_q("ENG-P6-008", 6, "english", "multiple_choice", "hard",
+    add_q("ENG-P6-007", 6, "english", "multiple_choice", "hard",
           "'Her argument was as solid as a rock.' What does this metaphor suggest?", "'她的论点坚如磐石。'这个比喻说明什么？",
           options=_mc_options(
               ["Her argument was strong and well-supported", "Her argument was heavy", "Her argument was cold", "Her argument was hard to understand"],
@@ -968,7 +968,7 @@ def generate_questions():
           explanation_zh="生物需要水、食物、空气和阳光才能生存。",
           tags=["voice-first"], moed_code="S-P1-LL-02")
 
-    add_q("SCI-P1-004", 1, "science", "multiple_choice", "easy",
+    add_q("SCI-P1-003", 1, "science", "multiple_choice", "easy",
           "A towel is made of cloth because cloth is:", "毛巾用布做是因为布是：",
           options=_mc_options(["Soft and absorbent", "Hard and shiny", "Transparent", "Magnetic"], ["柔软且吸水的", "坚硬且发亮的", "透明的", "有磁性的"], 0),
           answer_en="Soft and absorbent", answer_zh="柔软且吸水的",
@@ -1000,7 +1000,7 @@ def generate_questions():
           explanation_zh="透明材料能让光通过，所以你能看清楚。玻璃是透明的。",
           moed_code="S-P2-UM-01")
 
-    add_q("SCI-P2-004", 2, "science", "short_answer", "medium",
+    add_q("SCI-P2-003", 2, "science", "short_answer", "medium",
           "Why do polar bears have thick fur?", "为什么北极熊有厚厚的毛？",
           answer_en="To keep warm in the cold Arctic environment.", answer_zh="为了在寒冷的北极环境中保暖。",
           explanation_en="Thick fur traps body heat and keeps the polar bear warm in freezing temperatures.",
@@ -1201,7 +1201,7 @@ def generate_questions():
 
     # --- More Science questions ---
     # P1
-    add_q("SCI-P1-005", 1, "science", "short_answer", "easy",
+    add_q("SCI-P1-003", 1, "science", "short_answer", "easy",
           "Name two materials that are waterproof.", "说出两种防水材料。",
           answer_en="Plastic and metal", answer_zh="塑料和金属",
           explanation_en="Plastic and metal do not absorb water, so they are waterproof.",
@@ -1209,7 +1209,7 @@ def generate_questions():
           tags=["voice-first"], moed_code="S-P1-M-02")
 
     # P2
-    add_q("SCI-P2-005", 2, "science", "multiple_choice", "easy",
+    add_q("SCI-P2-003", 2, "science", "multiple_choice", "easy",
           "Which animal lives in the ocean?", "哪种动物生活在海洋里？",
           options=_mc_options(["Dolphin", "Rabbit", "Elephant", "Cat"], ["海豚", "兔子", "大象", "猫"], 0),
           answer_en="Dolphin", answer_zh="海豚",
@@ -1217,7 +1217,7 @@ def generate_questions():
           explanation_zh="海豚是生活在海洋中的海洋哺乳动物。",
           tags=["habitat"], moed_code="S-P2-H-03")
 
-    add_q("SCI-P2-006", 2, "science", "short_answer", "medium",
+    add_q("SCI-P2-003", 2, "science", "short_answer", "medium",
           "What happens to water when it is heated?", "水加热时会发生什么？",
           answer_en="It evaporates and turns into water vapour.", answer_zh="它会蒸发变成水蒸气。",
           explanation_en="When water is heated enough, it changes from liquid to gas (water vapour).",
@@ -1225,7 +1225,7 @@ def generate_questions():
           moed_code="S-P2-UM-02")
 
     # P3
-    add_q("SCI-P3-005", 3, "science", "multiple_choice", "medium",
+    add_q("SCI-P3-004", 3, "science", "multiple_choice", "medium",
           "Which part of a plant absorbs water from the soil?", "植物的哪个部分从土壤中吸收水分？",
           options=_mc_options(["Roots", "Leaves", "Flowers", "Stem"], ["根", "叶", "花", "茎"], 0),
           answer_en="Roots", answer_zh="根",
@@ -1233,7 +1233,7 @@ def generate_questions():
           explanation_zh="根从土壤中吸收水分和矿物质。",
           moed_code="S-P3-AP-02")
 
-    add_q("SCI-P3-006", 3, "science", "short_answer", "medium",
+    add_q("SCI-P3-004", 3, "science", "short_answer", "medium",
           "What are the two poles of a magnet called?", "磁铁的两个极叫什么？",
           answer_en="North pole and south pole", answer_zh="北极和南极",
           explanation_en="Every magnet has a north pole and a south pole. Like poles repel, unlike poles attract.",
@@ -1241,7 +1241,7 @@ def generate_questions():
           moed_code="S-P3-MG-02")
 
     # P4
-    add_q("SCI-P4-006", 4, "science", "structured", "hard",
+    add_q("SCI-P4-005", 4, "science", "structured", "hard",
           "Explain why a metal spoon in hot soup becomes hot but a wooden spoon does not.", "解释为什么放在热汤里的金属勺会变热，而木勺不会。",
           answer_en="Metal is a good conductor of heat, so heat from the soup travels through the spoon. Wood is an insulator, so heat does not travel through it easily.",
           answer_zh="金属是良导体，所以汤中的热会传到勺子上。木头是绝缘体，所以热不容易传递。",
@@ -1249,7 +1249,7 @@ def generate_questions():
           explanation_zh="导体传递热，绝缘体不传递热。",
           moed_code="S-P4-HT-02")
 
-    add_q("SCI-P4-007", 4, "science", "multiple_choice", "easy",
+    add_q("SCI-P4-005", 4, "science", "multiple_choice", "easy",
           "What organ do we use to breathe?", "我们用什么器官呼吸？",
           options=_mc_options(["Lungs", "Heart", "Stomach", "Liver"], ["肺", "心脏", "胃", "肝脏"], 0),
           answer_en="Lungs", answer_zh="肺",
@@ -1258,13 +1258,13 @@ def generate_questions():
           tags=["respiratory-system"], moed_code="S-P4-CR-02")
 
     # P5
-    add_q("SCI-P5-007", 5, "science", "structured", "hard",
+    add_q("SCI-P5-006", 5, "science", "structured", "hard",
           "Design a fair test to find out which material keeps a drink hottest: foam, cotton wool, or newspaper. State: (a) what to change, (b) what to measure, (c) two things to keep the same.", "设计一个公平测试来找出哪种材料最能保温：泡沫、棉花还是报纸。说明：(a)要改变的变量，(b)要测量的变量，(c)要保持不变的两个变量。",
           answer_en="(a) Type of wrapping material. (b) Temperature of water after a set time. (c) Same volume of water, same starting temperature, same container, same time.",
           answer_zh="(a)包裹材料的类型。(b)一定时间后的水温。(c)相同水量、相同初始温度、相同容器、相同时间。",
           tags=["experimental-design"], moed_code="S-P5-CI-02")
 
-    add_q("SCI-P5-008", 5, "science", "multiple_choice", "medium",
+    add_q("SCI-P5-006", 5, "science", "multiple_choice", "medium",
           "Which of these is a chemical change?", "以下哪个是化学变化？",
           options=_mc_options(["Rusting of iron", "Melting of ice", "Boiling water", "Breaking glass"], ["铁生锈", "冰融化", "水沸腾", "玻璃破碎"], 0),
           answer_en="Rusting of iron", answer_zh="铁生锈",
@@ -1273,13 +1273,13 @@ def generate_questions():
           moed_code="S-P5-MT-02")
 
     # P6
-    add_q("SCI-P6-009", 6, "science", "short_answer", "medium",
+    add_q("SCI-P6-008", 6, "science", "short_answer", "medium",
           "What is the role of decomposers in an ecosystem?", "分解者在生态系统中的作用是什么？",
           answer_en="Decomposers break down dead organisms and waste, returning nutrients to the soil.",
           answer_zh="分解者分解死亡的生物和废物，将营养物质返回到土壤中。",
           tags=["ecosystem"], moed_code="S-P6-FC-02")
 
-    add_q("SCI-P6-010", 6, "science", "multiple_choice", "hard",
+    add_q("SCI-P6-005", 6, "science", "multiple_choice", "hard",
           "In a parallel circuit, if one bulb blows, what happens to the other bulbs?", "在并联电路中，如果一个灯泡烧了，其他灯泡会怎样？",
           options=_mc_options(
               ["They stay lit", "They all go out", "They become dimmer", "They become brighter"],
@@ -1290,7 +1290,7 @@ def generate_questions():
           explanation_zh="在并联电路中，每个灯泡有自己的路径。如果一个坏了，其他的还能工作。",
           moed_code="S-P6-EC-02")
 
-    add_q("SCI-P6-011", 6, "science", "structured", "hard",
+    add_q("SCI-P6-007", 6, "science", "structured", "hard",
           "Explain how the circulatory and respiratory systems work together.", "解释循环系统和呼吸系统是如何协同工作的。",
           answer_en="The lungs take in oxygen during breathing. The heart pumps oxygen-rich blood from the lungs to all body cells. At the same time, carbon dioxide is carried from cells back to the lungs to be exhaled.",
           answer_zh="肺在呼吸时吸入氧气。心脏把富含氧气的血液从肺泵到全身细胞。同时，二氧化碳从细胞带回肺，然后呼出。",
@@ -1585,7 +1585,7 @@ def generate_questions():
 
     # --- More Chinese questions ---
     # P1
-    add_q("CHI-P1-007", 1, "chinese", "multiple_choice", "easy",
+    add_q("CHI-P1-006", 1, "chinese", "multiple_choice", "easy",
           "哪个是动物的叫声？", "哪个是动物的叫声？",
           options=_mc_options(["汪汪", "叮咚", "哗啦", "轰隆"], ["汪汪", "叮咚", "哗啦", "轰隆"], 0),
           answer_en="汪汪", answer_zh="汪汪",
@@ -1593,7 +1593,7 @@ def generate_questions():
           explanation_zh="'汪汪'是狗的叫声。",
           tags=["voice-first"], moed_code="C-P1-CW-04")
 
-    add_q("CHI-P1-008", 1, "chinese", "short_answer", "easy",
+    add_q("CHI-P1-006", 1, "chinese", "short_answer", "easy",
           "说说你最喜欢的水果是什么，为什么。", "说说你最喜欢的水果是什么，为什么。",
           answer_en="(Open-ended — example: 我最喜欢的水果是苹果，因为它又甜又脆。)",
           answer_zh="（开放式——例如：我最喜欢的水果是苹果，因为它又甜又脆。）",
@@ -1602,7 +1602,7 @@ def generate_questions():
           tags=["voice-first", "oral"], moed_code="C-P1-LS-01")
 
     # P2
-    add_q("CHI-P2-006", 2, "chinese", "multiple_choice", "easy",
+    add_q("CHI-P2-005", 2, "chinese", "multiple_choice", "easy",
           "哪个词语和'快乐'意思最接近？", "哪个词语和'快乐'意思最接近？",
           options=_mc_options(["高兴", "伤心", "生气", "害怕"], ["高兴", "伤心", "生气", "害怕"], 0),
           answer_en="高兴", answer_zh="高兴",
@@ -1610,7 +1610,7 @@ def generate_questions():
           explanation_zh="'快乐'和'高兴'都表示开心的意思。",
           moed_code="C-P2-VB-01")
 
-    add_q("CHI-P2-007", 2, "chinese", "comprehension", "medium",
+    add_q("CHI-P2-005", 2, "chinese", "comprehension", "medium",
           "阅读：我的妈妈是一名护士。她每天都很辛苦地工作。她很善良，总是帮助别人。我爱我的妈妈。问题：妈妈做什么工作？",
           "阅读：我的妈妈是一名护士。她每天都很辛苦地工作。她很善良，总是帮助别人。我爱我的妈妈。问题：妈妈做什么工作？",
           answer_en="Nurse", answer_zh="护士",
@@ -1619,7 +1619,7 @@ def generate_questions():
           tags=["reading-comprehension"], moed_code="C-P2-RC-02")
 
     # P3
-    add_q("CHI-P3-006", 3, "chinese", "multiple_choice", "medium",
+    add_q("CHI-P3-005", 3, "chinese", "multiple_choice", "medium",
           "以下哪个句子是正确的？", "以下哪个句子是正确的？",
           options=_mc_options(
               ["他每天都很努力地学习。", "他每天努力地都很学习。", "他每天地都很努力学习。", "他很努力每天地学习。"],
@@ -1630,7 +1630,7 @@ def generate_questions():
           explanation_zh="正确的语序是：主语+时间状语+都+副词+地+动词。",
           moed_code="C-P3-GF-01")
 
-    add_q("CHI-P3-007", 3, "chinese", "short_answer", "medium",
+    add_q("CHI-P3-005", 3, "chinese", "short_answer", "medium",
           "改写句子，意思不变：小明很喜欢看书。", "改写句子，意思不变：小明很喜欢看书。",
           answer_en="小明非常爱读书。/ 小明对看书很感兴趣。",
           answer_zh="小明非常爱读书。/ 小明对看书很感兴趣。",
@@ -1639,7 +1639,7 @@ def generate_questions():
           moed_code="C-P3-SF-02")
 
     # P4
-    add_q("CHI-P4-007", 4, "chinese", "comprehension", "hard",
+    add_q("CHI-P4-006", 4, "chinese", "comprehension", "hard",
           "阅读：下雨了，小红没有带伞。小明看见了，主动把自己的伞借给了小红。小红说：谢谢你，你真好！小明笑着说：不用谢，我们是好朋友嘛。问题：小明为什么把伞借给小红？",
           "阅读：下雨了，小红没有带伞。小明看见了，主动把自己的伞借给了小红。小红说：谢谢你，你真好！小明笑着说：不用谢，我们是好朋友嘛。问题：小明为什么把伞借给小红？",
           answer_en="因为小明看到小红没有带伞，而且他们是好朋友。",
@@ -1648,7 +1648,7 @@ def generate_questions():
           explanation_zh="文章中小明主动借伞，说明他乐于助人，且两人是好朋友。",
           tags=["reading-comprehension"], moed_code="C-P4-RC-02")
 
-    add_q("CHI-P4-008", 4, "chinese", "fill_in_blank", "medium",
+    add_q("CHI-P4-006", 4, "chinese", "fill_in_blank", "medium",
           "我们___（应该/必须）遵守学校的规则。", "我们___（应该/必须）遵守学校的规则。",
           answer_en="应该", answer_zh="应该",
           explanation_en="'应该'表示建议或推荐，'必须'表示强制。在这个语境中，'应该'更合适。",
@@ -1656,7 +1656,7 @@ def generate_questions():
           moed_code="C-P4-GF-03")
 
     # P5
-    add_q("CHI-P5-007", 5, "chinese", "multiple_choice", "hard",
+    add_q("CHI-P5-006", 5, "chinese", "multiple_choice", "hard",
           "以下哪个句子使用了拟人的修辞手法？", "以下哪个句子使用了拟人的修辞手法？",
           options=_mc_options(
               ["小鸟在枝头欢快地歌唱。", "小明跑得像风一样快。", "她的脸红得像苹果。", "今天天气很好。"],
@@ -1667,7 +1667,7 @@ def generate_questions():
           explanation_zh="拟人是把非人的事物赋予人的行为或情感。'小鸟歌唱'把小鸟拟人化了。",
           tags=["rhetoric"], moed_code="C-P5-GS-02")
 
-    add_q("CHI-P5-008", 5, "chinese", "short_answer", "hard",
+    add_q("CHI-P5-006", 5, "chinese", "short_answer", "hard",
           "用'不仅……还……'写一个句子。", "用'不仅……还……'写一个句子。",
           answer_en="（开放式——例如：他不仅学习好，还乐于助人。）",
           answer_zh="（开放式——例如：他不仅学习好，还乐于助人。）",
@@ -1676,7 +1676,7 @@ def generate_questions():
           moed_code="C-P5-SF-01")
 
     # P6
-    add_q("CHI-P6-008", 6, "chinese", "comprehension", "hard",
+    add_q("CHI-P6-007", 6, "chinese", "comprehension", "hard",
           "阅读：在人生的道路上，我们会遇到许多困难和挫折。但只要我们坚持不懈，勇敢面对，就一定能够战胜它们。正如一句话所说：'失败是成功之母。'问题：'失败是成功之母'告诉我们什么道理？",
           "阅读：在人生的道路上，我们会遇到许多困难和挫折。但只要我们坚持不懈，勇敢面对，就一定能够战胜它们。正如一句话所说：'失败是成功之母。'问题：'失败是成功之母'告诉我们什么道理？",
           answer_en="告诉我们不要害怕失败，要从失败中吸取教训，继续努力，最终会成功。",
@@ -1685,7 +1685,7 @@ def generate_questions():
           explanation_zh="'失败是成功之母'是一句成语，意思是失败是成功的先导，从失败中可以找到成功的路。",
           tags=["chengyu", "psle-format"], moed_code="C-P6-RC-02")
 
-    add_q("CHI-P6-009", 6, "chinese", "cloze", "hard",
+    add_q("CHI-P6-007", 6, "chinese", "cloze", "hard",
           "综合填空：人生的道路上，没有___（一帆风顺/一路顺风），总会遇到___（挫折/顺利）。但只要我们___（坚持不懈/半途而废），就一定能___（实现梦想/放弃梦想）。",
           "综合填空：人生的道路上，没有___（一帆风顺/一路顺风），总会遇到___（挫折/顺利）。但只要我们___（坚持不懈/半途而废），就一定能___（实现梦想/放弃梦想）。",
           answer_en="一帆风顺，挫折，坚持不懈，实现梦想", answer_zh="一帆风顺，挫折，坚持不懈，实现梦想",
@@ -1693,7 +1693,7 @@ def generate_questions():
           explanation_zh="根据语境，应选表示顺利的'一帆风顺'、表示困难的'挫折'、表示坚持的'坚持不懈'和表示成功的'实现梦想'。",
           tags=["cloze-passage", "psle-format"], moed_code="C-P6-CF-02")
 
-    add_q("CHI-P6-010", 6, "chinese", "short_answer", "hard",
+    add_q("CHI-P6-007", 6, "chinese", "short_answer", "hard",
           "口语考试：请谈谈你对'少壮不努力，老大徒伤悲'这句话的理解。", "口语考试：请谈谈你对'少壮不努力，老大徒伤悲'这句话的理解。",
           answer_en="(Open-ended — assessed on: understanding of the proverb, personal reflection, coherent reasoning, appropriate vocabulary)",
           answer_zh="（开放式——评估标准：对谚语的理解、个人反思、推理连贯、词汇恰当）",
@@ -1702,7 +1702,7 @@ def generate_questions():
           tags=["oral", "proverb", "psle-format"], moed_code="C-P6-OR-02")
 
     # --- Final batch to reach 200+ ---
-    add_q("SCI-P1-006", 1, "science", "multiple_choice", "easy",
+    add_q("SCI-P1-003", 1, "science", "multiple_choice", "easy",
           "Which part of our body helps us to taste food?", "我们身体的哪个部位帮助我们品尝食物？",
           options=_mc_options(["Tongue", "Nose", "Eyes", "Ears"], ["舌头", "鼻子", "眼睛", "耳朵"], 0),
           answer_en="Tongue", answer_zh="舌头",
@@ -1710,7 +1710,7 @@ def generate_questions():
           explanation_zh="舌头上有味蕾，帮助我们分辨甜、酸、咸和苦。",
           tags=["voice-first"], moed_code="S-P1-AM-02")
 
-    add_q("ENG-P3-009", 3, "english", "short_answer", "easy",
+    add_q("ENG-P3-006", 3, "english", "short_answer", "easy",
           "Write a sentence using the word 'because'.", "用'because'写一个句子。",
           answer_en="(Open-ended — example: I am happy because it is my birthday.)",
           answer_zh="（开放式——例如：我很高兴，因为今天是我的生日。）",
@@ -1718,21 +1718,21 @@ def generate_questions():
           explanation_zh="'because'用来表示原因。",
           tags=["sentence-construction"], moed_code="E-P3-SC-02")
 
-    add_q("MAT-P4-013", 4, "math", "short_answer", "easy",
+    add_q("MAT-P4-007", 4, "math", "short_answer", "easy",
           "How many minutes are there in 2 and a half hours?", "两个半小时有多少分钟？",
           answer_en="150 minutes", answer_zh="150分钟",
           explanation_en="2 hours = 120 minutes. Half an hour = 30 minutes. 120 + 30 = 150 minutes.",
           explanation_zh="2小时=120分钟。半小时=30分钟。120+30=150分钟。",
           moed_code="M-P4-T-01")
 
-    add_q("CHI-P2-008", 2, "chinese", "fill_in_blank", "easy",
+    add_q("CHI-P2-005", 2, "chinese", "fill_in_blank", "easy",
           "今天天气很___。（好/跑/吃/大）", "今天天气很___。（好/跑/吃/大）",
           answer_en="好", answer_zh="好",
           explanation_en="'天气好'是正确的搭配。",
           explanation_zh="'天气好'是正确的搭配。",
           moed_code="C-P2-CW-01")
 
-    add_q("ENG-P5-009", 5, "english", "short_answer", "medium",
+    add_q("ENG-P5-006", 5, "english", "short_answer", "medium",
           "What does 'actions speak louder than words' mean?", "'actions speak louder than words'是什么意思？",
           answer_en="What you do is more important than what you say.",
           answer_zh="你做的事情比你说的话更重要。",

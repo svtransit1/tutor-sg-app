@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "metadata": {
-    "generated_at": "2026-05-06T06:33:24.885779+00:00",
+    "generated_at": "2026-05-06T07:39:59.601200+00:00",
     "source": "MOE Primary School Syllabus PDFs (public Crown Copyright, paraphrased)",
     "copyright_notice": "All questions are originally authored by AaaS. MOE syllabus topic references are paraphrased from public Crown Copyright documents. No textbook or examination paper content has been reproduced or closely paraphrased.",
     "total_questions": 200,
@@ -72,10 +72,7 @@
       "name_zh": "图形和模式",
       "description_en": "MOE Mathematics P1: Shapes and Patterns",
       "description_zh": "MOE 数学 P1：图形和模式",
-      "learning_outcomes": [
-        "Recognise and name 2D shapes",
-        "Identify and extend patterns"
-      ],
+      "learning_outcomes": ["Recognise and name 2D shapes", "Identify and extend patterns"],
       "parent_topic_id": null
     },
     {
@@ -100,10 +97,7 @@
       "name_zh": "时间和货币",
       "description_en": "MOE Mathematics P1: Time and Money",
       "description_zh": "MOE 数学 P1：时间和货币",
-      "learning_outcomes": [
-        "Tell time to the hour",
-        "Identify coins and notes"
-      ],
+      "learning_outcomes": ["Tell time to the hour", "Identify coins and notes"],
       "parent_topic_id": null
     },
     {
@@ -114,10 +108,7 @@
       "name_zh": "1000以内的数",
       "description_en": "MOE Mathematics P2: Numbers to 1000",
       "description_zh": "MOE 数学 P2：1000以内的数",
-      "learning_outcomes": [
-        "Count, read and write numbers to 1000",
-        "Understand place value"
-      ],
+      "learning_outcomes": ["Count, read and write numbers to 1000", "Understand place value"],
       "parent_topic_id": null
     },
     {
@@ -128,10 +119,7 @@
       "name_zh": "1000以内的加法和减法",
       "description_en": "MOE Mathematics P2: Addition and Subtraction within 1000",
       "description_zh": "MOE 数学 P2：1000以内的加法和减法",
-      "learning_outcomes": [
-        "Add and subtract within 1000 with regrouping",
-        "Solve word problems"
-      ],
+      "learning_outcomes": ["Add and subtract within 1000 with regrouping", "Solve word problems"],
       "parent_topic_id": null
     },
     {
@@ -170,10 +158,7 @@
       "name_zh": "货币",
       "description_en": "MOE Mathematics P2: Money",
       "description_zh": "MOE 数学 P2：货币",
-      "learning_outcomes": [
-        "Count money in dollars and cents",
-        "Solve money word problems"
-      ],
+      "learning_outcomes": ["Count money in dollars and cents", "Solve money word problems"],
       "parent_topic_id": null
     },
     {
@@ -184,10 +169,7 @@
       "name_zh": "时间",
       "description_en": "MOE Mathematics P2: Time",
       "description_zh": "MOE 数学 P2：时间",
-      "learning_outcomes": [
-        "Tell time to 5-minute intervals",
-        "Solve time problems"
-      ],
+      "learning_outcomes": ["Tell time to 5-minute intervals", "Solve time problems"],
       "parent_topic_id": null
     },
     {
@@ -198,10 +180,7 @@
       "name_zh": "长度、质量和体积",
       "description_en": "MOE Mathematics P2: Length, Mass and Volume",
       "description_zh": "MOE 数学 P2：长度、质量和体积",
-      "learning_outcomes": [
-        "Measure using standard units",
-        "Compare and order measurements"
-      ],
+      "learning_outcomes": ["Measure using standard units", "Compare and order measurements"],
       "parent_topic_id": null
     },
     {
@@ -212,10 +191,7 @@
       "name_zh": "图形和图表",
       "description_en": "MOE Mathematics P2: Shapes and Graphs",
       "description_zh": "MOE 数学 P2：图形和图表",
-      "learning_outcomes": [
-        "Identify properties of 2D and 3D shapes",
-        "Read picture graphs"
-      ],
+      "learning_outcomes": ["Identify properties of 2D and 3D shapes", "Read picture graphs"],
       "parent_topic_id": null
     },
     {
@@ -284,10 +260,7 @@
       "name_zh": "货币",
       "description_en": "MOE Mathematics P3: Money",
       "description_zh": "MOE 数学 P3：货币",
-      "learning_outcomes": [
-        "Solve multi-step money problems",
-        "Give change from a given amount"
-      ],
+      "learning_outcomes": ["Solve multi-step money problems", "Give change from a given amount"],
       "parent_topic_id": null
     },
     {
@@ -340,10 +313,7 @@
       "name_zh": "数据和图表",
       "description_en": "MOE Mathematics P3: Data and Graphs",
       "description_zh": "MOE 数学 P3：数据和图表",
-      "learning_outcomes": [
-        "Read and interpret bar graphs",
-        "Collect and organise data in tables"
-      ],
+      "learning_outcomes": ["Read and interpret bar graphs", "Collect and organise data in tables"],
       "parent_topic_id": null
     },
     {
@@ -354,10 +324,7 @@
       "name_zh": "时间",
       "description_en": "MOE Mathematics P3: Time",
       "description_zh": "MOE 数学 P3：时间",
-      "learning_outcomes": [
-        "Tell time to the minute",
-        "Solve elapsed time problems"
-      ],
+      "learning_outcomes": ["Tell time to the minute", "Solve elapsed time problems"],
       "parent_topic_id": null
     },
     {
@@ -382,10 +349,7 @@
       "name_zh": "因数和倍数",
       "description_en": "MOE Mathematics P4: Factors and Multiples",
       "description_zh": "MOE 数学 P4：因数和倍数",
-      "learning_outcomes": [
-        "Find factors and multiples",
-        "Identify prime numbers up to 50"
-      ],
+      "learning_outcomes": ["Find factors and multiples", "Identify prime numbers up to 50"],
       "parent_topic_id": null
     },
     {
@@ -537,10 +501,7 @@
       "name_zh": "分数",
       "description_en": "MOE Mathematics P5: Fractions",
       "description_zh": "MOE 数学 P5：分数",
-      "learning_outcomes": [
-        "Multiply and divide fractions",
-        "Solve multi-step fraction problems"
-      ],
+      "learning_outcomes": ["Multiply and divide fractions", "Solve multi-step fraction problems"],
       "parent_topic_id": null
     },
     {
@@ -565,10 +526,7 @@
       "name_zh": "百分比",
       "description_en": "MOE Mathematics P5: Percentage",
       "description_zh": "MOE 数学 P5：百分比",
-      "learning_outcomes": [
-        "Express parts as percentages",
-        "Solve percentage word problems"
-      ],
+      "learning_outcomes": ["Express parts as percentages", "Solve percentage word problems"],
       "parent_topic_id": null
     },
     {
@@ -579,10 +537,7 @@
       "name_zh": "比",
       "description_en": "MOE Mathematics P5: Ratio",
       "description_zh": "MOE 数学 P5：比",
-      "learning_outcomes": [
-        "Write and simplify ratios",
-        "Solve ratio problems"
-      ],
+      "learning_outcomes": ["Write and simplify ratios", "Solve ratio problems"],
       "parent_topic_id": null
     },
     {
@@ -593,10 +548,7 @@
       "name_zh": "速率",
       "description_en": "MOE Mathematics P5: Rate",
       "description_zh": "MOE 数学 P5：速率",
-      "learning_outcomes": [
-        "Understand and use rate",
-        "Solve rate problems"
-      ],
+      "learning_outcomes": ["Understand and use rate", "Solve rate problems"],
       "parent_topic_id": null
     },
     {
@@ -621,9 +573,7 @@
       "name_zh": "组合图形的面积和周长",
       "description_en": "MOE Mathematics P5: Area and Perimeter of Composite Shapes",
       "description_zh": "MOE 数学 P5：组合图形的面积和周长",
-      "learning_outcomes": [
-        "Find area and perimeter of composite rectilinear shapes"
-      ],
+      "learning_outcomes": ["Find area and perimeter of composite rectilinear shapes"],
       "parent_topic_id": null
     },
     {
@@ -1014,10 +964,7 @@
       "name_zh": "语法 - 时态",
       "description_en": "MOE English Language P3: Grammar - Tenses",
       "description_zh": "MOE 英语 P3：语法 - 时态",
-      "learning_outcomes": [
-        "Use present perfect tense",
-        "Use continuous tenses correctly"
-      ],
+      "learning_outcomes": ["Use present perfect tense", "Use continuous tenses correctly"],
       "parent_topic_id": null
     },
     {
@@ -1816,10 +1763,7 @@
       "name_zh": "造句",
       "description_en": "MOE Chinese Mother Tongue P2: Sentence Formation",
       "description_zh": "MOE 华文 P2：造句",
-      "learning_outcomes": [
-        "Form sentences using given words",
-        "Use 把 and 被 sentences"
-      ],
+      "learning_outcomes": ["Form sentences using given words", "Use 把 and 被 sentences"],
       "parent_topic_id": null
     },
     {
@@ -2245,9 +2189,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "M-P1-N-01"
     },
     {
@@ -2270,9 +2212,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "M-P1-AS-01"
     },
     {
@@ -2339,9 +2279,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "M-P1-AS-02"
     },
     {
@@ -2379,9 +2317,7 @@
       "answer_zh": "三角形",
       "explanation_en": "A triangle has 3 sides.",
       "explanation_zh": "三角形有3条边。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "M-P1-S-01"
     },
     {
@@ -2441,9 +2377,7 @@
       "answer_zh": "50分",
       "explanation_en": "50 cents is the highest value.",
       "explanation_zh": "50分是最高的面值。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "M-P1-TM-02"
     },
     {
@@ -2870,9 +2804,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "multi-step"
-      ],
+      "tags": ["multi-step"],
       "moed_code": "M-P3-LMV-01"
     },
     {
@@ -2925,9 +2857,7 @@
       "answer_zh": "B",
       "explanation_en": "Bar B shows 22, which is the highest number.",
       "explanation_zh": "B条形图显示22，是最高的数字。",
-      "tags": [
-        "data-interpretation"
-      ],
+      "tags": ["data-interpretation"],
       "moed_code": "M-P3-DG-01"
     },
     {
@@ -3009,9 +2939,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "order-of-operations"
-      ],
+      "tags": ["order-of-operations"],
       "moed_code": "M-P4-FO-01"
     },
     {
@@ -3130,9 +3058,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "M-P5-P-01"
     },
     {
@@ -3155,9 +3081,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "M-P5-R-01"
     },
     {
@@ -3195,9 +3119,7 @@
       "answer_zh": "60立方厘米",
       "explanation_en": "Volume = length × width × height = 5 × 3 × 4 = 60 cm³.",
       "explanation_zh": "体积=长×宽×高=5×3×4=60立方厘米。",
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "M-P5-V-01"
     },
     {
@@ -3220,10 +3142,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "psle-format",
-        "real-world"
-      ],
+      "tags": ["psle-format", "real-world"],
       "moed_code": "M-P5-P-02"
     },
     {
@@ -3246,9 +3165,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "M-P5-A-01"
     },
     {
@@ -3286,9 +3203,7 @@
       "answer_zh": "150公里",
       "explanation_en": "Distance = speed × time = 60 × 2.5 = 150 km.",
       "explanation_zh": "距离=速度×时间=60×2.5=150公里。",
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "M-P5-R-02"
     },
     {
@@ -3311,10 +3226,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "psle-format",
-        "working-backwards"
-      ],
+      "tags": ["psle-format", "working-backwards"],
       "moed_code": "M-P6-RP-01"
     },
     {
@@ -3337,10 +3249,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "psle-format",
-        "heuristic"
-      ],
+      "tags": ["psle-format", "heuristic"],
       "moed_code": "M-P6-A-01"
     },
     {
@@ -3378,9 +3287,7 @@
       "answer_zh": "144°",
       "explanation_en": "40% of 360° = 0.4 × 360 = 144°.",
       "explanation_zh": "360°的40%=0.4×360=144°。",
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "M-P6-DA-01"
     },
     {
@@ -3403,10 +3310,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "psle-format",
-        "real-world"
-      ],
+      "tags": ["psle-format", "real-world"],
       "moed_code": "M-P6-SP-01"
     },
     {
@@ -3444,11 +3348,7 @@
           "step": 1
         }
       ],
-      "tags": [
-        "psle-format",
-        "heuristic",
-        "guess-and-check"
-      ],
+      "tags": ["psle-format", "heuristic", "guess-and-check"],
       "moed_code": "M-P6-PS-01"
     },
     {
@@ -3464,9 +3364,7 @@
       "answer_zh": "6",
       "explanation_en": "9 minus 3 equals 6.",
       "explanation_zh": "9减3等于6。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "M-P1-AS-03"
     },
     {
@@ -3504,14 +3402,12 @@
       "answer_zh": "12",
       "explanation_en": "12 comes after 11 and before 13.",
       "explanation_zh": "12在11之后，13之前。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "M-P1-N-03"
     },
     {
       "question_id": "Q-MAT-P2-0045",
-      "topic_id": "MAT-P2-009",
+      "topic_id": "MAT-P2-003",
       "level": 2,
       "subject": "math",
       "question_type": "multiple_choice",
@@ -3548,7 +3444,7 @@
     },
     {
       "question_id": "Q-MAT-P2-0046",
-      "topic_id": "MAT-P2-010",
+      "topic_id": "MAT-P2-006",
       "level": 2,
       "subject": "math",
       "question_type": "short_answer",
@@ -3563,7 +3459,7 @@
     },
     {
       "question_id": "Q-MAT-P3-0047",
-      "topic_id": "MAT-P3-011",
+      "topic_id": "MAT-P3-006",
       "level": 3,
       "subject": "math",
       "question_type": "multiple_choice",
@@ -3600,7 +3496,7 @@
     },
     {
       "question_id": "Q-MAT-P3-0048",
-      "topic_id": "MAT-P3-012",
+      "topic_id": "MAT-P3-003",
       "level": 3,
       "subject": "math",
       "question_type": "fill_in_blank",
@@ -3615,7 +3511,7 @@
     },
     {
       "question_id": "Q-MAT-P4-0049",
-      "topic_id": "MAT-P4-011",
+      "topic_id": "MAT-P4-002",
       "level": 4,
       "subject": "math",
       "question_type": "short_answer",
@@ -3630,7 +3526,7 @@
     },
     {
       "question_id": "Q-MAT-P4-0050",
-      "topic_id": "MAT-P4-012",
+      "topic_id": "MAT-P4-006",
       "level": 4,
       "subject": "math",
       "question_type": "multiple_choice",
@@ -3667,7 +3563,7 @@
     },
     {
       "question_id": "Q-MAT-P5-0051",
-      "topic_id": "MAT-P5-013",
+      "topic_id": "MAT-P5-004",
       "level": 5,
       "subject": "math",
       "question_type": "short_answer",
@@ -3682,7 +3578,7 @@
     },
     {
       "question_id": "Q-MAT-P5-0052",
-      "topic_id": "MAT-P5-014",
+      "topic_id": "MAT-P5-003",
       "level": 5,
       "subject": "math",
       "question_type": "multiple_choice",
@@ -3715,14 +3611,12 @@
       "answer_zh": "40升",
       "explanation_en": "3/4 - 1/2 = 1/4. So 1/4 of the tank = 10 litres. Capacity = 10 × 4 = 40 litres.",
       "explanation_zh": "3/4-1/2=1/4。所以1/4箱=10升。容量=10×4=40升。",
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "M-P5-F-01"
     },
     {
       "question_id": "Q-MAT-P6-0053",
-      "topic_id": "MAT-P6-009",
+      "topic_id": "MAT-P6-002",
       "level": 6,
       "subject": "math",
       "question_type": "short_answer",
@@ -3733,14 +3627,12 @@
       "answer_zh": "80元",
       "explanation_en": "85% of original = $68. Original = $68 ÷ 0.85 = $80.",
       "explanation_zh": "原价的85%=68元。原价=68÷0.85=80元。",
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "M-P6-RP-02"
     },
     {
       "question_id": "Q-MAT-P6-0054",
-      "topic_id": "MAT-P6-010",
+      "topic_id": "MAT-P6-004",
       "level": 6,
       "subject": "math",
       "question_type": "multiple_choice",
@@ -3777,7 +3669,7 @@
     },
     {
       "question_id": "Q-MAT-P6-0055",
-      "topic_id": "MAT-P6-011",
+      "topic_id": "MAT-P6-008",
       "level": 6,
       "subject": "math",
       "question_type": "structured",
@@ -3795,14 +3687,12 @@
           "step": 1
         }
       ],
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "M-P6-RP-03"
     },
     {
       "question_id": "Q-MAT-P6-0056",
-      "topic_id": "MAT-P6-012",
+      "topic_id": "MAT-P6-003",
       "level": 6,
       "subject": "math",
       "question_type": "fill_in_blank",
@@ -3813,9 +3703,7 @@
       "answer_zh": "2a + 6b",
       "explanation_en": "Combine like terms: 3a - a = 2a and 2b + 4b = 6b.",
       "explanation_zh": "合并同类项：3a-a=2a，2b+4b=6b。",
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "M-P6-A-02"
     },
     {
@@ -3853,10 +3741,7 @@
       "answer_zh": "ball（球）",
       "explanation_en": "The word 'ball' starts with the /b/ sound.",
       "explanation_zh": "'ball'这个词以/b/音开头。",
-      "tags": [
-        "voice-first",
-        "phonics"
-      ],
+      "tags": ["voice-first", "phonics"],
       "moed_code": "E-P1-PW-01"
     },
     {
@@ -3872,9 +3757,7 @@
       "answer_zh": "下面",
       "explanation_en": "The preposition 'under' shows position below something.",
       "explanation_zh": "介词'under'表示在某物下面。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "E-P1-GB-01"
     },
     {
@@ -3890,10 +3773,7 @@
       "answer_zh": "（开放式——例如：我最喜欢的玩具是一辆红色的汽车。）",
       "explanation_en": "A good sentence has a capital letter at the start, a full stop at the end, and makes sense.",
       "explanation_zh": "一个好句子开头要大写字母，结尾有句号，意思要通顺。",
-      "tags": [
-        "voice-first",
-        "creative"
-      ],
+      "tags": ["voice-first", "creative"],
       "moed_code": "E-P1-SS-01"
     },
     {
@@ -3946,10 +3826,7 @@
       "answer_zh": "（开放式——例如：男孩在公园放风筝。）",
       "explanation_en": "Describe what you see in a complete sentence.",
       "explanation_zh": "用完整的句子描述你看到的内容。",
-      "tags": [
-        "picture-description",
-        "voice-first"
-      ],
+      "tags": ["picture-description", "voice-first"],
       "moed_code": "E-P1-PC-01"
     },
     {
@@ -3991,7 +3868,7 @@
     },
     {
       "question_id": "Q-ENG-P1-0063",
-      "topic_id": "ENG-P1-007",
+      "topic_id": "ENG-P1-006",
       "level": 1,
       "subject": "english",
       "question_type": "fill_in_blank",
@@ -4017,9 +3894,7 @@
       "answer_zh": "Max（麦克斯）",
       "explanation_en": "The passage says 'a pet dog named Max'.",
       "explanation_zh": "文章说'一只叫麦克斯的宠物狗'。",
-      "tags": [
-        "reading-comprehension"
-      ],
+      "tags": ["reading-comprehension"],
       "moed_code": "E-P2-RC-01"
     },
     {
@@ -4102,10 +3977,7 @@
       "answer_zh": "（开放式——例如：上个周末，我去看了奶奶。我们一起吃了午饭。然后我和表弟玩游戏。）",
       "explanation_en": "Use past tense verbs and sequence words like 'first', 'then', 'after that'.",
       "explanation_zh": "用过去式动词和顺序词，如'首先'、'然后'、'之后'。",
-      "tags": [
-        "writing",
-        "creative"
-      ],
+      "tags": ["writing", "creative"],
       "moed_code": "E-P2-W-01"
     },
     {
@@ -4158,10 +4030,7 @@
       "answer_zh": "她叹气是因为下雨破坏了她的野餐计划。",
       "explanation_en": "The passage shows Maya had plans that the weather disrupted. She sighed out of disappointment.",
       "explanation_zh": "文章显示玛雅有计划，但天气打乱了。她因为失望而叹气。",
-      "tags": [
-        "reading-comprehension",
-        "inferential"
-      ],
+      "tags": ["reading-comprehension", "inferential"],
       "moed_code": "E-P3-RC-01"
     },
     {
@@ -4177,9 +4046,7 @@
       "answer_zh": "打开",
       "explanation_en": "'Open' makes sense because you open a book before turning to a page.",
       "explanation_zh": "'打开'合理，因为翻到某一页前要先打开书。",
-      "tags": [
-        "cloze-passage"
-      ],
+      "tags": ["cloze-passage"],
       "moed_code": "E-P3-CP-01"
     },
     {
@@ -4232,10 +4099,7 @@
       "answer_zh": "（开放式——评估标准：开头、中间、结尾清晰；词汇恰当；语法和拼写正确）",
       "explanation_en": "A good narrative has a clear plot, interesting details, and correct language.",
       "explanation_zh": "好的叙事要有清晰的情节、有趣的细节和正确的语言。",
-      "tags": [
-        "composition",
-        "narrative"
-      ],
+      "tags": ["composition", "narrative"],
       "moed_code": "E-P3-CW-01"
     },
     {
@@ -4303,11 +4167,7 @@
       "answer_zh": "这暗示谭老师欣喜若狂，非常兴奋。",
       "explanation_en": "'Dancing words' is figurative language showing the reader is so happy the words seem to move with excitement.",
       "explanation_zh": "'跳舞的字'是比喻手法，表示读者太高兴了，字似乎都兴奋地动起来了。",
-      "tags": [
-        "reading-comprehension",
-        "figurative-language",
-        "inferential"
-      ],
+      "tags": ["reading-comprehension", "figurative-language", "inferential"],
       "moed_code": "E-P4-RC-01"
     },
     {
@@ -4360,9 +4220,7 @@
       "answer_zh": "rains",
       "explanation_en": "This is a Type 1 conditional: if + present simple, will + base verb.",
       "explanation_zh": "这是第一类条件句：if+一般现在时，will+动词原形。",
-      "tags": [
-        "conditional"
-      ],
+      "tags": ["conditional"],
       "moed_code": "E-P4-GC-02"
     },
     {
@@ -4378,11 +4236,7 @@
       "answer_zh": "（开放式——评估标准：情节发展、对话运用、情感表达、句式多样）",
       "explanation_en": "Include what happened, how you helped, how the person reacted, and what you learned.",
       "explanation_zh": "包括发生了什么、你如何帮助、对方的反应以及你学到了什么。",
-      "tags": [
-        "composition",
-        "narrative",
-        "dialogue"
-      ],
+      "tags": ["composition", "narrative", "dialogue"],
       "moed_code": "E-P4-CW-01"
     },
     {
@@ -4398,9 +4252,7 @@
       "answer_zh": "学校开展了回收计划，学生每天收集可回收物品。一个月内垃圾减少了30%。",
       "explanation_en": "A good summary captures the main points without details.",
       "explanation_zh": "好的总结要抓住要点，省略细节。",
-      "tags": [
-        "summary"
-      ],
+      "tags": ["summary"],
       "moed_code": "E-P4-SW-01"
     },
     {
@@ -4416,11 +4268,7 @@
       "answer_zh": "灯塔象征可靠、坚定和困难时期的希望。",
       "explanation_en": "Despite its worn appearance, the lighthouse continues its duty every night — showing perseverance and reliability.",
       "explanation_zh": "尽管外表破旧，灯塔每晚仍履行职责——表现出坚韧和可靠。",
-      "tags": [
-        "reading-comprehension",
-        "symbolism",
-        "inferential"
-      ],
+      "tags": ["reading-comprehension", "symbolism", "inferential"],
       "moed_code": "E-P5-RC-01"
     },
     {
@@ -4473,10 +4321,7 @@
       "answer_zh": "had had",
       "explanation_en": "Type 3 conditional: if + past perfect, would have + past participle.",
       "explanation_zh": "第三类条件句：if+过去完成时，would have+过去分词。",
-      "tags": [
-        "conditional",
-        "psle-format"
-      ],
+      "tags": ["conditional", "psle-format"],
       "moed_code": "E-P5-GA-02"
     },
     {
@@ -4492,11 +4337,7 @@
       "answer_zh": "（开放式——评估标准：感官细节、情绪/基调、词汇选择、句式多样）",
       "explanation_en": "Use all five senses: what you saw, heard, smelled, felt and tasted during the storm.",
       "explanation_zh": "运用五感：暴风雨中你看到、听到、闻到、感觉到和尝到的。",
-      "tags": [
-        "composition",
-        "descriptive",
-        "sensory"
-      ],
+      "tags": ["composition", "descriptive", "sensory"],
       "moed_code": "E-P5-CW-01"
     },
     {
@@ -4534,10 +4375,7 @@
       "answer_zh": "在社交场合开始交谈",
       "explanation_en": "'Break the ice' is an idiom meaning to relieve tension or start conversation in an awkward situation.",
       "explanation_zh": "'break the ice'是一个习语，意思是在尴尬的情况下缓解紧张气氛或开始交谈。",
-      "tags": [
-        "idioms",
-        "figurative-language"
-      ],
+      "tags": ["idioms", "figurative-language"],
       "moed_code": "E-P5-VW-01"
     },
     {
@@ -4553,9 +4391,7 @@
       "answer_zh": "Sarah说她放学后要去图书馆。",
       "explanation_en": "In reported speech, change 'I' to 'she', 'am' to 'was' (tense backshift).",
       "explanation_zh": "在间接引语中，把'I'改为'she'，'am'改为'was'（时态后移）。",
-      "tags": [
-        "reported-speech"
-      ],
+      "tags": ["reported-speech"],
       "moed_code": "E-P5-GA-03"
     },
     {
@@ -4571,11 +4407,7 @@
       "answer_zh": "年轻女人是童年时期的美玲妈妈，男孩可能是她妈妈的弟弟（美玲的舅舅）。美玲从未见过妈妈小时候的样子，说明妈妈可能已经去世或与家人分离。",
       "explanation_en": "The passage says 'the only picture Mei Ling had of her mother as a child', implying she never knew that time of her mother's life.",
       "explanation_zh": "文章说'这是美玲拥有的她母亲童年时唯一的照片'，暗示她从不了解妈妈的那段时光。",
-      "tags": [
-        "reading-comprehension",
-        "inferential",
-        "psle-format"
-      ],
+      "tags": ["reading-comprehension", "inferential", "psle-format"],
       "moed_code": "E-P6-RC-01"
     },
     {
@@ -4613,10 +4445,7 @@
       "answer_zh": "pressed（奋力前进）",
       "explanation_en": "'Pressed forward' means continued moving with determination, which fits the context of a determined runner.",
       "explanation_zh": "'pressed forward'表示坚定地继续前进，符合坚定跑步者的语境。",
-      "tags": [
-        "vocabulary-in-context",
-        "psle-format"
-      ],
+      "tags": ["vocabulary-in-context", "psle-format"],
       "moed_code": "E-P6-VC-01"
     },
     {
@@ -4632,11 +4461,7 @@
       "answer_zh": "（开放式——评估标准：情节发展、人物塑造、结局、句式多样、词汇丰富、基调恰当）",
       "explanation_en": "Build suspense from the unexpected room, develop a clear plot with conflict and resolution.",
       "explanation_zh": "从意想不到的房间制造悬念，发展有冲突和结局的清晰情节。",
-      "tags": [
-        "composition",
-        "narrative",
-        "psle-format"
-      ],
+      "tags": ["composition", "narrative", "psle-format"],
       "moed_code": "E-P6-CW-01"
     },
     {
@@ -4652,11 +4477,7 @@
       "answer_zh": "（开放式——评估标准：正式语气、清晰结构、有说服力的论点、正确格式）",
       "explanation_en": "A formal email should include: Dear [Title/Name], clear purpose, polite request, formal closing.",
       "explanation_zh": "正式邮件应包括：尊敬的[称呼]、明确目的、礼貌请求、正式结尾。",
-      "tags": [
-        "functional-writing",
-        "email",
-        "psle-format"
-      ],
+      "tags": ["functional-writing", "email", "psle-format"],
       "moed_code": "E-P6-WF-01"
     },
     {
@@ -4694,10 +4515,7 @@
       "answer_zh": "Neither the teacher nor the students were aware.",
       "explanation_en": "With 'neither...nor', the verb agrees with the subject closest to it. 'Students' is plural, so 'were'.",
       "explanation_zh": "'neither...nor'结构中，动词与最近的主语一致。'students'是复数，所以用'were'。",
-      "tags": [
-        "psle-format",
-        "grammar"
-      ],
+      "tags": ["psle-format", "grammar"],
       "moed_code": "E-P6-GA-01"
     },
     {
@@ -4713,15 +4531,12 @@
       "answer_zh": "whose",
       "explanation_en": "'Whose' shows possession. The research belongs to the scientist.",
       "explanation_zh": "'whose'表示所有格。研究属于这位科学家。",
-      "tags": [
-        "psle-format",
-        "grammar"
-      ],
+      "tags": ["psle-format", "grammar"],
       "moed_code": "E-P6-GA-02"
     },
     {
       "question_id": "Q-ENG-P1-0093",
-      "topic_id": "ENG-P1-008",
+      "topic_id": "ENG-P1-006",
       "level": 1,
       "subject": "english",
       "question_type": "multiple_choice",
@@ -4754,15 +4569,12 @@
       "answer_zh": "hat（帽子）",
       "explanation_en": "'hat' and 'cat' both end with the '-at' sound.",
       "explanation_zh": "'hat'和'cat'都以'-at'音结尾。",
-      "tags": [
-        "voice-first",
-        "phonics"
-      ],
+      "tags": ["voice-first", "phonics"],
       "moed_code": "E-P1-PW-02"
     },
     {
       "question_id": "Q-ENG-P1-0094",
-      "topic_id": "ENG-P1-009",
+      "topic_id": "ENG-P1-006",
       "level": 1,
       "subject": "english",
       "question_type": "fill_in_blank",
@@ -4773,14 +4585,12 @@
       "answer_zh": "fly",
       "explanation_en": "'Can' is followed by the base form of the verb.",
       "explanation_zh": "'can'后面用动词原形。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "E-P1-GB-04"
     },
     {
       "question_id": "Q-ENG-P2-0095",
-      "topic_id": "ENG-P2-007",
+      "topic_id": "ENG-P2-006",
       "level": 2,
       "subject": "english",
       "question_type": "multiple_choice",
@@ -4817,7 +4627,7 @@
     },
     {
       "question_id": "Q-ENG-P2-0096",
-      "topic_id": "ENG-P2-008",
+      "topic_id": "ENG-P2-006",
       "level": 2,
       "subject": "english",
       "question_type": "short_answer",
@@ -4832,7 +4642,7 @@
     },
     {
       "question_id": "Q-ENG-P3-0097",
-      "topic_id": "ENG-P3-007",
+      "topic_id": "ENG-P3-006",
       "level": 3,
       "subject": "english",
       "question_type": "multiple_choice",
@@ -4869,7 +4679,7 @@
     },
     {
       "question_id": "Q-ENG-P3-0098",
-      "topic_id": "ENG-P3-008",
+      "topic_id": "ENG-P3-006",
       "level": 3,
       "subject": "english",
       "question_type": "fill_in_blank",
@@ -4917,14 +4727,12 @@
       "answer_zh": "He is as brave as a lion.",
       "explanation_en": "A simile uses 'like' or 'as' to compare two things.",
       "explanation_zh": "明喻使用'like'或'as'来比较两个事物。",
-      "tags": [
-        "figurative-language"
-      ],
+      "tags": ["figurative-language"],
       "moed_code": "E-P4-RC-02"
     },
     {
       "question_id": "Q-ENG-P4-0100",
-      "topic_id": "ENG-P4-007",
+      "topic_id": "ENG-P4-006",
       "level": 4,
       "subject": "english",
       "question_type": "short_answer",
@@ -4935,14 +4743,12 @@
       "answer_zh": "除非你学习，否则你会失败。",
       "explanation_en": "'Unless' means 'if not'. So 'unless you study' = 'if you do not study'.",
       "explanation_zh": "'unless'意思是'如果不'。所以'unless you study'='if you do not study'。",
-      "tags": [
-        "conditional"
-      ],
+      "tags": ["conditional"],
       "moed_code": "E-P4-GC-03"
     },
     {
       "question_id": "Q-ENG-P5-0101",
-      "topic_id": "ENG-P5-007",
+      "topic_id": "ENG-P5-006",
       "level": 5,
       "subject": "english",
       "question_type": "multiple_choice",
@@ -4975,14 +4781,12 @@
       "answer_zh": "胜利的",
       "explanation_en": "'Finally achieved independence' conveys a sense of triumph and victory.",
       "explanation_zh": "'终于实现了独立'传达了胜利和成功的感觉。",
-      "tags": [
-        "tone-analysis"
-      ],
+      "tags": ["tone-analysis"],
       "moed_code": "E-P5-RC-02"
     },
     {
       "question_id": "Q-ENG-P5-0102",
-      "topic_id": "ENG-P5-008",
+      "topic_id": "ENG-P5-006",
       "level": 5,
       "subject": "english",
       "question_type": "fill_in_blank",
@@ -5008,15 +4812,12 @@
       "answer_zh": "拟人",
       "explanation_en": "Personification gives human qualities (whispering) to non-human things (the wind).",
       "explanation_zh": "拟人赋予非人类事物（风）人类特质（低语）。",
-      "tags": [
-        "literary-device",
-        "psle-format"
-      ],
+      "tags": ["literary-device", "psle-format"],
       "moed_code": "E-P6-RC-02"
     },
     {
       "question_id": "Q-ENG-P6-0104",
-      "topic_id": "ENG-P6-008",
+      "topic_id": "ENG-P6-007",
       "level": 6,
       "subject": "english",
       "question_type": "multiple_choice",
@@ -5049,10 +4850,7 @@
       "answer_zh": "她的论点有力且有充分支持",
       "explanation_en": "'Solid as a rock' means strong, reliable and well-founded.",
       "explanation_zh": "'坚如磐石'表示坚固、可靠和有充分依据。",
-      "tags": [
-        "metaphor",
-        "psle-format"
-      ],
+      "tags": ["metaphor", "psle-format"],
       "moed_code": "E-P6-RC-03"
     },
     {
@@ -5090,9 +4888,7 @@
       "answer_zh": "鼻子",
       "explanation_en": "We use our nose to smell.",
       "explanation_zh": "我们用鼻子闻气味。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "S-P1-AM-01"
     },
     {
@@ -5130,9 +4926,7 @@
       "answer_zh": "一棵树",
       "explanation_en": "A tree grows, needs food and water, and can reproduce. It is a living thing.",
       "explanation_zh": "树会生长，需要食物和水，还能繁殖。它是生物。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "S-P1-LL-01"
     },
     {
@@ -5148,14 +4942,12 @@
       "answer_zh": "水和食物（或空气/阳光）",
       "explanation_en": "Living things need water, food, air and sunlight to survive.",
       "explanation_zh": "生物需要水、食物、空气和阳光才能生存。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "S-P1-LL-02"
     },
     {
       "question_id": "Q-SCI-P1-0108",
-      "topic_id": "SCI-P1-004",
+      "topic_id": "SCI-P1-003",
       "level": 1,
       "subject": "science",
       "question_type": "multiple_choice",
@@ -5188,9 +4980,7 @@
       "answer_zh": "柔软且吸水的",
       "explanation_en": "Cloth is soft (feels nice on skin) and absorbent (soaks up water).",
       "explanation_zh": "布柔软（接触皮肤舒服）且吸水（能吸收水分）。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "S-P1-M-01"
     },
     {
@@ -5228,9 +5018,7 @@
       "answer_zh": "卵",
       "explanation_en": "A butterfly starts as an egg, then becomes a caterpillar, then a pupa, then an adult butterfly.",
       "explanation_zh": "蝴蝶从卵开始，然后变成毛毛虫，再变成蛹，最后变成蝴蝶。",
-      "tags": [
-        "life-cycle"
-      ],
+      "tags": ["life-cycle"],
       "moed_code": "S-P2-GU-01"
     },
     {
@@ -5287,7 +5075,7 @@
     },
     {
       "question_id": "Q-SCI-P2-0112",
-      "topic_id": "SCI-P2-004",
+      "topic_id": "SCI-P2-003",
       "level": 2,
       "subject": "science",
       "question_type": "short_answer",
@@ -5298,9 +5086,7 @@
       "answer_zh": "为了在寒冷的北极环境中保暖。",
       "explanation_en": "Thick fur traps body heat and keeps the polar bear warm in freezing temperatures.",
       "explanation_zh": "厚厚的毛能留住体温，使北极熊在极寒的温度下保持温暖。",
-      "tags": [
-        "adaptation"
-      ],
+      "tags": ["adaptation"],
       "moed_code": "S-P2-H-02"
     },
     {
@@ -5338,9 +5124,7 @@
       "answer_zh": "哺乳动物",
       "explanation_en": "Humans are mammals because they have hair, give birth to live young, and feed their young with milk.",
       "explanation_zh": "人类是哺乳动物，因为有毛发、胎生、用乳汁哺育幼崽。",
-      "tags": [
-        "classification"
-      ],
+      "tags": ["classification"],
       "moed_code": "S-P3-CL-01"
     },
     {
@@ -5512,9 +5296,7 @@
       "answer_zh": "食道",
       "explanation_en": "After chewing and swallowing, food travels down the oesophagus to reach the stomach.",
       "explanation_zh": "咀嚼和吞咽后，食物沿食道到达胃。",
-      "tags": [
-        "digestive-system"
-      ],
+      "tags": ["digestive-system"],
       "moed_code": "S-P4-DS-01"
     },
     {
@@ -5552,9 +5334,7 @@
       "answer_zh": "心脏",
       "explanation_en": "The heart is a muscle that pumps blood through blood vessels to all parts of the body.",
       "explanation_zh": "心脏是一块肌肉，通过血管把血液泵送到身体各部位。",
-      "tags": [
-        "circulatory-system"
-      ],
+      "tags": ["circulatory-system"],
       "moed_code": "S-P4-CR-01"
     },
     {
@@ -5607,9 +5387,7 @@
       "answer_zh": "风、水和动物（包括人类）。",
       "explanation_en": "Seeds are dispersed by wind (e.g. dandelion), water (e.g. coconut) and animals (e.g. burrs).",
       "explanation_zh": "种子通过风（如蒲公英）、水（如椰子）和动物（如苍耳）传播。",
-      "tags": [
-        "reproduction"
-      ],
+      "tags": ["reproduction"],
       "moed_code": "S-P5-RP-01"
     },
     {
@@ -5662,9 +5440,7 @@
       "answer_zh": "金属比塑料更好地传导热量。当你触摸金属勺时，它比塑料更快地从手中传导走热量，所以感觉更冷。",
       "explanation_en": "Good conductors transfer heat quickly. Metal conducts heat away from your skin, creating a cold sensation.",
       "explanation_zh": "良导体能快速传递热量。金属从皮肤传导走热量，产生冷的感觉。",
-      "tags": [
-        "conductors-insulators"
-      ],
+      "tags": ["conductors-insulators"],
       "moed_code": "S-P5-CI-01"
     },
     {
@@ -5702,9 +5478,7 @@
       "answer_zh": "液体变成气体",
       "explanation_en": "Boiling is the change of state from liquid to gas (water vapour) at 100°C.",
       "explanation_zh": "沸腾是在100°C时从液体变成气体（水蒸气）的状态变化。",
-      "tags": [
-        "changes-of-state"
-      ],
+      "tags": ["changes-of-state"],
       "moed_code": "S-P5-CS-01"
     },
     {
@@ -5735,10 +5509,7 @@
       "answer_zh": "青蛙的数量会增加，因为没有蛇吃它们了。",
       "explanation_en": "Removing a predator (snake) means its prey (frog) has fewer natural enemies, so its population increases.",
       "explanation_zh": "移除捕食者（蛇）意味着其猎物（青蛙）的天敌减少，所以数量增加。",
-      "tags": [
-        "food-chain",
-        "ecosystem"
-      ],
+      "tags": ["food-chain", "ecosystem"],
       "moed_code": "S-P6-FC-01"
     },
     {
@@ -5776,9 +5547,7 @@
       "answer_zh": "减少蒸腾作用造成的水分流失",
       "explanation_en": "Spines have a smaller surface area than leaves, reducing water loss — a key adaptation in dry environments.",
       "explanation_zh": "刺的表面积比叶子小，减少水分流失——这是干旱环境中的关键适应。",
-      "tags": [
-        "adaptation"
-      ],
+      "tags": ["adaptation"],
       "moed_code": "S-P6-AE-01"
     },
     {
@@ -5809,9 +5578,7 @@
       "answer_zh": "1.蒸发：海洋、河流和湖泊的水被太阳加热变成水蒸气。2.凝结：水蒸气上升、冷却形成小水滴（云）。3.降水：水滴变重时，以雨的形式落下。4.汇集：水汇集到水体中，循环重复。",
       "explanation_en": "The water cycle is a continuous process: evaporation → condensation → precipitation → collection.",
       "explanation_zh": "水循环是一个持续过程：蒸发→凝结→降水→汇集。",
-      "tags": [
-        "water-cycle"
-      ],
+      "tags": ["water-cycle"],
       "moed_code": "S-P6-WC-01"
     },
     {
@@ -5864,10 +5631,7 @@
       "answer_zh": "(a)给水量。(b)植物高度。(c)任一：植物种类、阳光量、土壤类型、花盆大小。",
       "explanation_en": "In a fair test, only one variable is changed (independent), one is measured (dependent), and all others are kept constant (controlled).",
       "explanation_zh": "在公平测试中，只改变一个变量（自变量），测量一个变量（因变量），其他所有变量保持不变（控制变量）。",
-      "tags": [
-        "experimental-design",
-        "psle-format"
-      ],
+      "tags": ["experimental-design", "psle-format"],
       "moed_code": "S-P6-PS-01"
     },
     {
@@ -5883,9 +5647,7 @@
       "answer_zh": "二氧化碳",
       "explanation_en": "Plants take in carbon dioxide and water, using sunlight to produce glucose and oxygen.",
       "explanation_zh": "植物吸收二氧化碳和水，利用阳光产生葡萄糖和氧气。",
-      "tags": [
-        "photosynthesis"
-      ],
+      "tags": ["photosynthesis"],
       "moed_code": "S-P6-PH-01"
     },
     {
@@ -5927,7 +5689,7 @@
     },
     {
       "question_id": "Q-SCI-P1-0136",
-      "topic_id": "SCI-P1-005",
+      "topic_id": "SCI-P1-003",
       "level": 1,
       "subject": "science",
       "question_type": "short_answer",
@@ -5938,14 +5700,12 @@
       "answer_zh": "塑料和金属",
       "explanation_en": "Plastic and metal do not absorb water, so they are waterproof.",
       "explanation_zh": "塑料和金属不吸水，所以是防水的。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "S-P1-M-02"
     },
     {
       "question_id": "Q-SCI-P2-0137",
-      "topic_id": "SCI-P2-005",
+      "topic_id": "SCI-P2-003",
       "level": 2,
       "subject": "science",
       "question_type": "multiple_choice",
@@ -5978,14 +5738,12 @@
       "answer_zh": "海豚",
       "explanation_en": "Dolphins are marine mammals that live in the ocean.",
       "explanation_zh": "海豚是生活在海洋中的海洋哺乳动物。",
-      "tags": [
-        "habitat"
-      ],
+      "tags": ["habitat"],
       "moed_code": "S-P2-H-03"
     },
     {
       "question_id": "Q-SCI-P2-0138",
-      "topic_id": "SCI-P2-006",
+      "topic_id": "SCI-P2-003",
       "level": 2,
       "subject": "science",
       "question_type": "short_answer",
@@ -6000,7 +5758,7 @@
     },
     {
       "question_id": "Q-SCI-P3-0139",
-      "topic_id": "SCI-P3-005",
+      "topic_id": "SCI-P3-004",
       "level": 3,
       "subject": "science",
       "question_type": "multiple_choice",
@@ -6037,7 +5795,7 @@
     },
     {
       "question_id": "Q-SCI-P3-0140",
-      "topic_id": "SCI-P3-006",
+      "topic_id": "SCI-P3-004",
       "level": 3,
       "subject": "science",
       "question_type": "short_answer",
@@ -6052,7 +5810,7 @@
     },
     {
       "question_id": "Q-SCI-P4-0141",
-      "topic_id": "SCI-P4-006",
+      "topic_id": "SCI-P4-005",
       "level": 4,
       "subject": "science",
       "question_type": "structured",
@@ -6067,7 +5825,7 @@
     },
     {
       "question_id": "Q-SCI-P4-0142",
-      "topic_id": "SCI-P4-007",
+      "topic_id": "SCI-P4-005",
       "level": 4,
       "subject": "science",
       "question_type": "multiple_choice",
@@ -6100,14 +5858,12 @@
       "answer_zh": "肺",
       "explanation_en": "The lungs take in oxygen from air and release carbon dioxide.",
       "explanation_zh": "肺从空气中吸入氧气，释放二氧化碳。",
-      "tags": [
-        "respiratory-system"
-      ],
+      "tags": ["respiratory-system"],
       "moed_code": "S-P4-CR-02"
     },
     {
       "question_id": "Q-SCI-P5-0143",
-      "topic_id": "SCI-P5-007",
+      "topic_id": "SCI-P5-006",
       "level": 5,
       "subject": "science",
       "question_type": "structured",
@@ -6116,14 +5872,12 @@
       "stem_zh": "设计一个公平测试来找出哪种材料最能保温：泡沫、棉花还是报纸。说明：(a)要改变的变量，(b)要测量的变量，(c)要保持不变的两个变量。",
       "answer_en": "(a) Type of wrapping material. (b) Temperature of water after a set time. (c) Same volume of water, same starting temperature, same container, same time.",
       "answer_zh": "(a)包裹材料的类型。(b)一定时间后的水温。(c)相同水量、相同初始温度、相同容器、相同时间。",
-      "tags": [
-        "experimental-design"
-      ],
+      "tags": ["experimental-design"],
       "moed_code": "S-P5-CI-02"
     },
     {
       "question_id": "Q-SCI-P5-0144",
-      "topic_id": "SCI-P5-008",
+      "topic_id": "SCI-P5-006",
       "level": 5,
       "subject": "science",
       "question_type": "multiple_choice",
@@ -6160,7 +5914,7 @@
     },
     {
       "question_id": "Q-SCI-P6-0145",
-      "topic_id": "SCI-P6-009",
+      "topic_id": "SCI-P6-008",
       "level": 6,
       "subject": "science",
       "question_type": "short_answer",
@@ -6169,14 +5923,12 @@
       "stem_zh": "分解者在生态系统中的作用是什么？",
       "answer_en": "Decomposers break down dead organisms and waste, returning nutrients to the soil.",
       "answer_zh": "分解者分解死亡的生物和废物，将营养物质返回到土壤中。",
-      "tags": [
-        "ecosystem"
-      ],
+      "tags": ["ecosystem"],
       "moed_code": "S-P6-FC-02"
     },
     {
       "question_id": "Q-SCI-P6-0146",
-      "topic_id": "SCI-P6-010",
+      "topic_id": "SCI-P6-005",
       "level": 6,
       "subject": "science",
       "question_type": "multiple_choice",
@@ -6213,7 +5965,7 @@
     },
     {
       "question_id": "Q-SCI-P6-0147",
-      "topic_id": "SCI-P6-011",
+      "topic_id": "SCI-P6-007",
       "level": 6,
       "subject": "science",
       "question_type": "structured",
@@ -6222,9 +5974,7 @@
       "stem_zh": "解释循环系统和呼吸系统是如何协同工作的。",
       "answer_en": "The lungs take in oxygen during breathing. The heart pumps oxygen-rich blood from the lungs to all body cells. At the same time, carbon dioxide is carried from cells back to the lungs to be exhaled.",
       "answer_zh": "肺在呼吸时吸入氧气。心脏把富含氧气的血液从肺泵到全身细胞。同时，二氧化碳从细胞带回肺，然后呼出。",
-      "tags": [
-        "body-systems"
-      ],
+      "tags": ["body-systems"],
       "moed_code": "S-P6-HS-02"
     },
     {
@@ -6262,10 +6012,7 @@
       "answer_zh": "b",
       "explanation_en": "声母是汉语拼音中的辅音部分。b是一个声母。",
       "explanation_zh": "声母是汉语拼音中的辅音部分。b是一个声母。",
-      "tags": [
-        "voice-first",
-        "pinyin"
-      ],
+      "tags": ["voice-first", "pinyin"],
       "moed_code": "C-P1-HP-01"
     },
     {
@@ -6281,10 +6028,7 @@
       "answer_zh": "2",
       "explanation_en": "'人' has two strokes: first is pie (撇), second is na (捺).",
       "explanation_zh": "'人'有两笔：第一笔是撇，第二笔是捺。",
-      "tags": [
-        "voice-first",
-        "stroke-order"
-      ],
+      "tags": ["voice-first", "stroke-order"],
       "moed_code": "C-P1-SO-01"
     },
     {
@@ -6322,9 +6066,7 @@
       "answer_zh": "小",
       "explanation_en": "'大' and '小' are antonyms.",
       "explanation_zh": "'大'和'小'是一对反义词。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "C-P1-CW-01"
     },
     {
@@ -6340,10 +6082,7 @@
       "answer_zh": "（开放式——例如：小猫在草地上玩。）",
       "explanation_en": "A good sentence describes what you see and uses correct punctuation.",
       "explanation_zh": "好句子要描述你看到的内容，并使用正确的标点符号。",
-      "tags": [
-        "voice-first",
-        "picture-description"
-      ],
+      "tags": ["voice-first", "picture-description"],
       "moed_code": "C-P1-PD-01"
     },
     {
@@ -6359,9 +6098,7 @@
       "answer_zh": "一",
       "explanation_en": "'一' means the quantity is one.",
       "explanation_zh": "'一'表示数量是一个。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "C-P1-CW-02"
     },
     {
@@ -6399,9 +6136,7 @@
       "answer_zh": "母亲",
       "explanation_en": "妈妈 is the colloquial term for mother.",
       "explanation_zh": "妈妈是母亲的口语说法。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "C-P1-CW-03"
     },
     {
@@ -6432,9 +6167,7 @@
       "answer_zh": "七点",
       "explanation_en": "文章说小明七点去上学。",
       "explanation_zh": "文章说小明七点去上学。",
-      "tags": [
-        "reading-comprehension"
-      ],
+      "tags": ["reading-comprehension"],
       "moed_code": "C-P2-RC-01"
     },
     {
@@ -6450,9 +6183,7 @@
       "answer_zh": "（开放式——例如：我在学校上学。我的老师很好。同学很友好。在学校我很开心。）",
       "explanation_en": "Use all the given words in a coherent paragraph with complete sentences.",
       "explanation_zh": "在连贯的段落中使用所有给定的词语，句子要完整。",
-      "tags": [
-        "writing"
-      ],
+      "tags": ["writing"],
       "moed_code": "C-P2-W-01"
     },
     {
@@ -6542,9 +6273,7 @@
       "answer_zh": "兴高采烈",
       "explanation_en": "'兴高采烈' describes being very happy and excited.",
       "explanation_zh": "'兴高采烈'形容非常高兴的样子。",
-      "tags": [
-        "chengyu"
-      ],
+      "tags": ["chengyu"],
       "moed_code": "C-P3-VP-01"
     },
     {
@@ -6560,9 +6289,7 @@
       "answer_zh": "香蕉",
       "explanation_en": "文章说小华最喜欢香蕉。",
       "explanation_zh": "文章说小华最喜欢香蕉。",
-      "tags": [
-        "reading-comprehension"
-      ],
+      "tags": ["reading-comprehension"],
       "moed_code": "C-P3-RC-01"
     },
     {
@@ -6593,10 +6320,7 @@
       "answer_zh": "（开放式——评估标准：叙事清晰、词汇恰当、语法正确、有道德启示）",
       "explanation_en": "Describe the picture clearly, explain what the boy did, and include what we can learn from this.",
       "explanation_zh": "清楚描述图片内容，解释男孩做了什么，并包括我们能从中学到什么。",
-      "tags": [
-        "composition",
-        "picture-composition"
-      ],
+      "tags": ["composition", "picture-composition"],
       "moed_code": "C-P3-CW-01"
     },
     {
@@ -6612,10 +6336,7 @@
       "answer_zh": "（评估标准：发音正确、声调准确、标点处适当停顿）",
       "explanation_en": "朗读时要注意每个字的声调和标点处的停顿。",
       "explanation_zh": "朗读时要注意每个字的声调和标点处的停顿。",
-      "tags": [
-        "oral",
-        "reading-aloud"
-      ],
+      "tags": ["oral", "reading-aloud"],
       "moed_code": "C-P3-OR-01"
     },
     {
@@ -6631,9 +6352,7 @@
       "answer_zh": "一根长棍子",
       "explanation_en": "文章说李明找来一根长棍子，帮小女孩把风筝取了下来。",
       "explanation_zh": "文章说李明找来一根长棍子，帮小女孩把风筝取了下来。",
-      "tags": [
-        "reading-comprehension"
-      ],
+      "tags": ["reading-comprehension"],
       "moed_code": "C-P4-RC-01"
     },
     {
@@ -6649,9 +6368,7 @@
       "answer_zh": "组织，非常，玩，难忘",
       "explanation_en": "组织郊游是固定搭配。非常表示程度。玩游戏是正确搭配。难忘修饰经历。",
       "explanation_zh": "组织郊游是固定搭配。非常表示程度。玩游戏是正确搭配。难忘修饰经历。",
-      "tags": [
-        "cloze-passage"
-      ],
+      "tags": ["cloze-passage"],
       "moed_code": "C-P4-CF-01"
     },
     {
@@ -6667,10 +6384,7 @@
       "answer_zh": "（开放式——评估标准：叙事结构清晰、情感表达、对话运用、句式多样）",
       "explanation_en": "叙事作文要有时间、地点、人物、起因、经过和结果。要写出令你感动的原因。",
       "explanation_zh": "叙事作文要有时间、地点、人物、起因、经过和结果。要写出令你感动的原因。",
-      "tags": [
-        "composition",
-        "narrative"
-      ],
+      "tags": ["composition", "narrative"],
       "moed_code": "C-P4-CW-01"
     },
     {
@@ -6723,10 +6437,7 @@
       "answer_zh": "（开放式——评估标准：流利度、词汇、推理连贯、语气恰当）",
       "explanation_en": "回答要有条理，说明活动的内容、时间和地点，以及你为什么选择这个活动。",
       "explanation_zh": "回答要有条理，说明活动的内容、时间和地点，以及为什么选择这个活动。",
-      "tags": [
-        "oral",
-        "conversation"
-      ],
+      "tags": ["oral", "conversation"],
       "moed_code": "C-P4-OR-01"
     },
     {
@@ -6757,10 +6468,7 @@
       "answer_zh": "新加坡虽然种族多元，但不同种族和谐共处，共同热爱这个家园。",
       "explanation_en": "文章通过种族和谐日的活动，表达了多元文化和谐共存的主题。",
       "explanation_zh": "文章通过种族和谐日的活动，表达了多元文化和谐共存的主题。",
-      "tags": [
-        "reading-comprehension",
-        "theme-analysis"
-      ],
+      "tags": ["reading-comprehension", "theme-analysis"],
       "moed_code": "C-P5-RC-01"
     },
     {
@@ -6776,10 +6484,7 @@
       "answer_zh": "毅然，出乎意料，惊讶，团队精神",
       "explanation_en": "毅然表示坚定地。出乎意料表示没想到。惊讶表示吃惊。团队精神是正确搭配。",
       "explanation_zh": "毅然表示坚定地。出乎意料表示没想到。惊讶表示吃惊。团队精神是正确搭配。",
-      "tags": [
-        "cloze-passage",
-        "psle-format"
-      ],
+      "tags": ["cloze-passage", "psle-format"],
       "moed_code": "C-P5-CF-01"
     },
     {
@@ -6795,10 +6500,7 @@
       "answer_zh": "（开放式——评估标准：情节发展、人物描写、心理刻画、有意义的结尾、修辞手法）",
       "explanation_en": "作文要有清晰的叙事结构，包括起因、经过、高潮和结果。要写出自己的感受和学到的道理。",
       "explanation_zh": "作文要有清晰的叙事结构，包括起因、经过、高潮和结果。要写出自己的感受和学到的道理。",
-      "tags": [
-        "composition",
-        "psle-format"
-      ],
+      "tags": ["composition", "psle-format"],
       "moed_code": "C-P5-CW-01"
     },
     {
@@ -6851,9 +6553,7 @@
       "answer_zh": "小明专心致志地学习，考试得了第一名。",
       "explanation_en": "'专心致志' means very focused, matching the result of getting first place.",
       "explanation_zh": "'专心致志'表示非常专注，与'考试得了第一名'的结果一致。",
-      "tags": [
-        "chengyu"
-      ],
+      "tags": ["chengyu"],
       "moed_code": "C-P5-VP-01"
     },
     {
@@ -6869,10 +6569,7 @@
       "answer_zh": "（开放式——评估标准：流利度、道德推理、同理心、词汇和语气恰当）",
       "explanation_en": "回答应表达尊老爱幼的价值观，并描述具体行动。",
       "explanation_zh": "回答应表达尊老爱幼的价值观，并描述具体行动。",
-      "tags": [
-        "oral",
-        "stimulus-based"
-      ],
+      "tags": ["oral", "stimulus-based"],
       "moed_code": "C-P5-OR-01"
     },
     {
@@ -6888,11 +6585,7 @@
       "answer_zh": "说明小雨付出了很多努力，反复修改和练习。",
       "explanation_en": "橡皮屑代表反复修改，翻烂的练习册代表大量练习，这些都是刻苦学习的象征。",
       "explanation_zh": "橡皮屑代表反复修改，翻烂的练习册代表大量练习，这些都是刻苦学习的象征。",
-      "tags": [
-        "reading-comprehension",
-        "detail-analysis",
-        "psle-format"
-      ],
+      "tags": ["reading-comprehension", "detail-analysis", "psle-format"],
       "moed_code": "C-P6-RC-01"
     },
     {
@@ -6908,10 +6601,7 @@
       "answer_zh": "望而却步，坚持不懈，迎难而上，取得成功",
       "explanation_en": "面对困难不能退缩（望而却步），而要坚持（坚持不懈），要勇敢面对（迎难而上），最终才能成功（取得成功）。",
       "explanation_zh": "面对困难不能退缩（望而却步），而要坚持（坚持不懈），要勇敢面对（迎难而上），最终才能成功（取得成功）。",
-      "tags": [
-        "cloze-passage",
-        "psle-format"
-      ],
+      "tags": ["cloze-passage", "psle-format"],
       "moed_code": "C-P6-CF-01"
     },
     {
@@ -6927,11 +6617,7 @@
       "answer_zh": "（开放式——评估标准：三幅图情节连贯、人物发展、情感表达、词汇丰富、有意义的结尾）",
       "explanation_en": "作文要连接三幅图的情节，写出人物的心理变化，最后点明主题或感悟。",
       "explanation_zh": "作文要连接三幅图的情节，写出人物的心理变化，最后点明主题或感悟。",
-      "tags": [
-        "composition",
-        "three-picture",
-        "psle-format"
-      ],
+      "tags": ["composition", "three-picture", "psle-format"],
       "moed_code": "C-P6-CW-01"
     },
     {
@@ -6947,10 +6633,7 @@
       "answer_zh": "B1: 有点难，尤其是综合填空部分。B2: 那我们放学后一起复习吧？",
       "explanation_en": "对话要连贯，回应要自然，符合日常口语习惯。",
       "explanation_zh": "对话要连贯，回应要自然，符合日常口语习惯。",
-      "tags": [
-        "dialogue-completion",
-        "psle-format"
-      ],
+      "tags": ["dialogue-completion", "psle-format"],
       "moed_code": "C-P6-CD-01"
     },
     {
@@ -6966,11 +6649,7 @@
       "answer_zh": "（评估标准：声调准确、流利、语速适当、有感情）",
       "explanation_en": "朗读时要注意每个字的声调，语速适中，读出对家园的热爱之情。",
       "explanation_zh": "朗读时要注意每个字的声调，语速适中，读出对家园的热爱之情。",
-      "tags": [
-        "oral",
-        "reading-aloud",
-        "psle-format"
-      ],
+      "tags": ["oral", "reading-aloud", "psle-format"],
       "moed_code": "C-P6-OR-01"
     },
     {
@@ -7008,10 +6687,7 @@
       "answer_zh": "她的笑容像阳光一样温暖。",
       "explanation_en": "A simile compares one thing to another. 'Like sunshine' compares the smile to sunlight.",
       "explanation_zh": "比喻是用一种事物来比作另一种事物。'像阳光一样温暖'把笑容比作阳光。",
-      "tags": [
-        "rhetoric",
-        "psle-format"
-      ],
+      "tags": ["rhetoric", "psle-format"],
       "moed_code": "C-P6-RC-02"
     },
     {
@@ -7027,14 +6703,12 @@
       "answer_zh": "但是，灰心，努力，进步",
       "explanation_en": "'虽然……但是……' is a fixed collocation. Based on context, choose 灰心, 努力, and 进步.",
       "explanation_zh": "'虽然……但是……'是固定搭配。根据句意，应该选择灰心和努力、进步。",
-      "tags": [
-        "psle-format"
-      ],
+      "tags": ["psle-format"],
       "moed_code": "C-P6-GS-01"
     },
     {
       "question_id": "Q-CHI-P1-0183",
-      "topic_id": "CHI-P1-007",
+      "topic_id": "CHI-P1-006",
       "level": 1,
       "subject": "chinese",
       "question_type": "multiple_choice",
@@ -7067,14 +6741,12 @@
       "answer_zh": "汪汪",
       "explanation_en": "'汪汪'是狗的叫声。",
       "explanation_zh": "'汪汪'是狗的叫声。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "C-P1-CW-04"
     },
     {
       "question_id": "Q-CHI-P1-0184",
-      "topic_id": "CHI-P1-008",
+      "topic_id": "CHI-P1-006",
       "level": 1,
       "subject": "chinese",
       "question_type": "short_answer",
@@ -7085,15 +6757,12 @@
       "answer_zh": "（开放式——例如：我最喜欢的水果是苹果，因为它又甜又脆。）",
       "explanation_en": "用完整的句子说出水果名称和原因。",
       "explanation_zh": "用完整的句子说出水果名称和原因。",
-      "tags": [
-        "voice-first",
-        "oral"
-      ],
+      "tags": ["voice-first", "oral"],
       "moed_code": "C-P1-LS-01"
     },
     {
       "question_id": "Q-CHI-P2-0185",
-      "topic_id": "CHI-P2-006",
+      "topic_id": "CHI-P2-005",
       "level": 2,
       "subject": "chinese",
       "question_type": "multiple_choice",
@@ -7130,7 +6799,7 @@
     },
     {
       "question_id": "Q-CHI-P2-0186",
-      "topic_id": "CHI-P2-007",
+      "topic_id": "CHI-P2-005",
       "level": 2,
       "subject": "chinese",
       "question_type": "comprehension",
@@ -7141,14 +6810,12 @@
       "answer_zh": "护士",
       "explanation_en": "文章说妈妈是一名护士。",
       "explanation_zh": "文章说妈妈是一名护士。",
-      "tags": [
-        "reading-comprehension"
-      ],
+      "tags": ["reading-comprehension"],
       "moed_code": "C-P2-RC-02"
     },
     {
       "question_id": "Q-CHI-P3-0187",
-      "topic_id": "CHI-P3-006",
+      "topic_id": "CHI-P3-005",
       "level": 3,
       "subject": "chinese",
       "question_type": "multiple_choice",
@@ -7185,7 +6852,7 @@
     },
     {
       "question_id": "Q-CHI-P3-0188",
-      "topic_id": "CHI-P3-007",
+      "topic_id": "CHI-P3-005",
       "level": 3,
       "subject": "chinese",
       "question_type": "short_answer",
@@ -7200,7 +6867,7 @@
     },
     {
       "question_id": "Q-CHI-P4-0189",
-      "topic_id": "CHI-P4-007",
+      "topic_id": "CHI-P4-006",
       "level": 4,
       "subject": "chinese",
       "question_type": "comprehension",
@@ -7211,14 +6878,12 @@
       "answer_zh": "因为小明看到小红没有带伞，而且他们是好朋友。",
       "explanation_en": "文章中小明主动借伞，说明他乐于助人，且两人是好朋友。",
       "explanation_zh": "文章中小明主动借伞，说明他乐于助人，且两人是好朋友。",
-      "tags": [
-        "reading-comprehension"
-      ],
+      "tags": ["reading-comprehension"],
       "moed_code": "C-P4-RC-02"
     },
     {
       "question_id": "Q-CHI-P4-0190",
-      "topic_id": "CHI-P4-008",
+      "topic_id": "CHI-P4-006",
       "level": 4,
       "subject": "chinese",
       "question_type": "fill_in_blank",
@@ -7233,7 +6898,7 @@
     },
     {
       "question_id": "Q-CHI-P5-0191",
-      "topic_id": "CHI-P5-007",
+      "topic_id": "CHI-P5-006",
       "level": 5,
       "subject": "chinese",
       "question_type": "multiple_choice",
@@ -7266,14 +6931,12 @@
       "answer_zh": "小鸟在枝头欢快地歌唱。",
       "explanation_en": "拟人是把非人的事物赋予人的行为或情感。'小鸟歌唱'把小鸟拟人化了。",
       "explanation_zh": "拟人是把非人的事物赋予人的行为或情感。'小鸟歌唱'把小鸟拟人化了。",
-      "tags": [
-        "rhetoric"
-      ],
+      "tags": ["rhetoric"],
       "moed_code": "C-P5-GS-02"
     },
     {
       "question_id": "Q-CHI-P5-0192",
-      "topic_id": "CHI-P5-008",
+      "topic_id": "CHI-P5-006",
       "level": 5,
       "subject": "chinese",
       "question_type": "short_answer",
@@ -7288,7 +6951,7 @@
     },
     {
       "question_id": "Q-CHI-P6-0193",
-      "topic_id": "CHI-P6-008",
+      "topic_id": "CHI-P6-007",
       "level": 6,
       "subject": "chinese",
       "question_type": "comprehension",
@@ -7299,15 +6962,12 @@
       "answer_zh": "告诉我们不要害怕失败，要从失败中吸取教训，继续努力，最终会成功。",
       "explanation_en": "'失败是成功之母'是一句成语，意思是失败是成功的先导，从失败中可以找到成功的路。",
       "explanation_zh": "'失败是成功之母'是一句成语，意思是失败是成功的先导，从失败中可以找到成功的路。",
-      "tags": [
-        "chengyu",
-        "psle-format"
-      ],
+      "tags": ["chengyu", "psle-format"],
       "moed_code": "C-P6-RC-02"
     },
     {
       "question_id": "Q-CHI-P6-0194",
-      "topic_id": "CHI-P6-009",
+      "topic_id": "CHI-P6-007",
       "level": 6,
       "subject": "chinese",
       "question_type": "cloze",
@@ -7318,15 +6978,12 @@
       "answer_zh": "一帆风顺，挫折，坚持不懈，实现梦想",
       "explanation_en": "根据语境，应选表示顺利的'一帆风顺'、表示困难的'挫折'、表示坚持的'坚持不懈'和表示成功的'实现梦想'。",
       "explanation_zh": "根据语境，应选表示顺利的'一帆风顺'、表示困难的'挫折'、表示坚持的'坚持不懈'和表示成功的'实现梦想'。",
-      "tags": [
-        "cloze-passage",
-        "psle-format"
-      ],
+      "tags": ["cloze-passage", "psle-format"],
       "moed_code": "C-P6-CF-02"
     },
     {
       "question_id": "Q-CHI-P6-0195",
-      "topic_id": "CHI-P6-010",
+      "topic_id": "CHI-P6-007",
       "level": 6,
       "subject": "chinese",
       "question_type": "short_answer",
@@ -7337,16 +6994,12 @@
       "answer_zh": "（开放式——评估标准：对谚语的理解、个人反思、推理连贯、词汇恰当）",
       "explanation_en": "这句话的意思是：年轻时不努力，老了就会后悔。应该表达珍惜时光、努力学习/工作的态度。",
       "explanation_zh": "这句话的意思是：年轻时不努力，老了就会后悔。应该表达珍惜时光、努力学习/工作的态度。",
-      "tags": [
-        "oral",
-        "proverb",
-        "psle-format"
-      ],
+      "tags": ["oral", "proverb", "psle-format"],
       "moed_code": "C-P6-OR-02"
     },
     {
       "question_id": "Q-SCI-P1-0196",
-      "topic_id": "SCI-P1-006",
+      "topic_id": "SCI-P1-003",
       "level": 1,
       "subject": "science",
       "question_type": "multiple_choice",
@@ -7379,14 +7032,12 @@
       "answer_zh": "舌头",
       "explanation_en": "The tongue has taste buds that help us detect sweet, sour, salty and bitter.",
       "explanation_zh": "舌头上有味蕾，帮助我们分辨甜、酸、咸和苦。",
-      "tags": [
-        "voice-first"
-      ],
+      "tags": ["voice-first"],
       "moed_code": "S-P1-AM-02"
     },
     {
       "question_id": "Q-ENG-P3-0197",
-      "topic_id": "ENG-P3-009",
+      "topic_id": "ENG-P3-006",
       "level": 3,
       "subject": "english",
       "question_type": "short_answer",
@@ -7397,14 +7048,12 @@
       "answer_zh": "（开放式——例如：我很高兴，因为今天是我的生日。）",
       "explanation_en": "'Because' is used to give a reason.",
       "explanation_zh": "'because'用来表示原因。",
-      "tags": [
-        "sentence-construction"
-      ],
+      "tags": ["sentence-construction"],
       "moed_code": "E-P3-SC-02"
     },
     {
       "question_id": "Q-MAT-P4-0198",
-      "topic_id": "MAT-P4-013",
+      "topic_id": "MAT-P4-007",
       "level": 4,
       "subject": "math",
       "question_type": "short_answer",
@@ -7419,7 +7068,7 @@
     },
     {
       "question_id": "Q-CHI-P2-0199",
-      "topic_id": "CHI-P2-008",
+      "topic_id": "CHI-P2-005",
       "level": 2,
       "subject": "chinese",
       "question_type": "fill_in_blank",
@@ -7434,7 +7083,7 @@
     },
     {
       "question_id": "Q-ENG-P5-0200",
-      "topic_id": "ENG-P5-009",
+      "topic_id": "ENG-P5-006",
       "level": 5,
       "subject": "english",
       "question_type": "short_answer",
@@ -7445,10 +7094,7 @@
       "answer_zh": "你做的事情比你说的话更重要。",
       "explanation_en": "This proverb means that people's actions reveal their true intentions more than their words.",
       "explanation_zh": "这句谚语的意思是，人们的行动比言语更能揭示他们的真实意图。",
-      "tags": [
-        "proverb",
-        "psle-format"
-      ],
+      "tags": ["proverb", "psle-format"],
       "moed_code": "E-P5-VW-02"
     }
   ]
