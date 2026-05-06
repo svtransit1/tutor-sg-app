@@ -3,7 +3,7 @@
   "app.name": "tutor-sg",
   "onboarding": {
     "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
-    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。" },
+    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。", "continue": "继续" },
     "siblingPrompt": {
       "title": "家里还有其他孩子要用吗？",
       "subtitle": "现在添加，他/她也会有自己的学习记录。",

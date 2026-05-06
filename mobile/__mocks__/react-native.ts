@@ -26,7 +26,7 @@ const ReactNative = {
   Platform: { OS: 'ios', Version: '18.0', select: (obj: Record<string, unknown>) => obj.ios ?? obj.default },
   useColorScheme: () => 'light',
   StyleSheet: { create: <T extends Record<string, unknown>>(styles: T): T => styles, flatten: (styles: any) => styles },
-  View: 'View', Text: 'Text', useWindowDimensions: () => ({ width: 390, height: 844 }),
+  View: 'View', Text: 'Text', Pressable: 'View', useWindowDimensions: () => ({ width: 390, height: 844 }),
   ActivityIndicator: 'ActivityIndicator', TouchableOpacity: 'TouchableOpacity', ScrollView: 'ScrollView',
   SafeAreaView: 'SafeAreaView',
   Linking: { openURL: jest.fn() },

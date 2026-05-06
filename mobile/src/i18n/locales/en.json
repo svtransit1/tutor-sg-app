@@ -3,7 +3,7 @@
   "app.name": "tutor-sg",
   "onboarding": {
     "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
-    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language." },
+    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
     "siblingPrompt": {
       "title": "Got another child who could use this too?",
       "subtitle": "Add them now and they'll have their own learning log.",
