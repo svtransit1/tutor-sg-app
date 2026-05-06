@@ -1,0 +1,120 @@
+{
+  "onboarding": {
+    "kidProfile": {
+      "title": "Set up child profile",
+      "nameLabel": "Child's name",
+      "namePlaceholder": "Enter a name (max 30 characters)",
+      "nameError": "Name must be 1-30 characters",
+      "levelLabel": "Primary level",
+      "levels": {
+        "P1": "Primary 1",
+        "P2": "Primary 2",
+        "P3": "Primary 3",
+        "P4": "Primary 4",
+        "P5": "Primary 5",
+        "P6": "Primary 6"
+      },
+      "languageLabel": "Primary language",
+      "languageEN": "English",
+      "languageZH": "简体中文",
+      "children": "Children",
+      "addFirst": "Add your first child",
+      "addAnother": "Add another child",
+      "addTitle": "Add another child",
+      "editTitle": "Edit profile",
+      "edit": "Edit",
+      "delete": "Delete",
+      "deleteTitle": "Delete profile?",
+      "deleteDesc": "This cannot be undone.",
+      "maxKids": "Maximum 4 children reached.",
+      "continue": "Continue",
+      "skip": "Skip for now"
+    },
+    "common": {
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "back": "Back",
+      "next": "Next",
+      "save": "Save",
+      "done": "Done"
+    },
+    "subjects": {
+      "math": "Mathematics",
+      "english": "English",
+      "science": "Science",
+      "chinese_mt": "Chinese Mother Tongue"
+    },
+    "home": {
+      "greeting": "Hi! Ready to start?",
+      "snapHomework": "Snap your homework",
+      "parentArea": "Parent area"
+    },
+    "camera": {
+      "title": "Scan Homework",
+      "instructions": "Point your camera at your worksheet",
+      "previewTitle": "Review your photo",
+      "previewInstructions": "Make sure it is clear and in focus",
+      "permissionDenied": "Camera permission denied",
+      "requestPermission": "Grant Permission",
+      "capture": "Take Photo",
+      "retake": "Retake",
+      "usePhoto": "Use This Photo",
+      "addPage": "Add Page",
+      "done": "Done",
+      "processing": "Processing...",
+      "processingFailed": "Processing failed. Please try again.",
+      "pageCount": "{{count}} page(s)"
+    },
+    "feedback": {
+      "title": "Homework Feedback",
+      "loading": "Thinking...",
+      "hint": "Hint",
+      "step": "Step",
+      "solution": "Solution",
+      "error": "Try Again",
+      "errorDetail": "Error generating feedback. Please try again.",
+      "askHint": "Ask for a Hint",
+      "done": "Done",
+      "newHomework": "New Homework",
+      "sessionSaved": "Session saved to Parent Log"
+    },
+    "deviceTier": {
+      "checking": "Checking your device...",
+      "title": "Device Ready!",
+      "highSubtitle": "Your device can run the most powerful AI tutor.",
+      "midSubtitle": "Your device can run the standard AI tutor.",
+      "thermalWarning": "Your device may slow down during long study sessions.",
+      "storageWarning": "You are low on storage. The AI model needs about 2–5 GB free space.",
+      "low": "Device Not Supported",
+      "lowBody": "Your device does not meet the minimum requirements. This app needs a device with at least 4 GB RAM and 5 GB free storage."
+    },
+    "manualInput": {
+      "title": "Type Item {{number}}",
+      "instructions": "We couldn't recognise this item. Please type or write it.",
+      "placeholder": "Type here...",
+      "continue": "Continue"
+    },
+    "modelDownload": {
+      "title": "Setting up your tutor...",
+      "readyTitle": "All set!",
+      "subtitle": "Downloading the AI model so your tutor works offline.",
+      "preparing": "Preparing download...",
+      "downloading": "Downloading AI model...",
+      "downloadingFile": "Downloading {{fileName}}...",
+      "verifying": "Verifying download...",
+      "ready": "Ready!",
+      "readyHint": "Your AI tutor is ready. Tap to start!",
+      "paused": "Download paused",
+      "pausedHint": "Connect to Wi-Fi to continue. Downloads resume automatically.",
+      "error": "Download failed",
+      "errorHint": "Please check your internet connection and try again.",
+      "cancelled": "Download cancelled",
+      "cancelledHint": "You can resume the download when you are ready.",
+      "pause": "Pause",
+      "resume": "Resume",
+      "cancel": "Cancel",
+      "retry": "Retry",
+      "footnote": "Models are downloaded once and work fully offline."
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "onboarding": {
+    "kidProfile": {
+      "title": "设置孩子档案",
+      "nameLabel": "孩子姓名",
+      "namePlaceholder": "输入名字（最多30个字符）",
+      "nameError": "名字必须是1-30个字符",
+      "levelLabel": "年级",
+      "levels": {
+        "P1": "小一",
+        "P2": "小二",
+        "P3": "小三",
+        "P4": "小四",
+        "P5": "小五",
+        "P6": "小六"
+      },
+      "languageLabel": "主要语言",
+      "languageEN": "English",
+      "languageZH": "简体中文",
+      "children": "孩子",
+      "addFirst": "添加第一个孩子",
+      "addAnother": "添加另一个孩子",
+      "addTitle": "添加另一个孩子",
+      "editTitle": "编辑档案",
+      "edit": "编辑",
+      "delete": "删除",
+      "deleteTitle": "删除这个档案？",
+      "deleteDesc": "此操作无法撤销。",
+      "maxKids": "最多只能添加4个孩子。",
+      "continue": "继续",
+      "skip": "稍后设置"
+    },
+    "common": {
+      "cancel": "取消",
+      "delete": "删除",
+      "back": "返回",
+      "next": "下一步",
+      "save": "保存",
+      "done": "完成"
+    },
+    "subjects": {
+      "math": "数学",
+      "english": "英文",
+      "science": "科学",
+      "chinese_mt": "华文"
+    },
+    "home": {
+      "greeting": "你好！准备好了吗？",
+      "snapHomework": "拍一下作业",
+      "parentArea": "家长专区"
+    },
+    "camera": {
+      "title": "扫描作业",
+      "instructions": "请将摄像头对准作业页面",
+      "previewTitle": "查看照片",
+      "previewInstructions": "请确保文字清晰对焦",
+      "permissionDenied": "相机权限被拒绝",
+      "requestPermission": "授予权限",
+      "capture": "拍照",
+      "retake": "重拍",
+      "usePhoto": "使用这张照片",
+      "addPage": "添加页面",
+      "done": "完成",
+      "processing": "处理中...",
+      "processingFailed": "处理失败，请重试",
+      "pageCount": "共 {{count}} 页"
+    },
+    "feedback": {
+      "title": "作业反馈",
+      "loading": "思考中...",
+      "hint": "提示",
+      "step": "步骤",
+      "solution": "解答",
+      "error": "再试一次",
+      "errorDetail": "生成反馈时出错，请重试",
+      "askHint": "请求提示",
+      "done": "完成",
+      "newHomework": "新作业",
+      "sessionSaved": "会话已保存到家长日志"
+    },
+    "deviceTier": {
+      "checking": "正在检查设备...",
+      "title": "设备已就绪！",
+      "highSubtitle": "您的设备可以运行最强AI导师。",
+      "midSubtitle": "您的设备可以运行标准AI导师。",
+      "thermalWarning": "长时间使用时设备可能会变慢。",
+      "storageWarning": "存储空间不足。AI模型需要约2-5 GB可用空间。",
+      "low": "设备不支持",
+      "lowBody": "您的设备不符合最低要求。此应用需要至少4 GB内存和5 GB可用存储空间。"
+    },
+    "manualInput": {
+      "title": "输入第 {{number}} 项",
+      "instructions": "我们无法识别这一项。请输入或书写。",
+      "placeholder": "在这里输入...",
+      "continue": "继续"
+    },
+    "modelDownload": {
+      "title": "正在设置你的AI导师...",
+      "readyTitle": "准备就绪！",
+      "subtitle": "正在下载AI模型，让你的导师能够离线使用。",
+      "preparing": "准备下载...",
+      "downloading": "正在下载AI模型...",
+      "downloadingFile": "正在下载 {{fileName}}...",
+      "verifying": "正在验证下载文件...",
+      "ready": "准备好了！",
+      "readyHint": "你的AI导师已就绪，点击开始！",
+      "paused": "下载已暂停",
+      "pausedHint": "请连接Wi-Fi继续。下载会自动恢复。",
+      "error": "下载失败",
+      "errorHint": "请检查互联网连接，然后重试。",
+      "cancelled": "下载已取消",
+      "cancelledHint": "你可以在准备好后恢复下载。",
+      "pause": "暂停",
+      "resume": "继续",
+      "cancel": "取消",
+      "retry": "重试",
+      "footnote": "模型仅下载一次，完全离线使用。"
+    }
+  }
+}
