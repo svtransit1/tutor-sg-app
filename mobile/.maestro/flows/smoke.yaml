@@ -12,12 +12,12 @@
 # This test runs against a dev build (not Expo Go), since the app will use
 # native modules (LLM runtime, camera, OCR, PencilKit).
 
-appId: sg.aaas.tutorsg
+appId: com.aaas.tutorsg
 
 ---
 # Launch the app with a fresh state
 - launchApp:
-    appId: 'sg.aaas.tutorsg'
+    appId: 'com.aaas.tutorsg'
     clearState: true
 
 # Wait for the home screen to render (subtitle shows "tutor-sg — AI Tutor")
@@ -53,4 +53,4 @@ appId: sg.aaas.tutorsg
 
 # Stop the app cleanly
 - stopApp:
-    appId: 'sg.aaas.tutorsg'
+    appId: 'com.aaas.tutorsg'

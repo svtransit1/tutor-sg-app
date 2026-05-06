@@ -30,7 +30,7 @@
 #   1. Build the dev client: expo run:ios (or expo run:android)
 #   2. Then run: pnpm e2e:full
 
-appId: sg.aaas.tutorsg
+appId: com.aaas.tutorsg
 
 # ── Timing infrastructure ──────────────────────────────────────────
 # Each step is wrapped in `runFlow` with a `startTimer`/`stopTimer` pair.
@@ -48,7 +48,7 @@ env:
 # STEP 0: Fresh install — launch with cleared state
 # ═══════════════════════════════════════════════════════════════════
 - launchApp:
-    appId: sg.aaas.tutorsg
+    appId: com.aaas.tutorsg
     clearState: true
     stopApp: true
 
@@ -261,4 +261,4 @@ env:
 # The ci-e2e.sh wrapper captures the total duration.
 
 - stopApp:
-    appId: sg.aaas.tutorsg
+    appId: com.aaas.tutorsg
