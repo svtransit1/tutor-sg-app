@@ -9,9 +9,9 @@
     "test": "pnpm exec jest --passWithNoTests --maxWorkers=2"
   },
   "dependencies": {
-    "@tutor-sg/device-tier": "*",
-    "@tutor-sg/features": "*",
-    "@tutor-sg/llm": "*",
+    "@tutor-sg/device-tier": "workspace:*",
+    "@tutor-sg/features": "workspace:*",
+    "@tutor-sg/llm": "workspace:*",
     "zod": "^3.25.0"
   },
   "devDependencies": {
