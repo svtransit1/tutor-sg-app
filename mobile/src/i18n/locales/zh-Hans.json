@@ -4,6 +4,12 @@
   "onboarding": {
     "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
     "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。" },
+    "parentGate": {
+      "title": "家长设置",
+      "body": "这个应用需要爸爸妈妈或监护人先完成设置。请把手机交给大人。",
+      "continue": "我是家长 / 监护人",
+      "goBack": "我不是 — 返回"
+    },
     "siblingPrompt": {
       "title": "家里还有其他孩子要用吗？",
       "subtitle": "现在添加，他/她也会有自己的学习记录。",
