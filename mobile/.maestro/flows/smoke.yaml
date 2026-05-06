@@ -1,0 +1,56 @@
+# Smoke test: app launches, home screen renders, bilingual content is visible
+#
+# Prerequisites:
+#   1. Build the dev client:  expo run:ios  (or expo run:android)
+#   2. Then run:              pnpm e2e:smoke
+#
+# Language-toggling E2E test: not yet available. The app currently detects
+# locale from the device OS (via expo-localization) and has no in-app language
+# toggle. When a language-switcher component lands, add a follow-up flow at
+# `.maestro/flows/language-toggle.yaml`.
+#
+# This test runs against a dev build (not Expo Go), since the app will use
+# native modules (LLM runtime, camera, OCR, PencilKit).
+
+appId: sg.aaas.tutorsg
+
+---
+# Launch the app with a fresh state
+- launchApp:
+    appId: 'sg.aaas.tutorsg'
+    clearState: true
+
+# Wait for the home screen to render (subtitle shows "tutor-sg — AI Tutor")
+- waitForVisible:
+    text: 'AI Tutor'
+    timeout: 15000
+
+# Welcome title — renders as the device locale's translation
+#   en:       "Welcome"
+#   zh-Hans:  "欢迎"
+# Either is valid here; check for both with an OR-like approach.
+# Use extendedWaitUntil for the first visible check since the app may
+# need a moment to initialize i18n on first launch.
+- assertVisible:
+    text: 'Welcome'
+- assertVisible:
+    text: '欢迎'
+
+# Verify bilingual subject labels are visible
+# The home screen always renders each subject as "{en} / {zh-Hans}"
+# regardless of locale, so these are the most stable assertions.
+- assertVisible:
+    text: 'Mathematics / 数学'
+- assertVisible:
+    text: 'English / 英语'
+- assertVisible:
+    text: 'Science / 科学'
+- assertVisible:
+    text: 'Chinese Mother Tongue / 华文'
+
+# Take a screenshot for visual verification
+- takeScreenshot: 'smoke-home-screen'
+
+# Stop the app cleanly
+- stopApp:
+    appId: 'sg.aaas.tutorsg'

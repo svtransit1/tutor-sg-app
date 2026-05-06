@@ -71,3 +71,34 @@ jobs:
         run: npx expo export --platform ${{ matrix.platform }} --output-dir dist-${{ matrix.platform }}
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
+
+  e2e:
+    name: E2E
+    needs: [bundle]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Skipped on PR for now because E2E requires a native-device/simulator runner
+    # with a built .app/.apk. We use the Maestro Docker image, but the Expo dev
+    # build step (`expo run:ios/android`) is not available on GitHub-hosted
+    # runners (no macOS for iOS, complex Android emulator setup).
+    #
+    # Short-term: run E2E locally before merge (documented in README).
+    # Medium-term: switch to EAS Build + EAS Run when we have a dedicated runner,
+    # or use Maestro Cloud with an uploaded .app/.apk.
+    if: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - uses: mobile-dev-inc/maestro-action@v2
+        with:
+          app-file: dist-ios # path to built app
+          env: |
+            APP_NAME=tutor-sg
+          flow-path: mobile/.maestro/flows

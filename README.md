@@ -3,10 +3,11 @@
 Singapore primary school AI tutor — on-device LLM, EN + Simplified Chinese, P1–P6, all 4 core subjects.
 
 **Owner:** Agent as a Service Pte. Ltd.
-**Paperclip company:** AaaS (`a0b206eb-3265-4b08-8bd4-d21b9c52c827`)
-**Authoritative spec:** [wiki ADD](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fapp-design-document.md)
-**Architecture:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 **Framework:** React Native + Expo + TypeScript (single codebase, iOS + Android)
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [App Design Document (Obsidian)](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fapp-design-document.md)
+- [Locked decisions](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fdecisions-locked.md)
 
 Do not commit secrets, child data, or model weights. See `.gitignore`.
 
@@ -41,3 +42,171 @@ The app verifies downloaded model artifacts against SHA-256 checksums in `packag
 ### Placeholder hashes
 
 Until real model files are hosted on a CDN, `integrity.json` ships with all-zero `sha256` placeholders. The download verifier must treat these as "unverified" and skip hash checks in dev/staging builds.
+
+---
+
+## Local dev runbook
+
+Target: **clean Mac → dev server in under 5 minutes.**
+
+### Prerequisites
+
+| Tool           | Version                   | Install                                                              |
+| -------------- | ------------------------- | -------------------------------------------------------------------- |
+| Node.js        | ≥ 20 LTS                  | `brew install node@20` or [nodejs.org](https://nodejs.org)           |
+| pnpm           | ≥ 9 (managed by corepack) | bundled with Node — no separate install needed                       |
+| watchman       | latest                    | `brew install watchman` (recommended for RN file watching)           |
+| Xcode CLI      | ≥ 16                      | `xcode-select --install`                                             |
+| Android Studio | Ladybug (2024.2+)         | [developer.android.com/studio](https://developer.android.com/studio) |
+| JDK            | 17                        | bundled with Android Studio, or `brew install openjdk@17`            |
+
+### Quick start
+
+```bash
+git clone git@github.com:aaas-pte-ltd/tutor-sg-app.git
+cd tutor-sg-app
+./scripts/bootstrap.sh
+```
+
+### Run mobile (Expo)
+
+```bash
+pnpm --filter mobile start        # Expo dev server — scan QR with Expo Go, or press i/a
+pnpm --filter mobile ios          # iOS simulator
+pnpm --filter mobile android      # Android emulator
+```
+
+### Run web (parent dashboard)
+
+```bash
+pnpm --filter web dev             # http://localhost:3000
+```
+
+### Before pushing
+
+```bash
+pnpm typecheck && pnpm lint && pnpm test
+```
+
+## E2E tests (Maestro)
+
+```bash
+# 1. Install Maestro CLI (one-time)
+curl -Ls "https://get.maestro.mobile.dev" | bash
+
+# 2. Build the dev client for the target platform
+pnpm mobile ios    # or: pnpm mobile android
+
+# 3. Run the smoke test
+pnpm mobile e2e:smoke
+
+# 4. Run all E2E flows
+pnpm mobile e2e
+
+# 5. Run the full fresh-install → first-feedback flow with timing
+pnpm mobile e2e:full
+```
+
+The smoke test verifies: app launches → home screen renders → bilingual (EN/zh-Hans) subject labels are visible.
+
+The full flow (`onboarding-to-feedback`) exercises: first launch → language pick → parent gate → PIN setup → grade/subject pick → model download → ready landing → camera capture → homework feedback. **Timing per step is captured; total must complete under 120 seconds on a mid-tier emulator.**
+
+**CI status:** The `e2e-maestro` job runs on PR for both iOS simulator and Android emulator. Timing reports are uploaded as CI artifacts.
+
+- [E2E framework ADR](docs/adr/001-e2e-framework.md)
+- [Maestro flows](mobile/.maestro/flows/)
+
+### Project layout
+
+```
+tutor-sg-app/
+├── mobile/          # React Native + Expo app (main deliverable)
+├── web/             # Next.js parent dashboard (stub, full build M6)
+├── packages/shared/ # Shared types, i18n keys, syllabus schemas
+├── data/            # Static content packs
+├── schema/          # Content pack JSON schemas
+└── scripts/         # bootstrap.sh, content generation
+```
+
+---
+
+## Troubleshooting (Mac M1/M2/M3)
+
+### `env: node: Bad CPU type` or architecture mismatch
+
+Your shell is running under Rosetta. Ensure you're in a native arm64 terminal:
+
+```bash
+uname -m          # should print arm64
+arch              # should print arm64
+```
+
+If not, right-click Terminal.app → Get Info → uncheck "Open using Rosetta".
+
+### `gem': mach-o, but wrong architecture`
+
+Ruby gems compiled for x86-64 won't run natively. Check `which ruby` — prefer the system Ruby (`/usr/bin/ruby`) or a Homebrew arm64 Ruby. Avoid the `/usr/local` prefix which is Rosetta-only.
+
+### Cocoapods installs fail (`ffi` gem or `mach-o` errors)
+
+```bash
+sudo gem uninstall cocoapods
+brew install cocoapods
+```
+
+Homebrew's arm64 cocoapods avoids the ffi architecture trap.
+
+### `Podfile` out of date after `pnpm install`
+
+```bash
+cd mobile/ios
+pod install --repo-update
+```
+
+Run this whenever `node_modules` changes after a fresh `pnpm install`.
+
+### `expo: command not found`
+
+The bootstrap script should catch this, but if you skipped it:
+
+```bash
+corepack enable
+pnpm install
+```
+
+### Android emulator doesn't start
+
+Check that `$ANDROID_HOME` and `$JAVA_HOME` are set:
+
+```bash
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
+```
+
+Add these to `~/.zshrc`.
+
+### `Flipper` or `hermes-engine` build failures
+
+We use Hermes (Expo default) and do not use Flipper. If you see Flipper-related errors, check that `mobile/ios/Podfile` does not reference Flipper — it should not after `expo prebuild --clean`.
+
+### Watchman watches exhausted
+
+```
+echo 999999 | sudo tee -a /proc/sys/fs/inotify/max_user_watches  # Linux
+```
+
+On macOS Watchman manages this automatically, but if you see "too many open files":
+
+```bash
+ulimit -n 8192
+```
+
+### Slow first `pnpm install`
+
+On Apple Silicon, native arm64 Node and pnpm are fast. If installs are slow, check:
+
+```bash
+node -p "process.arch"   # should print arm64
+which node               # should be under /opt/homebrew, not /usr/local
+```

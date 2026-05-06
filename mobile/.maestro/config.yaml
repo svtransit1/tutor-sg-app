@@ -1,0 +1,14 @@
+# Maestro E2E configuration
+# See: https://maestro.mobile.dev/getting-started/configuring-projects
+
+name: tutor-sg-e2e
+
+# App under test — dev build for iOS simulator
+# Run `expo run:ios` or `expo run:android` first to build the dev client
+appFile:
+  ios: null # Set to .app path when running via maestro test
+  android: null
+
+# Default environment variables available in all flows
+env:
+  APP_NAME: 'tutor-sg'
