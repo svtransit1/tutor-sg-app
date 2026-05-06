@@ -1,0 +1,1133 @@
+{
+  "$schema": "https://example.com/syllabus-math-v1.schema.json",
+  "version": "1.0.0",
+  "subject": "math",
+  "name_en": "Mathematics",
+  "name_zh": "数学",
+  "sources": [
+    "MOE Primary Mathematics Syllabus 2021 (public Crown Copyright, paraphrased)",
+    "MOE PSLE Mathematics Subject Syllabus (public, paraphrased)"
+  ],
+  "description": "Hierarchical topic tree for MOE Primary Mathematics P1-P6. Structure: Subject > Level > Strand > Topic > Sub-topic > Learning Outcome. All labels bilingual (EN + zh-Hans). No verbatim textbook content.",
+  "psle_cutoff_level": 6,
+  "levels": {
+    "1": {
+      "name_en": "Primary 1",
+      "name_zh": "一年级",
+      "psle_relevant": false,
+      "strands": {
+        "numbers": {
+          "name_en": "Numbers and Operations",
+          "name_zh": "数与运算",
+          "topics": [
+            {
+              "id": "MAT-P1-N01",
+              "name_en": "Numbers to 10",
+              "name_zh": "10以内的数",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Counting and representation",
+                  "name_zh": "数数与表示",
+                  "outcomes": [
+                    { "id": "MAT-P1-N01-O1", "name_en": "Count, read and write numbers to 10", "name_zh": "数、读和写10以内的数" },
+                    { "id": "MAT-P1-N01-O2", "name_en": "Compare and order numbers to 10", "name_zh": "比较和排列10以内的数" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P1-N02",
+              "name_en": "Numbers to 20",
+              "name_zh": "20以内的数",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Counting and ordering",
+                  "name_zh": "数数与排列",
+                  "outcomes": [
+                    { "id": "MAT-P1-N02-O1", "name_en": "Count, read and write numbers to 20", "name_zh": "数、读和写20以内的数" },
+                    { "id": "MAT-P1-N02-O2", "name_en": "Compare and order numbers to 20", "name_zh": "比较和排列20以内的数" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P1-N03",
+              "name_en": "Addition and Subtraction within 20",
+              "name_zh": "20以内的加法和减法",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Number sentences",
+                  "name_zh": "算式",
+                  "outcomes": [
+                    { "id": "MAT-P1-N03-O1", "name_en": "Write addition and subtraction number sentences", "name_zh": "写出加法和减法算式" },
+                    { "id": "MAT-P1-N03-O2", "name_en": "Solve one-step word problems within 20", "name_zh": "解答20以内一步应用题" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "measurement": {
+          "name_en": "Measurement",
+          "name_zh": "测量",
+          "topics": [
+            {
+              "id": "MAT-P1-M01",
+              "name_en": "Length and Mass",
+              "name_zh": "长度和质量",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Comparison and non-standard units",
+                  "name_zh": "比较与非标准单位",
+                  "outcomes": [
+                    { "id": "MAT-P1-M01-O1", "name_en": "Compare length and mass by direct comparison", "name_zh": "通过直接比较比较长度和质量" },
+                    { "id": "MAT-P1-M01-O2", "name_en": "Use non-standard units to measure", "name_zh": "使用非标准单位进行测量" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P1-M02",
+              "name_en": "Time and Money",
+              "name_zh": "时间和货币",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Time",
+                  "name_zh": "时间",
+                  "outcomes": [
+                    { "id": "MAT-P1-M02-O1", "name_en": "Tell time to the hour", "name_zh": "识别整点时间" }
+                  ]
+                },
+                {
+                  "name_en": "Money",
+                  "name_zh": "货币",
+                  "outcomes": [
+                    { "id": "MAT-P1-M02-O2", "name_en": "Identify Singapore coins and notes", "name_zh": "识别新加坡硬币和纸币" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "geometry": {
+          "name_en": "Geometry and Spatial Sense",
+          "name_zh": "几何与空间观念",
+          "topics": [
+            {
+              "id": "MAT-P1-G01",
+              "name_en": "Shapes and Patterns",
+              "name_zh": "图形和模式",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "2D shapes",
+                  "name_zh": "平面图形",
+                  "outcomes": [
+                    { "id": "MAT-P1-G01-O1", "name_en": "Recognise and name basic 2D shapes", "name_zh": "认识和命名基本平面图形" }
+                  ]
+                },
+                {
+                  "name_en": "Patterns",
+                  "name_zh": "模式",
+                  "outcomes": [
+                    { "id": "MAT-P1-G01-O2", "name_en": "Identify and extend simple repeating patterns", "name_zh": "识别和延伸简单重复模式" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "data": {
+          "name_en": "Data Analysis",
+          "name_zh": "数据分析",
+          "topics": [
+            {
+              "id": "MAT-P1-D01",
+              "name_en": "Picture Graphs",
+              "name_zh": "象形图",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Reading picture graphs",
+                  "name_zh": "读取象形图",
+                  "outcomes": [
+                    { "id": "MAT-P1-D01-O1", "name_en": "Read and interpret simple picture graphs", "name_zh": "读取和理解简单象形图" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "2": {
+      "name_en": "Primary 2",
+      "name_zh": "二年级",
+      "psle_relevant": false,
+      "strands": {
+        "numbers": {
+          "name_en": "Numbers and Operations",
+          "name_zh": "数与运算",
+          "topics": [
+            {
+              "id": "MAT-P2-N01",
+              "name_en": "Numbers to 1000",
+              "name_zh": "1000以内的数",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Place value",
+                  "name_zh": "位值",
+                  "outcomes": [
+                    { "id": "MAT-P2-N01-O1", "name_en": "Count, read and write numbers to 1000", "name_zh": "数、读和写1000以内的数" },
+                    { "id": "MAT-P2-N01-O2", "name_en": "Understand place value (hundreds, tens, ones)", "name_zh": "理解位值（百位、十位、个位）" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P2-N02",
+              "name_en": "Addition and Subtraction within 1000",
+              "name_zh": "1000以内的加法和减法",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Operations with regrouping",
+                  "name_zh": "进位/退位运算",
+                  "outcomes": [
+                    { "id": "MAT-P2-N02-O1", "name_en": "Add and subtract within 1000 with regrouping", "name_zh": "1000以内进位加法和退位减法" },
+                    { "id": "MAT-P2-N02-O2", "name_en": "Solve one- and two-step word problems", "name_zh": "解答一至两步应用题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P2-N03",
+              "name_en": "Multiplication and Division",
+              "name_zh": "乘法和除法",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Times tables",
+                  "name_zh": "乘法表",
+                  "outcomes": [
+                    { "id": "MAT-P2-N03-O1", "name_en": "Recall multiplication tables of 2, 3, 5 and 10", "name_zh": "记住2、3、5、10的乘法表" },
+                    { "id": "MAT-P2-N03-O2", "name_en": "Solve word problems using multiplication and division", "name_zh": "用乘法和除法解答应用题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P2-N04",
+              "name_en": "Fractions",
+              "name_zh": "分数",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Introduction to fractions",
+                  "name_zh": "分数入门",
+                  "outcomes": [
+                    { "id": "MAT-P2-N04-O1", "name_en": "Recognise and write fractions as part of a whole", "name_zh": "认识和写出分数作为整体的一部分" },
+                    { "id": "MAT-P2-N04-O2", "name_en": "Compare unit fractions", "name_zh": "比较单位分数" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "measurement": {
+          "name_en": "Measurement",
+          "name_zh": "测量",
+          "topics": [
+            {
+              "id": "MAT-P2-M01",
+              "name_en": "Money",
+              "name_zh": "货币",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Counting and word problems",
+                  "name_zh": "计算与应用题",
+                  "outcomes": [
+                    { "id": "MAT-P2-M01-O1", "name_en": "Count money in dollars and cents", "name_zh": "以元和角计算金额" },
+                    { "id": "MAT-P2-M01-O2", "name_en": "Solve money word problems", "name_zh": "解答货币应用题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P2-M02",
+              "name_en": "Time",
+              "name_zh": "时间",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Reading time",
+                  "name_zh": "读取时间",
+                  "outcomes": [
+                    { "id": "MAT-P2-M02-O1", "name_en": "Tell time to 5-minute intervals", "name_zh": "以5分钟间隔读取时间" },
+                    { "id": "MAT-P2-M02-O2", "name_en": "Solve time problems", "name_zh": "解答时间问题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P2-M03",
+              "name_en": "Length, Mass and Volume",
+              "name_zh": "长度、质量和体积",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Standard units",
+                  "name_zh": "标准单位",
+                  "outcomes": [
+                    { "id": "MAT-P2-M03-O1", "name_en": "Measure using standard units (cm, m, g, kg, L)", "name_zh": "使用标准单位测量（厘米、米、克、千克、升）" },
+                    { "id": "MAT-P2-M03-O2", "name_en": "Compare and order measurements", "name_zh": "比较和排列测量结果" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "geometry": {
+          "name_en": "Geometry and Spatial Sense",
+          "name_zh": "几何与空间观念",
+          "topics": [
+            {
+              "id": "MAT-P2-G01",
+              "name_en": "Shapes and Graphs",
+              "name_zh": "图形和图表",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "2D and 3D shapes",
+                  "name_zh": "平面和立体图形",
+                  "outcomes": [
+                    { "id": "MAT-P2-G01-O1", "name_en": "Identify properties of basic 2D and 3D shapes", "name_zh": "识别基本平面和立体图形的特征" }
+                  ]
+                },
+                {
+                  "name_en": "Picture graphs",
+                  "name_zh": "象形图",
+                  "outcomes": [
+                    { "id": "MAT-P2-G01-O2", "name_en": "Read and interpret picture graphs with scales", "name_zh": "读取和理解带比例的象形图" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "3": {
+      "name_en": "Primary 3",
+      "name_zh": "三年级",
+      "psle_relevant": false,
+      "strands": {
+        "numbers": {
+          "name_en": "Numbers and Operations",
+          "name_zh": "数与运算",
+          "topics": [
+            {
+              "id": "MAT-P3-N01",
+              "name_en": "Numbers to 10 000",
+              "name_zh": "10000以内的数",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Place value and rounding",
+                  "name_zh": "位值与四舍五入",
+                  "outcomes": [
+                    { "id": "MAT-P3-N01-O1", "name_en": "Count, read and write numbers to 10 000", "name_zh": "数、读和写10000以内的数" },
+                    { "id": "MAT-P3-N01-O2", "name_en": "Round numbers to nearest 10 or 100", "name_zh": "将数四舍五入到最接近的十位或百位" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P3-N02",
+              "name_en": "Addition and Subtraction within 10 000",
+              "name_zh": "10000以内的加法和减法",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Multi-digit operations",
+                  "name_zh": "多位数运算",
+                  "outcomes": [
+                    { "id": "MAT-P3-N02-O1", "name_en": "Add and subtract numbers up to 4 digits", "name_zh": "进行最多4位数的加减法" },
+                    { "id": "MAT-P3-N02-O2", "name_en": "Solve multi-step word problems", "name_zh": "解答多步应用题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P3-N03",
+              "name_en": "Multiplication and Division",
+              "name_zh": "乘法和除法",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Multi-digit multiplication and division",
+                  "name_zh": "多位数乘除法",
+                  "outcomes": [
+                    { "id": "MAT-P3-N03-O1", "name_en": "Multiply 2- or 3-digit numbers by 1-digit", "name_zh": "两或三位数乘以一位数" },
+                    { "id": "MAT-P3-N03-O2", "name_en": "Divide up to 3-digit numbers by 1-digit", "name_zh": "最多三位数除以一位数" },
+                    { "id": "MAT-P3-N03-O3", "name_en": "Recall multiplication tables up to 9", "name_zh": "记住9以内的乘法表" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P3-N04",
+              "name_en": "Fractions",
+              "name_zh": "分数",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Comparing and operations",
+                  "name_zh": "比较与运算",
+                  "outcomes": [
+                    { "id": "MAT-P3-N04-O1", "name_en": "Compare and order fractions", "name_zh": "比较和排列分数" },
+                    { "id": "MAT-P3-N04-O2", "name_en": "Add and subtract like fractions", "name_zh": "同分母分数加减法" },
+                    { "id": "MAT-P3-N04-O3", "name_en": "Find equivalent fractions", "name_zh": "找出等值分数" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P3-N05",
+              "name_en": "Money",
+              "name_zh": "货币",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Multi-step money problems",
+                  "name_zh": "多步货币问题",
+                  "outcomes": [
+                    { "id": "MAT-P3-N05-O1", "name_en": "Solve multi-step money problems", "name_zh": "解答多步货币应用题" },
+                    { "id": "MAT-P3-N05-O2", "name_en": "Give change from a given amount", "name_zh": "计算找零" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "measurement": {
+          "name_en": "Measurement",
+          "name_zh": "测量",
+          "topics": [
+            {
+              "id": "MAT-P3-M01",
+              "name_en": "Length, Mass and Volume",
+              "name_zh": "长度、质量和体积",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Mixed units and word problems",
+                  "name_zh": "混合单位与应用题",
+                  "outcomes": [
+                    { "id": "MAT-P3-M01-O1", "name_en": "Measure in mixed units", "name_zh": "用混合单位测量" },
+                    { "id": "MAT-P3-M01-O2", "name_en": "Solve word problems involving length, mass and volume", "name_zh": "解答涉及长度、质量和体积的应用题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P3-M02",
+              "name_en": "Perimeter and Area",
+              "name_zh": "周长和面积",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Introduction to perimeter and area",
+                  "name_zh": "周长和面积入门",
+                  "outcomes": [
+                    { "id": "MAT-P3-M02-O1", "name_en": "Find perimeter of rectilinear shapes", "name_zh": "计算直线图形的周长" },
+                    { "id": "MAT-P3-M02-O2", "name_en": "Find area by counting squares", "name_zh": "通过数方格求面积" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P3-M03",
+              "name_en": "Time",
+              "name_zh": "时间",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Time to the minute",
+                  "name_zh": "精确到分钟的时间",
+                  "outcomes": [
+                    { "id": "MAT-P3-M03-O1", "name_en": "Tell time to the minute", "name_zh": "精确到分钟读取时间" },
+                    { "id": "MAT-P3-M03-O2", "name_en": "Solve elapsed time problems", "name_zh": "解答经过时间问题" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "geometry": {
+          "name_en": "Geometry and Spatial Sense",
+          "name_zh": "几何与空间观念",
+          "topics": [
+            {
+              "id": "MAT-P3-G01",
+              "name_en": "Angles",
+              "name_zh": "角",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Angle recognition",
+                  "name_zh": "角的认识",
+                  "outcomes": [
+                    { "id": "MAT-P3-G01-O1", "name_en": "Identify angles greater than, less than or equal to a right angle", "name_zh": "识别大于、小于或等于直角的角" },
+                    { "id": "MAT-P3-G01-O2", "name_en": "Recognise angles in 2D shapes", "name_zh": "识别平面图形中的角" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "data": {
+          "name_en": "Data Analysis",
+          "name_zh": "数据分析",
+          "topics": [
+            {
+              "id": "MAT-P3-D01",
+              "name_en": "Data and Graphs",
+              "name_zh": "数据和图表",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Bar graphs",
+                  "name_zh": "条形图",
+                  "outcomes": [
+                    { "id": "MAT-P3-D01-O1", "name_en": "Read and interpret bar graphs", "name_zh": "读取和理解条形图" },
+                    { "id": "MAT-P3-D01-O2", "name_en": "Collect and organise data in tables", "name_zh": "用表格收集和整理数据" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "4": {
+      "name_en": "Primary 4",
+      "name_zh": "四年级",
+      "psle_relevant": false,
+      "strands": {
+        "numbers": {
+          "name_en": "Numbers and Operations",
+          "name_zh": "数与运算",
+          "topics": [
+            {
+              "id": "MAT-P4-N01",
+              "name_en": "Numbers to 100 000",
+              "name_zh": "100000以内的数",
+              "psle_relevant": false,
+              "subtopics": [
+                {
+                  "name_en": "Large numbers and rounding",
+                  "name_zh": "大数与四舍五入",
+                  "outcomes": [
+                    { "id": "MAT-P4-N01-O1", "name_en": "Count, read and write numbers to 100 000", "name_zh": "数、读和写100000以内的数" },
+                    { "id": "MAT-P4-N01-O2", "name_en": "Round to nearest 10, 100, 1000", "name_zh": "四舍五入到最接近的十位、百位、千位" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P4-N02",
+              "name_en": "Factors and Multiples",
+              "name_zh": "因数和倍数",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Number theory basics",
+                  "name_zh": "数论基础",
+                  "outcomes": [
+                    { "id": "MAT-P4-N02-O1", "name_en": "Find factors and multiples of a number", "name_zh": "找出一个数的因数和倍数" },
+                    { "id": "MAT-P4-N02-O2", "name_en": "Identify prime numbers up to 50", "name_zh": "识别50以内的质数" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P4-N03",
+              "name_en": "Four Operations",
+              "name_zh": "四则运算",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Order of operations",
+                  "name_zh": "运算顺序",
+                  "outcomes": [
+                    { "id": "MAT-P4-N03-O1", "name_en": "Apply order of operations (BODMAS)", "name_zh": "应用运算顺序（BODMAS）" },
+                    { "id": "MAT-P4-N03-O2", "name_en": "Solve multi-step problems with all four operations", "name_zh": "解答涉及四则运算的多步问题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P4-N04",
+              "name_en": "Fractions and Decimals",
+              "name_zh": "分数和小数",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Fraction-decimal conversion",
+                  "name_zh": "分数与小数互化",
+                  "outcomes": [
+                    { "id": "MAT-P4-N04-O1", "name_en": "Convert between fractions and decimals", "name_zh": "分数与小数互化" },
+                    { "id": "MAT-P4-N04-O2", "name_en": "Add and subtract unlike fractions", "name_zh": "异分母分数加减法" },
+                    { "id": "MAT-P4-N04-O3", "name_en": "Multiply fractions by whole numbers", "name_zh": "分数乘以整数" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P4-N05",
+              "name_en": "Decimals",
+              "name_zh": "小数",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Decimal operations",
+                  "name_zh": "小数运算",
+                  "outcomes": [
+                    { "id": "MAT-P4-N05-O1", "name_en": "Read, write and order decimals to 2 decimal places", "name_zh": "读、写和排列两位小数" },
+                    { "id": "MAT-P4-N05-O2", "name_en": "Add, subtract and multiply decimals", "name_zh": "小数加减乘法" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "measurement": {
+          "name_en": "Measurement",
+          "name_zh": "测量",
+          "topics": [
+            {
+              "id": "MAT-P4-M01",
+              "name_en": "Area and Perimeter",
+              "name_zh": "面积和周长",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Rectangles and squares",
+                  "name_zh": "长方形和正方形",
+                  "outcomes": [
+                    { "id": "MAT-P4-M01-O1", "name_en": "Find area and perimeter of rectangles and squares", "name_zh": "计算长方形和正方形的面积和周长" },
+                    { "id": "MAT-P4-M01-O2", "name_en": "Solve word problems involving area and perimeter", "name_zh": "解答涉及面积和周长的应用题" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "geometry": {
+          "name_en": "Geometry and Spatial Sense",
+          "name_zh": "几何与空间观念",
+          "topics": [
+            {
+              "id": "MAT-P4-G01",
+              "name_en": "Symmetry and Lines",
+              "name_zh": "对称和线",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Symmetry",
+                  "name_zh": "对称",
+                  "outcomes": [
+                    { "id": "MAT-P4-G01-O1", "name_en": "Identify line(s) of symmetry in 2D shapes", "name_zh": "识别平面图形的对称轴" }
+                  ]
+                },
+                {
+                  "name_en": "Parallel and perpendicular lines",
+                  "name_zh": "平行线和垂线",
+                  "outcomes": [
+                    { "id": "MAT-P4-G01-O2", "name_en": "Recognise parallel and perpendicular lines", "name_zh": "识别平行线和垂线" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P4-G02",
+              "name_en": "Angles",
+              "name_zh": "角",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Measuring angles",
+                  "name_zh": "测量角",
+                  "outcomes": [
+                    { "id": "MAT-P4-G02-O1", "name_en": "Estimate and measure angles in degrees", "name_zh": "估算和测量角度（度数）" },
+                    { "id": "MAT-P4-G02-O2", "name_en": "Draw angles using a protractor", "name_zh": "用量角器画角" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "data": {
+          "name_en": "Data Analysis",
+          "name_zh": "数据分析",
+          "topics": [
+            {
+              "id": "MAT-P4-D01",
+              "name_en": "Data, Tables and Graphs",
+              "name_zh": "数据、表格和图表",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Bar graphs and tables",
+                  "name_zh": "条形图和表格",
+                  "outcomes": [
+                    { "id": "MAT-P4-D01-O1", "name_en": "Read and construct bar graphs", "name_zh": "读取和绘制条形图" },
+                    { "id": "MAT-P4-D01-O2", "name_en": "Interpret data from tables and graphs", "name_zh": "从表格和图表中解读数据" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P4-D02",
+              "name_en": "Average",
+              "name_zh": "平均数",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Calculating average",
+                  "name_zh": "计算平均数",
+                  "outcomes": [
+                    { "id": "MAT-P4-D02-O1", "name_en": "Calculate average (mean) from a data set", "name_zh": "计算一组数据的平均数" },
+                    { "id": "MAT-P4-D02-O2", "name_en": "Solve word problems involving average", "name_zh": "解答涉及平均数的应用题" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "5": {
+      "name_en": "Primary 5",
+      "name_zh": "五年级",
+      "psle_relevant": true,
+      "strands": {
+        "numbers": {
+          "name_en": "Numbers and Operations",
+          "name_zh": "数与运算",
+          "topics": [
+            {
+              "id": "MAT-P5-N01",
+              "name_en": "Whole Numbers",
+              "name_zh": "整数",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Large whole numbers",
+                  "name_zh": "大整数",
+                  "outcomes": [
+                    { "id": "MAT-P5-N01-O1", "name_en": "Read, write and compare numbers up to 10 million", "name_zh": "读、写和比较最多1000万的数" },
+                    { "id": "MAT-P5-N01-O2", "name_en": "Round numbers to required place value", "name_zh": "按要求位数四舍五入" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P5-N02",
+              "name_en": "Four Operations on Whole Numbers",
+              "name_zh": "整数的四则运算",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Multi-digit operations",
+                  "name_zh": "多位数运算",
+                  "outcomes": [
+                    { "id": "MAT-P5-N02-O1", "name_en": "Multiply and divide by 2-digit numbers", "name_zh": "乘以和除以两位数" },
+                    { "id": "MAT-P5-N02-O2", "name_en": "Use brackets in number sentences", "name_zh": "在算式中使用括号" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P5-N03",
+              "name_en": "Fractions",
+              "name_zh": "分数",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Fraction operations",
+                  "name_zh": "分数运算",
+                  "outcomes": [
+                    { "id": "MAT-P5-N03-O1", "name_en": "Multiply and divide fractions", "name_zh": "分数的乘法和除法" },
+                    { "id": "MAT-P5-N03-O2", "name_en": "Solve multi-step fraction problems", "name_zh": "解答多步分数问题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P5-N04",
+              "name_en": "Decimals",
+              "name_zh": "小数",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Decimal division and percentage link",
+                  "name_zh": "小数除法与百分比联系",
+                  "outcomes": [
+                    { "id": "MAT-P5-N04-O1", "name_en": "Divide decimals by whole numbers", "name_zh": "小数除以整数" },
+                    { "id": "MAT-P5-N04-O2", "name_en": "Relate fractions, decimals and percentages", "name_zh": "联系分数、小数和百分比" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P5-N05",
+              "name_en": "Percentage",
+              "name_zh": "百分比",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Understanding percentage",
+                  "name_zh": "理解百分比",
+                  "outcomes": [
+                    { "id": "MAT-P5-N05-O1", "name_en": "Express parts as percentages", "name_zh": "用百分比表示部分" },
+                    { "id": "MAT-P5-N05-O2", "name_en": "Solve percentage word problems", "name_zh": "解答百分比应用题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P5-N06",
+              "name_en": "Ratio",
+              "name_zh": "比",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Ratio concepts",
+                  "name_zh": "比的概念",
+                  "outcomes": [
+                    { "id": "MAT-P5-N06-O1", "name_en": "Write and simplify ratios", "name_zh": "写出和化简比" },
+                    { "id": "MAT-P5-N06-O2", "name_en": "Solve ratio problems", "name_zh": "解答比例问题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P5-N07",
+              "name_en": "Rate",
+              "name_zh": "速率",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Rate concepts",
+                  "name_zh": "速率概念",
+                  "outcomes": [
+                    { "id": "MAT-P5-N07-O1", "name_en": "Understand and use rate", "name_zh": "理解和使用速率" },
+                    { "id": "MAT-P5-N07-O2", "name_en": "Solve rate problems", "name_zh": "解答速率问题" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "measurement": {
+          "name_en": "Measurement",
+          "name_zh": "测量",
+          "topics": [
+            {
+              "id": "MAT-P5-M01",
+              "name_en": "Area and Perimeter of Composite Shapes",
+              "name_zh": "组合图形的面积和周长",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Composite shapes",
+                  "name_zh": "组合图形",
+                  "outcomes": [
+                    { "id": "MAT-P5-M01-O1", "name_en": "Find area and perimeter of composite rectilinear shapes", "name_zh": "计算组合直线图形的面积和周长" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P5-M02",
+              "name_en": "Volume of Cubes and Cuboids",
+              "name_zh": "正方体和长方体的体积",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Volume calculation",
+                  "name_zh": "体积计算",
+                  "outcomes": [
+                    { "id": "MAT-P5-M02-O1", "name_en": "Calculate volume in cm³ and m³", "name_zh": "计算cm³和m³为单位的体积" },
+                    { "id": "MAT-P5-M02-O2", "name_en": "Solve word problems involving volume", "name_zh": "解答涉及体积的应用题" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "geometry": {
+          "name_en": "Geometry and Spatial Sense",
+          "name_zh": "几何与空间观念",
+          "topics": [
+            {
+              "id": "MAT-P5-G01",
+              "name_en": "Triangles and Quadrilaterals",
+              "name_zh": "三角形和四边形",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Properties of triangles and quadrilaterals",
+                  "name_zh": "三角形和四边形的特征",
+                  "outcomes": [
+                    { "id": "MAT-P5-G01-O1", "name_en": "Identify types of triangles and quadrilaterals", "name_zh": "识别三角形和四边形的类型" },
+                    { "id": "MAT-P5-G01-O2", "name_en": "Use angle sum properties of triangles and quadrilaterals", "name_zh": "应用三角形和四边形的内角和性质" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "data": {
+          "name_en": "Data Analysis",
+          "name_zh": "数据分析",
+          "topics": [
+            {
+              "id": "MAT-P5-D01",
+              "name_en": "Data and Average",
+              "name_zh": "数据和平均数",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Line graphs and statistics",
+                  "name_zh": "折线图和统计",
+                  "outcomes": [
+                    { "id": "MAT-P5-D01-O1", "name_en": "Read and interpret line graphs", "name_zh": "读取和理解折线图" },
+                    { "id": "MAT-P5-D01-O2", "name_en": "Solve problems involving average, mode and median", "name_zh": "解答涉及平均数、众数和中位数的问题" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "algebra": {
+          "name_en": "Algebra",
+          "name_zh": "代数",
+          "topics": [
+            {
+              "id": "MAT-P5-A01",
+              "name_en": "Introduction to Algebra",
+              "name_zh": "代数入门",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Letters as unknowns",
+                  "name_zh": "字母表示未知数",
+                  "outcomes": [
+                    { "id": "MAT-P5-A01-O1", "name_en": "Use letters to represent unknown quantities", "name_zh": "用字母表示未知量" },
+                    { "id": "MAT-P5-A01-O2", "name_en": "Form and solve simple linear equations", "name_zh": "建立和求解简单线性方程" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "6": {
+      "name_en": "Primary 6",
+      "name_zh": "六年级",
+      "psle_relevant": true,
+      "strands": {
+        "numbers": {
+          "name_en": "Numbers and Operations",
+          "name_zh": "数与运算",
+          "topics": [
+            {
+              "id": "MAT-P6-N01",
+              "name_en": "Numbers and Operations",
+              "name_zh": "数和运算",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Mixed operations",
+                  "name_zh": "混合运算",
+                  "outcomes": [
+                    { "id": "MAT-P6-N01-O1", "name_en": "Perform mixed operations with fractions, decimals and percentages", "name_zh": "进行分数、小数和百分比的混合运算" },
+                    { "id": "MAT-P6-N01-O2", "name_en": "Solve complex multi-step word problems", "name_zh": "解答复杂多步应用题" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P6-N02",
+              "name_en": "Ratio, Percentage and Rate",
+              "name_zh": "比、百分比和速率",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Advanced ratio, percentage and rate",
+                  "name_zh": "高级比、百分比和速率",
+                  "outcomes": [
+                    { "id": "MAT-P6-N02-O1", "name_en": "Solve multi-step problems involving ratio, percentage and rate", "name_zh": "解答涉及比、百分比和速率的多步问题" },
+                    { "id": "MAT-P6-N02-O2", "name_en": "Apply to real-world contexts like discounts and GST", "name_zh": "应用于折扣和GST等实际情境" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "algebra": {
+          "name_en": "Algebra",
+          "name_zh": "代数",
+          "topics": [
+            {
+              "id": "MAT-P6-A01",
+              "name_en": "Algebra",
+              "name_zh": "代数",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Algebraic expressions and equations",
+                  "name_zh": "代数式和方程",
+                  "outcomes": [
+                    { "id": "MAT-P6-A01-O1", "name_en": "Simplify algebraic expressions", "name_zh": "化简代数式" },
+                    { "id": "MAT-P6-A01-O2", "name_en": "Solve linear equations with one unknown", "name_zh": "解一元一次方程" },
+                    { "id": "MAT-P6-A01-O3", "name_en": "Substitute values into algebraic expressions", "name_zh": "代入数值到代数式" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "geometry": {
+          "name_en": "Geometry and Spatial Sense",
+          "name_zh": "几何与空间观念",
+          "topics": [
+            {
+              "id": "MAT-P6-G01",
+              "name_en": "Geometry",
+              "name_zh": "几何",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Nets and 3D solids",
+                  "name_zh": "展开图和立体",
+                  "outcomes": [
+                    { "id": "MAT-P6-G01-O1", "name_en": "Identify nets of 3D solids (cubes, cuboids, cylinders, cones)", "name_zh": "识别立体图形（正方体、长方体、圆柱、圆锥）的展开图" }
+                  ]
+                },
+                {
+                  "name_en": "Angles",
+                  "name_zh": "角",
+                  "outcomes": [
+                    { "id": "MAT-P6-G01-O2", "name_en": "Calculate angles on a straight line and at a point", "name_zh": "计算直线上的角和周角" },
+                    { "id": "MAT-P6-G01-O3", "name_en": "Use properties of special triangles (isosceles, equilateral, right-angled)", "name_zh": "应用特殊三角形（等腰、等边、直角）的性质" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "measurement": {
+          "name_en": "Measurement",
+          "name_zh": "测量",
+          "topics": [
+            {
+              "id": "MAT-P6-M01",
+              "name_en": "Area and Volume",
+              "name_zh": "面积和体积",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Area of triangles and composite shapes",
+                  "name_zh": "三角形和组合图形的面积",
+                  "outcomes": [
+                    { "id": "MAT-P6-M01-O1", "name_en": "Find area of triangles using formula", "name_zh": "用公式求三角形面积" },
+                    { "id": "MAT-P6-M01-O2", "name_en": "Find area of composite shapes involving circles", "name_zh": "求涉及圆的组合图形面积" }
+                  ]
+                },
+                {
+                  "name_en": "Volume",
+                  "name_zh": "体积",
+                  "outcomes": [
+                    { "id": "MAT-P6-M01-O3", "name_en": "Calculate volume of cubes and cuboids in practical contexts", "name_zh": "计算实际情境中正方体和长方体的体积" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "MAT-P6-M02",
+              "name_en": "Speed",
+              "name_zh": "速度",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Speed concepts",
+                  "name_zh": "速度概念",
+                  "outcomes": [
+                    { "id": "MAT-P6-M02-O1", "name_en": "Use the relationship distance = speed × time", "name_zh": "使用距离 = 速度 × 时间的关系" },
+                    { "id": "MAT-P6-M02-O2", "name_en": "Solve word problems involving speed", "name_zh": "解答涉及速度的应用题" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "data": {
+          "name_en": "Data Analysis",
+          "name_zh": "数据分析",
+          "topics": [
+            {
+              "id": "MAT-P6-D01",
+              "name_en": "Data Analysis",
+              "name_zh": "数据分析",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Pie charts and data interpretation",
+                  "name_zh": "扇形统计图与数据解读",
+                  "outcomes": [
+                    { "id": "MAT-P6-D01-O1", "name_en": "Read and interpret pie charts", "name_zh": "读取和理解扇形统计图" },
+                    { "id": "MAT-P6-D01-O2", "name_en": "Solve problems from tables, graphs and charts", "name_zh": "从表格、 graphs和图表中解答问题" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "problem_solving": {
+          "name_en": "PSLE Problem Solving",
+          "name_zh": "小六会考解题",
+          "topics": [
+            {
+              "id": "MAT-P6-PS01",
+              "name_en": "PSLE Heuristics",
+              "name_zh": "小六会考解题策略",
+              "psle_relevant": true,
+              "subtopics": [
+                {
+                  "name_en": "Heuristic strategies",
+                  "name_zh": "解题策略",
+                  "outcomes": [
+                    { "id": "MAT-P6-PS01-O1", "name_en": "Apply heuristic strategies: guess and check, before-after, working backwards, constant difference", "name_zh": "应用解题策略：猜测与检验、前后变化、逆向思维、差不变" },
+                    { "id": "MAT-P6-PS01-O2", "name_en": "Solve multi-step non-routine PSLE-style problems", "name_zh": "解答多步非routine小六会考风格问题" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}
