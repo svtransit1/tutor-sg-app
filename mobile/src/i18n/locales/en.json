@@ -45,6 +45,24 @@
     "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
     "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
   },
+  "deviceTierResult": {
+    "title": "Your device is ready!",
+    "tierLabel": "Detected performance level",
+    "highPerformance": "High Performance",
+    "standard": "Standard",
+    "highDescription": "Your device can run the full AI tutor experience with faster responses.",
+    "standardDescription": "Your device will run the AI tutor smoothly with slightly longer response times.",
+    "downloadSize": "Download size: {{size}}",
+    "modelNames": "Models: {{models}}",
+    "consentText": "Models run entirely on this device. Nothing leaves your phone.",
+    "downloadNow": "Download now",
+    "downloadLater": "Download later (Wi-Fi only)",
+    "cellularWarning": "{{size}} download over cellular. Connect to Wi-Fi to save data?",
+    "cellularProceed": "Download anyway",
+    "cellularCancel": "Wait for Wi-Fi",
+    "loading": "Checking your device…",
+    "error": "Could not detect device capabilities. Please try again."
+  },
   "modelDownload": {
     "title": "Setting up your tutor...",
     "progress": "Downloading {{fileName}}…",

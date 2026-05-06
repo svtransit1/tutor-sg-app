@@ -18,6 +18,7 @@
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-community/netinfo": "^12.0.1",
     "@supabase/supabase-js": "^2.105.3",
+    "@tutor-sg/device-tier": "workspace:*",
     "@tutor-sg/shared": "workspace:*",
     "expo": "~54.0.0",
     "expo-auth-session": "^55.0.15",
