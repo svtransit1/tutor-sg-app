@@ -1,0 +1,20 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@tutor-sg/device-tier": ["../packages/device-tier/src"],
+      "@tutor-sg/features": ["../packages/features"],
+      "@tutor-sg/shared": ["../packages/shared/src"],
+      "@tutor-sg/llm": ["../packages/llm/src"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "tutor-sg",
+    "slug": "tutor-sg",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "scheme": "tutor-sg",
+    "splash": {
+      "backgroundColor": "#FFFFFF"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.aaas.tutorsg",
+      "minimumOsVersion": "16.0",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "For PIN-protected parent area access."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.aaas.tutorsg",
+      "minSdkVersion": 30
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store"
+    ]
+  }
+}
