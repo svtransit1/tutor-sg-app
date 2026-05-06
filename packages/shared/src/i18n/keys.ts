@@ -15,6 +15,8 @@ export type I18nKey =
   | 'app.name'
   | 'onboarding.welcome.title'
   | 'onboarding.welcome.subtitle'
+  | 'onboarding.langPick.title'
+  | 'onboarding.langPick.subtitle'
   | 'onboarding.done.title'
   | 'onboarding.done.subtitle'
   | 'onboarding.done.greeting'
@@ -89,6 +91,8 @@ export const I18N_KEYS = [
   'app.name',
   'onboarding.welcome.title',
   'onboarding.welcome.subtitle',
+  'onboarding.langPick.title',
+  'onboarding.langPick.subtitle',
   'onboarding.done.title',
   'onboarding.done.subtitle',
   'onboarding.done.greeting',

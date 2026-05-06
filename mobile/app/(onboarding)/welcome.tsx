@@ -16,7 +16,7 @@ export default function WelcomeScreen() {
   const isDark = useColorScheme() === 'dark';
 
   const handleGetStarted = () => {
-    router.push('/(onboarding)/consent');
+    router.push('/(onboarding)/language-select');
   };
 
   return (

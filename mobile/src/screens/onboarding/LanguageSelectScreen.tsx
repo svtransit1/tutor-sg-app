@@ -28,7 +28,10 @@ import {
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import i18n from '../../i18n';
-import { setOnboardingLocale, type OnboardingLocale } from '../../storage/onboarding-prefs';
+import { persistLocale } from '../../storage/onboarding-state';
+
+/** Locale code used in language selection. */
+export type OnboardingLocale = 'en' | 'zh-Hans';
 import OnboardingProgressIndicator from '../../components/OnboardingProgressIndicator';
 
 // ── Props ──────────────────────────────────────────────────────────
@@ -85,7 +88,7 @@ export default function LanguageSelectScreen({
       setCommitting(true);
 
       // Persist immediately per Article 12 §3.2
-      setOnboardingLocale(locale);
+      persistLocale(locale);
 
       // Switch i18n locale so subsequent screens render in chosen language
       i18n.changeLanguage(locale);
@@ -96,7 +99,7 @@ export default function LanguageSelectScreen({
         if (onLanguageSelected) {
           onLanguageSelected(locale);
         } else {
-          router.replace('/(onboarding)/age-gate');
+          router.replace('/(onboarding)/consent');
         }
       }
     },
