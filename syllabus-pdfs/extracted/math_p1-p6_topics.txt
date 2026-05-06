@@ -1,0 +1,49 @@
+MOE Primary Mathematics Syllabus - Level P6
+华文: 数学 P6
+Source: MOE Primary School Syllabus (public Crown Copyright, paraphrased)
+
+Topic: Numbers and Operations (数和运算)
+Code: MAT-P6-001
+  Learning Outcome 1: Perform mixed operations with fractions, decimals and percentages
+  Learning Outcome 2: Solve complex word problems
+
+Topic: Ratio, Percentage and Rate (比、百分比和速率)
+Code: MAT-P6-002
+  Learning Outcome 1: Solve multi-step problems involving ratio, percentage and rate
+  Learning Outcome 2: Apply to real-world contexts like discounts and GST
+
+Topic: Algebra (代数)
+Code: MAT-P6-003
+  Learning Outcome 1: Simplify algebraic expressions
+  Learning Outcome 2: Solve linear equations with one unknown
+  Learning Outcome 3: Substitute values
+
+Topic: Geometry (几何)
+Code: MAT-P6-004
+  Learning Outcome 1: Identify nets of 3D solids
+  Learning Outcome 2: Calculate angles on a straight line and at a point
+  Learning Outcome 3: Use properties of special triangles
+
+Topic: Area and Volume (面积和体积)
+Code: MAT-P6-005
+  Learning Outcome 1: Find area of triangles and composite shapes
+  Learning Outcome 2: Calculate volume of cubes and cuboids in practical contexts
+
+Topic: Speed (速度)
+Code: MAT-P6-006
+  Learning Outcome 1: Use the relationship distance = speed × time
+  Learning Outcome 2: Solve word problems involving speed
+
+Topic: Data Analysis (数据分析)
+Code: MAT-P6-007
+  Learning Outcome 1: Read and interpret pie charts
+  Learning Outcome 2: Solve problems from tables, graphs and charts
+
+Topic: PSLE Problem Solving (小六会考解题)
+Code: MAT-P6-008
+  Learning Outcome 1: Apply heuristic strategies: guess and check, before-after, working backwards
+  Learning Outcome 2: Solve multi-step non-routine problems
+
+---
+Note: This is a paraphrased topic extraction for content-authoring reference.
+No verbatim content from MOE PDFs is included.

@@ -1,0 +1,42 @@
+MOE Primary Chinese Mother Tongue Syllabus - Level P6
+华文: 华文 P6
+Source: MOE Primary School Syllabus (public Crown Copyright, paraphrased)
+
+Topic: PSLE Vocabulary (小六会考词汇)
+Code: CHI-P6-001
+  Learning Outcome 1: Demonstrate mastery of PSLE Chinese vocabulary list
+  Learning Outcome 2: ~2000-2300 cumulative characters
+
+Topic: PSLE Reading Comprehension (小六会考阅读理解)
+Code: CHI-P6-002
+  Learning Outcome 1: Answer open-ended and MCQ comprehension questions
+  Learning Outcome 2: Analyse passage structure, writer's techniques and moral lessons
+
+Topic: PSLE Cloze Passage (小六会考综合填空)
+Code: CHI-P6-003
+  Learning Outcome 1: Complete cloze passages with high accuracy using contextual and grammatical reasoning
+  Learning Outcome 2: Handle near-synonyms and near-homophones
+
+Topic: PSLE Composition (小六会考作文)
+Code: CHI-P6-004
+  Learning Outcome 1: Write a composition (≥ 150 characters) based on 三幅图 or a title
+  Learning Outcome 2: Demonstrate character development, plot progression and a meaningful conclusion
+
+Topic: PSLE Oral Examination (小六会考口试)
+Code: CHI-P6-005
+  Learning Outcome 1: 朗读 with excellent pronunciation, tone accuracy and expression
+  Learning Outcome 2: 会话: sustain discussion on a stimulus image, express well-reasoned opinions
+
+Topic: PSLE Listening Comprehension (小六会考听力理解)
+Code: CHI-P6-006
+  Learning Outcome 1: Understand spoken Chinese passages and answer MCQ questions
+  Learning Outcome 2: Identify speaker attitudes and infer meaning from tone
+
+Topic: PSLE 完成对话 (小六会考完成对话)
+Code: CHI-P6-007
+  Learning Outcome 1: Complete missing turns in a dialogue with contextually and grammatically appropriate responses
+  Learning Outcome 2: Maintain tone and register consistency
+
+---
+Note: This is a paraphrased topic extraction for content-authoring reference.
+No verbatim content from MOE PDFs is included.

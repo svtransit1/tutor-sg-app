@@ -1,0 +1,49 @@
+MOE Primary Science Syllabus - Level P6
+华文: 科学 P6
+Source: MOE Primary School Syllabus (public Crown Copyright, paraphrased)
+
+Topic: Food Chains and Food Webs (食物链和食物网)
+Code: SCI-P6-001
+  Learning Outcome 1: Construct food chains and food webs
+  Learning Outcome 2: Identify producers, consumers and decomposers
+
+Topic: Adaptation to Environment (对环境的适应)
+Code: SCI-P6-002
+  Learning Outcome 1: Describe how structural and behavioural adaptations help organisms survive
+  Learning Outcome 2: Explain the relationship between adaptation and habitat
+
+Topic: Electric Circuits (电路)
+Code: SCI-P6-003
+  Learning Outcome 1: Draw and interpret circuit diagrams
+  Learning Outcome 2: Describe how switches control circuits
+  Learning Outcome 3: Identify series and parallel circuits
+
+Topic: Water Cycle (水循环)
+Code: SCI-P6-004
+  Learning Outcome 1: Describe the processes of evaporation, condensation and precipitation
+  Learning Outcome 2: Explain the water cycle as a continuous process
+
+Topic: Forces (力)
+Code: SCI-P6-005
+  Learning Outcome 1: Identify types of forces (friction, gravity, elastic spring, magnetic)
+  Learning Outcome 2: Describe how forces affect motion
+
+Topic: PSLE Science Application (小六会考科学应用)
+Code: SCI-P6-006
+  Learning Outcome 1: Apply scientific concepts to novel contexts
+  Learning Outcome 2: Design fair tests and identify variables
+  Learning Outcome 3: Draw conclusions from experimental data
+
+Topic: Photosynthesis (光合作用)
+Code: SCI-P6-007
+  Learning Outcome 1: Describe the process of photosynthesis
+  Learning Outcome 2: Identify conditions necessary for photosynthesis
+
+Topic: Human Body Systems (人体系统)
+Code: SCI-P6-008
+  Learning Outcome 1: Describe how body systems work together
+  Learning Outcome 2: Explain how the nervous system coordinates responses
+
+---
+Note: This is a paraphrased topic extraction for content-authoring reference.
+No verbatim content from MOE PDFs is included.

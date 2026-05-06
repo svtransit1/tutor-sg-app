@@ -1,0 +1,42 @@
+MOE Primary English Language Syllabus - Level P6
+华文: 英语 P6
+Source: MOE Primary School Syllabus (public Crown Copyright, paraphrased)
+
+Topic: PSLE Reading Comprehension (小六会考阅读理解)
+Code: ENG-P6-001
+  Learning Outcome 1: Answer open-ended comprehension questions with text evidence
+  Learning Outcome 2: Analyse writer's techniques (figurative language, structure)
+
+Topic: PSLE Vocabulary (小六会考词汇)
+Code: ENG-P6-002
+  Learning Outcome 1: Demonstrate mastery of PSLE vocabulary list
+  Learning Outcome 2: Use vocabulary-in-context MCQ strategies
+
+Topic: PSLE Grammar (小六会考语法)
+Code: ENG-P6-003
+  Learning Outcome 1: Demonstrate mastery of all primary school grammar structures
+  Learning Outcome 2: Edit passages for grammatical accuracy
+
+Topic: PSLE Composition (小六会考作文)
+Code: ENG-P6-004
+  Learning Outcome 1: Write a well-structured narrative (150-200 words) with plot, character development and resolution
+  Learning Outcome 2: Use varied sentence structures and vocabulary
+
+Topic: PSLE Oral Examination (小六会考口试)
+Code: ENG-P6-005
+  Learning Outcome 1: Read aloud with confidence, accuracy and expression
+  Learning Outcome 2: Engage in sustained stimulus-based conversation
+
+Topic: PSLE Listening Comprehension (小六会考听力理解)
+Code: ENG-P6-006
+  Learning Outcome 1: Understand spoken texts and answer MCQ and open-ended questions
+  Learning Outcome 2: Identify speaker attitudes and infer meaning
+
+Topic: PSLE Writing (Functional) (小六会考应用文写作)
+Code: ENG-P6-007
+  Learning Outcome 1: Write formal and informal emails/letters
+  Learning Outcome 2: Write speeches, reports and reviews with appropriate format
+
+---
+Note: This is a paraphrased topic extraction for content-authoring reference.
+No verbatim content from MOE PDFs is included.
