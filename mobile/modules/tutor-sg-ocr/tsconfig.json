@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "sourceMap": true,
+    "noUncheckedIndexedAccess": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "expo-modules-core": ["../node_modules/expo-modules-core"],
+      "expo-modules-core/*": ["../node_modules/expo-modules-core/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "app.plugin.js"],
+  "exclude": ["node_modules", "dist", "__tests__"]
+}

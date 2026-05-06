@@ -1,0 +1,10 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["TutorSgOcrModule"],
+    "podspecPath": "ios/TutorSgOcr.podspec"
+  },
+  "android": {
+    "modules": ["expo.modules.tutorsgocr.TutorSgOcrModule"]
+  }
+}

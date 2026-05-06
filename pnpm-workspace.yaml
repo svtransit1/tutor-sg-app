@@ -1,0 +1,5 @@
+packages:
+  - 'mobile'
+  - 'mobile/modules/*'
+  - 'web'
+  - 'packages/*'
