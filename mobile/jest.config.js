@@ -45,6 +45,7 @@ module.exports = {
     '^react-native-safe-area-context$': '<rootDir>/__mocks__/react-native-safe-area-context.ts',
     '^@supabase/supabase-js$': '<rootDir>/__mocks__/@supabase/supabase-js.ts',
     '^@tutor-sg/device-tier$': '<rootDir>/__mocks__/@tutor-sg/device-tier.tsx',
+    '^@tutor-sg/llm$': '<rootDir>/__mocks__/@tutor-sg/llm.ts',
     '^expo-(.*)$': '<rootDir>/__mocks__/expo-module-proxy.ts',
   },
   setupFiles: [path.join(rnDir, 'jest', 'setup.js')],

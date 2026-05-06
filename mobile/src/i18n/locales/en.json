@@ -10,6 +10,19 @@
       "continue": "I'm a parent / guardian",
       "goBack": "I'm not — go back"
     },
+    "parentPinSetup": {
+      "title": "Set your parent PIN",
+      "body": "Set a 4-digit PIN. You'll use this to see your child's learning log.",
+      "enterPin": "Enter a 4-digit PIN",
+      "confirmPin": "Confirm your PIN",
+      "mismatch": "PINs don't match. Try again.",
+      "skip": "Skip — set up later",
+      "accessibility": {
+        "digitInput": "Digit {{position}}",
+        "confirmDigitInput": "Confirm digit {{position}}",
+        "skipButton": "Skip PIN setup"
+      }
+    },
     "siblingPrompt": {
       "title": "Got another child who could use this too?",
       "subtitle": "Add them now and they'll have their own learning log.",
@@ -154,6 +167,81 @@
         "welcomeBanner": "Welcome banner. Start your first homework session.",
         "practiceTile": "Try a {{subject}} practice question"
       }
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "back": "Back",
+    "goBack": "Go back",
+    "loading": "Loading…",
+    "retry": "Retry"
+  },
+  "cameraScreen": {
+    "snapPrompt": "Line up the page",
+    "pages": "{{count}} page captured",
+    "pages_plural": "{{count}} pages captured",
+    "addAnother": "Add another page",
+    "done": "Done — get help",
+    "hint": {
+      "singlePage": "Line up your homework in the frame, then tap the button below",
+      "morePages": "Great! Add more pages or tap Done"
+    },
+    "status": {
+      "capturing": "Taking photo…",
+      "ocr": "Reading your homework…",
+      "inferring": "Thinking about your questions…",
+      "ocrSubtext": "This should only take a moment",
+      "inferenceSubtext": "The tutor is working through each question"
+    },
+    "permission": {
+      "title": "Camera access needed",
+      "description": "We need camera access so you can take photos of your homework. Your photos never leave this device.",
+      "cta": "Enable camera access"
+    },
+    "manualInput": {
+      "title": "Can't read all of it",
+      "description": "Some parts were unclear. Please type what you see below.",
+      "placeholder": "Type the text here…",
+      "submit": "Continue",
+      "accessibility": "Item {{item}} manual input"
+    },
+    "error": {
+      "title": "Something went wrong",
+      "captureFailed": "Couldn't take the photo. Please try again.",
+      "processingFailed": "Couldn't read the homework. Please try again with better lighting.",
+      "inferenceFailed": "The tutor couldn't process this right now. Please try again.",
+      "retake": "Try again"
+    },
+    "accessibility": {
+      "cancel": "Go back to home screen",
+      "capture": "Take a photo of your homework"
+    }
+  },
+  "cameraResult": {
+    "title": "Homework Help",
+    "retake": "Retake",
+    "question": "Question {{number}}",
+    "questions": "{{count}} question",
+    "questions_plural": "{{count}} questions",
+    "hint": "Hint",
+    "showSteps": "Show me the steps",
+    "steps": "Step-by-step guide",
+    "showSolution": "Show me the full answer",
+    "fullSolution": "Full solution",
+    "tryThis": "Try this next",
+    "backToHome": "Back to Home",
+    "encouragement": {
+      "title": "Great work! 💪",
+      "body": "Try the hint first. If you're still stuck, tap 'Show me the steps' for a guided walkthrough."
+    },
+    "followUp": {
+      "placeholder": "Ask a follow-up question…",
+      "send": "Send",
+      "accessibility": "Type a follow-up question",
+      "mockResponse": "Great question! Let me help you with that. Think about what we just learned — try applying the same method here. What do you think the first step should be?"
+    },
+    "error": {
+      "notFound": "This result is no longer available. Please take a new photo."
     }
   },
   "modelDownload": {
