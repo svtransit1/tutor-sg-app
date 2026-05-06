@@ -29,10 +29,15 @@ dist/
 *.app
 
 # Local LLM model artefacts — never commit
-models/
+**/models/
 *.tflite
 *.litertlm
 *.gguf
+# Exception: shared package models dir (integrity manifest)
+!packages/shared/src/models/
+# Only track JSON manifests, not actual model weights
+packages/shared/src/models/*
+!packages/shared/src/models/*.json
 
 # Test outputs
 coverage/
