@@ -1,0 +1,62 @@
+{
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "remote",
+    "requireCommit": false
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "internal": {
+      "ios": {
+        "distribution": "internal",
+        "simulator": false
+      },
+      "android": {
+        "distribution": "internal"
+      }
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "ios": {
+        "distribution": "store",
+        "autoIncrement": true
+      },
+      "android": {
+        "distribution": "store",
+        "autoIncrement": true
+      }
+    }
+  },
+  "submit": {
+    "beta": {
+      "ios": {
+        "appleAppSpecificPassword": "@EAS_APPLE_APP_SPECIFIC_PASSWORD",
+        "ascAppId": "ASC_APPLE_ID_PLACEHOLDER",
+        "appleTeamId": "@EAS_APPLE_TEAM_ID",
+        "appleId": "@EAS_APPLE_ID"
+      },
+      "android": {
+        "serviceAccountKeyPath": "@EAS_ANDROID_SERVICE_ACCOUNT_KEY_PATH",
+        "track": "internal"
+      }
+    },
+    "production": {
+      "ios": {
+        "appleAppSpecificPassword": "@EAS_APPLE_APP_SPECIFIC_PASSWORD",
+        "ascAppId": "ASC_APPLE_ID_PLACEHOLDER",
+        "appleTeamId": "@EAS_APPLE_TEAM_ID",
+        "appleId": "@EAS_APPLE_ID"
+      },
+      "android": {
+        "serviceAccountKeyPath": "@EAS_ANDROID_SERVICE_ACCOUNT_KEY_PATH",
+        "track": "production",
+        "releaseStatus": "completed"
+      }
+    }
+  }
+}
