@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   percentText: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#6B7280',
     marginBottom: 24,
   },
