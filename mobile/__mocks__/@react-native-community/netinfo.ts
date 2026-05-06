@@ -45,9 +45,9 @@ function notifyListeners(): void {
 }
 
 const NetInfo = {
-  fetch: jest.fn<Promise<NetInfoState>, []>().mockResolvedValue({ ...currentState }),
+  fetch: jest.fn().mockImplementation(() => Promise.resolve({ ...currentState })),
   addEventListener: jest
-    .fn<(handler: NetInfoChangeHandler) => NetInfoSubscription, [NetInfoChangeHandler]>()
+    .fn()
     .mockImplementation((handler: NetInfoChangeHandler) => {
       listeners.add(handler);
       return () => {
@@ -55,7 +55,7 @@ const NetInfo = {
       };
     }),
   /** @deprecated Use `mockNetInfo.setNetworkState` instead. */
-  refresh: jest.fn<Promise<NetInfoState>, []>().mockResolvedValue({ ...currentState }),
+  refresh: jest.fn().mockImplementation(() => Promise.resolve({ ...currentState })),
 };
 
 /**
@@ -65,8 +65,6 @@ const NetInfo = {
 export const mockNetInfo = {
   setNetworkState(overrides: Partial<NetInfoState>): void {
     currentState = { ...currentState, ...overrides };
-    // Update fetch mock
-    NetInfo.fetch = jest.fn<Promise<NetInfoState>, []>().mockResolvedValue({ ...currentState });
     notifyListeners();
   },
   reset(): void {
@@ -76,7 +74,6 @@ export const mockNetInfo = {
       isInternetReachable: true,
       details: null,
     };
-    NetInfo.fetch = jest.fn<Promise<NetInfoState>, []>().mockResolvedValue({ ...currentState });
     listeners.clear();
   },
 };
@@ -84,6 +81,11 @@ export const mockNetInfo = {
 /** Called by setup-jest.ts beforeEach */
 export function __resetNetInfo() {
   mockNetInfo.reset();
+}
+
+/** Convenience helper for tests: set connected/disconnected. */
+export function __setConnected(connected: boolean, type: string = 'wifi') {
+  mockNetInfo.setNetworkState({ isConnected: connected, type: type as any });
 }
 
 export type { NetInfoState, NetInfoStateType, NetInfoSubscription };
