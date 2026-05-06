@@ -1,0 +1,13 @@
+# CODEOWNERS — tutor-sg
+# Per ADD §11: Tortoise reviews every PR; Foxy approves merges to main; Owl gates architecture-touching PRs.
+#
+# BLOCKED: @tortoise-tutor-sg is a placeholder. Update to the real Tortoise bot GitHub handle
+# once Boss provisions the bot account (approval 67b2d57e).
+
+# Global default — Tortoise reviews everything
+* @tortoise-tutor-sg
+
+# Architecture-touching paths also need Owl review
+/docs/ARCHITECTURE.md @tortoise-tutor-sg
+/src/model/ @tortoise-tutor-sg
+/src/inference/ @tortoise-tutor-sg
