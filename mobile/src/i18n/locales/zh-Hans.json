@@ -194,6 +194,7 @@
   "manualInputFallback": {
     "title": "有些内容看不清楚",
     "description": "以下内容识别不清。你可以输入文字，或用手写笔/手指书写答案。",
+    "subjectPrompt": "这是哪个科目？",
     "typeTab": "输入",
     "drawTab": "手写",
     "itemLabel": "第 {{number}} 项",
