@@ -88,3 +88,36 @@ Every CI run includes a `lockfile-guard` job that:
 2. Checks `git diff --exit-code pnpm-lock.yaml`.
 
 If the lockfile drifts from `package.json` changes, the build fails immediately.
+
+---
+
+## EAS Build (internal distribution)
+
+The project uses Expo Application Services (EAS) for cloud builds. The `internal` profile produces ad-hoc builds suitable for TestFlight-precursor testing.
+
+### Build profiles (eas.json)
+
+| Profile | Distribution | Use case |
+|---------|-------------|----------|
+| `development` | internal | Dev client with hot reload |
+| `internal` | internal | Ad-hoc / TestFlight precursor |
+| `preview` | internal | Pre-release testing |
+| `production` | store | App Store / Play Store release |
+
+### iOS internal build
+
+```bash
+pnpm --filter mobile eas:build:ios:internal
+# or directly:
+cd mobile && eas build --platform ios --profile internal
+```
+
+**Bundle ID:** `com.aaas.tutorsg` (placeholder — confirm with Apple Developer account).
+
+### Prerequisites
+
+- Apple Developer Program membership ($99/year) for iOS internal distribution.
+- `eas-cli` installed: `npm install -g eas-cli`
+- Run `eas login` and `eas build:configure` in `mobile/` on first use.
+
+Until an Apple Developer account is set up, the build scripts serve as stubs that will fail with an auth error — file a `boss-needed` issue to provision the Apple account.
