@@ -17,10 +17,10 @@
  * Bilingual: all strings via i18n (EN + zh-Hans).
  */
 
-import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import i18n from '@/i18n';
-import { useEffect, useState, useCallback } from 'react';
+import { useRouter } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import i18n from '@/i18n'
+import { useEffect, useState, useCallback } from 'react'
 import {
   View,
   Text,
@@ -29,22 +29,19 @@ import {
   ScrollView,
   useColorScheme,
   RefreshControl,
-} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { getRecentSessions } from '@/storage/sessions';
-import type { KidSession } from '@/storage/sessions';
-import {
-  isFirstHomeVisit,
-  markFirstHomeVisitComplete,
-} from '@/storage/onboarding-state';
+} from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { getRecentSessions } from '@/storage/sessions'
+import type { KidSession } from '@/storage/sessions'
+import { isFirstHomeVisit, markFirstHomeVisitComplete } from '@/storage/onboarding-state'
 
 // --- Subject Tile Config ------------------------------------------------
 
 interface SubjectTile {
-  id: 'math' | 'english' | 'science' | 'chinese';
-  icon: string;
-  color: string;
-  darkColor: string;
+  id: 'math' | 'english' | 'science' | 'chinese'
+  icon: string
+  color: string
+  darkColor: string
 }
 
 const SUBJECTS: SubjectTile[] = [
@@ -52,122 +49,122 @@ const SUBJECTS: SubjectTile[] = [
   { id: 'english', icon: '📖', color: '#E3F2FD', darkColor: '#1A2A4A' },
   { id: 'science', icon: '🔬', color: '#FFF3E0', darkColor: '#4A2A00' },
   { id: 'chinese', icon: '🀄', color: '#FCE4EC', darkColor: '#4A1A2A' },
-];
+]
 
 const SUBJECT_ICONS: Record<string, string> = {
   math: '🧮',
   english: '📖',
   science: '🔬',
   chinese: '🀄',
-};
+}
 
 // --- Time Ago Helper ----------------------------------------------------
 
 function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): string {
-  const now = Date.now();
-  const then = new Date(dateStr).getTime();
-  const diffMs = now - then;
-  const diffMin = Math.floor(diffMs / 60000);
-  const diffHr = Math.floor(diffMs / 3600000);
+  const now = Date.now()
+  const then = new Date(dateStr).getTime()
+  const diffMs = now - then
+  const diffMin = Math.floor(diffMs / 60000)
+  const diffHr = Math.floor(diffMs / 3600000)
 
-  if (diffMin < 1) return t('kidHome.recentSessions.timeAgo.justNow');
-  if (diffMin < 60) return t('kidHome.recentSessions.timeAgo.minutesAgo', { minutes: diffMin });
-  if (diffHr < 24) return t('kidHome.recentSessions.timeAgo.hoursAgo', { hours: diffHr });
-  return t('kidHome.recentSessions.timeAgo.yesterday');
+  if (diffMin < 1) return t('kidHome.recentSessions.timeAgo.justNow')
+  if (diffMin < 60) return t('kidHome.recentSessions.timeAgo.minutesAgo', { minutes: diffMin })
+  if (diffHr < 24) return t('kidHome.recentSessions.timeAgo.hoursAgo', { hours: diffHr })
+  return t('kidHome.recentSessions.timeAgo.yesterday')
 }
 
 // --- Screen -------------------------------------------------------------
 
 export default function KidHomeScreen() {
-  const { t } = useTranslation();
-  const router = useRouter();
-  const insets = useSafeAreaInsets();
-  const isDark = useColorScheme() === 'dark';
+  const { t } = useTranslation()
+  const router = useRouter()
+  const insets = useSafeAreaInsets()
+  const isDark = useColorScheme() === 'dark'
 
-  const [sessions, setSessions] = useState<KidSession[]>([]);
-  const [refreshing, setRefreshing] = useState(false);
+  const [sessions, setSessions] = useState<KidSession[]>([])
+  const [refreshing, setRefreshing] = useState(false)
 
   // Welcome banner visibility — shown on first-ever home screen visit
   // when there are no sessions yet. Dismissed by user action or after
   // a session is created (on next refresh).
-  const [showWelcome, setShowWelcome] = useState(false);
-  const [welcomeInitDone, setWelcomeInitDone] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false)
+  const [welcomeInitDone, setWelcomeInitDone] = useState(false)
 
   // Demo data: kid name + level (will be replaced from profile storage)
-  const kidName = 'Alex';
-  const kidLevel = 3;
+  const kidName = 'Alex'
+  const kidLevel = 3
 
   const loadSessions = useCallback(async () => {
     try {
-      const recent = await getRecentSessions(3);
-      setSessions(recent);
+      const recent = await getRecentSessions(3)
+      setSessions(recent)
     } catch {
-      setSessions([]);
+      setSessions([])
     }
-  }, []);
+  }, [])
 
   // Initialise welcome state on mount
   useEffect(() => {
     loadSessions().then(() => {
-      const firstVisit = isFirstHomeVisit();
-      setShowWelcome(firstVisit);
-      setWelcomeInitDone(true);
-    });
-  }, [loadSessions]);
+      const firstVisit = isFirstHomeVisit()
+      setShowWelcome(firstVisit)
+      setWelcomeInitDone(true)
+    })
+  }, [loadSessions])
 
   // If sessions appear (e.g. after navigating back from camera),
   // auto-dismiss the welcome banner.
   useEffect(() => {
     if (sessions.length > 0 && showWelcome) {
-      setShowWelcome(false);
-      markFirstHomeVisitComplete();
+      setShowWelcome(false)
+      markFirstHomeVisitComplete()
     }
-  }, [sessions, showWelcome]);
+  }, [sessions, showWelcome])
 
   const onRefresh = useCallback(async () => {
-    setRefreshing(true);
-    await loadSessions();
-    setRefreshing(false);
-  }, [loadSessions]);
+    setRefreshing(true)
+    await loadSessions()
+    setRefreshing(false)
+  }, [loadSessions])
 
   const handleSwitchLanguage = () => {
-    const current = i18n.language;
-    const next = current === 'zh-Hans' ? 'en' : 'zh-Hans';
-    i18n.changeLanguage(next);
-  };
+    const current = i18n.language
+    const next = current === 'zh-Hans' ? 'en' : 'zh-Hans'
+    i18n.changeLanguage(next)
+  }
 
   const handleCameraPress = () => {
     // Dismiss welcome when user takes action
     if (showWelcome) {
-      setShowWelcome(false);
-      markFirstHomeVisitComplete();
+      setShowWelcome(false)
+      markFirstHomeVisitComplete()
     }
-    router.push('/(kid)/camera');
-  };
+    router.push('/(kid)/camera')
+  }
 
   const handleSubjectPress = (_subjectId: string) => {
-    handleCameraPress();
-  };
+    handleCameraPress()
+  }
 
   const handlePracticePress = (_subjectId: string) => {
     // Mark first visit done and start a practice session
     if (showWelcome) {
-      setShowWelcome(false);
-      markFirstHomeVisitComplete();
+      setShowWelcome(false)
+      markFirstHomeVisitComplete()
     }
     // For now, navigate to camera as the practice entry point.
     // Future: route to a subject-specific practice flow.
-    router.push('/(kid)/camera');
-  };
+    router.push('/(kid)/camera')
+  }
 
   const handleDismissWelcome = () => {
-    setShowWelcome(false);
-    markFirstHomeVisitComplete();
-  };
+    setShowWelcome(false)
+    markFirstHomeVisitComplete()
+  }
 
   const handleViewAllHistory = () => {
-    router.push('/(kid)/history');
-  };
+    router.push('/(kid)/history')
+  }
 
   return (
     <View
@@ -186,15 +183,12 @@ export default function KidHomeScreen() {
           >
             {t('kidHome.header.greeting', { name: kidName })}
           </Text>
-          <View
-            style={[
-              styles.levelBadge,
-              { backgroundColor: isDark ? '#2A4A7A' : '#E8F4FD' },
-            ]}
-          >
+          <View style={[styles.levelBadge, { backgroundColor: isDark ? '#2A4A7A' : '#E8F4FD' }]}>
             <Text
               style={[styles.levelText, { color: isDark ? '#90CAF9' : '#2563EB' }]}
-              accessibilityLabel={t('kidHome.header.levelBadge', { level: kidLevel })}
+              accessibilityLabel={t('kidHome.header.levelBadge', {
+                level: kidLevel,
+              })}
             >
               {t('kidHome.header.levelBadge', { level: kidLevel })}
             </Text>
@@ -263,10 +257,7 @@ export default function KidHomeScreen() {
         {/* Hint text when subject tiles are dimmed (first visit) */}
         {showWelcome && (
           <Text
-            style={[
-              styles.subjectsHint,
-              { color: isDark ? '#888888' : '#9CA3AF' },
-            ]}
+            style={[styles.subjectsHint, { color: isDark ? '#888888' : '#9CA3AF' }]}
             accessibilityRole="text"
           >
             {t('kidHome.firstSession.subjectsHint')}
@@ -301,64 +292,41 @@ export default function KidHomeScreen() {
         {welcomeInitDone && showWelcome && sessions.length === 0 ? (
           /* ── First-Session Welcome Hero ── */
           <View
-            style={[
-              styles.welcomeHero,
-              { backgroundColor: isDark ? '#1A2A3A' : '#E8F4FD' },
-            ]}
+            style={[styles.welcomeHero, { backgroundColor: isDark ? '#1A2A3A' : '#E8F4FD' }]}
             accessibilityRole="summary"
             accessibilityLabel={t('kidHome.firstSession.accessibility.welcomeBanner')}
           >
             {/* Celebration icon */}
             <View
-              style={[
-                styles.welcomeCircle,
-                { backgroundColor: isDark ? '#2A4A7A' : '#FFFFFF' },
-              ]}
+              style={[styles.welcomeCircle, { backgroundColor: isDark ? '#2A4A7A' : '#FFFFFF' }]}
             >
               <Text style={styles.welcomeCircleIcon}>🚀</Text>
             </View>
 
             {/* Welcome title */}
-            <Text
-              style={[styles.welcomeTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
-            >
+            <Text style={[styles.welcomeTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
               {t('kidHome.firstSession.welcomeTitle')}
             </Text>
 
             {/* Welcome body */}
-            <Text
-              style={[
-                styles.welcomeBody,
-                { color: isDark ? '#B0B0B0' : '#555555' },
-              ]}
-            >
+            <Text style={[styles.welcomeBody, { color: isDark ? '#B0B0B0' : '#555555' }]}>
               {t('kidHome.firstSession.welcomeBody')}
             </Text>
 
             {/* Primary CTA: take first homework photo */}
             <TouchableOpacity
-              style={[
-                styles.firstSessionCta,
-                { backgroundColor: isDark ? '#2563EB' : '#4A90D9' },
-              ]}
+              style={[styles.firstSessionCta, { backgroundColor: isDark ? '#2563EB' : '#4A90D9' }]}
               onPress={handleCameraPress}
               accessibilityRole="button"
               accessibilityLabel={t('kidHome.firstSession.ctaCamera')}
               activeOpacity={0.8}
             >
               <Text style={styles.firstSessionCtaIcon}>📸</Text>
-              <Text style={styles.firstSessionCtaText}>
-                {t('kidHome.firstSession.ctaCamera')}
-              </Text>
+              <Text style={styles.firstSessionCtaText}>{t('kidHome.firstSession.ctaCamera')}</Text>
             </TouchableOpacity>
 
             {/* Practice question prompt + subject chips */}
-            <Text
-              style={[
-                styles.practicePrompt,
-                { color: isDark ? '#888888' : '#9CA3AF' },
-              ]}
-            >
+            <Text style={[styles.practicePrompt, { color: isDark ? '#888888' : '#9CA3AF' }]}>
               {t('kidHome.firstSession.ctaPractice')}
             </Text>
 
@@ -379,18 +347,14 @@ export default function KidHomeScreen() {
                   ]}
                   onPress={() => handlePracticePress(subject.id)}
                   accessibilityRole="button"
-                  accessibilityLabel={t(
-                    'kidHome.firstSession.accessibility.practiceTile',
-                    { subject: t(`kidHome.subjects.${subject.id}`) },
-                  )}
+                  accessibilityLabel={t('kidHome.firstSession.accessibility.practiceTile', {
+                    subject: t(`kidHome.subjects.${subject.id}`),
+                  })}
                   activeOpacity={0.7}
                 >
                   <Text style={styles.practiceChipIcon}>{subject.icon}</Text>
                   <Text
-                    style={[
-                      styles.practiceChipLabel,
-                      { color: isDark ? '#FFFFFF' : '#1A1A1A' },
-                    ]}
+                    style={[styles.practiceChipLabel, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
                   >
                     {t(`kidHome.subjects.${subject.id}`)}
                   </Text>
@@ -406,12 +370,7 @@ export default function KidHomeScreen() {
               accessibilityLabel={t('kidHome.firstSession.dismiss')}
               hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
             >
-              <Text
-                style={[
-                  styles.dismissText,
-                  { color: isDark ? '#90CAF9' : '#6B7280' },
-                ]}
-              >
+              <Text style={[styles.dismissText, { color: isDark ? '#90CAF9' : '#6B7280' }]}>
                 {t('kidHome.firstSession.dismiss')}
               </Text>
             </TouchableOpacity>
@@ -461,15 +420,10 @@ export default function KidHomeScreen() {
                     })}
                     activeOpacity={0.7}
                   >
-                    <Text style={styles.sessionIcon}>
-                      {SUBJECT_ICONS[session.subject] ?? '📚'}
-                    </Text>
+                    <Text style={styles.sessionIcon}>{SUBJECT_ICONS[session.subject] ?? '📚'}</Text>
                     <View style={styles.sessionInfo}>
                       <Text
-                        style={[
-                          styles.sessionSubject,
-                          { color: isDark ? '#FFFFFF' : '#1A1A1A' },
-                        ]}
+                        style={[styles.sessionSubject, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
                       >
                         {t(`kidHome.subjects.${session.subject}`)}
                       </Text>
@@ -491,14 +445,14 @@ export default function KidHomeScreen() {
         <View style={{ height: 32 }} />
       </ScrollView>
     </View>
-  );
+  )
 }
 
 // --- Styles -------------------------------------------------------------
 
-const TILE_MIN_HEIGHT = 120;
-const CAMERA_BUTTON_MIN_HEIGHT = 56;
-const CORNER_RADIUS = 16;
+const TILE_MIN_HEIGHT = 120
+const CAMERA_BUTTON_MIN_HEIGHT = 56
+const CORNER_RADIUS = 16
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
@@ -576,7 +530,12 @@ const styles = StyleSheet.create({
   cameraButtonContent: { flexDirection: 'row', alignItems: 'center', gap: 14 },
   cameraIcon: { fontSize: 32 },
   cameraTextBlock: { flex: 1 },
-  cameraTitle: { fontSize: 20, fontWeight: '700', color: '#FFFFFF', marginBottom: 2 },
+  cameraTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    marginBottom: 2,
+  },
   cameraSubtitle: { fontSize: 14, color: '#FFFFFF', opacity: 0.85 },
 
   // ── Welcome Hero (first-session empty state) ──
@@ -689,7 +648,12 @@ const styles = StyleSheet.create({
   viewAllLink: { fontSize: 14, fontWeight: '600' },
   emptyState: { alignItems: 'center', paddingVertical: 32, gap: 8 },
   emptyIcon: { fontSize: 36 },
-  emptyText: { fontSize: 15, textAlign: 'center', lineHeight: 22, paddingHorizontal: 24 },
+  emptyText: {
+    fontSize: 15,
+    textAlign: 'center',
+    lineHeight: 22,
+    paddingHorizontal: 24,
+  },
   sessionList: { gap: 10 },
   sessionCard: {
     flexDirection: 'row',
@@ -707,4 +671,4 @@ const styles = StyleSheet.create({
   sessionInfo: { flex: 1 },
   sessionSubject: { fontSize: 16, fontWeight: '600', marginBottom: 2 },
   sessionMeta: { fontSize: 13, color: '#9CA3AF' },
-});
+})

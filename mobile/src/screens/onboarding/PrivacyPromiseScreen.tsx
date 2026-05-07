@@ -21,7 +21,7 @@
  * @see ADD §4.2 — Privacy promise hard rule
  */
 
-import React, { useCallback } from 'react';
+import React, { useCallback } from 'react'
 import {
   View,
   Text,
@@ -30,30 +30,28 @@ import {
   useColorScheme,
   type ViewStyle,
   type TextStyle,
-} from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import PrivacyPromisePanel from '../../components/PrivacyPromisePanel';
+} from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import PrivacyPromisePanel from '../../components/PrivacyPromisePanel'
 
 // ── Props ──────────────────────────────────────────────────────────
 
 interface PrivacyPromiseScreenProps {
   /** Called when user taps "Continue" — proceeds to model download. */
-  onContinue?: () => void;
+  onContinue?: () => void
 }
 
 // ── Component ──────────────────────────────────────────────────────
 
-export default function PrivacyPromiseScreen({
-  onContinue,
-}: PrivacyPromiseScreenProps) {
-  const { t } = useTranslation();
-  const isDark = useColorScheme() === 'dark';
-  const insets = useSafeAreaInsets();
+export default function PrivacyPromiseScreen({ onContinue }: PrivacyPromiseScreenProps) {
+  const { t } = useTranslation()
+  const isDark = useColorScheme() === 'dark'
+  const insets = useSafeAreaInsets()
 
   const handleContinue = useCallback(() => {
-    onContinue?.();
-  }, [onContinue]);
+    onContinue?.()
+  }, [onContinue])
 
   return (
     <View
@@ -66,10 +64,7 @@ export default function PrivacyPromiseScreen({
       <View style={styles.content}>
         {/* Headline */}
         <Text
-          style={[
-            styles.headline,
-            { color: isDark ? '#FFFFFF' : '#1A1A1A' },
-          ]}
+          style={[styles.headline, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
           accessibilityRole="header"
         >
           {t('onboarding.privacyPromise.headline')}
@@ -82,32 +77,22 @@ export default function PrivacyPromiseScreen({
       {/* Continue button */}
       <View style={styles.footer}>
         <TouchableOpacity
-          style={[
-            styles.continueBtn,
-            { backgroundColor: isDark ? '#2563EB' : '#2563EB' },
-          ]}
+          style={[styles.continueBtn, { backgroundColor: isDark ? '#2563EB' : '#2563EB' }]}
           onPress={handleContinue}
           activeOpacity={0.8}
           accessibilityRole="button"
           accessibilityLabel={t('onboarding.privacyPromise.continue')}
         >
-          <Text style={styles.continueBtnText}>
-            {t('onboarding.privacyPromise.continue')}
-          </Text>
+          <Text style={styles.continueBtnText}>{t('onboarding.privacyPromise.continue')}</Text>
         </TouchableOpacity>
 
         {/* Subtle reassurance text */}
-        <Text
-          style={[
-            styles.reassurance,
-            { color: isDark ? '#888' : '#9CA3AF' },
-          ]}
-        >
+        <Text style={[styles.reassurance, { color: isDark ? '#888' : '#9CA3AF' }]}>
           {t('onboarding.privacyPromise.reassurance')}
         </Text>
       </View>
     </View>
-  );
+  )
 }
 
 // ── Styles ─────────────────────────────────────────────────────────
@@ -167,4 +152,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 32,
   } satisfies TextStyle,
-});
+})

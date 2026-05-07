@@ -23,6 +23,7 @@ interface PinContextValue extends PinState {
   handleSetupPin: (pin: string, confirmPin: string) => Promise<boolean>
   handleVerifyPin: (pin: string) => Promise<boolean>
   resetVerification: () => void
+  handleResetPin: () => Promise<void>
 }
 
 const PinContext = createContext<PinContextValue | null>(null)
@@ -180,11 +181,25 @@ export function PinGateProvider({ children }: { children: React.ReactNode }) {
     }))
   }, [])
 
+  const handleResetPin = useCallback(async () => {
+    const { clearPin } = await import('../storage/pin-storage')
+    await clearPin()
+    setState((prev) => ({
+      ...prev,
+      status: 'needs-setup',
+      error: null,
+      attemptsRemaining: MAX_ATTEMPTS,
+      cooldownRemaining: 0,
+    }))
+    stopCooldownTimer()
+  }, [stopCooldownTimer])
+
   const value: PinContextValue = {
     ...state,
     handleSetupPin,
     handleVerifyPin,
     resetVerification,
+    handleResetPin,
   }
 
   return <PinContext.Provider value={value}>{children}</PinContext.Provider>

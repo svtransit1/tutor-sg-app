@@ -16,8 +16,8 @@
  * @see ADD §4.4 — Stylus-input native support
  */
 
-import React, { useRef, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useRef, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   View,
   PanResponder,
@@ -28,43 +28,43 @@ import {
   type GestureResponderEvent,
   type PanResponderGestureState,
   type ViewStyle,
-} from 'react-native';
+} from 'react-native'
 
 // ── Types ──────────────────────────────────────────────────────────
 
 export interface Point {
-  x: number;
-  y: number;
+  x: number
+  y: number
 }
 
 export interface Stroke {
-  points: Point[];
-  color: string;
-  width: number;
+  points: Point[]
+  color: string
+  width: number
 }
 
 interface DrawingCanvasProps {
   /** Current strokes in the canvas */
-  strokes: Stroke[];
+  strokes: Stroke[]
   /** Callback when a new stroke is completed (touch end) */
-  onStrokesChange: (strokes: Stroke[]) => void;
+  onStrokesChange: (strokes: Stroke[]) => void
   /** Current stroke color (default: #1A1A1A) */
-  strokeColor?: string;
+  strokeColor?: string
   /** Stroke width in pixels (default: 3) */
-  strokeWidth?: number;
+  strokeWidth?: number
   /** Placeholder text shown when canvas is empty */
-  placeholder?: string;
+  placeholder?: string
   /** Accessibility label for the canvas area */
-  accessibilityLabel?: string;
+  accessibilityLabel?: string
   /** Test ID */
-  testID?: string;
+  testID?: string
 }
 
 // ── Constants ──────────────────────────────────────────────────────
 
-const DEFAULT_STROKE_COLOR = '#1A1A1A';
-const DEFAULT_STROKE_WIDTH = 3;
-const CANVAS_MIN_HEIGHT = 160;
+const DEFAULT_STROKE_COLOR = '#1A1A1A'
+const DEFAULT_STROKE_WIDTH = 3
+const CANVAS_MIN_HEIGHT = 160
 
 // ── Component ──────────────────────────────────────────────────────
 
@@ -77,12 +77,23 @@ export default function DrawingCanvas({
   accessibilityLabel,
   testID,
 }: DrawingCanvasProps) {
-  const { t } = useTranslation();
-  const canvasAccessibilityLabel = accessibilityLabel ?? t('manualInputFallback.accessibility.drawCanvas', { number: '' });
-  const isDark = useColorScheme() === 'dark';
-  const currentStrokeRef = useRef<Point[]>([]);
-  const canvasRef = useRef<View>(null);
-  const canvasLayoutRef = useRef({ x: 0, y: 0, width: 0, height: 0 });
+  const { t } = useTranslation()
+  const canvasAccessibilityLabel =
+    accessibilityLabel ?? t('manualInputFallback.accessibility.drawCanvas', { number: '' })
+  const isDark = useColorScheme() === 'dark'
+  const currentStrokeRef = useRef<Point[]>([])
+  const canvasRef = useRef<View>(null)
+  const canvasLayoutRef = useRef({ x: 0, y: 0, width: 0, height: 0 })
+
+  // Refs to avoid stale closure in PanResponder (created once via useRef)
+  const strokesRef = useRef(strokes)
+  strokesRef.current = strokes
+  const onStrokesChangeRef = useRef(onStrokesChange)
+  onStrokesChangeRef.current = onStrokesChange
+  const strokeColorRef = useRef(strokeColor)
+  strokeColorRef.current = strokeColor
+  const strokeWidthRef = useRef(strokeWidth)
+  strokeWidthRef.current = strokeWidth
 
   // ── PanResponder for touch drawing ─────────────────────────────
 
@@ -92,27 +103,20 @@ export default function DrawingCanvas({
       onMoveShouldSetPanResponder: () => true,
 
       onPanResponderGrant: (evt: GestureResponderEvent) => {
-        const { locationX, locationY } = evt.nativeEvent;
-        currentStrokeRef.current = [{ x: locationX, y: locationY }];
+        const { locationX, locationY } = evt.nativeEvent
+        currentStrokeRef.current = [{ x: locationX, y: locationY }]
       },
 
       onPanResponderMove: (evt: GestureResponderEvent) => {
-        const { locationX, locationY } = evt.nativeEvent;
-        const lastPoint =
-          currentStrokeRef.current[
-            currentStrokeRef.current.length - 1
-          ];
+        const { locationX, locationY } = evt.nativeEvent
+        const lastPoint = currentStrokeRef.current[currentStrokeRef.current.length - 1]
 
         // Only add point if we've moved enough (avoid dense point clouds)
         if (
           lastPoint &&
-          (Math.abs(locationX - lastPoint.x) > 2 ||
-            Math.abs(locationY - lastPoint.y) > 2)
+          (Math.abs(locationX - lastPoint.x) > 2 || Math.abs(locationY - lastPoint.y) > 2)
         ) {
-          currentStrokeRef.current = [
-            ...currentStrokeRef.current,
-            { x: locationX, y: locationY },
-          ];
+          currentStrokeRef.current = [...currentStrokeRef.current, { x: locationX, y: locationY }]
         }
       },
 
@@ -120,77 +124,76 @@ export default function DrawingCanvas({
         if (currentStrokeRef.current.length > 0) {
           const newStroke: Stroke = {
             points: currentStrokeRef.current,
-            color: strokeColor,
-            width: strokeWidth,
-          };
-          onStrokesChange([...strokes, newStroke]);
-          currentStrokeRef.current = [];
+            color: strokeColorRef.current,
+            width: strokeWidthRef.current,
+          }
+          onStrokesChangeRef.current([...strokesRef.current, newStroke])
+          currentStrokeRef.current = []
         }
       },
 
       onPanResponderTerminate: () => {
         // Touch interrupted — discard current stroke
-        currentStrokeRef.current = [];
+        currentStrokeRef.current = []
       },
     }),
-  ).current;
+  ).current
 
   // ── Clear handler ──────────────────────────────────────────────
 
   const handleClear = useCallback(() => {
-    onStrokesChange([]);
-    currentStrokeRef.current = [];
-  }, [onStrokesChange]);
+    onStrokesChange([])
+    currentStrokeRef.current = []
+  }, [onStrokesChange])
 
   // ── Render helper: build SVG-like segments from strokes ────────
 
   const renderStroke = (stroke: Stroke, strokeIndex: number) => {
-    if (stroke.points.length < 2) return null;
+    if (stroke.points.length < 2) return null
 
-    const elements: React.ReactNode[] = [];
+    const elements: React.ReactNode[] = []
 
     for (let i = 0; i < stroke.points.length - 1; i++) {
-      const p0 = stroke.points[i];
-      const p1 = stroke.points[i + 1];
+      const p0 = stroke.points[i]
+      const p1 = stroke.points[i + 1]
 
-      if (!p0 || !p1) continue;
+      if (!p0 || !p1) continue
 
       // Draw a line segment between consecutive points
-      const dx = p1.x - p0.x;
-      const dy = p1.y - p0.y;
-      const length = Math.sqrt(dx * dx + dy * dy);
-      const angle = Math.atan2(dy, dx);
+      const dx = p1.x - p0.x
+      const dy = p1.y - p0.y
+      const length = Math.sqrt(dx * dx + dy * dy)
+      const angle = Math.atan2(dy, dx)
 
       elements.push(
         <View
           key={`${strokeIndex}-${i}`}
-          style={{
-            position: 'absolute',
-            left: p0.x,
-            top: p0.y,
-            width: length,
-            height: stroke.width,
-            backgroundColor: stroke.color,
-            borderRadius: stroke.width / 2,
-            transform: [{ rotate: `${angle}rad` }],
-            transformOrigin: 'left center',
-          } as ViewStyle}
+          style={
+            {
+              position: 'absolute',
+              left: p0.x,
+              top: p0.y,
+              width: length,
+              height: stroke.width,
+              backgroundColor: stroke.color,
+              borderRadius: stroke.width / 2,
+              transform: [{ rotate: `${angle}rad` }],
+              transformOrigin: 'left center',
+            } as ViewStyle
+          }
         />,
-      );
+      )
     }
 
-    return elements;
-  };
+    return elements
+  }
 
   // ── Render ─────────────────────────────────────────────────────
 
-  const isEmpty = strokes.length === 0 && currentStrokeRef.current.length === 0;
+  const isEmpty = strokes.length === 0 && currentStrokeRef.current.length === 0
 
   return (
-    <View
-      style={styles.container}
-      testID={testID}
-    >
+    <View style={styles.container} testID={testID}>
       {/* Canvas area */}
       <View
         ref={canvasRef}
@@ -238,7 +241,7 @@ export default function DrawingCanvas({
         </TouchableOpacity>
       )}
     </View>
-  );
+  )
 }
 
 // ── Styles ─────────────────────────────────────────────────────────
@@ -278,4 +281,4 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '500',
   },
-});
+})

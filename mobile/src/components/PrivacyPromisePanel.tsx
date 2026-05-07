@@ -22,8 +22,8 @@
  * @see ADD §9 — Quality bars (accessibility, bilingual)
  */
 
-import React, { useState, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   View,
   Text,
@@ -32,35 +32,35 @@ import {
   useColorScheme,
   type ViewStyle,
   type TextStyle,
-} from 'react-native';
+} from 'react-native'
 
 // ── Variants ───────────────────────────────────────────────────────
 
-export type PrivacyPromiseVariant = 'card' | 'badge' | 'inline';
+export type PrivacyPromiseVariant = 'card' | 'badge' | 'inline'
 
 // ── Props ──────────────────────────────────────────────────────────
 
 export interface PrivacyPromisePanelProps {
   /** Visual variant — defaults to 'card' */
-  variant?: PrivacyPromiseVariant;
+  variant?: PrivacyPromiseVariant
   /** Optional custom container style (applied on top of variant styles) */
-  style?: ViewStyle;
+  style?: ViewStyle
   /**
    * Whether to show the "Learn more" expandable section (card variant only).
    * Defaults to true for card variant.
    */
-  showLearnMore?: boolean;
+  showLearnMore?: boolean
   /**
    * Override the body text. Defaults to i18n key
    * `onboarding.privacyPromise.body` or `onboarding.privacyPromise.badgeText`
    * depending on variant.
    */
-  body?: string;
+  body?: string
 }
 
 // ── Bullet point shape icons ───────────────────────────────────────
 
-const BULLET_ICONS = ['📷', '💬', '👨‍👩‍👧‍👦'];
+const BULLET_ICONS = ['📷', '💬', '👨‍👩‍👧‍👦']
 
 // ── Component ──────────────────────────────────────────────────────
 
@@ -70,26 +70,26 @@ export default function PrivacyPromisePanel({
   showLearnMore: showLearnMoreProp = true,
   body,
 }: PrivacyPromisePanelProps) {
-  const { t } = useTranslation();
-  const isDark = useColorScheme() === 'dark';
+  const { t } = useTranslation()
+  const isDark = useColorScheme() === 'dark'
 
-  const label = t('onboarding.privacyPromise.accessibility');
-  const title = t('onboarding.privacyPromise.title');
+  const label = t('onboarding.privacyPromise.accessibility')
+  const title = t('onboarding.privacyPromise.title')
   const bullets: [string, string, string] = [
     t('onboarding.privacyPromise.bullet1'),
     t('onboarding.privacyPromise.bullet2'),
     t('onboarding.privacyPromise.bullet3'),
-  ];
+  ]
 
   // ── Learn-more expand state ───────────────────────────────
 
-  const [expanded, setExpanded] = useState(false);
-  const toggleExpanded = useCallback(() => setExpanded((v) => !v), []);
+  const [expanded, setExpanded] = useState(false)
+  const toggleExpanded = useCallback(() => setExpanded((v) => !v), [])
 
   // ── Learn-more section ──────────────────────────────────
 
   function renderLearnMore() {
-    if (!showLearnMoreProp) return null;
+    if (!showLearnMoreProp) return null
     return (
       <View style={cardStyles.learnMoreWrap}>
         <TouchableOpacity
@@ -105,12 +105,7 @@ export default function PrivacyPromisePanel({
           accessibilityState={{ expanded }}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <Text
-            style={[
-              cardStyles.learnMoreText,
-              { color: isDark ? '#81C784' : '#2E7D32' },
-            ]}
-          >
+          <Text style={[cardStyles.learnMoreText, { color: isDark ? '#81C784' : '#2E7D32' }]}>
             {expanded
               ? `▲ ${t('onboarding.privacyPromise.learnLess')}`
               : `▼ ${t('onboarding.privacyPromise.learnMore')}`}
@@ -119,10 +114,7 @@ export default function PrivacyPromisePanel({
 
         {expanded && (
           <Text
-            style={[
-              cardStyles.learnMoreBody,
-              { color: isDark ? '#B0B0B0' : '#4A5568' },
-            ]}
+            style={[cardStyles.learnMoreBody, { color: isDark ? '#B0B0B0' : '#4A5568' }]}
             accessibilityRole="summary"
             accessibilityLabel={t('onboarding.privacyPromise.learnMoreBody')}
           >
@@ -130,7 +122,7 @@ export default function PrivacyPromisePanel({
           </Text>
         )}
       </View>
-    );
+    )
   }
 
   // ── Variant renderers ────────────────────────────────────
@@ -151,16 +143,13 @@ export default function PrivacyPromisePanel({
       >
         <Text style={badgeStyles.icon}>🔒</Text>
         <Text
-          style={[
-            badgeStyles.text,
-            { color: isDark ? '#A5D6A7' : '#2E7D32' },
-          ]}
+          style={[badgeStyles.text, { color: isDark ? '#A5D6A7' : '#2E7D32' }]}
           numberOfLines={2}
         >
           {body ?? t('onboarding.privacyPromise.badgeText')}
         </Text>
       </View>
-    );
+    )
   }
 
   if (variant === 'inline') {
@@ -180,17 +169,14 @@ export default function PrivacyPromisePanel({
         <Text style={inlineStyles.icon}>🔒</Text>
         <View style={inlineStyles.textWrap}>
           <Text
-            style={[
-              inlineStyles.text,
-              { color: isDark ? '#A5D6A7' : '#276749' },
-            ]}
+            style={[inlineStyles.text, { color: isDark ? '#A5D6A7' : '#276749' }]}
             numberOfLines={3}
           >
             {body ?? t('onboarding.privacyPromise.body')}
           </Text>
         </View>
       </View>
-    );
+    )
   }
 
   // ── Default: card variant ────────────────────────────────
@@ -223,10 +209,7 @@ export default function PrivacyPromisePanel({
 
       {/* Headline */}
       <Text
-        style={[
-          cardStyles.title,
-          { color: isDark ? '#FFFFFF' : '#1A1A1A' },
-        ]}
+        style={[cardStyles.title, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
         accessibilityRole="header"
       >
         {title}
@@ -236,15 +219,8 @@ export default function PrivacyPromisePanel({
       <View style={cardStyles.bulletList}>
         {bullets.map((text, i) => (
           <View key={i} style={cardStyles.bulletRow}>
-            <Text style={cardStyles.bulletIcon}>
-              {BULLET_ICONS[i]}
-            </Text>
-            <Text
-              style={[
-                cardStyles.bulletText,
-                { color: isDark ? '#D0D0D0' : '#374151' },
-              ]}
-            >
+            <Text style={cardStyles.bulletIcon}>{BULLET_ICONS[i]}</Text>
+            <Text style={[cardStyles.bulletText, { color: isDark ? '#D0D0D0' : '#374151' }]}>
               {text}
             </Text>
           </View>
@@ -254,7 +230,7 @@ export default function PrivacyPromisePanel({
       {/* Learn more expand/collapse */}
       {renderLearnMore()}
     </View>
-  );
+  )
 }
 
 // ── Card Styles ────────────────────────────────────────────────────
@@ -347,7 +323,7 @@ const cardStyles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingTop: 8,
   } satisfies TextStyle,
-});
+})
 
 // ── Badge Styles ───────────────────────────────────────────────────
 
@@ -372,7 +348,7 @@ const badgeStyles = StyleSheet.create({
     lineHeight: 18,
     flexShrink: 1,
   } satisfies TextStyle,
-});
+})
 
 // ── Inline Styles ──────────────────────────────────────────────────
 
@@ -402,4 +378,4 @@ const inlineStyles = StyleSheet.create({
     lineHeight: 18,
     flexShrink: 1,
   } satisfies TextStyle,
-});
+})

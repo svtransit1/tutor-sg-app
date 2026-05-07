@@ -25,38 +25,31 @@
  * @module LANG_PICK
  */
 
-import { useState } from 'react';
-import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  useColorScheme,
-  Pressable,
-} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { persistLocale } from '@/storage/onboarding-state';
+import { useState } from 'react'
+import { useRouter } from 'expo-router'
+import { useTranslation } from 'react-i18next'
+import { View, Text, TouchableOpacity, StyleSheet, useColorScheme, Pressable } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { persistLocale } from '@/storage/onboarding-state'
 
 // ── Constants ──────────────────────────────────────────────────────────
 
-const ONBOARDING_TOTAL_STEPS = 7;
-const ONBOARDING_CURRENT_STEP = 1;
+const ONBOARDING_TOTAL_STEPS = 7
+const ONBOARDING_CURRENT_STEP = 1
 
 interface LanguageOption {
   /** ISO language tag used in i18n and persistLocale */
-  locale: 'en' | 'zh-Hans';
+  locale: 'en' | 'zh-Hans'
   /** Label shown inside the card — written in the target language itself */
-  label: string;
+  label: string
   /** Emoji flag / icon */
-  icon: string;
+  icon: string
 }
 
 const LANGUAGES: LanguageOption[] = [
   { locale: 'en', label: 'English', icon: '🇬🇧' },
   { locale: 'zh-Hans', label: '中文', icon: '🇨🇳' },
-];
+]
 
 // ── Dot Row Component ──────────────────────────────────────────────────
 
@@ -66,15 +59,21 @@ function ProgressDots({
   current,
   isDark,
 }: {
-  total: number;
-  current: number;
-  isDark: boolean;
+  total: number
+  current: number
+  isDark: boolean
 }) {
-  const dots = Array.from({ length: total }, (_, i) => i + 1);
+  const dots = Array.from({ length: total }, (_, i) => i + 1)
   return (
-    <View style={styles.dotsRow} accessibilityRole="progressbar" aria-valuemin={1} aria-valuemax={total} aria-valuenow={current}>
+    <View
+      style={styles.dotsRow}
+      accessibilityRole="progressbar"
+      aria-valuemin={1}
+      aria-valuemax={total}
+      aria-valuenow={current}
+    >
       {dots.map((step) => {
-        const isActive = step <= current;
+        const isActive = step <= current
         return (
           <View
             key={step}
@@ -93,10 +92,10 @@ function ProgressDots({
               },
             ]}
           />
-        );
+        )
       })}
     </View>
-  );
+  )
 }
 
 // ── Language Card Component ────────────────────────────────────────────
@@ -107,10 +106,10 @@ function LanguageCard({
   isDark,
   onPress,
 }: {
-  option: LanguageOption;
-  isSelected: boolean;
-  isDark: boolean;
-  onPress: () => void;
+  option: LanguageOption
+  isSelected: boolean
+  isDark: boolean
+  onPress: () => void
 }) {
   return (
     <Pressable
@@ -137,10 +136,7 @@ function LanguageCard({
       {/* Selection checkmark — top-right corner */}
       {isSelected && (
         <View
-          style={[
-            styles.checkBadge,
-            { backgroundColor: isDark ? '#90CAF9' : '#2563EB' },
-          ]}
+          style={[styles.checkBadge, { backgroundColor: isDark ? '#90CAF9' : '#2563EB' }]}
           accessibilityElementsHidden
         >
           <Text style={styles.checkMark}>✓</Text>
@@ -165,48 +161,45 @@ function LanguageCard({
 
       {/* Helper text — language name in English for disambiguation */}
       <Text
-        style={[
-          styles.langSubtext,
-          { color: isDark ? '#888888' : '#9CA3AF' },
-        ]}
+        style={[styles.langSubtext, { color: isDark ? '#888888' : '#9CA3AF' }]}
         numberOfLines={1}
       >
         {option.locale === 'en' ? 'English' : '简体中文'}
       </Text>
     </Pressable>
-  );
+  )
 }
 
 // ── Main Screen ────────────────────────────────────────────────────────
 
 export default function LangPickScreen() {
-  const { t, i18n } = useTranslation();
-  const router = useRouter();
-  const insets = useSafeAreaInsets();
-  const isDark = useColorScheme() === 'dark';
+  const { t, i18n } = useTranslation()
+  const router = useRouter()
+  const insets = useSafeAreaInsets()
+  const isDark = useColorScheme() === 'dark'
 
-  const [selectedLocale, setSelectedLocale] = useState<'en' | 'zh-Hans' | null>(null);
+  const [selectedLocale, setSelectedLocale] = useState<'en' | 'zh-Hans' | null>(null)
 
   const handleSelect = (locale: 'en' | 'zh-Hans') => {
-    setSelectedLocale(locale);
-  };
+    setSelectedLocale(locale)
+  }
 
   const handleContinue = () => {
-    if (!selectedLocale) return;
+    if (!selectedLocale) return
 
     // 1. Persist locale to MMKV
-    persistLocale(selectedLocale);
+    persistLocale(selectedLocale)
 
     // 2. Switch i18n language immediately so subsequent onboarding
     //    screens render in the chosen language
-    i18n.changeLanguage(selectedLocale);
+    i18n.changeLanguage(selectedLocale)
 
     // 3. Navigate to next onboarding step (welcome / step 2)
     //    Using replace so back navigation goes to app start, not lang-pick
-    router.replace('/(onboarding)/welcome');
-  };
+    router.replace('/(onboarding)/welcome')
+  }
 
-  const canContinue = selectedLocale !== null;
+  const canContinue = selectedLocale !== null
 
   return (
     <View
@@ -240,12 +233,7 @@ export default function LangPickScreen() {
       {/* ── Content Area ── */}
       <View style={styles.content}>
         {/* Globe icon */}
-        <View
-          style={[
-            styles.iconCircle,
-            { backgroundColor: isDark ? '#1A2A3A' : '#E8F4FD' },
-          ]}
-        >
+        <View style={[styles.iconCircle, { backgroundColor: isDark ? '#1A2A3A' : '#E8F4FD' }]}>
           <Text style={styles.globeIcon}>🌐</Text>
         </View>
 
@@ -258,9 +246,7 @@ export default function LangPickScreen() {
         </Text>
 
         {/* Subtitle */}
-        <Text
-          style={[styles.subtitle, { color: isDark ? '#B0B0B0' : '#6B7280' }]}
-        >
+        <Text style={[styles.subtitle, { color: isDark ? '#B0B0B0' : '#6B7280' }]}>
           {t('onboarding.langPick.subtitle')}
         </Text>
 
@@ -307,7 +293,9 @@ export default function LangPickScreen() {
           <Text
             style={[
               styles.continueText,
-              { color: canContinue ? '#FFFFFF' : isDark ? '#666666' : '#9CA3AF' },
+              {
+                color: canContinue ? '#FFFFFF' : isDark ? '#666666' : '#9CA3AF',
+              },
             ]}
           >
             {t('onboarding.langPick.continue')}
@@ -315,7 +303,7 @@ export default function LangPickScreen() {
         </TouchableOpacity>
       </View>
     </View>
-  );
+  )
 }
 
 // ── Styles ─────────────────────────────────────────────────────────────
@@ -454,4 +442,4 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '700',
   },
-});
+})

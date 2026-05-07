@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'expo-router'
 import { usePinGate } from '../../src/parent-auth/pin-context'
@@ -7,7 +7,7 @@ import { usePinGate } from '../../src/parent-auth/pin-context'
 export default function PinVerifyScreen() {
   const { t } = useTranslation()
   const router = useRouter()
-  const { handleVerifyPin, error, attemptsRemaining, cooldownRemaining, status } = usePinGate()
+  const { handleVerifyPin, handleResetPin, error, attemptsRemaining, cooldownRemaining, status } = usePinGate()
 
   const [pin, setPin] = useState('')
   const [localError, setLocalError] = useState<string | null>(null)
@@ -63,6 +63,23 @@ export default function PinVerifyScreen() {
   }
 
   const isLocked = cooldownDisplay > 0
+
+  async function handleForgotPin() {
+    Alert.alert(
+      t('parentAuth.title'),
+      t('parentAuth.signIn.subtitle'),
+      [
+        { text: t('parentAuth.signIn.skip'), style: 'cancel' },
+        {
+          text: t('parentAuth.signIn.continue'),
+          onPress: async () => {
+            await handleResetPin()
+            router.replace('/(parent)/pin-setup')
+          },
+        },
+      ],
+    )
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -132,6 +149,15 @@ export default function PinVerifyScreen() {
             )
           })}
         </View>
+
+        <TouchableOpacity
+          onPress={handleForgotPin}
+          style={styles.forgotLink}
+          accessibilityRole="button"
+          accessibilityLabel={t('parentAuth.signIn.title')}
+        >
+          <Text style={styles.forgotLinkText}>{t('parentAuth.signIn.title')}</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   )
@@ -236,5 +262,16 @@ const styles = StyleSheet.create({
   },
   keypadKeyTextDisabled: {
     color: '#CCC',
+  },
+  forgotLink: {
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  forgotLinkText: {
+    fontSize: 14,
+    color: '#4A90D9',
+    fontWeight: '500',
+    textDecorationLine: 'underline',
   },
 })

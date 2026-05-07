@@ -1,14 +1,12 @@
-const path = require('path');
-const rnDir = path.dirname(require.resolve('react-native'));
+const path = require('path')
+const rnDir = path.dirname(require.resolve('react-native'))
 
 module.exports = {
   preset: 'react-native',
   rootDir: '.',
   roots: ['<rootDir>'],
   testMatch: ['**/__tests__/**/*.test.(ts|tsx|js)'],
-  testPathIgnorePatterns: [
-    '<rootDir>/src/home/',
-  ],
+  testPathIgnorePatterns: ['<rootDir>/src/home/'],
   transformIgnorePatterns: [
     'node_modules/(?!(jest-)?react-native|@react-native(-community)?|expo(-.*)?|@expo(-.*)?|react-native-.*)/',
   ],
@@ -61,4 +59,4 @@ module.exports = {
   ],
   coverageThreshold: { global: { lines: 0, branches: 0, functions: 0 } },
   testTimeout: 30000,
-};
+}

@@ -15,9 +15,9 @@
  * @see decisions-locked — "Cannot recognise item N. Please type the answer."
  */
 
-import { useState, useCallback, useEffect } from 'react';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
+import { useState, useCallback, useEffect } from 'react'
+import { useLocalSearchParams, useRouter } from 'expo-router'
+import { useTranslation } from 'react-i18next'
 import {
   View,
   Text,
@@ -29,41 +29,32 @@ import {
   KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
-} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import DrawingCanvas, { type Stroke } from '@/components/DrawingCanvas';
-import {
-  saveDraft,
-  loadDraft,
-  clearDraft,
-  type DraftData,
-} from '@/storage/manual-input-draft';
+} from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import DrawingCanvas, { type Stroke } from '@/components/DrawingCanvas'
+import { saveDraft, loadDraft, clearDraft, type DraftData } from '@/storage/manual-input-draft'
 
 // ── Types ──────────────────────────────────────────────────────────
 
-export type InputMode = 'type' | 'draw';
+export type InputMode = 'type' | 'draw'
 
-export type SubjectKey =
-  | 'math'
-  | 'english'
-  | 'science'
-  | 'chinese';
+export type SubjectKey = 'math' | 'english' | 'science' | 'chinese'
 
 export interface ManualInputItem {
   /** 1-based index shown to the user */
-  index: number;
+  index: number
   /** The text that OCR tried to read (may be garbled) */
-  originalText: string;
+  originalText: string
   /** Confidence score 0–1 */
-  confidence: number;
+  confidence: number
 }
 
 interface ManualInputAnswer {
   /** Matches ManualInputItem.index */
-  index: number;
-  mode: InputMode;
-  textValue: string;
-  strokes: Stroke[];
+  index: number
+  mode: InputMode
+  textValue: string
+  strokes: Stroke[]
 }
 
 const SUBJECTS: { key: SubjectKey; icon: string }[] = [
@@ -71,15 +62,15 @@ const SUBJECTS: { key: SubjectKey; icon: string }[] = [
   { key: 'english', icon: '📖' },
   { key: 'science', icon: '🔬' },
   { key: 'chinese', icon: '🀄' },
-];
+]
 
 // ── Props from navigation params ──────────────────────────────────
 
 interface ManualInputParams {
   /** JSON-stringified array of ManualInputItem[] */
-  items: string;
+  items: string
   /** The session/capture data needed to resume inference after submit */
-  capturedPageUris: string;
+  capturedPageUris: string
 }
 
 // ── Segmented Control ─────────────────────────────────────────────
@@ -90,19 +81,16 @@ function ModeSegmentedControl({
   labelType,
   labelDraw,
 }: {
-  mode: InputMode;
-  onModeChange: (m: InputMode) => void;
-  labelType: string;
-  labelDraw: string;
+  mode: InputMode
+  onModeChange: (m: InputMode) => void
+  labelType: string
+  labelDraw: string
 }) {
-  const isDark = useColorScheme() === 'dark';
+  const isDark = useColorScheme() === 'dark'
 
   return (
     <View
-      style={[
-        styles.segmentedControl,
-        { backgroundColor: isDark ? '#2A2A2A' : '#F3F4F6' },
-      ]}
+      style={[styles.segmentedControl, { backgroundColor: isDark ? '#2A2A2A' : '#F3F4F6' }]}
       accessibilityRole="tablist"
     >
       <TouchableOpacity
@@ -127,11 +115,7 @@ function ModeSegmentedControl({
           style={[
             styles.segmentText,
             {
-              color: mode === 'type'
-                ? '#FFFFFF'
-                : isDark
-                  ? '#AAAAAA'
-                  : '#6B7280',
+              color: mode === 'type' ? '#FFFFFF' : isDark ? '#AAAAAA' : '#6B7280',
             },
           ]}
         >
@@ -161,11 +145,7 @@ function ModeSegmentedControl({
           style={[
             styles.segmentText,
             {
-              color: mode === 'draw'
-                ? '#FFFFFF'
-                : isDark
-                  ? '#AAAAAA'
-                  : '#6B7280',
+              color: mode === 'draw' ? '#FFFFFF' : isDark ? '#AAAAAA' : '#6B7280',
             },
           ]}
         >
@@ -173,95 +153,90 @@ function ModeSegmentedControl({
         </Text>
       </TouchableOpacity>
     </View>
-  );
+  )
 }
 
 // ── Screen ─────────────────────────────────────────────────────────
 
 export default function ManualInputFallbackScreen() {
-  const { t } = useTranslation();
-  const router = useRouter();
-  const insets = useSafeAreaInsets();
-  const isDark = useColorScheme() === 'dark';
-  const params = useLocalSearchParams<ManualInputParams>();
+  const { t } = useTranslation()
+  const router = useRouter()
+  const insets = useSafeAreaInsets()
+  const isDark = useColorScheme() === 'dark'
+  const params = useLocalSearchParams<ManualInputParams>()
 
   // ── Parse navigation params synchronously ──────────────────
 
   const [items, setItems] = useState<ManualInputItem[]>(() => {
     try {
-      return JSON.parse(params.items ?? '[]') as ManualInputItem[];
+      return JSON.parse(params.items ?? '[]') as ManualInputItem[]
     } catch {
-      return [];
+      return []
     }
-  });
+  })
   const [answers, setAnswers] = useState<ManualInputAnswer[]>(() => {
     try {
-      const parsed = JSON.parse(params.items ?? '[]') as ManualInputItem[];
+      const parsed = JSON.parse(params.items ?? '[]') as ManualInputItem[]
       return parsed.map((item) => ({
         index: item.index,
         mode: 'type' as const,
         textValue: '',
         strokes: [],
-      }));
+      }))
     } catch {
-      return [];
+      return []
     }
-  });
-  const [inputMode, setInputMode] = useState<InputMode>('type');
+  })
+  const [inputMode, setInputMode] = useState<InputMode>('type')
   const [parseError, setParseError] = useState(() => {
     try {
-      JSON.parse(params.items ?? '[]');
-      return false;
+      JSON.parse(params.items ?? '[]')
+      return false
     } catch {
-      return true;
+      return true
     }
-  });
-  const [validationError, setValidationError] = useState<string | null>(null);
-  const [selectedSubject, setSelectedSubject] = useState<SubjectKey | null>(null);
-  const [draftRestored, setDraftRestored] = useState(false);
+  })
+  const [validationError, setValidationError] = useState<string | null>(null)
+  const [selectedSubject, setSelectedSubject] = useState<SubjectKey | null>(null)
+  const [draftRestored, setDraftRestored] = useState(false)
 
   // ── Restore draft asynchronously on mount ──────────────────
   useEffect(() => {
-    const capturedUris = params.capturedPageUris;
-    if (!capturedUris || parseError || items.length === 0) return;
-
-    (async () => {
+    const capturedUris = params.capturedPageUris
+    if (!capturedUris || parseError || items.length === 0) return
+    ;(async () => {
       try {
-        const draft = await loadDraft(capturedUris);
+        const draft = await loadDraft(capturedUris)
         if (!draft) {
-          setDraftRestored(true);
-          return;
+          setDraftRestored(true)
+          return
         }
 
         setAnswers(
           items.map((item) => {
-            const saved = draft.answers.find(
-              (a) => a.index === item.index,
-            );
+            const saved = draft.answers.find((a) => a.index === item.index)
             return {
               index: item.index,
               mode: draft.inputMode,
               textValue: saved?.textValue ?? '',
-              strokes: saved?.strokesJSON
-                ? (JSON.parse(saved.strokesJSON) as Stroke[])
-                : [],
-            };
+              strokes: saved?.strokesJSON ? (JSON.parse(saved.strokesJSON) as Stroke[]) : [],
+            }
           }),
-        );
-        setInputMode(draft.inputMode);
+        )
+        setInputMode(draft.inputMode)
         if (draft.subject) {
-          setSelectedSubject(draft.subject as SubjectKey);
+          setSelectedSubject(draft.subject as SubjectKey)
         }
-        setDraftRestored(true);
+        setDraftRestored(true)
       } catch {
-        setDraftRestored(true);
+        setDraftRestored(true)
       }
-    })();
-  }, []); // run once on mount
+    })()
+  }, []) // run once on mount
 
   // ── Auto-save draft when answers change ─────────────────────
   useEffect(() => {
-    if (!draftRestored || !params.capturedPageUris) return;
+    if (!draftRestored || !params.capturedPageUris) return
 
     const timer = setTimeout(() => {
       const data: DraftData = {
@@ -273,52 +248,40 @@ export default function ManualInputFallbackScreen() {
         subject: selectedSubject ?? '',
         inputMode,
         updatedAt: new Date().toISOString(),
-      };
-      saveDraft(params.capturedPageUris, data);
-    }, 500); // Debounce 500ms
+      }
+      saveDraft(params.capturedPageUris, data)
+    }, 500) // Debounce 500ms
 
-    return () => clearTimeout(timer);
-  }, [answers, selectedSubject, inputMode, draftRestored, params.capturedPageUris]);
+    return () => clearTimeout(timer)
+  }, [answers, selectedSubject, inputMode, draftRestored, params.capturedPageUris])
 
   // ── Update answer for a specific item ──────────────────────────
 
-  const updateTextAnswer = useCallback(
-    (itemIndex: number, text: string) => {
-      setAnswers((prev) =>
-        prev.map((a) =>
-          a.index === itemIndex ? { ...a, textValue: text, mode: 'type' } : a,
-        ),
-      );
-    },
-    [],
-  );
+  const updateTextAnswer = useCallback((itemIndex: number, text: string) => {
+    setAnswers((prev) =>
+      prev.map((a) => (a.index === itemIndex ? { ...a, textValue: text, mode: 'type' } : a)),
+    )
+  }, [])
 
-  const updateDrawAnswer = useCallback(
-    (itemIndex: number, strokes: Stroke[]) => {
-      setAnswers((prev) =>
-        prev.map((a) =>
-          a.index === itemIndex ? { ...a, strokes, mode: 'draw' } : a,
-        ),
-      );
-    },
-    [],
-  );
+  const updateDrawAnswer = useCallback((itemIndex: number, strokes: Stroke[]) => {
+    setAnswers((prev) =>
+      prev.map((a) => (a.index === itemIndex ? { ...a, strokes, mode: 'draw' } : a)),
+    )
+  }, [])
 
   // ── Submit ─────────────────────────────────────────────────────
 
   const handleSubmit = useCallback(async () => {
     // Validate: at least one item must have input
-    const hasInput = answers.some(
-      (a) => a.textValue.trim().length > 0 || a.strokes.length > 0,
-    );
+    const hasInput = answers.some((a) => a.textValue.trim().length > 0 || a.strokes.length > 0)
     if (!hasInput) {
-      setValidationError(t('manualInputFallback.error.noInputs'));
-      return;
+      setValidationError(t('manualInputFallback.error.noInputs'))
+      return
     }
 
     // Clear draft on successful submit
     if (params.capturedPageUris) {
-      await clearDraft(params.capturedPageUris);
+      await clearDraft(params.capturedPageUris)
     }
 
     // Build the result to pass back
@@ -328,7 +291,7 @@ export default function ManualInputFallbackScreen() {
       hasDrawing: a.strokes.length > 0,
       // Pass strokes as JSON for the parent to interpret
       strokesJSON: JSON.stringify(a.strokes),
-    }));
+    }))
 
     // Navigate back to camera screen with results
     router.push({
@@ -338,24 +301,24 @@ export default function ManualInputFallbackScreen() {
         capturedPageUris: params.capturedPageUris ?? '',
         manualInputSubject: selectedSubject ?? '',
       },
-    });
-  }, [answers, selectedSubject, params.capturedPageUris, router, t]);
+    })
+  }, [answers, selectedSubject, params.capturedPageUris, router, t])
 
   // ── Skip item ──────────────────────────────────────────────────
 
   const handleSkipItem = useCallback(
     (itemIndex: number) => {
-      updateTextAnswer(itemIndex, '(skipped)');
-      setValidationError(null);
+      updateTextAnswer(itemIndex, '(skipped)')
+      setValidationError(null)
     },
     [updateTextAnswer],
-  );
+  )
 
   // ── Navigate back ─────────────────────────────────────────────
 
   const handleBack = useCallback(() => {
-    router.back();
-  }, [router]);
+    router.back()
+  }, [router])
 
   // ── Parse error state ─────────────────────────────────────────
 
@@ -369,20 +332,10 @@ export default function ManualInputFallbackScreen() {
         ]}
       >
         <Text style={styles.errorEmoji}>😅</Text>
-        <Text
-          style={[
-            styles.errorTitle,
-            { color: isDark ? '#FFFFFF' : '#1A1A1A' },
-          ]}
-        >
+        <Text style={[styles.errorTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
           {t('cameraScreen.error.title')}
         </Text>
-        <Text
-          style={[
-            styles.errorDesc,
-            { color: isDark ? '#AAAAAA' : '#6B7280' },
-          ]}
-        >
+        <Text style={[styles.errorDesc, { color: isDark ? '#AAAAAA' : '#6B7280' }]}>
           {t('cameraScreen.error.processingFailed')}
         </Text>
         <TouchableOpacity
@@ -394,7 +347,7 @@ export default function ManualInputFallbackScreen() {
           <Text style={styles.primaryButtonText}>{t('common.goBack')}</Text>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
 
   // ── Empty state ───────────────────────────────────────────────
@@ -410,22 +363,19 @@ export default function ManualInputFallbackScreen() {
       >
         <ActivityIndicator size="large" color={isDark ? '#90CAF9' : '#4A90D9'} />
       </View>
-    );
+    )
   }
 
   // ── Main render ──────────────────────────────────────────────
 
   const answeredCount = answers.filter(
     (a) => a.textValue.trim().length > 0 || a.strokes.length > 0,
-  ).length;
-  const remaining = items.length - answeredCount;
+  ).length
+  const remaining = items.length - answeredCount
 
   return (
     <KeyboardAvoidingView
-      style={[
-        styles.container,
-        { backgroundColor: isDark ? '#121212' : '#F8F9FA' },
-      ]}
+      style={[styles.container, { backgroundColor: isDark ? '#121212' : '#F8F9FA' }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
     >
@@ -446,22 +396,12 @@ export default function ManualInputFallbackScreen() {
             accessibilityLabel={t('common.goBack')}
             hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
           >
-            <Text
-              style={[
-                styles.backButton,
-                { color: isDark ? '#90CAF9' : '#2563EB' },
-              ]}
-            >
+            <Text style={[styles.backButton, { color: isDark ? '#90CAF9' : '#2563EB' }]}>
               ← {t('common.back')}
             </Text>
           </TouchableOpacity>
 
-          <Text
-            style={[
-              styles.headerTitle,
-              { color: isDark ? '#FFFFFF' : '#1A1A1A' },
-            ]}
-          >
+          <Text style={[styles.headerTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
             {t('manualInputFallback.title')}
           </Text>
 
@@ -470,34 +410,19 @@ export default function ManualInputFallbackScreen() {
         </View>
 
         {/* Description */}
-        <Text
-          style={[
-            styles.headerDesc,
-            { color: isDark ? '#AAAAAA' : '#6B7280' },
-          ]}
-        >
+        <Text style={[styles.headerDesc, { color: isDark ? '#AAAAAA' : '#6B7280' }]}>
           {t('manualInputFallback.description')}
         </Text>
 
         {/* Progress indicator */}
-        <Text
-          style={[
-            styles.progressText,
-            { color: isDark ? '#888888' : '#9CA3AF' },
-          ]}
-        >
+        <Text style={[styles.progressText, { color: isDark ? '#888888' : '#9CA3AF' }]}>
           {remaining > 0
             ? t('manualInputFallback.remaining', { count: remaining })
             : t('manualInputFallback.remaining', { count: 0 })}
         </Text>
 
         {/* Subject picker */}
-        <Text
-          style={[
-            styles.subjectPrompt,
-            { color: isDark ? '#BBBBBB' : '#6B7280' },
-          ]}
-        >
+        <Text style={[styles.subjectPrompt, { color: isDark ? '#BBBBBB' : '#6B7280' }]}>
           {t('manualInputFallback.subjectPrompt')}
         </Text>
         <ScrollView
@@ -506,7 +431,7 @@ export default function ManualInputFallbackScreen() {
           contentContainerStyle={styles.subjectRow}
         >
           {SUBJECTS.map((subject) => {
-            const isSelected = selectedSubject === subject.key;
+            const isSelected = selectedSubject === subject.key
             return (
               <TouchableOpacity
                 key={subject.key}
@@ -523,9 +448,7 @@ export default function ManualInputFallbackScreen() {
                     borderColor: isDark ? '#444' : '#D1D5DB',
                   },
                 ]}
-                onPress={() =>
-                  setSelectedSubject(isSelected ? null : subject.key)
-                }
+                onPress={() => setSelectedSubject(isSelected ? null : subject.key)}
                 accessibilityRole="button"
                 accessibilityLabel={`${subject.key} subject`}
                 accessibilityState={{ selected: isSelected }}
@@ -536,18 +459,14 @@ export default function ManualInputFallbackScreen() {
                   style={[
                     styles.subjectChipLabel,
                     {
-                      color: isSelected
-                        ? '#FFFFFF'
-                        : isDark
-                          ? '#CCCCCC'
-                          : '#4A5568',
+                      color: isSelected ? '#FFFFFF' : isDark ? '#CCCCCC' : '#4A5568',
                     },
                   ]}
                 >
                   {t(`kidHome.subjects.${subject.key}`)}
                 </Text>
               </TouchableOpacity>
-            );
+            )
           })}
         </ScrollView>
 
@@ -568,10 +487,9 @@ export default function ManualInputFallbackScreen() {
         keyboardShouldPersistTaps="handled"
       >
         {items.map((item) => {
-          const answer = answers.find((a) => a.index === item.index);
+          const answer = answers.find((a) => a.index === item.index)
           const isAnswered =
-            (answer?.textValue.trim().length ?? 0) > 0 ||
-            (answer?.strokes.length ?? 0) > 0;
+            (answer?.textValue.trim().length ?? 0) > 0 || (answer?.strokes.length ?? 0) > 0
 
           return (
             <View
@@ -597,25 +515,15 @@ export default function ManualInputFallbackScreen() {
               <View style={styles.itemHeader}>
                 <View style={styles.itemHeaderLeft}>
                   <View
-                    style={[
-                      styles.itemBadge,
-                      { backgroundColor: isDark ? '#2A4A7A' : '#E8F4FD' },
-                    ]}
+                    style={[styles.itemBadge, { backgroundColor: isDark ? '#2A4A7A' : '#E8F4FD' }]}
                   >
-                    <Text
-                      style={[
-                        styles.itemBadgeText,
-                        { color: isDark ? '#90CAF9' : '#2563EB' },
-                      ]}
-                    >
+                    <Text style={[styles.itemBadgeText, { color: isDark ? '#90CAF9' : '#2563EB' }]}>
                       {t('manualInputFallback.itemLabel', {
                         number: item.index,
                       })}
                     </Text>
                   </View>
-                  {isAnswered && (
-                    <Text style={styles.checkmark}>✓</Text>
-                  )}
+                  {isAnswered && <Text style={styles.checkmark}>✓</Text>}
                 </View>
 
                 {/* Skip button */}
@@ -625,12 +533,7 @@ export default function ManualInputFallbackScreen() {
                   accessibilityRole="button"
                   accessibilityLabel={t('manualInputFallback.accessibility.skip')}
                 >
-                  <Text
-                    style={[
-                      styles.skipLink,
-                      { color: isDark ? '#90CAF9' : '#9CA3AF' },
-                    ]}
-                  >
+                  <Text style={[styles.skipLink, { color: isDark ? '#90CAF9' : '#9CA3AF' }]}>
                     {t('manualInputFallback.skip')}
                   </Text>
                 </TouchableOpacity>
@@ -638,10 +541,7 @@ export default function ManualInputFallbackScreen() {
 
               {/* OCR'd text */}
               <Text
-                style={[
-                  styles.originalText,
-                  { color: isDark ? '#BBBBBB' : '#6B7280' },
-                ]}
+                style={[styles.originalText, { color: isDark ? '#BBBBBB' : '#6B7280' }]}
                 numberOfLines={2}
               >
                 {t('manualInputFallback.itemLabel', {
@@ -674,20 +574,17 @@ export default function ManualInputFallbackScreen() {
               ) : (
                 <DrawingCanvas
                   strokes={answer?.strokes ?? []}
-                  onStrokesChange={(strokes) =>
-                    updateDrawAnswer(item.index, strokes)
-                  }
+                  onStrokesChange={(strokes) => updateDrawAnswer(item.index, strokes)}
                   placeholder={t('manualInputFallback.drawPlaceholder')}
-                  accessibilityLabel={t(
-                    'manualInputFallback.accessibility.drawCanvas',
-                    { number: item.index },
-                  )}
+                  accessibilityLabel={t('manualInputFallback.accessibility.drawCanvas', {
+                    number: item.index,
+                  })}
                   strokeColor={isDark ? '#FFFFFF' : '#1A1A1A'}
                   strokeWidth={3}
                 />
               )}
             </View>
-          );
+          )
         })}
 
         <View style={{ height: 120 }} />
@@ -695,18 +592,8 @@ export default function ManualInputFallbackScreen() {
 
       {/* Validation error */}
       {validationError && (
-        <View
-          style={[
-            styles.validationBar,
-            { backgroundColor: isDark ? '#4A1A1A' : '#FEE2E2' },
-          ]}
-        >
-          <Text
-            style={[
-              styles.validationText,
-              { color: isDark ? '#FF8A8A' : '#DC2626' },
-            ]}
-          >
+        <View style={[styles.validationBar, { backgroundColor: isDark ? '#4A1A1A' : '#FEE2E2' }]}>
+          <Text style={[styles.validationText, { color: isDark ? '#FF8A8A' : '#DC2626' }]}>
             {validationError}
           </Text>
         </View>
@@ -742,7 +629,7 @@ export default function ManualInputFallbackScreen() {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-  );
+  )
 }
 
 // ── Styles ─────────────────────────────────────────────────────────
@@ -891,4 +778,4 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
   },
-});
+})

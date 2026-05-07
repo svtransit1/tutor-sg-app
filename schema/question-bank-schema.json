@@ -35,8 +35,16 @@
         "required": ["topic_id", "level", "subject", "name_en", "name_zh"],
         "properties": {
           "topic_id": { "type": "string", "pattern": "^[A-Z]{3}-P\\d-\\d{3}$" },
-          "level": { "type": "integer", "minimum": 1, "maximum": 6, "description": "Primary level P1-P6" },
-          "subject": { "type": "string", "enum": ["math", "english", "science", "chinese"] },
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6,
+            "description": "Primary level P1-P6"
+          },
+          "subject": {
+            "type": "string",
+            "enum": ["math", "english", "science", "chinese"]
+          },
           "name_en": { "type": "string" },
           "name_zh": { "type": "string" },
           "description_en": { "type": "string" },
@@ -58,26 +66,56 @@
       "items": {
         "type": "object",
         "required": [
-          "question_id", "topic_id", "level", "subject", "question_type",
-          "stem_en", "stem_zh", "difficulty"
+          "question_id",
+          "topic_id",
+          "level",
+          "subject",
+          "question_type",
+          "stem_en",
+          "stem_zh",
+          "difficulty"
         ],
         "properties": {
-          "question_id": { "type": "string", "pattern": "^Q-[A-Z]{3}-P\\d-\\d{4}$" },
+          "question_id": {
+            "type": "string",
+            "pattern": "^Q-[A-Z]{3}-P\\d-\\d{4}$"
+          },
           "topic_id": { "type": "string", "pattern": "^[A-Z]{3}-P\\d-\\d{3}$" },
           "level": { "type": "integer", "minimum": 1, "maximum": 6 },
-          "subject": { "type": "string", "enum": ["math", "english", "science", "chinese"] },
+          "subject": {
+            "type": "string",
+            "enum": ["math", "english", "science", "chinese"]
+          },
           "question_type": {
             "type": "string",
             "enum": [
-              "multiple_choice", "fill_in_blank", "short_answer",
-              "structured", "open_ended", "oral", "composition",
-              "comprehension", "dictation", "cloze", "sentence_formation",
-              "picture_description", "stroke_order"
+              "multiple_choice",
+              "fill_in_blank",
+              "short_answer",
+              "structured",
+              "open_ended",
+              "oral",
+              "composition",
+              "comprehension",
+              "dictation",
+              "cloze",
+              "sentence_formation",
+              "picture_description",
+              "stroke_order"
             ]
           },
-          "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
-          "stem_en": { "type": "string", "description": "Question stem in English" },
-          "stem_zh": { "type": "string", "description": "Question stem in Simplified Chinese" },
+          "difficulty": {
+            "type": "string",
+            "enum": ["easy", "medium", "hard"]
+          },
+          "stem_en": {
+            "type": "string",
+            "description": "Question stem in English"
+          },
+          "stem_zh": {
+            "type": "string",
+            "description": "Question stem in Simplified Chinese"
+          },
           "options": {
             "type": "array",
             "description": "For multiple_choice: array of {label, text_en, text_zh}",
@@ -91,10 +129,22 @@
               }
             }
           },
-          "answer_en": { "type": "string", "description": "Correct answer in English" },
-          "answer_zh": { "type": "string", "description": "Correct answer in Simplified Chinese" },
-          "explanation_en": { "type": "string", "description": "Explanation/solution in English" },
-          "explanation_zh": { "type": "string", "description": "Explanation/solution in Simplified Chinese" },
+          "answer_en": {
+            "type": "string",
+            "description": "Correct answer in English"
+          },
+          "answer_zh": {
+            "type": "string",
+            "description": "Correct answer in Simplified Chinese"
+          },
+          "explanation_en": {
+            "type": "string",
+            "description": "Explanation/solution in English"
+          },
+          "explanation_zh": {
+            "type": "string",
+            "description": "Explanation/solution in Simplified Chinese"
+          },
           "hints": {
             "type": "array",
             "description": "Progressive hints (hint first, answer last)",

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "plugins/**/*.ts",
+    "setup-jest.ts"
+  ],
+  "exclude": ["node_modules"]
+}
