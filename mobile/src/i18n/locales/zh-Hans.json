@@ -3,6 +3,17 @@
   "app.name": "tutor-sg",
   "onboarding": {
     "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴" },
+    "kidNameEntry": {
+      "title": "孩子的名字是什么？",
+      "siblingTitle": "他/她叫什么名字？",
+      "subtitle": "我们会在应用中用名字称呼孩子，让体验更亲切。",
+      "nameLabel": "姓名",
+      "namePlaceholder": "例如：林伟明",
+      "nameZhLabel": "中文姓名（选填）",
+      "nameZhPlaceholder": "例如：林伟明",
+      "nameZhHint": "有助于我们正确显示中文内容中的姓名",
+      "nameRequired": "请输入孩子的姓名以继续"
+    },
     "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧" }
   },
   "network.offline": "你已离线",
@@ -39,6 +50,23 @@
       "errorSignInFailed": "登录失败，请重试。",
       "errorAuthSession": "登录会话已取消或失败。",
       "signedIn": "登录成功"
+    }
+  },
+  "kidNav": {
+    "tabs": {
+      "home": "首页",
+      "camera": "拍照",
+      "history": "历史"
+    },
+    "history": {
+      "title": "学习历史",
+      "placeholder": "过往的作业和练习将显示在这里"
+    }
+  },
+  "parentNav": {
+    "tabs": {
+      "dashboard": "仪表盘",
+      "settings": "设置"
     }
   },
   "parent": {

@@ -3,6 +3,17 @@
   "app.name": "tutor-sg",
   "onboarding": {
     "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion" },
+    "kidNameEntry": {
+      "title": "What's your child's name?",
+      "siblingTitle": "What's their name?",
+      "subtitle": "We'll use their name around the app to make it feel personal.",
+      "nameLabel": "Full name",
+      "namePlaceholder": "e.g. Lim Wei Ming",
+      "nameZhLabel": "Chinese name (optional)",
+      "nameZhPlaceholder": "例如：林伟明",
+      "nameZhHint": "Helps us show Chinese-language content with their name",
+      "nameRequired": "Please enter your child's name to continue"
+    },
     "done": { "title": "All set!", "subtitle": "Let's start learning" }
   },
   "network.offline": "You're offline",
@@ -39,6 +50,23 @@
       "errorSignInFailed": "Sign-in failed. Please try again.",
       "errorAuthSession": "Authentication session was cancelled or failed.",
       "signedIn": "Signed in successfully"
+    }
+  },
+  "kidNav": {
+    "tabs": {
+      "home": "Home",
+      "camera": "Camera",
+      "history": "History"
+    },
+    "history": {
+      "title": "History",
+      "placeholder": "Past sessions and worksheets will appear here"
+    }
+  },
+  "parentNav": {
+    "tabs": {
+      "dashboard": "Dashboard",
+      "settings": "Settings"
     }
   },
   "parent": {
