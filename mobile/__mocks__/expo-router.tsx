@@ -6,6 +6,7 @@ export const router = {
 };
 export const useRouter = () => router;
 export const usePathname = () => '/';
+export const useSegments = () => ['(onboarding)', 'sibling-prompt'];
 export const useLocalSearchParams = () => ({});
 export const Link = ({ children, ...props }: any) => React.createElement('a', props, children);
 export const Stack = {

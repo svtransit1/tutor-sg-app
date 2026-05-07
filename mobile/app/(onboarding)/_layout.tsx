@@ -1,11 +1,3 @@
-/**
- * Onboarding navigation layout.
- *
- * Stack navigator with all onboarding screens registered.
- * Screen routing is handled by the OnboardingProvider's internal
- * useEffect based on the state machine's currentStep.
- */
-
 import React from 'react';
 import { Stack } from 'expo-router';
 
