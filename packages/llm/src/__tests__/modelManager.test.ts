@@ -181,22 +181,29 @@ describe('ModelDownloadManager', () => {
 
   describe('pause and resume', () => {
     it('should allow pausing a running download', async () => {
-      const { adapter } = makeAsyncAdapter(100); // 100ms total download
+      const { adapter } = makeAsyncAdapter(200); // 200ms total download
       const manager = new ModelDownloadManager(makeConfig({ fileAdapter: adapter }));
       addTestModel(manager, 'slow-model');
 
       const promise = manager.startAll();
 
-      // Wait a bit then pause
-      await new Promise((r) => setTimeout(r, 30));
+      // Wait a bit then pause (well before download completes)
+      await new Promise((r) => setTimeout(r, 10));
       manager.pause('slow-model');
 
       const paused = manager.getItem('slow-model');
       expect(paused?.state).toBe('paused');
 
-      // Resume
-      manager.resume('slow-model');
+      // startAll broke out after pause; await it before resuming
       await promise;
+
+      // Resume and poll for completion
+      manager.resume('slow-model');
+      for (let i = 0; i < 100; i++) {
+        const item = manager.getItem('slow-model');
+        if (item?.state === 'completed' || item?.state === 'failed') break;
+        await new Promise((r) => setTimeout(r, 20));
+      }
 
       expect(manager.getItem('slow-model')?.state).toBe('completed');
     });
@@ -233,12 +240,14 @@ describe('ModelDownloadManager', () => {
   describe('sequential download queue', () => {
     it('should download all items sequentially', async () => {
       const downloadCalls: string[] = [];
-      const { adapter } = makeAsyncAdapter(10);
+      const { adapter, fs } = makeAsyncAdapter(10);
       // Override downloadRange to track calls
       (adapter.downloadRange as ReturnType<typeof vi.fn>).mockImplementation(
         async (opts: { url: string }) => {
           downloadCalls.push(opts.url);
-          return { fileSize: 1_000_000 };
+          fs.write(opts.destPath, opts.expectedSize);
+          opts.onProgress(opts.expectedSize, opts.expectedSize);
+          return { fileSize: opts.expectedSize };
         },
       );
 

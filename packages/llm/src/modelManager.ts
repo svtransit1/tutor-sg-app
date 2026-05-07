@@ -235,8 +235,8 @@ export class ModelDownloadManager {
       },
       onStateChange: (state) => {
         // Only update for non-terminal states; let startItem decide terminal state
-        if (state === 'verifying') {
-          item.state = 'verifying';
+        if (state === 'verifying' || state === 'downloading') {
+          item.state = state;
           this.notifyStateChange(item);
         }
       },
