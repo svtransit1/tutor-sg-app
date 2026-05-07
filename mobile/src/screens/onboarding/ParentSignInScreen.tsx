@@ -28,7 +28,8 @@ import {
   SafeAreaView,
   type TextStyle,
 } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";;
 import * as Linking from 'expo-linking';
 import {
   signInWithMagicLink,
@@ -270,7 +271,9 @@ export default function ParentSignInScreen({
               onPress={onSignedIn}
               accessibilityRole="button"
             >
-              <Text style={styles.primaryButtonText}>Continue</Text>
+              <Text style={styles.primaryButtonText}>
+                {t('parentAuth.signIn.continue')}
+              </Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -366,7 +369,7 @@ export default function ParentSignInScreen({
                   <ActivityIndicator color="#333" />
                 ) : (
                   <View style={styles.brandIconWrap}>
-                    <Text style={styles.googleIcon}>G</Text>
+                    <Ionicons name="logo-google" size={18} color="#4285F4" />
                   </View>
                 )}
                 <Text style={styles.oauthButtonLabel}>
@@ -384,9 +387,7 @@ export default function ParentSignInScreen({
                 {screenState === 'loading_oauth' ? (
                   <ActivityIndicator color="#fff" />
                 ) : (
-                  <View style={styles.brandIconWrap}>
-                    <Text style={styles.appleIcon}></Text>
-                  </View>
+                  <Ionicons name="logo-apple" size={20} color="#FFFFFF" />
                 )}
                 <Text style={[styles.oauthButtonLabel, styles.oauthButtonLabelApple]}>
                   {t('parentAuth.signIn.continueWithApple')}
@@ -546,16 +547,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
-  },
-  googleIcon: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: '#4285F4',
-  },
-  appleIcon: {
-    fontSize: 18,
-    color: '#000000',
-    marginTop: 1,
   },
   oauthButtonLabel: {
     fontSize: 16,

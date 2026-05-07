@@ -33,6 +33,11 @@ jest.mock('expo-linking', () => ({
   addEventListener: jest.fn(() => ({ remove: jest.fn() })),
 }));
 
+// Mock @expo/vector-icons — Ionicons uses TTF fonts that Jest can't parse
+jest.mock('@expo/vector-icons', () => ({
+  Ionicons: 'Ionicons',
+}));
+
 // Mock react-i18next
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -53,6 +58,7 @@ jest.mock('react-i18next', () => ({
         'parentAuth.signIn.errorSignInFailed': 'Sign-in failed.',
         'parentAuth.signIn.errorAuthSession': 'Auth session cancelled.',
         'parentAuth.signIn.signedIn': 'Signed in successfully',
+        'parentAuth.signIn.continue': 'Continue',
       };
       return keys[key] ?? key;
     },
