@@ -7,6 +7,7 @@ Singapore primary school AI tutor — on-device LLM, EN + Simplified Chinese, P1
 **Authoritative spec:** [wiki ADD](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fapp-design-document.md)
 **Architecture:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 **Framework:** React Native + Expo + TypeScript (single codebase, iOS + Android)
+**CI:** ![CI](https://github.com/svtransit1/tutor-sg-app/actions/workflows/ci.yml/badge.svg)
 
 Do not commit secrets, child data, or model weights. See `.gitignore`.
 
