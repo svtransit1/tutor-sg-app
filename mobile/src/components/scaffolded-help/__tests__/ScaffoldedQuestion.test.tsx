@@ -10,6 +10,8 @@
  * - Topic label displayed when provided
  * - Subject colour applied to question number circle
  * - Accessibility labels
+ * - Session logging callbacks (onRevealSteps, onRevealSolution)
+ * - Backward navigation (go back to hint, go back to steps)
  *
  * @see ADD §4.1 — Camera homework check flow (hint-first default)
  * @see ADD §9 — Quality bars (accessibility, bilingual)
@@ -42,6 +44,8 @@ const defaultProps = {
     showSolution: 'Show me the full answer',
     fullSolution: 'Full solution',
     tryThis: 'Try this next',
+    goBackToHint: 'Back to hint',
+    goBackToSteps: 'Back to steps',
     confirmSolutionTitle: 'See the answer?',
     confirmSolutionMessage: 'Are you sure you want to see the full solution? Try solving it yourself first!',
     confirmCancel: 'Not yet',
@@ -245,5 +249,138 @@ describe('ScaffoldedQuestion', () => {
     expect(
       screen.getByLabelText('Show me the steps'),
     ).toBeTruthy();
+  });
+
+  // ── Session Logging Callbacks ────────────────────────────
+
+  it('calls onRevealSteps when steps are revealed', () => {
+    const onRevealSteps = jest.fn();
+    render(
+      <ScaffoldedQuestion
+        {...defaultProps}
+        onRevealSteps={onRevealSteps}
+      />,
+    );
+
+    fireEvent.press(screen.getByText('Show me the steps'));
+    expect(onRevealSteps).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onRevealSolution when solution is confirmed', () => {
+    const onRevealSolution = jest.fn();
+    render(
+      <ScaffoldedQuestion
+        {...defaultProps}
+        onRevealSolution={onRevealSolution}
+      />,
+    );
+
+    fireEvent.press(screen.getByText('Show me the steps'));
+    fireEvent.press(screen.getByText('Show me the full answer'));
+    fireEvent.press(screen.getByText('Show answer'));
+    expect(onRevealSolution).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not call onRevealSolution when cancelled', () => {
+    const onRevealSolution = jest.fn();
+    render(
+      <ScaffoldedQuestion
+        {...defaultProps}
+        onRevealSolution={onRevealSolution}
+      />,
+    );
+
+    fireEvent.press(screen.getByText('Show me the steps'));
+    fireEvent.press(screen.getByText('Show me the full answer'));
+    fireEvent.press(screen.getByText('Not yet'));
+    expect(onRevealSolution).not.toHaveBeenCalled();
+  });
+
+  // ── Backward Navigation ──────────────────────────────────
+
+  it('shows "Back to hint" link after steps are revealed', () => {
+    render(<ScaffoldedQuestion {...defaultProps} />);
+
+    fireEvent.press(screen.getByText('Show me the steps'));
+
+    expect(screen.getByText('← Back to hint')).toBeTruthy();
+  });
+
+  it('hides steps and returns to hint-only when "Back to hint" is pressed', () => {
+    render(<ScaffoldedQuestion {...defaultProps} />);
+
+    // Reveal steps first
+    fireEvent.press(screen.getByText('Show me the steps'));
+    expect(screen.getByText('Step-by-step guide')).toBeTruthy();
+
+    // Go back to hint
+    fireEvent.press(screen.getByText('← Back to hint'));
+
+    // Steps hidden
+    expect(screen.queryByText('Step-by-step guide')).toBeNull();
+    // "Show steps" button returns
+    expect(screen.getByText('Show me the steps')).toBeTruthy();
+    // Hint still visible
+    expect(screen.getByText('Hint')).toBeTruthy();
+  });
+
+  it('shows "Back to steps" link after solution is confirmed', () => {
+    render(<ScaffoldedQuestion {...defaultProps} />);
+
+    fireEvent.press(screen.getByText('Show me the steps'));
+    fireEvent.press(screen.getByText('Show me the full answer'));
+    fireEvent.press(screen.getByText('Show answer'));
+
+    expect(screen.getByText('← Back to steps')).toBeTruthy();
+  });
+
+  it('hides solution and returns to steps-only when "Back to steps" is pressed', () => {
+    render(<ScaffoldedQuestion {...defaultProps} />);
+
+    fireEvent.press(screen.getByText('Show me the steps'));
+    fireEvent.press(screen.getByText('Show me the full answer'));
+    fireEvent.press(screen.getByText('Show answer'));
+
+    expect(screen.getByText('Full solution')).toBeTruthy();
+
+    // Go back to steps
+    fireEvent.press(screen.getByText('← Back to steps'));
+
+    // Solution hidden
+    expect(screen.queryByText('Full solution')).toBeNull();
+    // "Show full answer" button returns
+    expect(screen.getByText('Show me the full answer')).toBeTruthy();
+    // Steps still visible
+    expect(screen.getByText('Step-by-step guide')).toBeTruthy();
+  });
+
+  it('calls onGoBackToHint when kid goes back to hint', () => {
+    const onGoBackToHint = jest.fn();
+    render(
+      <ScaffoldedQuestion
+        {...defaultProps}
+        onGoBackToHint={onGoBackToHint}
+      />,
+    );
+
+    fireEvent.press(screen.getByText('Show me the steps'));
+    fireEvent.press(screen.getByText('← Back to hint'));
+    expect(onGoBackToHint).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onGoBackToSteps when kid goes back to steps', () => {
+    const onGoBackToSteps = jest.fn();
+    render(
+      <ScaffoldedQuestion
+        {...defaultProps}
+        onGoBackToSteps={onGoBackToSteps}
+      />,
+    );
+
+    fireEvent.press(screen.getByText('Show me the steps'));
+    fireEvent.press(screen.getByText('Show me the full answer'));
+    fireEvent.press(screen.getByText('Show answer'));
+    fireEvent.press(screen.getByText('← Back to steps'));
+    expect(onGoBackToSteps).toHaveBeenCalledTimes(1);
   });
 });

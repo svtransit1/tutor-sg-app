@@ -7,6 +7,8 @@
  * 3. "Show steps" button → reveals step-by-step guide
  * 4. "Show full solution" button → reveals full worked answer (only after steps)
  * 5. Optional follow-up suggestion
+ * 6. Backward navigation: kid can go back to previous levels at any time
+ * 7. Session logging callbacks for parent log integration
  *
  * Kid-friendly, bilingual via i18n (caller passes translated strings).
  * No analytics, no network calls.
@@ -28,27 +30,20 @@ import StepsSection, { type Step } from './StepsSection';
 import SolutionSection from './SolutionSection';
 import { SUBJECT_META, type SubjectKey } from './SubjectBadge';
 
-// ── Types ──────────────────────────────────────────────────────────
-
 export interface ScaffoldedQuestionProps {
-  /** 1-based question index */
   index: number;
-  /** Question text displayed above the scaffolded help */
   questionText: string;
-  /** Subject key for the question number circle colour */
   subject?: SubjectKey;
-  /** Topic label (e.g. "Fractions", "Grammar") */
   topic?: string;
-  /** Hint text (always visible) */
   hint: string;
-  /** Step-by-step guide items */
   steps: Step[];
-  /** Full solution text (revealed after steps) */
   fullSolution: string;
-  /** Optional follow-up suggestion shown after steps are revealed */
   followUpSuggestion?: string;
+  onRevealSteps?: () => void;
+  onRevealSolution?: () => void;
+  onGoBackToHint?: () => void;
+  onGoBackToSteps?: () => void;
 
-  /** i18n labels passed through from caller */
   labels: {
     question: string;
     hint: string;
@@ -57,15 +52,14 @@ export interface ScaffoldedQuestionProps {
     showSolution: string;
     fullSolution: string;
     tryThis: string;
-    /** Confirmation dialog before revealing full worked solution */
+    goBackToHint: string;
+    goBackToSteps: string;
     confirmSolutionTitle: string;
     confirmSolutionMessage: string;
     confirmCancel: string;
     confirmReveal: string;
   };
 }
-
-// ── Component ──────────────────────────────────────────────────────
 
 export default function ScaffoldedQuestion({
   index,
@@ -76,6 +70,10 @@ export default function ScaffoldedQuestion({
   steps,
   fullSolution,
   followUpSuggestion,
+  onRevealSteps,
+  onRevealSolution,
+  onGoBackToHint,
+  onGoBackToSteps,
   labels,
 }: ScaffoldedQuestionProps) {
   const isDark = useColorScheme() === 'dark';
@@ -85,7 +83,8 @@ export default function ScaffoldedQuestion({
 
   const handleRevealSteps = useCallback(() => {
     setRevealedSteps(true);
-  }, []);
+    onRevealSteps?.();
+  }, [onRevealSteps]);
 
   const handleRequestSolution = useCallback(() => {
     setShowingConfirm(true);
@@ -94,13 +93,26 @@ export default function ScaffoldedQuestion({
   const handleConfirmSolution = useCallback(() => {
     setShowingConfirm(false);
     setRevealedSolution(true);
-  }, []);
+    onRevealSolution?.();
+  }, [onRevealSolution]);
 
   const handleCancelSolution = useCallback(() => {
     setShowingConfirm(false);
   }, []);
 
-  // Subject colour for the question number circle
+  const handleGoBackToHint = useCallback(() => {
+    setRevealedSteps(false);
+    setRevealedSolution(false);
+    setShowingConfirm(false);
+    onGoBackToHint?.();
+  }, [onGoBackToHint]);
+
+  const handleGoBackToSteps = useCallback(() => {
+    setRevealedSolution(false);
+    setShowingConfirm(false);
+    onGoBackToSteps?.();
+  }, [onGoBackToSteps]);
+
   const subjectColor = subject ? SUBJECT_META[subject]?.color ?? '#E3F2FD' : '#E3F2FD';
 
   return (
@@ -111,7 +123,6 @@ export default function ScaffoldedQuestion({
       ]}
       accessibilityLabel={`${labels.question} ${index}`}
     >
-      {/* Question header */}
       <View style={styles.questionHeader}>
         <View
           style={[
@@ -143,7 +154,6 @@ export default function ScaffoldedQuestion({
         </View>
       </View>
 
-      {/* Question text */}
       <Text
         style={[
           styles.questionText,
@@ -153,15 +163,12 @@ export default function ScaffoldedQuestion({
         {questionText}
       </Text>
 
-      {/* Divider */}
       <View
         style={[styles.divider, { backgroundColor: isDark ? '#333' : '#E5E7EB' }]}
       />
 
-      {/* Hint (always visible) */}
       <HintSection hint={hint} headingLabel={labels.hint} />
 
-      {/* Steps (revealed on demand) */}
       {!revealedSteps ? (
         <TouchableOpacity
           style={[
@@ -185,7 +192,18 @@ export default function ScaffoldedQuestion({
         <View style={styles.revealedSection}>
           <StepsSection steps={steps} headingLabel={labels.steps} />
 
-          {/* Full solution (inline confirmation required before revealing) */}
+          <TouchableOpacity
+            style={styles.backLink}
+            onPress={handleGoBackToHint}
+            accessibilityRole="button"
+            accessibilityLabel={labels.goBackToHint}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Text style={[styles.backLinkText, { color: isDark ? '#90CAF9' : '#6B7280' }]}>
+              ← {labels.goBackToHint}
+            </Text>
+          </TouchableOpacity>
+
           {!revealedSolution && !showingConfirm && (
             <TouchableOpacity
               style={[
@@ -202,7 +220,6 @@ export default function ScaffoldedQuestion({
             </TouchableOpacity>
           )}
 
-          {/* Inline confirmation dialog */}
           {showingConfirm && (
             <View
               style={[
@@ -252,15 +269,26 @@ export default function ScaffoldedQuestion({
             </View>
           )}
 
-          {/* Solution (shown after confirmation) */}
           {revealedSolution && (
-            <SolutionSection
-              solution={fullSolution}
-              headingLabel={labels.fullSolution}
-            />
+            <>
+              <SolutionSection
+                solution={fullSolution}
+                headingLabel={labels.fullSolution}
+              />
+              <TouchableOpacity
+                style={styles.backLink}
+                onPress={handleGoBackToSteps}
+                accessibilityRole="button"
+                accessibilityLabel={labels.goBackToSteps}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Text style={[styles.backLinkText, { color: isDark ? '#90CAF9' : '#6B7280' }]}>
+                  ← {labels.goBackToSteps}
+                </Text>
+              </TouchableOpacity>
+            </>
           )}
 
-          {/* Follow-up suggestion */}
           {followUpSuggestion && (
             <View
               style={[
@@ -291,8 +319,6 @@ export default function ScaffoldedQuestion({
     </View>
   );
 }
-
-// ── Styles ─────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
   card: {
@@ -350,7 +376,6 @@ const styles = StyleSheet.create({
 
   revealedSection: { gap: 8 },
 
-  // Inline confirmation dialog
   confirmBox: {
     padding: 14,
     borderRadius: 12,
@@ -409,4 +434,14 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase' as const,
   },
   followUpText: { fontSize: 16, lineHeight: 24 },
+
+  backLink: {
+    alignSelf: 'flex-start',
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+  },
+  backLinkText: {
+    fontSize: 14,
+    fontWeight: '500' as const,
+  },
 });
