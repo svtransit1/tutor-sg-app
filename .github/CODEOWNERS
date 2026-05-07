@@ -1,0 +1,15 @@
+# CODEOWNERS — tutor-sg
+# Per ADD §11: Tortoise reviews every PR; Foxy approves merges to main; Owl gates architecture-touching PRs.
+#
+# NOTE: @tortoise-tutor-sg bot account not yet provisioned (pending approval 67b2d57e).
+# Until provisioned, @svtransit1 serves as the repo owner gate.
+# Once the bot is live, replace @svtransit1 with @tortoise-tutor-sg below.
+
+# Global default — all PRs require review
+* @svtransit1
+
+# Architecture-touching paths — escalate to Owl (CTO)
+/docs/ARCHITECTURE.md @svtransit1
+/packages/llm/ @svtransit1
+/packages/device-tier/ @svtransit1
+/mobile/src/ @svtransit1
