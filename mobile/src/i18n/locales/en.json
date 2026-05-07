@@ -1,6 +1,12 @@
 {
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
+  "app.loadingStates": {
+    "preparingDownload": "Preparing download...",
+    "checkingDevice": "Checking your device...",
+    "personalising": "Setting things up for you...",
+    "loadingHome": "Loading your dashboard..."
+  },
   "onboarding": {
     "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
     "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language." },

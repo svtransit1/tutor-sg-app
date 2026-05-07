@@ -1,6 +1,12 @@
 {
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
+  "app.loadingStates": {
+    "preparingDownload": "准备下载中...",
+    "checkingDevice": "正在检测设备...",
+    "personalising": "正在为你设置...",
+    "loadingHome": "加载主页中..."
+  },
   "onboarding": {
     "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
     "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。" },

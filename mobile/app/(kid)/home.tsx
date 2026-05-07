@@ -37,6 +37,13 @@ import {
   isFirstHomeVisit,
   markFirstHomeVisitComplete,
 } from '@/storage/onboarding-state';
+import {
+  SkeletonSubjectGrid,
+  SkeletonCameraButton,
+  SkeletonSessionList,
+  SkeletonLine,
+  SkeletonBox,
+} from '../../src/components';
 
 // --- Subject Tile Config ------------------------------------------------
 
@@ -92,6 +99,7 @@ export default function KidHomeScreen() {
   // a session is created (on next refresh).
   const [showWelcome, setShowWelcome] = useState(false);
   const [welcomeInitDone, setWelcomeInitDone] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   // Demo data: kid name + level (will be replaced from profile storage)
   const kidName = 'Alex';
@@ -108,11 +116,15 @@ export default function KidHomeScreen() {
 
   // Initialise welcome state on mount
   useEffect(() => {
-    loadSessions().then(() => {
-      const firstVisit = isFirstHomeVisit();
-      setShowWelcome(firstVisit);
-      setWelcomeInitDone(true);
-    });
+    loadSessions()
+      .then(() => {
+        const firstVisit = isFirstHomeVisit();
+        setShowWelcome(firstVisit);
+        setWelcomeInitDone(true);
+      })
+      .finally(() => {
+        setIsInitialLoading(false);
+      });
   }, [loadSessions]);
 
   // If sessions appear (e.g. after navigating back from camera),
@@ -179,27 +191,35 @@ export default function KidHomeScreen() {
     >
       {/* Header */}
       <View style={[styles.header, { paddingHorizontal: 20 }]}>
-        <View style={styles.headerLeft}>
-          <Text
-            style={[styles.greeting, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
-            accessibilityRole="header"
-          >
-            {t('kidHome.header.greeting', { name: kidName })}
-          </Text>
-          <View
-            style={[
-              styles.levelBadge,
-              { backgroundColor: isDark ? '#2A4A7A' : '#E8F4FD' },
-            ]}
-          >
-            <Text
-              style={[styles.levelText, { color: isDark ? '#90CAF9' : '#2563EB' }]}
-              accessibilityLabel={t('kidHome.header.levelBadge', { level: kidLevel })}
-            >
-              {t('kidHome.header.levelBadge', { level: kidLevel })}
-            </Text>
+        {isInitialLoading ? (
+          /* ── Skeleton Header ── */
+          <View style={styles.headerLeft}>
+            <SkeletonLine width={120} height={22} isDark={isDark} />
+            <SkeletonBox width={60} height={24} borderRadius={12} isDark={isDark} />
           </View>
-        </View>
+        ) : (
+          <View style={styles.headerLeft}>
+            <Text
+              style={[styles.greeting, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
+              accessibilityRole="header"
+            >
+              {t('kidHome.header.greeting', { name: kidName })}
+            </Text>
+            <View
+              style={[
+                styles.levelBadge,
+                { backgroundColor: isDark ? '#2A4A7A' : '#E8F4FD' },
+              ]}
+            >
+              <Text
+                style={[styles.levelText, { color: isDark ? '#90CAF9' : '#2563EB' }]}
+                accessibilityLabel={t('kidHome.header.levelBadge', { level: kidLevel })}
+              >
+                {t('kidHome.header.levelBadge', { level: kidLevel })}
+              </Text>
+            </View>
+          </View>
+        )}
 
         <TouchableOpacity
           style={[styles.langButton, { backgroundColor: isDark ? '#2A2A2A' : '#FFFFFF' }]}
@@ -225,252 +245,255 @@ export default function KidHomeScreen() {
           />
         }
       >
-        {/* Subject Tiles (2x2 grid) */}
-        <View style={styles.subjectsGrid}>
-          {SUBJECTS.map((subject) => (
-            <TouchableOpacity
-              key={subject.id}
-              style={[
-                styles.subjectTile,
-                {
-                  backgroundColor: isDark ? subject.darkColor : subject.color,
-                  borderColor: isDark ? 'transparent' : '#E5E7EB',
-                },
-              ]}
-              onPress={() => handleSubjectPress(subject.id)}
-              accessibilityRole="button"
-              accessibilityLabel={t('kidHome.accessibility.subjectTile', {
-                subject: t(`kidHome.subjects.${subject.id}`),
-              })}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.subjectIcon}>{subject.icon}</Text>
-              <Text style={[styles.subjectTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
-                {t(`kidHome.subjects.${subject.id}`)}
-              </Text>
-              <Text
-                style={[styles.subjectDescription, { color: isDark ? '#AAAAAA' : '#6B7280' }]}
-                numberOfLines={2}
-              >
-                {t(`kidHome.subjectsDescriptions.${subject.id}`)}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {/* Hero Camera Button */}
-        <TouchableOpacity
-          style={[
-            styles.cameraButton,
-            {
-              backgroundColor: isDark ? '#2563EB' : '#4A90D9',
-              // Extra prominence on first visit when welcome hero is shown
-              ...(showWelcome ? { shadowOpacity: 0.45, elevation: 8 } : {}),
-            },
-          ]}
-          onPress={handleCameraPress}
-          accessibilityRole="button"
-          accessibilityLabel={t('kidHome.camera.accessibility')}
-          activeOpacity={0.8}
-        >
-          <View style={styles.cameraButtonContent}>
-            <Text style={styles.cameraIcon}>📷</Text>
-            <View style={styles.cameraTextBlock}>
-              <Text style={styles.cameraTitle}>{t('kidHome.camera.title')}</Text>
-              <Text style={styles.cameraSubtitle}>{t('kidHome.camera.subtitle')}</Text>
-            </View>
+        {isInitialLoading ? (
+          /* ── Full-Page Skeleton ── */
+          <View accessibilityLabel="Loading home screen" accessibilityRole="image">
+            <SkeletonSubjectGrid isDark={isDark} />
+            <SkeletonCameraButton isDark={isDark} />
+            <SkeletonSessionList count={3} isDark={isDark} />
           </View>
-        </TouchableOpacity>
-
-        {/* Bottom Section: Welcome Banner OR Recent Sessions */}
-        {welcomeInitDone && showWelcome && sessions.length === 0 ? (
-          /* ── First-Session Welcome Hero ── */
-          <View
-            style={[
-              styles.welcomeHero,
-              { backgroundColor: isDark ? '#1A2A3A' : '#E8F4FD' },
-            ]}
-            accessibilityRole="summary"
-            accessibilityLabel={t('kidHome.firstSession.accessibility.welcomeBanner')}
-          >
-            {/* Celebration icon */}
-            <View
-              style={[
-                styles.welcomeCircle,
-                { backgroundColor: isDark ? '#2A4A7A' : '#FFFFFF' },
-              ]}
-            >
-              <Text style={styles.welcomeCircleIcon}>🚀</Text>
-            </View>
-
-            {/* Welcome title */}
-            <Text
-              style={[styles.welcomeTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
-            >
-              {t('kidHome.firstSession.welcomeTitle')}
-            </Text>
-
-            {/* Welcome body */}
-            <Text
-              style={[
-                styles.welcomeBody,
-                { color: isDark ? '#B0B0B0' : '#555555' },
-              ]}
-            >
-              {t('kidHome.firstSession.welcomeBody')}
-            </Text>
-
-            {/* Primary CTA: take first homework photo */}
-            <TouchableOpacity
-              style={[
-                styles.firstSessionCta,
-                { backgroundColor: isDark ? '#2563EB' : '#4A90D9' },
-              ]}
-              onPress={handleCameraPress}
-              accessibilityRole="button"
-              accessibilityLabel={t('kidHome.firstSession.ctaCamera')}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.firstSessionCtaIcon}>📸</Text>
-              <Text style={styles.firstSessionCtaText}>
-                {t('kidHome.firstSession.ctaCamera')}
-              </Text>
-            </TouchableOpacity>
-
-            {/* Practice question prompt + subject chips */}
-            <Text
-              style={[
-                styles.practicePrompt,
-                { color: isDark ? '#888888' : '#9CA3AF' },
-              ]}
-            >
-              {t('kidHome.firstSession.ctaPractice')}
-            </Text>
-
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.practiceChipsRow}
-            >
+        ) : (
+          <>
+            {/* Subject Tiles (2x2 grid) */}
+            <View style={styles.subjectsGrid}>
               {SUBJECTS.map((subject) => (
                 <TouchableOpacity
                   key={subject.id}
                   style={[
-                    styles.practiceChip,
+                    styles.subjectTile,
                     {
                       backgroundColor: isDark ? subject.darkColor : subject.color,
-                      borderColor: isDark ? 'transparent' : '#D1D5DB',
+                      borderColor: isDark ? 'transparent' : '#E5E7EB',
                     },
                   ]}
-                  onPress={() => handlePracticePress(subject.id)}
+                  onPress={() => handleSubjectPress(subject.id)}
                   accessibilityRole="button"
-                  accessibilityLabel={t(
-                    'kidHome.firstSession.accessibility.practiceTile',
-                    { subject: t(`kidHome.subjects.${subject.id}`) },
-                  )}
+                  accessibilityLabel={t('kidHome.accessibility.subjectTile', {
+                    subject: t(`kidHome.subjects.${subject.id}`),
+                  })}
                   activeOpacity={0.7}
                 >
-                  <Text style={styles.practiceChipIcon}>{subject.icon}</Text>
-                  <Text
-                    style={[
-                      styles.practiceChipLabel,
-                      { color: isDark ? '#FFFFFF' : '#1A1A1A' },
-                    ]}
-                  >
+                  <Text style={styles.subjectIcon}>{subject.icon}</Text>
+                  <Text style={[styles.subjectTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
                     {t(`kidHome.subjects.${subject.id}`)}
+                  </Text>
+                  <Text
+                    style={[styles.subjectDescription, { color: isDark ? '#AAAAAA' : '#6B7280' }]}
+                    numberOfLines={2}
+                  >
+                    {t(`kidHome.subjectsDescriptions.${subject.id}`)}
                   </Text>
                 </TouchableOpacity>
               ))}
-            </ScrollView>
-
-            {/* Dismiss link */}
-            <TouchableOpacity
-              style={styles.dismissButton}
-              onPress={handleDismissWelcome}
-              accessibilityRole="button"
-              accessibilityLabel={t('kidHome.firstSession.dismiss')}
-              hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
-            >
-              <Text
-                style={[
-                  styles.dismissText,
-                  { color: isDark ? '#90CAF9' : '#6B7280' },
-                ]}
-              >
-                {t('kidHome.firstSession.dismiss')}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          /* ── Recent Sessions ── */
-          <View style={styles.recentSection}>
-            <View style={styles.recentHeader}>
-              <Text style={[styles.recentTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
-                {t('kidHome.recentSessions.title')}
-              </Text>
-              {sessions.length > 0 && (
-                <TouchableOpacity
-                  onPress={handleViewAllHistory}
-                  accessibilityRole="button"
-                  accessibilityLabel={t('kidHome.accessibility.viewAll')}
-                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                >
-                  <Text style={[styles.viewAllLink, { color: isDark ? '#90CAF9' : '#2563EB' }]}>
-                    {t('kidHome.recentSessions.viewAll')}
-                  </Text>
-                </TouchableOpacity>
-              )}
             </View>
 
-            {sessions.length === 0 ? (
-              <View style={styles.emptyState}>
-                <Text style={styles.emptyIcon}>📝</Text>
-                <Text style={[styles.emptyText, { color: isDark ? '#888888' : '#9CA3AF' }]}>
-                  {t('kidHome.recentSessions.empty')}
-                </Text>
+            {/* Hero Camera Button */}
+            <TouchableOpacity
+              style={[
+                styles.cameraButton,
+                {
+                  backgroundColor: isDark ? '#2563EB' : '#4A90D9',
+                  ...(showWelcome ? { shadowOpacity: 0.45, elevation: 8 } : {}),
+                },
+              ]}
+              onPress={handleCameraPress}
+              accessibilityRole="button"
+              accessibilityLabel={t('kidHome.camera.accessibility')}
+              activeOpacity={0.8}
+            >
+              <View style={styles.cameraButtonContent}>
+                <Text style={styles.cameraIcon}>📷</Text>
+                <View style={styles.cameraTextBlock}>
+                  <Text style={styles.cameraTitle}>{t('kidHome.camera.title')}</Text>
+                  <Text style={styles.cameraSubtitle}>{t('kidHome.camera.subtitle')}</Text>
+                </View>
               </View>
-            ) : (
-              <View style={styles.sessionList}>
-                {sessions.map((session) => (
-                  <TouchableOpacity
-                    key={session.id}
-                    style={[
-                      styles.sessionCard,
-                      { backgroundColor: isDark ? '#1E1E1E' : '#FFFFFF' },
-                    ]}
-                    accessibilityRole="summary"
-                    accessibilityLabel={t('kidHome.accessibility.recentSession', {
-                      subject: t(`kidHome.subjects.${session.subject}`),
-                      time: timeAgo(session.createdAt, t),
-                      questions: session.questionCount,
-                    })}
-                    activeOpacity={0.7}
-                  >
-                    <Text style={styles.sessionIcon}>
-                      {SUBJECT_ICONS[session.subject] ?? '📚'}
-                    </Text>
-                    <View style={styles.sessionInfo}>
+            </TouchableOpacity>
+
+            {/* Bottom Section: Welcome Banner OR Recent Sessions */}
+            {welcomeInitDone && showWelcome && sessions.length === 0 ? (
+              /* ── First-Session Welcome Hero ── */
+              <View
+                style={[
+                  styles.welcomeHero,
+                  { backgroundColor: isDark ? '#1A2A3A' : '#E8F4FD' },
+                ]}
+                accessibilityRole="summary"
+                accessibilityLabel={t('kidHome.firstSession.accessibility.welcomeBanner')}
+              >
+                <View
+                  style={[
+                    styles.welcomeCircle,
+                    { backgroundColor: isDark ? '#2A4A7A' : '#FFFFFF' },
+                  ]}
+                >
+                  <Text style={styles.welcomeCircleIcon}>🚀</Text>
+                </View>
+
+                <Text
+                  style={[styles.welcomeTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
+                >
+                  {t('kidHome.firstSession.welcomeTitle')}
+                </Text>
+
+                <Text
+                  style={[
+                    styles.welcomeBody,
+                    { color: isDark ? '#B0B0B0' : '#555555' },
+                  ]}
+                >
+                  {t('kidHome.firstSession.welcomeBody')}
+                </Text>
+
+                <TouchableOpacity
+                  style={[
+                    styles.firstSessionCta,
+                    { backgroundColor: isDark ? '#2563EB' : '#4A90D9' },
+                  ]}
+                  onPress={handleCameraPress}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('kidHome.firstSession.ctaCamera')}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.firstSessionCtaIcon}>📸</Text>
+                  <Text style={styles.firstSessionCtaText}>
+                    {t('kidHome.firstSession.ctaCamera')}
+                  </Text>
+                </TouchableOpacity>
+
+                <Text
+                  style={[
+                    styles.practicePrompt,
+                    { color: isDark ? '#888888' : '#9CA3AF' },
+                  ]}
+                >
+                  {t('kidHome.firstSession.ctaPractice')}
+                </Text>
+
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.practiceChipsRow}
+                >
+                  {SUBJECTS.map((subject) => (
+                    <TouchableOpacity
+                      key={subject.id}
+                      style={[
+                        styles.practiceChip,
+                        {
+                          backgroundColor: isDark ? subject.darkColor : subject.color,
+                          borderColor: isDark ? 'transparent' : '#D1D5DB',
+                        },
+                      ]}
+                      onPress={() => handlePracticePress(subject.id)}
+                      accessibilityRole="button"
+                      accessibilityLabel={t(
+                        'kidHome.firstSession.accessibility.practiceTile',
+                        { subject: t(`kidHome.subjects.${subject.id}`) },
+                      )}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={styles.practiceChipIcon}>{subject.icon}</Text>
                       <Text
                         style={[
-                          styles.sessionSubject,
+                          styles.practiceChipLabel,
                           { color: isDark ? '#FFFFFF' : '#1A1A1A' },
                         ]}
                       >
-                        {t(`kidHome.subjects.${session.subject}`)}
+                        {t(`kidHome.subjects.${subject.id}`)}
                       </Text>
-                      <Text style={styles.sessionMeta}>
-                        {timeAgo(session.createdAt, t)}
-                        {' · '}
-                        {t('kidHome.recentSessions.questions', {
-                          count: session.questionCount,
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+
+                <TouchableOpacity
+                  style={styles.dismissButton}
+                  onPress={handleDismissWelcome}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('kidHome.firstSession.dismiss')}
+                  hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                >
+                  <Text
+                    style={[
+                      styles.dismissText,
+                      { color: isDark ? '#90CAF9' : '#6B7280' },
+                    ]}
+                  >
+                    {t('kidHome.firstSession.dismiss')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View style={styles.recentSection}>
+                <View style={styles.recentHeader}>
+                  <Text style={[styles.recentTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
+                    {t('kidHome.recentSessions.title')}
+                  </Text>
+                  {sessions.length > 0 && (
+                    <TouchableOpacity
+                      onPress={handleViewAllHistory}
+                      accessibilityRole="button"
+                      accessibilityLabel={t('kidHome.accessibility.viewAll')}
+                      hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                    >
+                      <Text style={[styles.viewAllLink, { color: isDark ? '#90CAF9' : '#2563EB' }]}>
+                        {t('kidHome.recentSessions.viewAll')}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+
+                {sessions.length === 0 ? (
+                  <View style={styles.emptyState}>
+                    <Text style={styles.emptyIcon}>📝</Text>
+                    <Text style={[styles.emptyText, { color: isDark ? '#888888' : '#9CA3AF' }]}>
+                      {t('kidHome.recentSessions.empty')}
+                    </Text>
+                  </View>
+                ) : (
+                  <View style={styles.sessionList}>
+                    {sessions.map((session) => (
+                      <TouchableOpacity
+                        key={session.id}
+                        style={[
+                          styles.sessionCard,
+                          { backgroundColor: isDark ? '#1E1E1E' : '#FFFFFF' },
+                        ]}
+                        accessibilityRole="summary"
+                        accessibilityLabel={t('kidHome.accessibility.recentSession', {
+                          subject: t(`kidHome.subjects.${session.subject}`),
+                          time: timeAgo(session.createdAt, t),
+                          questions: session.questionCount,
                         })}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                ))}
+                        activeOpacity={0.7}
+                      >
+                        <Text style={styles.sessionIcon}>
+                          {SUBJECT_ICONS[session.subject] ?? '📚'}
+                        </Text>
+                        <View style={styles.sessionInfo}>
+                          <Text
+                            style={[
+                              styles.sessionSubject,
+                              { color: isDark ? '#FFFFFF' : '#1A1A1A' },
+                            ]}
+                          >
+                            {t(`kidHome.subjects.${session.subject}`)}
+                          </Text>
+                          <Text style={styles.sessionMeta}>
+                            {timeAgo(session.createdAt, t)}
+                            {' · '}
+                            {t('kidHome.recentSessions.questions', {
+                              count: session.questionCount,
+                            })}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                )}
               </View>
             )}
-          </View>
+          </>
         )}
 
         <View style={{ height: 32 }} />
