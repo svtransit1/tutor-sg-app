@@ -1,13 +1,21 @@
 # CODEOWNERS — tutor-sg
-# Per ADD §11: Tortoise reviews every PR; Foxy approves merges to main; Owl gates architecture-touching PRs.
+# Per Foxy Decision 2026-05-07: role-based ownership model.
 #
-# BLOCKED: @tortoise-tutor-sg is a placeholder. Update to the real Tortoise bot GitHub handle
-# once Boss provisions the bot account (approval 67b2d57e).
+# PLACEHOLDER: @tortoise-tutor-sg and @sage-tutor-sg are placeholders.
+# Update to real bot GitHub handles once Boss provisions the accounts.
 
-# Global default — Tortoise reviews everything
-* @tortoise-tutor-sg
+# Global default — Foxy (PM/CEO) owns everything not explicitly assigned
+* @svtransit1
 
-# Architecture-touching paths also need Owl review
-/docs/ARCHITECTURE.md @tortoise-tutor-sg
-/src/model/ @tortoise-tutor-sg
-/src/inference/ @tortoise-tutor-sg
+# PM-owned artifacts
+*.md @svtransit1
+
+# Documentation — Sage (content)
+/docs/ @sage-tutor-sg
+
+# Workspace packages — Wolf (lead engineer)
+/packages/ @muatan
+
+# App code — Wolf (lead engineer)
+/apps/ @muatan
+/mobile/ @muatan
