@@ -2,9 +2,9 @@
  * Onboarding step machine — types and transition rules.
  *
  * Per Article 12 (First-90-Seconds Onboarding Dev Spec):
- * Splash → LangPick → AgeGate → ParentPinSetup → GradeSubjectPick →
- * SiblingPrompt → DeviceTierResult → PermissionPrimer → ModelDownload →
- * ReadyLanding → Done
+ * Splash → LangPick → AgeGate → ParentPinSetup → ParentSignIn →
+ * GradeSubjectPick → SiblingPrompt → DeviceTierResult →
+ * PermissionPrimer → ModelDownload → ReadyLanding → Done
  */
 
 export const ONBOARDING_STEPS = [
@@ -12,6 +12,7 @@ export const ONBOARDING_STEPS = [
   'lang_pick',
   'age_gate',
   'parent_pin_setup',
+  'parent_sign_in',
   'grade_subject_pick',
   'sibling_prompt',
   'device_tier_result',
@@ -59,6 +60,7 @@ export const STEP_CONFIG: Record<OnboardingStep, StepConfig> = {
   lang_pick:            { reversible: true,  requiresParent: false, route: 'lang-pick',             hasScreen: true },
   age_gate:             { reversible: true,  requiresParent: true,  route: 'age-gate',              hasScreen: true },
   parent_pin_setup:     { reversible: false, requiresParent: true,  route: 'parent-pin-setup',      hasScreen: true },
+  parent_sign_in:       { reversible: false, requiresParent: true,  route: 'parent-sign-in',        hasScreen: true },
   grade_subject_pick:   { reversible: false, requiresParent: true,  route: 'grade-subject-pick',    hasScreen: true },
   sibling_prompt:       { reversible: false, requiresParent: true,  route: 'sibling-prompt',        hasScreen: true },
   device_tier_result:   { reversible: false, requiresParent: false, route: 'device-tier-result',    hasScreen: true },

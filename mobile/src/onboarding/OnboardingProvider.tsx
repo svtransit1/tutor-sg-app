@@ -372,6 +372,13 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
             granted: state.notificationPermissionGranted,
           });
           break;
+        case 'parent_sign_in':
+          trackEvent({
+            event: 'onboarding_parent_signed_in',
+            timestamp: Date.now(),
+            signedIn: state.signedInViaParentAuth,
+          });
+          break;
         case 'model_download':
           trackEvent({
             event: 'onboarding_download_started',
@@ -384,7 +391,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
           break;
       }
     },
-    [state.locale, state.grade, state.subjects, state.siblingProfiles, state.deviceTier, state.cameraPermissionGranted, state.notificationPermissionGranted],
+    [state.locale, state.grade, state.subjects, state.siblingProfiles, state.deviceTier, state.cameraPermissionGranted, state.notificationPermissionGranted, state.signedInViaParentAuth],
   );
 
   // ── Navigation routing ─────────────────────────────────────

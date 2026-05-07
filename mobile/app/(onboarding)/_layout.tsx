@@ -8,6 +8,7 @@ export default function OnboardingLayout() {
       <Stack.Screen name="lang-pick" />
       <Stack.Screen name="age-gate" />
       <Stack.Screen name="parent-pin-setup" />
+      <Stack.Screen name="parent-sign-in" />
       <Stack.Screen name="grade-subject-pick" />
       <Stack.Screen name="sibling-prompt" />
       <Stack.Screen name="device-tier-result" />
