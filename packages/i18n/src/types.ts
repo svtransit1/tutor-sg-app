@@ -100,6 +100,12 @@ export type TranslationInterpolationMap = {
   'onboarding:download_cellular_desc': { size: string };
   'onboarding:download_retrying': { attempt: string | number; max: string | number };
   'parent:pin_wrong': { attempts: string };
+  'parent:digit_filled': { position: string };
+  'parent:digit_empty': { position: string };
+  'parent:digit_confirm': { position: string };
+  'parent:attempts_remaining': { count: string };
+  'parent:cooldown_timer': { seconds: string };
+  'parent:keypad_digit': { value: string };
   'settings:subscription_free_tier_desc': { photos: string; questions: string };
   'homework:worksheet_score': { correct: string | number; total: string | number };
 };

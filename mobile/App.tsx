@@ -5,9 +5,18 @@
  * 1. Initialize i18n (locale detection, resource loading)
  * 2. Render splash while loading
  * 3. Wrap app tree in TutorSGProvider for typed useI18n()
+ * 4. Main screen includes "Parent Area" button that opens PIN gate
  *
  * This file is the standard Expo entry point (App.tsx).
  * In a full Expo Router setup, this would delegate to an app/_layout.tsx.
+ *
+ * Parent PIN gate flow (AAAS-305):
+ * - Tap "Parent Area" → check if PIN set
+ *   - Not set → PinSetupScreen (create PIN)
+ *   - Set → PinGateScreen (enter PIN)
+ *   - Success → ParentDashboardScreen
+ * - Each screen has dismiss to go back to main app
+ * - 5 failed PIN attempts → 60-second lockout
  */
 
 import React, { useEffect, useState } from 'react';
@@ -23,10 +32,16 @@ import {
 } from 'react-native';
 import { initializeI18n, TutorSGProvider, useI18n } from '@tutor-sg/i18n';
 import type { SupportedLocale } from '@tutor-sg/i18n';
+import { isPinSet } from './src/parent/pin-storage';
+import PinGateScreen from './src/parent/PinGateScreen';
+import PinSetupScreen from './src/parent/PinSetupScreen';
+import ParentDashboardScreen from './src/parent/ParentDashboardScreen';
 
-// ---------------------------------------------------------------------------
-// Splash screen shown while i18n initializes
-// ---------------------------------------------------------------------------
+// ── Types ──────────────────────────────────────────────────────────
+
+type ParentView = null | 'loading' | 'setup' | 'gate' | 'dashboard';
+
+// ── Splash screen shown while i18n initializes ────────────────────
 
 function SplashScreen() {
   const [dots, setDots] = useState('');
@@ -41,9 +56,7 @@ function SplashScreen() {
     <SafeAreaView style={splashStyles.container}>
       <StatusBar barStyle="dark-content" />
       <ActivityIndicator size="large" color="#4A90D9" />
-      <Text style={splashStyles.text}>
-        Loading{dots}
-      </Text>
+      <Text style={splashStyles.text}>Loading{dots}</Text>
     </SafeAreaView>
   );
 }
@@ -62,50 +75,75 @@ const splashStyles = StyleSheet.create({
   },
 });
 
-// ---------------------------------------------------------------------------
-// Demo screen — shows translations working across all namespaces
-// ---------------------------------------------------------------------------
+// ── Demo / main content screen ────────────────────────────────────
 
-function DemoContent() {
+function MainContent({
+  onOpenParentArea,
+}: {
+  onOpenParentArea: () => void;
+}) {
   const { t, locale, setLocale } = useI18n();
   const isEn = locale === 'en';
 
   return (
     <ScrollView
-      style={demoStyles.scroll}
-      contentContainerStyle={demoStyles.content}
+      style={mainStyles.scroll}
+      contentContainerStyle={mainStyles.content}
     >
       {/* App header */}
-      <Text style={demoStyles.title}>{t('app.name')}</Text>
-      <Text style={demoStyles.tagline}>{t('app.tagline')}</Text>
+      <Text style={mainStyles.title}>{t('app.name')}</Text>
+      <Text style={mainStyles.tagline}>{t('app.tagline')}</Text>
 
       {/* Locale switcher */}
-      <View style={demoStyles.switcherRow}>
+      <View style={mainStyles.switcherRow}>
         <TouchableOpacity
-          style={[demoStyles.langButton, isEn && demoStyles.langButtonActive]}
+          style={[mainStyles.langButton, isEn && mainStyles.langButtonActive]}
           onPress={() => setLocale('en')}
           accessibilityLabel="Switch to English"
         >
-          <Text style={[demoStyles.langText, isEn && demoStyles.langTextActive]}>
+          <Text
+            style={[
+              mainStyles.langText,
+              isEn && mainStyles.langTextActive,
+            ]}
+          >
             {t('english')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[demoStyles.langButton, !isEn && demoStyles.langButtonActive]}
+          style={[
+            mainStyles.langButton,
+            !isEn && mainStyles.langButtonActive,
+          ]}
           onPress={() => setLocale('zh-Hans')}
           accessibilityLabel="Switch to Simplified Chinese"
         >
-          <Text style={[demoStyles.langText, !isEn && demoStyles.langTextActive]}>
+          <Text
+            style={[
+              mainStyles.langText,
+              !isEn && mainStyles.langTextActive,
+            ]}
+          >
             {t('chinese')}
           </Text>
         </TouchableOpacity>
       </View>
 
-      <Text style={demoStyles.badge}>
-        Current locale: {locale}
-      </Text>
+      <Text style={mainStyles.badge}>Current locale: {locale}</Text>
 
-      {/* Common namespace */}
+      {/* Parent Area button */}
+      <TouchableOpacity
+        style={mainStyles.parentButton}
+        onPress={onOpenParentArea}
+        accessibilityRole="button"
+        accessibilityLabel={t('onboarding:enter_parent_area')}
+      >
+        <Text style={mainStyles.parentButtonText}>
+          {t('onboarding:enter_parent_area')}
+        </Text>
+      </TouchableOpacity>
+
+      {/* Common namespace demo */}
       <Section title="common namespace">
         <DemoRow label={t('save')} note="t('save')" />
         <DemoRow label={t('cancel')} note="t('cancel')" />
@@ -118,59 +156,9 @@ function DemoContent() {
         <DemoRow label={t('subject_select')} note="t('subject_select')" />
       </Section>
 
-      {/* Onboarding namespace */}
-      <Section title="onboarding namespace">
-        <DemoRow
-          label={t('onboarding:welcome_title')}
-          note="t('onboarding:welcome_title')"
-        />
-        <DemoRow
-          label={t('onboarding:get_started')}
-          note="t('onboarding:get_started')"
-        />
-        <DemoRow
-          label={t('onboarding:download_model')}
-          note="t('onboarding:download_model')"
-        />
-        <DemoRow
-          label={t('onboarding:setup_complete')}
-          note="t('onboarding:setup_complete')"
-        />
-      </Section>
-
-      {/* Homework namespace */}
-      <Section title="homework namespace">
-        <DemoRow
-          label={t('homework:title')}
-          note="t('homework:title')"
-        />
-        <DemoRow
-          label={t('homework:capture')}
-          note="t('homework:capture')"
-        />
-        <DemoRow
-          label={t('homework:chat_hint')}
-          note="t('homework:chat_hint')"
-        />
-        <DemoRow
-          label={t('homework:worksheet_title')}
-          note="t('homework:worksheet_title')"
-        />
-        <DemoRow
-          label={t('homework:worksheet_score', {
-            correct: 3,
-            total: 5,
-          })}
-          note="t('homework:worksheet_score', { correct: 3, total: 5 })"
-        />
-      </Section>
-
-      {/* Parent namespace */}
+      {/* Parent namespace demo */}
       <Section title="parent namespace">
-        <DemoRow
-          label={t('parent:pin_title')}
-          note="t('parent:pin_title')"
-        />
+        <DemoRow label={t('parent:pin_title')} note="t('parent:pin_title')" />
         <DemoRow
           label={t('parent:dashboard_title')}
           note="t('parent:dashboard_title')"
@@ -180,30 +168,20 @@ function DemoContent() {
           note="t('parent:log_empty')"
         />
       </Section>
-
-      {/* Settings namespace */}
-      <Section title="settings namespace">
-        <DemoRow
-          label={t('settings:subscription_title')}
-          note="t('settings:subscription_title')"
-        />
-        <DemoRow
-          label={t('settings:subscription_free_tier')}
-          note="t('settings:subscription_free_tier')"
-        />
-        <DemoRow
-          label={t('settings:subscription_restore')}
-          note="t('settings:subscription_restore')"
-        />
-      </Section>
     </ScrollView>
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
-    <View style={demoStyles.section}>
-      <Text style={demoStyles.sectionTitle}>{title}</Text>
+    <View style={mainStyles.section}>
+      <Text style={mainStyles.sectionTitle}>{title}</Text>
       {children}
     </View>
   );
@@ -211,19 +189,35 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function DemoRow({ label, note }: { label: string; note: string }) {
   return (
-    <View style={demoStyles.row}>
-      <Text style={demoStyles.rowLabel}>{label}</Text>
-      <Text style={demoStyles.rowNote}>{note}</Text>
+    <View style={mainStyles.row}>
+      <Text style={mainStyles.rowLabel}>{label}</Text>
+      <Text style={mainStyles.rowNote}>{note}</Text>
     </View>
   );
 }
 
-const demoStyles = StyleSheet.create({
+const mainStyles = StyleSheet.create({
   scroll: { flex: 1, backgroundColor: '#F5F5F5' },
   content: { padding: 20, paddingBottom: 60 },
-  title: { fontSize: 28, fontWeight: '700', textAlign: 'center', color: '#1A1A2E' },
-  tagline: { fontSize: 14, textAlign: 'center', color: '#666', marginTop: 4, marginBottom: 20 },
-  switcherRow: { flexDirection: 'row', justifyContent: 'center', gap: 12, marginBottom: 12 },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    textAlign: 'center',
+    color: '#1A1A2E',
+  },
+  tagline: {
+    fontSize: 14,
+    textAlign: 'center',
+    color: '#666',
+    marginTop: 4,
+    marginBottom: 20,
+  },
+  switcherRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 12,
+    marginBottom: 12,
+  },
   langButton: {
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -239,6 +233,24 @@ const demoStyles = StyleSheet.create({
     color: '#999',
     marginBottom: 24,
     fontFamily: 'monospace',
+  },
+  parentButton: {
+    backgroundColor: '#2563EB',
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginBottom: 24,
+    shadowColor: '#2563EB',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  parentButtonText: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
   section: {
     backgroundColor: '#FFF',
@@ -261,16 +273,20 @@ const demoStyles = StyleSheet.create({
   },
   row: { marginBottom: 8, paddingVertical: 4 },
   rowLabel: { fontSize: 16, color: '#1A1A2E' },
-  rowNote: { fontSize: 11, color: '#AAA', fontFamily: 'monospace', marginTop: 2 },
+  rowNote: {
+    fontSize: 11,
+    color: '#AAA',
+    fontFamily: 'monospace',
+    marginTop: 2,
+  },
 });
 
-// ---------------------------------------------------------------------------
-// App root
-// ---------------------------------------------------------------------------
+// ── App root ───────────────────────────────────────────────────────
 
 export default function App() {
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [parentView, setParentView] = useState<ParentView>(null);
 
   useEffect(() => {
     initializeI18n()
@@ -280,6 +296,25 @@ export default function App() {
         setError(err.message ?? 'Failed to initialize');
       });
   }, []);
+
+  // ── Handle "Parent Area" button press ─────────────────────
+  const handleOpenParentArea = async () => {
+    setParentView('loading');
+    try {
+      const pinAlreadySet = await isPinSet();
+      setParentView(pinAlreadySet ? 'gate' : 'setup');
+    } catch {
+      // If storage fails, default to setup
+      setParentView('setup');
+    }
+  };
+
+  // ── Handle exit from parent area ──────────────────────────
+  const handleDismissParent = () => {
+    setParentView(null);
+  };
+
+  // ── Render ────────────────────────────────────────────────
 
   // Splash while loading
   if (!ready) {
@@ -297,11 +332,39 @@ export default function App() {
     );
   }
 
-  // App ready — wrap in i18n provider
+  // App root
   return (
     <TutorSGProvider>
-      <SafeAreaView style={demoStyles.scroll}>
-        <DemoContent />
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+        {parentView === null && (
+          <MainContent onOpenParentArea={handleOpenParentArea} />
+        )}
+
+        {parentView === 'loading' && (
+          <View style={splashStyles.container}>
+            <ActivityIndicator size="large" color="#4A90D9" />
+          </View>
+        )}
+
+        {parentView === 'setup' && (
+          <PinSetupScreen
+            onComplete={() => setParentView('dashboard')}
+            onSkip={() => setParentView(null)}
+            onDismiss={handleDismissParent}
+            skippable={true}
+          />
+        )}
+
+        {parentView === 'gate' && (
+          <PinGateScreen
+            onAuthenticated={() => setParentView('dashboard')}
+            onDismiss={handleDismissParent}
+          />
+        )}
+
+        {parentView === 'dashboard' && (
+          <ParentDashboardScreen onDismiss={handleDismissParent} />
+        )}
       </SafeAreaView>
     </TutorSGProvider>
   );
