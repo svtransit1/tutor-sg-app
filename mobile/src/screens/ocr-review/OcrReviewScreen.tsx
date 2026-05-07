@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import OcrOverlay from '../../components/OcrOverlay';
-import type { OcrBlock } from '../../models/ocr';
-import { getConfidenceLevel, getConfidenceColor, getConfidenceBgColor } from '../../models/ocr';
+import type { OcrBlock } from '../../types/ocr';
+import { getConfidenceLevel, getConfidenceColor, getConfidenceBgColor } from '../../types/ocr';
 
 export interface OcrReviewScreenProps {
   photoUri: string;

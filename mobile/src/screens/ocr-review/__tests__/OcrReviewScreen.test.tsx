@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import OcrReviewScreen from '../OcrReviewScreen';
-import type { OcrBlock } from '../../../models/ocr';
+import type { OcrBlock } from '../../../types/ocr';
 
 jest.mock('@expo/vector-icons', () => ({ Ionicons: 'Ionicons' }));
 jest.mock('expo-router', () => ({ router: { back: jest.fn(), replace: jest.fn() } }));

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import OcrOverlay from '../OcrOverlay';
-import type { OcrBlock } from '../../models/ocr';
+import type { OcrBlock } from '../../types/ocr';
 
 jest.mock('@expo/vector-icons', () => ({ Ionicons: 'Ionicons' }));
 
@@ -36,22 +36,22 @@ describe('OcrOverlay', () => {
     const r = render(
       <OcrOverlay imageSource={{ uri: 'file://test.jpg' }} blocks={[]} imageWidth={1920} imageHeight={1080} onRetake={jest.fn()} />,
     );
-    expect(r.getByText('Unable to read text')).toBeTruthy();
-    expect(r.getByText('Retake photo')).toBeTruthy();
+    expect(r.getByText('ocr.overlay.emptyTitle')).toBeTruthy();
+    expect(r.getByText('ocr.overlay.retake')).toBeTruthy();
   });
 
   it('renders empty state without retake button when onRetake not provided', () => {
     const r = render(
       <OcrOverlay imageSource={{ uri: 'file://test.jpg' }} blocks={[]} imageWidth={1920} imageHeight={1080} />,
     );
-    expect(r.getByText('Unable to read text')).toBeTruthy();
+    expect(r.getByText('ocr.overlay.emptyTitle')).toBeTruthy();
   });
 
   it('renders low confidence "Tap to type" badge', () => {
     const r = render(<OcrOverlay imageSource={{ uri: 'file://test.jpg' }} blocks={[{ text: 'Low conf', boundingBox: { x: 0, y: 0, width: 100, height: 20 }, confidence: 0.45 }]} imageWidth={1920} imageHeight={1080} />);
     fireLayout(r);
     expect(r.getByText('45%')).toBeTruthy();
-    expect(r.getByText('Tap to type')).toBeTruthy();
+    expect(r.getByText('ocr.overlay.tapToType')).toBeTruthy();
   });
 
   it('renders single block without Tap to type for high confidence', () => {

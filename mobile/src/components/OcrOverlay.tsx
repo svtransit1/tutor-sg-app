@@ -9,12 +9,13 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import type { OcrBlock } from '../models/ocr';
+import type { OcrBlock } from '../types/ocr';
 import {
   getConfidenceLevel,
   getConfidenceColor,
   getConfidenceBgColor,
-} from '../models/ocr';
+  isTapToType,
+} from '../types/ocr';
 
 interface OcrOverlayProps {
   imageSource: ImageSourcePropType;
@@ -33,6 +34,7 @@ export default function OcrOverlay({
   onBlockPress,
   onRetake,
 }: OcrOverlayProps) {
+  const { t } = useTranslation();
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
 
   const handleLayout = useCallback((e: LayoutChangeEvent) => {
@@ -57,17 +59,11 @@ export default function OcrOverlay({
         />
         <View style={styles.emptyState}>
           <View style={styles.emptyStateCard}>
-            <Text style={styles.emptyStateTitle}>Unable to read text</Text>
-            <Text style={styles.emptyStateSubtitle}>
-              The app couldn't detect any questions in this photo. Try a clearer photo with good lighting.
-            </Text>
+            <Text style={styles.emptyStateTitle}>{t('ocr.overlay.emptyTitle')}</Text>
+            <Text style={styles.emptyStateSubtitle}>{t('ocr.overlay.emptySubtitle')}</Text>
             {onRetake && (
-              <Pressable
-                style={styles.emptyStateRetakeButton}
-                onPress={onRetake}
-                accessibilityRole="button"
-              >
-                <Text style={styles.emptyStateRetakeText}>Retake photo</Text>
+              <Pressable style={styles.emptyStateRetakeButton} onPress={onRetake} accessibilityRole="button">
+                <Text style={styles.emptyStateRetakeText}>{t('ocr.overlay.retake')}</Text>
               </Pressable>
             )}
           </View>
@@ -110,11 +106,11 @@ export default function OcrOverlay({
                   accessibilityRole="button"
                   accessibilityLabel={`Detected region ${index + 1}: ${block.text.substring(0, 30)}`}
                 >
-                  {block.confidence < 0.6 ? (
+                  {isTapToType(block.confidence) && (
                     <View style={styles.lowConfOverlay}>
-                      <Text style={styles.lowConfBadge}>Tap to type</Text>
+                      <Text style={styles.lowConfBadge}>{t('ocr.overlay.tapToType')}</Text>
                     </View>
-                  ) : null}
+                  )}
                   <View style={[styles.confidenceBadge, { backgroundColor: bgColor, borderColor }]}>
                     <Text style={[styles.confidenceText, { color: borderColor }]}>
                       {Math.round(block.confidence * 100)}%
