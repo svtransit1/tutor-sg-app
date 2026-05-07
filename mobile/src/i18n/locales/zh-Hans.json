@@ -204,6 +204,17 @@
       "unknown_error": "出现错误，请重试。"
     }
   },
+  "cameraGuideFrame": {
+    "title": "对齐作业页面",
+    "aligned": "完美！作业已对齐",
+    "hint": "将作业页面放入框内",
+    "capture": "拍照",
+    "retake": "重拍",
+    "accessibility": {
+      "alignFrame": "将作业页面放入框中",
+      "aligned": "作业已完美对齐"
+    }
+  },
   "homeworkFeedback": {
     "title": "作业反馈",
     "questionLabel": "第 {{number}} 题",
@@ -253,6 +264,30 @@
   "common": {
     "back": "返回",
     "goBack": "返回首页"
+  },
+  "homeworkError": {
+    "retry": "再试一次",
+    "manualInput": "改为输入答案",
+    "LLM_TIMEOUT": {
+      "title": "小老师在想呢...",
+      "body": "这次花的时间比平时长一点。要再试一次吗？如果能连上Wi-Fi，效果会更好哦。"
+    },
+    "CAMERA_PERMISSION_DENIED": {
+      "title": "相机用不了",
+      "body": "我们需要相机来看你的作业。你也可以自己把答案打出来——你说了算！"
+    },
+    "OCR_FAILURE": {
+      "title": "有些地方看不清",
+      "body": "作业有些地方看不太清楚。要不要试着把答案打出来？"
+    },
+    "MODEL_NOT_DOWNLOADED": {
+      "title": "小老师还没准备好",
+      "body": "AI 小老师还在下载中。连上 Wi-Fi 再试一次，马上就能好啦。"
+    },
+    "UNKNOWN": {
+      "title": "哎呀，出了点小问题",
+      "body": "发生了一点意料之外的情况。别担心，再试一次就能恢复啦！"
+    }
   },
   "manualInputFallback": {
     "title": "有些内容看不清楚",

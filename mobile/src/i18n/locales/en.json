@@ -204,6 +204,17 @@
       "unknown_error": "Something went wrong. Please try again."
     }
   },
+  "cameraGuideFrame": {
+    "title": "Align your worksheet",
+    "aligned": "Perfect! Worksheet is aligned",
+    "hint": "Fit the worksheet in the frame",
+    "capture": "Capture",
+    "retake": "Retake",
+    "accessibility": {
+      "alignFrame": "Align your worksheet in the frame",
+      "aligned": "Worksheet is perfectly aligned"
+    }
+  },
   "homeworkFeedback": {
     "title": "Homework Feedback",
     "questionLabel": "Question {{number}}",
@@ -253,6 +264,30 @@
   "common": {
     "back": "Back",
     "goBack": "Go back"
+  },
+  "homeworkError": {
+    "retry": "Try Again",
+    "manualInput": "Type Answers Instead",
+    "LLM_TIMEOUT": {
+      "title": "The tutor is thinking...",
+      "body": "It's taking a bit longer than usual. Want to try again? There's a better AI on Wi-Fi if you can connect."
+    },
+    "CAMERA_PERMISSION_DENIED": {
+      "title": "Camera is locked",
+      "body": "We need the camera to look at your homework. You can also type the answers yourself — your choice!"
+    },
+    "OCR_FAILURE": {
+      "title": "Can't read all of this",
+      "body": "Some parts of your homework are hard to read. Would you like to type the answers instead?"
+    },
+    "MODEL_NOT_DOWNLOADED": {
+      "title": "Tutor not ready yet",
+      "body": "The AI tutor model still needs to download. Connect to Wi-Fi and try again, and it'll be ready in no time."
+    },
+    "UNKNOWN": {
+      "title": "Oops, something went wrong",
+      "body": "Something unexpected happened. Don't worry, just try again and it should work!"
+    }
   },
   "manualInputFallback": {
     "title": "Can't read all items",

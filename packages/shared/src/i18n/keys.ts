@@ -13,6 +13,7 @@ export type I18nKey =
   | `parent.${ParentAreaKey}`
   | `modelDownload.${ModelDownloadKey}`
   | `homeworkFeedback.${HomeworkFeedbackKey}`
+  | `cameraGuideFrame.${CameraGuideFrameKey}`
 
 export type ParentAuthKey =
   | 'title'
@@ -73,6 +74,17 @@ export type HomeworkFeedbackAccessibilityKey =
   | 'sendButton'
   | 'speakContent'
   | 'stopSpeaking'
+
+export type CameraGuideFrameKey =
+  | 'title'
+  | 'aligned'
+  | 'hint'
+  | 'capture'
+  | 'retake'
+  | `accessibility.${CameraGuideFrameAccessibilityKey}`
+export type CameraGuideFrameAccessibilityKey =
+  | 'alignFrame'
+  | 'aligned'
 
 export type ModelDownloadKey =
   | 'title'
@@ -159,6 +171,13 @@ export const I18N_KEYS = [
   'homeworkFeedback.accessibility.sendButton',
   'homeworkFeedback.accessibility.speakContent',
   'homeworkFeedback.accessibility.stopSpeaking',
+  'cameraGuideFrame.title',
+  'cameraGuideFrame.aligned',
+  'cameraGuideFrame.hint',
+  'cameraGuideFrame.capture',
+  'cameraGuideFrame.retake',
+  'cameraGuideFrame.accessibility.alignFrame',
+  'cameraGuideFrame.accessibility.aligned',
   'modelDownload.title',
   'modelDownload.progress',
   'modelDownload.progressPercent',
