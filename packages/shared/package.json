@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "pnpm exec jest --passWithNoTests --maxWorkers=2"
+    "test": "vitest run --passWithNoTests --config vitest.config.ts"
   },
   "dependencies": {
     "@tutor-sg/device-tier": "workspace:*",
