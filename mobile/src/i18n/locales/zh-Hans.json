@@ -49,6 +49,7 @@
       "accessibility": {
         "gradeOption": "{{grade}}",
         "gradeSelected": "已选择 {{grade}}",
+        "gradePickerLabel": "选择孩子的年级",
         "subjectToggle": "{{subject}} - {{state}}",
         "subjectOn": "已选",
         "subjectOff": "未选"

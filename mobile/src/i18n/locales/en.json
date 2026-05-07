@@ -49,6 +49,7 @@
       "accessibility": {
         "gradeOption": "Grade {{grade}}",
         "gradeSelected": "Grade {{grade}} selected",
+        "gradePickerLabel": "Select your child's grade",
         "subjectToggle": "{{subject}} - {{state}}",
         "subjectOn": "selected",
         "subjectOff": "not selected"
