@@ -43,7 +43,10 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
+    "dashboard": {
+      "title": "Parent Dashboard",
+      "placeholder": "Session log and progress coming soon"
+    },
     "settings": {
       "title": "Settings",
       "sectionQuality": "AI Quality",

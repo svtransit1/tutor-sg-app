@@ -27,7 +27,7 @@ export type I18nKey =
   // ── Parent dashboard ─────────────────────────────────────
   | `parent.${ParentAreaKey}`
   // ── Model download ───────────────────────────────────────
-  | `modelDownload.${ModelDownloadKey}`;
+  | `modelDownload.${ModelDownloadKey}`
 
 // ── Sub-key spaces ────────────────────────────────────────────────
 
@@ -40,15 +40,13 @@ export type ParentAuthKey =
   | 'attemptsRemaining'
   | 'attemptsRemaining_plural'
   | 'pinsDontMatch'
-  | `setup.${ParentAuthSetupKey}`;
+  | `setup.${ParentAuthSetupKey}`
 
-export type ParentAuthSetupKey = 'title' | 'enterPin' | 'confirmPin';
+export type ParentAuthSetupKey = 'title' | 'enterPin' | 'confirmPin'
 
-export type ParentAreaKey =
-  | `dashboard.${ParentDashboardKey}`
-  | `settings.${ParentSettingsKey}`;
+export type ParentAreaKey = `dashboard.${ParentDashboardKey}` | `settings.${ParentSettingsKey}`
 
-export type ParentDashboardKey = 'title' | 'placeholder';
+export type ParentDashboardKey = 'title' | 'placeholder'
 
 export type ParentSettingsKey =
   | 'title'
@@ -65,7 +63,7 @@ export type ParentSettingsKey =
   | 'languageDescription'
   | 'languageEn'
   | 'languageZh'
-  | 'footerInfo';
+  | 'footerInfo'
 
 export type ModelDownloadKey =
   | 'title'
@@ -77,7 +75,7 @@ export type ModelDownloadKey =
   | 'completed'
   | 'retry'
   | 'wifiRequired'
-  | `errors.${ModelDownloadErrorKey}`;
+  | `errors.${ModelDownloadErrorKey}`
 
 export type ModelDownloadErrorKey =
   | 'connectivity_lost'
@@ -85,7 +83,7 @@ export type ModelDownloadErrorKey =
   | 'cdn_unreachable'
   | 'hash_mismatch'
   | 'download_stuck'
-  | 'unknown_error';
+  | 'unknown_error'
 
 // ── Runtime key safety ────────────────────────────────────────────
 
@@ -147,25 +145,25 @@ export const I18N_KEYS = [
   'modelDownload.errors.hash_mismatch',
   'modelDownload.errors.download_stuck',
   'modelDownload.errors.unknown_error',
-] as const;
+] as const
 
 /** Union of all valid i18n keys. */
-export type I18nKeyLiteral = (typeof I18N_KEYS)[number];
+export type I18nKeyLiteral = (typeof I18N_KEYS)[number]
 
 // ── Locale descriptor ─────────────────────────────────────────────
 
 /** Supported locale codes. */
-export type Locale = 'en' | 'zh-Hans';
+export type Locale = 'en' | 'zh-Hans'
 
 /** Locale metadata. */
 export interface LocaleDescriptor {
-  code: Locale;
-  labelEn: string;
-  labelNative: string;
+  code: Locale
+  labelEn: string
+  labelNative: string
 }
 
 /** All supported locales with display labels. */
 export const LOCALES: LocaleDescriptor[] = [
   { code: 'en', labelEn: 'English', labelNative: 'English' },
   { code: 'zh-Hans', labelEn: 'Simplified Chinese', labelNative: '简体中文' },
-];
+]

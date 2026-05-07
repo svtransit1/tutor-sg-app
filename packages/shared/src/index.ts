@@ -1,5 +1,5 @@
-export * from './schema/registry';
+export * from './schema/registry'
 
-export * from './config';
+export * from './config'
 
-export * from './i18n/keys';
+export * from './i18n/keys'

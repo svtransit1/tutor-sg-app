@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Stack } from 'expo-router'
 
 export default function ParentLayout() {
   return (
@@ -6,5 +6,5 @@ export default function ParentLayout() {
       <Stack.Screen name="dashboard" />
       <Stack.Screen name="settings" />
     </Stack>
-  );
+  )
 }

@@ -1,21 +1,14 @@
-import React from 'react';
-import {
-  Modal,
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-} from 'react-native';
-import { BELOW_FLOOR_MESSAGES } from '../types';
+import React from 'react'
+import { Modal, View, Text, StyleSheet, SafeAreaView } from 'react-native'
+import { BELOW_FLOOR_MESSAGES } from '../types'
 
 interface BelowFloorModalProps {
-  visible: boolean;
-  language?: 'en' | 'zh-Hans';
+  visible: boolean
+  language?: 'en' | 'zh-Hans'
 }
 
 export function BelowFloorModal({ visible, language = 'en' }: BelowFloorModalProps) {
-  const message =
-    language === 'zh-Hans' ? BELOW_FLOOR_MESSAGES.zh : BELOW_FLOOR_MESSAGES.en;
+  const message = language === 'zh-Hans' ? BELOW_FLOOR_MESSAGES.zh : BELOW_FLOOR_MESSAGES.en
 
   return (
     <Modal visible={visible} transparent={false} animationType="fade" statusBarTranslucent>
@@ -26,7 +19,7 @@ export function BelowFloorModal({ visible, language = 'en' }: BelowFloorModalPro
         </View>
       </SafeAreaView>
     </Modal>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -53,4 +46,4 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: '#4A4A4A',
   },
-});
+})

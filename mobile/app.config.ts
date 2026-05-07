@@ -1,8 +1,8 @@
-import { type ExpoConfig } from '@expo/config-types';
+import { type ExpoConfig } from '@expo/config-types'
 
 function getEnv(key: string, fallback?: string): string | undefined {
-  const val = process.env[key] ?? process.env['EXPO_PUBLIC_' + key];
-  return val ?? fallback;
+  const val = process.env[key] ?? process.env['EXPO_PUBLIC_' + key]
+  return val ?? fallback
 }
 
 const config: ExpoConfig = {
@@ -47,6 +47,6 @@ const config: ExpoConfig = {
   experiments: {
     typedRoutes: true,
   },
-};
+}
 
-export default config;
+export default config

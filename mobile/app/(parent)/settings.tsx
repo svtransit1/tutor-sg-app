@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react'
 import {
   View,
   Text,
@@ -7,10 +7,10 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
-} from 'react-native';
-import { useTranslation } from 'react-i18next';
-import type { SQLiteDatabase } from 'expo-sqlite';
-import type { DeviceTier } from '@tutor-sg/device-tier';
+} from 'react-native'
+import { useTranslation } from 'react-i18next'
+import type { SQLiteDatabase } from 'expo-sqlite'
+import type { DeviceTier } from '@tutor-sg/device-tier'
 import {
   openDatabase,
   ensureSettingsTable,
@@ -18,82 +18,81 @@ import {
   saveDeviceTier,
   clearDeviceTier,
   MODEL_MAP,
-} from '@tutor-sg/device-tier';
-import type { Locale } from '@tutor-sg/shared';
-import { useRouter } from 'expo-router';
+} from '@tutor-sg/device-tier'
+import type { Locale } from '@tutor-sg/shared'
+import { useRouter } from 'expo-router'
 
-type QualityOption = DeviceTier | 'auto';
+type QualityOption = DeviceTier | 'auto'
 
 const QUALITY_OPTIONS: { value: QualityOption; labelKey: string }[] = [
   { value: 'auto', labelKey: 'parent.settings.qualityAuto' },
   { value: 'high', labelKey: 'parent.settings.qualityHigh' },
   { value: 'mid', labelKey: 'parent.settings.qualityStandard' },
   { value: 'low', labelKey: 'parent.settings.qualityLow' },
-];
+]
 
 const TIER_DISPLAY: Record<DeviceTier, string> = {
   high: 'High Performance',
   mid: 'Standard',
   low: 'Low',
-};
+}
 
 export default function ParentSettingsScreen() {
-  const { t, i18n } = useTranslation();
-  const router = useRouter();
-  const [db, setDb] = useState<SQLiteDatabase | null>(null);
-  const [overrideTier, setOverrideTier] = useState<QualityOption>('auto');
-  const [loadingDb, setLoadingDb] = useState(true);
+  const { t, i18n } = useTranslation()
+  const router = useRouter()
+  const [db, setDb] = useState<SQLiteDatabase | null>(null)
+  const [overrideTier, setOverrideTier] = useState<QualityOption>('auto')
+  const [loadingDb, setLoadingDb] = useState(true)
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       try {
-        const database = await openDatabase();
-        await ensureSettingsTable(database);
-        setDb(database);
-        const saved = await loadDeviceTier(database);
+        const database = await openDatabase()
+        await ensureSettingsTable(database)
+        setDb(database)
+        const saved = await loadDeviceTier(database)
         if (saved) {
-          setOverrideTier(saved);
+          setOverrideTier(saved)
         }
       } catch {
         // DB not available — show defaults
       } finally {
-        setLoadingDb(false);
+        setLoadingDb(false)
       }
-    })();
-  }, []);
+    })()
+  }, [])
 
   const handleQualityChange = useCallback(
     async (value: QualityOption) => {
-      setOverrideTier(value);
-      if (!db) return;
+      setOverrideTier(value)
+      if (!db) return
       try {
         if (value === 'auto') {
-          await clearDeviceTier(db);
+          await clearDeviceTier(db)
         } else {
-          await saveDeviceTier(db, value);
+          await saveDeviceTier(db, value)
         }
       } catch {
         // persist failure — swallow; UI state is already updated optimistically
       }
     },
     [db],
-  );
+  )
 
   const handleLanguageChange = useCallback(
     (locale: Locale) => {
-      i18n.changeLanguage(locale);
+      i18n.changeLanguage(locale)
     },
     [i18n],
-  );
+  )
 
-  const selectedTier: DeviceTier =
-    overrideTier === 'auto' ? 'high' : overrideTier;
+  const selectedTier: DeviceTier = overrideTier === 'auto' ? 'high' : overrideTier
   const displayLabel =
     overrideTier === 'auto'
       ? t('parent.settings.tierAuto', { tier: TIER_DISPLAY[selectedTier] })
-      : t('parent.settings.tierOverride', { tier: TIER_DISPLAY[selectedTier] });
+      : t('parent.settings.tierOverride', { tier: TIER_DISPLAY[selectedTier] })
 
-  const modelInfo = MODEL_MAP[selectedTier];
+  const modelInfo = MODEL_MAP[selectedTier]
 
   return (
     <SafeAreaView style={styles.container}>
@@ -118,38 +117,28 @@ export default function ParentSettingsScreen() {
         ) : (
           <>
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>
-                {t('parent.settings.sectionQuality')}
-              </Text>
+              <Text style={styles.sectionTitle}>{t('parent.settings.sectionQuality')}</Text>
               <Text style={styles.sectionDescription}>
                 {t('parent.settings.qualityDescription')}
               </Text>
 
               <View style={styles.optionsRow}>
                 {QUALITY_OPTIONS.map((opt) => {
-                  const isSelected = overrideTier === opt.value;
+                  const isSelected = overrideTier === opt.value
                   return (
                     <TouchableOpacity
                       key={opt.value}
-                      style={[
-                        styles.pill,
-                        isSelected && styles.pillSelected,
-                      ]}
+                      style={[styles.pill, isSelected && styles.pillSelected]}
                       onPress={() => handleQualityChange(opt.value)}
                       accessibilityRole="button"
                       accessibilityLabel={t(opt.labelKey)}
                       accessibilityState={{ selected: isSelected }}
                     >
-                      <Text
-                        style={[
-                          styles.pillText,
-                          isSelected && styles.pillTextSelected,
-                        ]}
-                      >
+                      <Text style={[styles.pillText, isSelected && styles.pillTextSelected]}>
                         {t(opt.labelKey)}
                       </Text>
                     </TouchableOpacity>
-                  );
+                  )
                 })}
               </View>
 
@@ -166,39 +155,28 @@ export default function ParentSettingsScreen() {
             </View>
 
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>
-                {t('parent.settings.sectionLanguage')}
-              </Text>
+              <Text style={styles.sectionTitle}>{t('parent.settings.sectionLanguage')}</Text>
               <Text style={styles.sectionDescription}>
                 {t('parent.settings.languageDescription')}
               </Text>
 
               <View style={styles.optionsRow}>
                 <TouchableOpacity
-                  style={[
-                    styles.langPill,
-                    i18n.language === 'en' && styles.pillSelected,
-                  ]}
+                  style={[styles.langPill, i18n.language === 'en' && styles.pillSelected]}
                   onPress={() => handleLanguageChange('en')}
                   accessibilityRole="button"
                   accessibilityLabel={t('parent.settings.languageEn')}
                   accessibilityState={{ selected: i18n.language === 'en' }}
                 >
                   <Text
-                    style={[
-                      styles.pillText,
-                      i18n.language === 'en' && styles.pillTextSelected,
-                    ]}
+                    style={[styles.pillText, i18n.language === 'en' && styles.pillTextSelected]}
                   >
                     {t('parent.settings.languageEn')}
                   </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={[
-                    styles.langPill,
-                    i18n.language === 'zh-Hans' && styles.pillSelected,
-                  ]}
+                  style={[styles.langPill, i18n.language === 'zh-Hans' && styles.pillSelected]}
                   onPress={() => handleLanguageChange('zh-Hans')}
                   accessibilityRole="button"
                   accessibilityLabel={t('parent.settings.languageZh')}
@@ -216,14 +194,12 @@ export default function ParentSettingsScreen() {
               </View>
             </View>
 
-            <Text style={styles.footerInfo}>
-              {t('parent.settings.footerInfo')}
-            </Text>
+            <Text style={styles.footerInfo}>{t('parent.settings.footerInfo')}</Text>
           </>
         )}
       </ScrollView>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -344,4 +320,4 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     lineHeight: 18,
   },
-});
+})

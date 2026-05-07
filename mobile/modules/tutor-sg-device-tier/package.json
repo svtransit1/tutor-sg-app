@@ -1,1 +1,10 @@
-{"name":"tutor-sg-device-tier","version":"0.1.0","private":true,"main":"index.ts","scripts":{"lint":"eslint .","typecheck":"tsc --noEmit"}}
+{
+  "name": "tutor-sg-device-tier",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  }
+}
