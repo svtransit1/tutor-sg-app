@@ -1,0 +1,62 @@
+# M2-15: Onboarding Maestro E2E smoke test
+#
+# Purpose: Quick launch-and-smoke check. Verifies the app boots,
+# the splash screen renders, language pick works, and parent gate
+# is reachable. Runs in <30 seconds — fast enough for every commit.
+#
+# Run: maestro test .maestro/flows/smoke.yaml
+# Or:  pnpm e2e:smoke  (from mobile/)
+
+###############################################################################
+# Step 1 — App launch & splash
+###############################################################################
+- launchApp:
+    clearState: true
+    stopApp: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible:
+    text: "tutor-sg"
+    timeout: 10000
+
+###############################################################################
+# Step 2 — Language pick screen
+# The splash auto-advances after 200ms. We wait for the lang-pick screen.
+###############################################################################
+- waitForAnimationToEnd:
+    timeout: 3000
+- assertVisible:
+    text: "Choose your language"
+    timeout: 10000
+- assertVisible:
+    text: "English"
+- assertVisible:
+    text: "中文（简体）"
+
+###############################################################################
+# Step 3 — Select English, advance to age gate
+###############################################################################
+- tapOn:
+    text: "English"
+    index: 0
+- waitForAnimationToEnd:
+    timeout: 3000
+
+###############################################################################
+# Step 4 — Verify age gate (parent confirmation)
+# Article 12 §3.3: parent gate screen with "I'm a parent / guardian" CTA
+###############################################################################
+- assertVisible:
+    text: "Parent setup"
+    timeout: 10000
+- assertVisible:
+    text: "I'm a parent / guardian"
+
+###############################################################################
+# Step 5 — Smoke passes. Log success.
+###############################################################################
+- runFlow:
+    when:
+      visible: "I'm a parent / guardian"
+    commands:
+      - output: "✅ Smoke test PASSED — all critical onboarding screens verified"

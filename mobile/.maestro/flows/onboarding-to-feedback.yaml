@@ -1,0 +1,228 @@
+# M2-15: Onboarding Maestro E2E — full onboarding to first feedback
+#
+# Purpose: Comprehensive E2E test of the complete 10-step onboarding flow,
+# from splash through to the ready-landing screen and kid home.
+# Requires Java + Maestro CLI + iOS Simulator or Android emulator.
+#
+# Dependency: SiblingPromptScreen component must exist at
+#   src/screens/onboarding/SiblingPromptScreen.tsx
+# (Currently missing — file the flow will fail at step 6 until it exists.)
+#
+# Model download mock auto-completes after ~200s (2 GB at 10 MB/s).
+# Total test duration: ~210–240 seconds.
+#
+# Run: maestro test .maestro/flows/onboarding-to-feedback.yaml
+# Or:  pnpm e2e:full  (from mobile/)
+
+###############################################################################
+# STEP 1/10 — Splash (auto-advance, 200ms)
+# Article 12 §3.1: Brand mark, no copy, hard cap 200ms.
+###############################################################################
+- launchApp:
+    clearState: true
+    stopApp: true
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible:
+    text: "tutor-sg"
+    timeout: 10000
+
+###############################################################################
+# STEP 2/10 — Language Pick
+# Article 12 §3.2: Two large tiles. Tap English.
+###############################################################################
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible:
+    text: "Choose your language"
+    timeout: 10000
+- assertVisible:
+    text: "English"
+- assertVisible:
+    text: "中文（简体）"
+- tapOn:
+    text: "English"
+    index: 0
+- waitForAnimationToEnd:
+    timeout: 3000
+
+###############################################################################
+# STEP 3/10 — Age Gate (Parent confirmation)
+# Article 12 §3.3: "I'm a parent / guardian" CTA
+###############################################################################
+- assertVisible:
+    text: "Parent setup"
+    timeout: 10000
+- assertVisible:
+    text: "I'm a parent / guardian"
+- assertVisible:
+    text: "I'm not — go back"
+- tapOn:
+    text: "I'm a parent / guardian"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+###############################################################################
+# STEP 4/10 — Parent PIN Setup
+# Article 12 §3.4: Two-step 4-digit PIN entry with keypad
+# Strategy: Skip PIN setup (deferrable per spec)
+###############################################################################
+- assertVisible:
+    text: "Set your parent PIN"
+    timeout: 10000
+- assertVisible:
+    text: "Skip — set up later"
+- tapOn:
+    text: "Skip — set up later"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+###############################################################################
+# STEP 5/10 — Grade + Subject Pick
+# Article 12 §3.5: Grade segmented control + subject toggle chips
+# Select P6, all 4 subjects, tap Continue
+###############################################################################
+- assertVisible:
+    text: "What grade is your child in?"
+    timeout: 10000
+- assertVisible:
+    text: "P6"
+- tapOn:
+    text: "P6"
+- waitForAnimationToEnd:
+    timeout: 1000
+- assertVisible:
+    text: "Math"
+- assertVisible:
+    text: "English"
+- assertVisible:
+    text: "中文 (Chinese)"
+- assertVisible:
+    text: "Science"
+- tapOn:
+    text: "Continue"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+###############################################################################
+# STEP 6/10 — Sibling Prompt
+# Article 12 §3.6: Soft prompt, skippable. Tap "Maybe later".
+###############################################################################
+- assertVisible:
+    text: "Got another child who could use this too?"
+    timeout: 10000
+- assertVisible:
+    text: "Maybe later"
+- tapOn:
+    text: "Maybe later"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+###############################################################################
+# STEP 7/10 — Device Tier Result
+# Article 12 §3.7: Device capability detection
+# In simulator, detects as 'high' tier. Tap "Download now".
+###############################################################################
+- assertVisible:
+    text: "Your device is ready!"
+    timeout: 15000
+- assertVisible:
+    text: "Download now"
+- tapOn:
+    text: "Download now"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+###############################################################################
+# STEP 8/10 — Permission Primer
+# Article 12 §3.8: Soft-ask camera + notification permissions
+# Camera step → "Enable camera access" → Notification step → "Allow notifications"
+# → Done "All set!" → "Continue"
+###############################################################################
+# --- Camera step ---
+- assertVisible:
+    text: "Camera access needed"
+    timeout: 10000
+- assertVisible:
+    text: "Enable camera access"
+- tapOn:
+    text: "Enable camera access"
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# --- Notification step ---
+- assertVisible:
+    text: "Notifications"
+    timeout: 10000
+- assertVisible:
+    text: "Allow notifications"
+- tapOn:
+    text: "Allow notifications"
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# --- Done step ---
+- assertVisible:
+    text: "All set!"
+    timeout: 10000
+- assertVisible:
+    text: "Continue"
+- tapOn:
+    text: "Continue"
+- waitForAnimationToEnd:
+    timeout: 3000
+
+###############################################################################
+# STEP 9/10 — Model Download
+# Article 12 §3.9: Download progress, resumable, hash verification
+# Mock simulation: ~200s for 2 GB at 10 MB/s.
+# We wait for the "Continue" button after completion.
+###############################################################################
+- assertVisible:
+    text: "Setting up your tutor..."
+    timeout: 10000
+- assertVisible:
+    text: "Wi-Fi only"
+    timeout: 5000
+
+# Wait for download to complete — mock auto-completes after ~200s
+# The "Continue" button appears when phase === 'completed'
+- waitForAnimationToEnd:
+    timeout: 250000
+
+- assertVisible:
+    text: "Continue"
+    timeout: 300000  # 5 min max — generous for download + verify
+- tapOn:
+    text: "Continue"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+###############################################################################
+# STEP 10/10 — Ready Landing (final onboarding screen)
+# Article 12 §3.10: Camera CTA, subject practice tiles, parent area link
+###############################################################################
+- assertVisible:
+    text: "Snap your homework"
+    timeout: 15000
+- assertVisible:
+    text: "Parent area"
+    timeout: 5000
+
+###############################################################################
+# POST-ONBOARDING — Tap camera CTA, verify transition to kid home
+###############################################################################
+- tapOn:
+    text: "Snap your homework"
+- waitForAnimationToEnd:
+    timeout: 5000
+
+# At this point onboarding complete() is called, router navigates to (kid)/home
+- assertVisible:
+    text: "Snap Homework"
+    timeout: 15000
+
+###############################################################################
+# Final — test passed
+###############################################################################
+- output: "✅ Onboarding-to-feedback E2E PASSED — all 10 steps + kid home verified"
