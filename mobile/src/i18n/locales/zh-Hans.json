@@ -2,8 +2,16 @@
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
-    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。" },
+    "welcome": {
+      "title": "欢迎！",
+      "subtitle": "你的个人学习伙伴",
+      "tagline": "聪明学习，快乐成长！",
+      "cta": "开始使用"
+    },
+    "langPick": {
+      "title": "选择语言",
+      "subtitle": "应用将使用此语言。"
+    },
     "parentGate": {
       "title": "家长设置",
       "body": "这个应用需要爸爸妈妈或监护人先完成设置。请把手机交给大人。",
@@ -28,7 +36,9 @@
       "subtitle": "现在添加，他/她也会有自己的学习记录。",
       "addAnother": "添加",
       "skip": "以后再说",
-      "added": "已添加！您之后可以在设置中添加更多孩子。"
+      "added": "已添加！您之后可以在设置中添加更多孩子。",
+      "addHint": "为家庭计划添加另一个孩子",
+      "skipHint": "跳过，不添加其他孩子"
     },
     "gradePick": {
       "title": "孩子读几年级？",
@@ -54,7 +64,15 @@
         "subjectOff": "未选"
       }
     },
-    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
+    "done": {
+      "title": "准备好了！",
+      "subtitle": "让我们开始学习吧",
+      "greeting": "{{name}}，你好！准备好了吗？",
+      "cameraCta": "拍一下作业",
+      "cameraSubtitle": "拍张照片，立即获取帮助",
+      "practicePrompt": "或试试练习题",
+      "parentArea": "家长专区"
+    },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
@@ -97,8 +115,14 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
-    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+    "dashboard": {
+      "title": "家长面板",
+      "placeholder": "学习记录和进度即将上线"
+    },
+    "settings": {
+      "title": "设置",
+      "placeholder": "语言、质量、模型、隐私"
+    }
   },
   "deviceTierResult": {
     "title": "你的设备已就绪！",
