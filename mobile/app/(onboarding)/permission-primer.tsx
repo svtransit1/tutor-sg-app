@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   stepText: {
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: '600',
     color: '#9CA3AF',
     letterSpacing: 0.5,
@@ -526,7 +526,7 @@ const styles = StyleSheet.create({
   },
   btnNotNowText: {
     color: '#6B7280',
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '500',
   },
 
@@ -548,8 +548,8 @@ const styles = StyleSheet.create({
   },
   deniedText: {
     flex: 1,
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 24,
     color: '#92400E',
   },
   btnSettings: {
@@ -578,13 +578,13 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   privacyIcon: {
-    fontSize: 12,
+    fontSize: 16,
     marginRight: 6,
   },
   privacyText: {
-    fontSize: 12,
+    fontSize: 16,
     color: '#9CA3AF',
-    lineHeight: 16,
+    lineHeight: 24,
     flex: 1,
   },
 
@@ -625,12 +625,12 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     flex: 1,
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '500',
     color: '#374151',
   },
   summaryStatus: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
     color: '#6B7280',
   },
