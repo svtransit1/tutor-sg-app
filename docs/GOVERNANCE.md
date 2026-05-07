@@ -14,8 +14,8 @@ Agent ↔ GitHub account mapping and review rules. Per ADD §11 and [[decisions-
 | 🎨 Flutter | UX              | TBD                      | Onboarding, camera UX, homework log UI, IAP screens       |
 | 🌿 Sage   | Content           | TBD                      | Syllabus content, Chinese MT, question generation         |
 
-> **BLOCKED:** Bot accounts (Tortoise, and any others) need Boss provisioning. Tortoise GitHub handle is a placeholder.
-> Update this table when accounts are created. Tracked by Boss approval 67b2d57e.
+> **NOTE:** Tortoise GitHub handle `@tortoise-tutor-sg` is a placeholder — bot account not yet provisioned.
+> Update this table when accounts are created. CODEOWNERS uses the placeholder; branch protection uses `svtransit1` account temporarily.
 
 ## Review rules (from ADD §11)
 
@@ -27,17 +27,19 @@ Agent ↔ GitHub account mapping and review rules. Per ADD §11 and [[decisions-
 
 | Rule                        | Value                    |
 |-----------------------------|--------------------------|
+| Rule                        | Value                    |
+|-----------------------------|--------------------------|
 | Require PR review           | 1 approval               |
-| Required reviewer           | Tortoise                 |
-| Require CI checks           | `ci.yml` (M0-2)          |
+| Required approval reviewer  | svtransit1 (temporary — replace with Tortoise when provisioned) |
+| Require CI checks           | `test / ci` (from .github/workflows/ci.yml) |
+| Require CODEOWNERS review   | Enabled                  |
 | Allow force-push            | Disabled                 |
 | Allow deletions             | Disabled                 |
 | Require linear history      | Enabled                  |
-| Require conversation resolution | Enabled              |
+| Enforce admins              | Enabled                  |
 
-> **BLOCKED:** Branch protection rules cannot be applied via GitHub API until Tortoise bot account exists
-> and is a member of the `svtransit1/tutor-sg-app` repo with write access.
-> Enable these rules manually or via `gh` CLI once Tortoise is provisioned.
+> ✅ **Active** — enabled 2026-05-07 via `gh api`.
+> **Remaining:** Replace `svtransit1` required reviewer with Tortoise bot account once provisioned (Boss approval 67b2d57e).
 
 ## Branch conventions (from ADD §11)
 
