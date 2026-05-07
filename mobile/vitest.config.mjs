@@ -12,5 +12,10 @@ export default defineConfig({
     coverage: { provider: 'v8', include: ['src/**/*.(ts|tsx)'], exclude: ['src/**/*.types.ts', 'src/**/__tests__/**', 'src/i18n/**', 'src/components/**', 'src/services/**'], thresholds: { lines: 0, branches: 0, functions: 0 } },
     testTimeout: 30000,
   },
-  resolve: { alias: { '@': path.resolve(__dirname, 'src') } },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      'react-native': path.resolve(__dirname, '__mocks__/react-native.cjs'),
+    },
+  },
 });

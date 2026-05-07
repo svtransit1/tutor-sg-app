@@ -14,7 +14,8 @@
     "e2e": "maestro test .maestro/flows",
     "e2e:full": "maestro test .maestro/flows/onboarding-to-feedback.yaml",
     "e2e:detox:build": "pnpm exec detox build --configuration ios.sim.debug",
-    "e2e:detox:test": "pnpm exec detox test --configuration ios.sim.debug --cleanup"
+    "e2e:detox:test": "pnpm exec detox test --configuration ios.sim.debug --cleanup",
+    "test:vitest": "vitest run --config vitest.config.mjs"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
@@ -59,6 +60,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-test-renderer": "^19.1.0",
-    "ts-jest": "^29.4.9"
+    "ts-jest": "^29.4.9",
+    "vitest": "^4.1.5",
+    "vite": "^6.0.0"
   }
 }
