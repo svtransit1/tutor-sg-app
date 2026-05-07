@@ -5,6 +5,6 @@
     "rootDir": ".",
     "jsx": "react-jsx"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "__mocks__/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
