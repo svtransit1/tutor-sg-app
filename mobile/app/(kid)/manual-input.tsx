@@ -28,10 +28,10 @@ import {
   useColorScheme,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import DrawingCanvas, { type Stroke } from '@/components/DrawingCanvas';
+import { Skeleton } from '@/components/Skeleton';
 import {
   saveDraft,
   loadDraft,
@@ -397,18 +397,28 @@ export default function ManualInputFallbackScreen() {
     );
   }
 
-  // ── Empty state ───────────────────────────────────────────────
+  // ── Loading state (items not yet parsed / draft loading) ───────
 
-  if (items.length === 0) {
+  if (items.length === 0 && !parseError) {
     return (
       <View
         style={[
           styles.container,
-          styles.centerContent,
           { backgroundColor: isDark ? '#121212' : '#F8F9FA' },
         ]}
       >
-        <ActivityIndicator size="large" color={isDark ? '#90CAF9' : '#4A90D9'} />
+        <View style={[styles.header, { paddingTop: 56, backgroundColor: isDark ? '#1A1A1A' : '#FFFFFF' }]}>
+          <Skeleton width={160} height={18} borderRadius={4} isDark={isDark} style={{ marginBottom: 8 }} />
+          <Skeleton width="100%" height={14} borderRadius={4} isDark={isDark} style={{ marginBottom: 16 }} />
+          <Skeleton width={120} height={38} borderRadius={10} isDark={isDark} style={{ marginBottom: 8 }} />
+        </View>
+        <View style={[styles.scrollArea, { padding: 16 }]}>
+          <Skeleton.Card height={140} isDark={isDark} style={{ marginBottom: 12 }} />
+          <Skeleton.Card height={140} isDark={isDark} style={{ marginBottom: 12 }} />
+          <View style={{ paddingHorizontal: 16, paddingTop: 8 }}>
+            <Skeleton width="100%" height={48} borderRadius={14} isDark={isDark} />
+          </View>
+        </View>
       </View>
     );
   }

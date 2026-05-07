@@ -33,6 +33,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getRecentSessions } from '@/storage/sessions';
 import type { KidSession } from '@/storage/sessions';
+import { Skeleton } from '@/components/Skeleton';
 import {
   isFirstHomeVisit,
   markFirstHomeVisitComplete,
@@ -85,6 +86,7 @@ export default function KidHomeScreen() {
   const isDark = useColorScheme() === 'dark';
 
   const [sessions, setSessions] = useState<KidSession[]>([]);
+  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   // Welcome banner visibility — shown on first-ever home screen visit
@@ -112,6 +114,7 @@ export default function KidHomeScreen() {
       const firstVisit = isFirstHomeVisit();
       setShowWelcome(firstVisit);
       setWelcomeInitDone(true);
+      setLoading(false);
     });
   }, [loadSessions]);
 
@@ -297,8 +300,15 @@ export default function KidHomeScreen() {
           </View>
         </TouchableOpacity>
 
-        {/* Bottom Section: Welcome Banner OR Recent Sessions */}
-        {welcomeInitDone && showWelcome && sessions.length === 0 ? (
+        {/* Bottom Section: Loading Skeleton OR Welcome Banner OR Recent Sessions */}
+        {loading ? (
+          <View style={styles.recentSection}>
+            <Skeleton width={120} height={20} borderRadius={4} isDark={isDark} style={{ marginBottom: 12 }} />
+            <Skeleton.Card height={80} isDark={isDark} style={{ marginBottom: 10 }} />
+            <Skeleton.Card height={80} isDark={isDark} style={{ marginBottom: 10 }} />
+            <Skeleton.Card height={80} isDark={isDark} />
+          </View>
+        ) : welcomeInitDone && showWelcome && sessions.length === 0 ? (
           /* ── First-Session Welcome Hero ── */
           <View
             style={[
