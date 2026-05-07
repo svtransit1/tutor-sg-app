@@ -1,6 +1,10 @@
 {
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
+  "common": {
+    "back": "Back",
+    "loading": "Loading…"
+  },
   "onboarding": {
     "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
     "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language." },
@@ -67,6 +71,16 @@
     "cellularCancel": "Wait for Wi-Fi",
     "loading": "Checking your device…",
     "error": "Could not detect device capabilities. Please try again."
+  },
+  "history": {
+    "title": "My Sessions",
+    "empty": "No sessions yet.",
+    "loadMore": "Load more",
+    "noMore": "That's all your sessions",
+    "accessibility": {
+      "sessionItem": "{{subject}}, {{time}} ago, {{questions}} questions",
+      "loadMoreButton": "Show more past sessions"
+    }
   },
   "kidHome": {
     "header": {

@@ -88,3 +88,46 @@ export async function getSessionCount(): Promise<number> {
   );
   return row?.count ?? 0;
 }
+
+/**
+ * Get a paginated page of sessions for the history screen.
+ * Returns { sessions, total, hasMore } for easy FlatList pagination.
+ */
+export async function getPaginatedSessions(
+  page: number,
+  pageSize: number = 20,
+): Promise<{
+  sessions: KidSession[];
+  total: number;
+  hasMore: boolean;
+}> {
+  const db = await getDb();
+  const offset = (page - 1) * pageSize;
+
+  const countRow = await db.getFirstAsync<{ count: number }>(
+    'SELECT COUNT(*) as count FROM kid_sessions',
+  );
+  const total = countRow?.count ?? 0;
+
+  const rows = await db.getAllAsync<{
+    id: number;
+    subject: string;
+    question_count: number;
+    created_at: string;
+  }>(
+    'SELECT id, subject, question_count, created_at FROM kid_sessions ORDER BY created_at DESC LIMIT ? OFFSET ?',
+    pageSize,
+    offset,
+  );
+
+  return {
+    sessions: rows.map((r) => ({
+      id: r.id,
+      subject: r.subject as KidSession['subject'],
+      questionCount: r.question_count,
+      createdAt: r.created_at,
+    })),
+    total,
+    hasMore: offset + pageSize < total,
+  };
+}
