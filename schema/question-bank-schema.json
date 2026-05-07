@@ -72,7 +72,7 @@
               "multiple_choice", "fill_in_blank", "short_answer",
               "structured", "open_ended", "oral", "composition",
               "comprehension", "dictation", "cloze", "sentence_formation",
-              "picture_description", "stroke_order"
+              "picture_description", "stroke_order", "dialogue_completion"
             ]
           },
           "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },

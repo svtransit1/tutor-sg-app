@@ -877,18 +877,75 @@ def gen_p6_psle_listening(vocab_batch, qc, topic_id):
                        moed_code="C-P6-LC-01"))
     return qq
 
+def gen_p4_dialogue(vocab_batch, qc, topic_id):
+    qs = []
+    dialogs = [
+        dict(zh="A：请问，图书馆怎么走？\nB：你一直往前走，在___左转就到了。（路口/学校/医院）",
+             en="A: Excuse me, how do I get to the library?\nB: Go straight ahead and turn left at the ___. (crossroad/school/hospital)",
+             ans="路口", ans_en="crossroad"),
+        dict(zh="A：你要不要一起去吃午餐？\nB：好呀，___吃？（去哪里/吃什么/什么时候）",
+             en="A: Do you want to have lunch together?\nB: Sure, where ___? (to go/to eat/when)",
+             ans="去哪里", ans_en="to go"),
+        dict(zh="A：这个周末你有空吗？\nB：星期六我要___，星期天可以。（上补习班/去学校/做功课）",
+             en="A: Are you free this weekend?\nB: I have ___ on Saturday, but Sunday is fine. (tuition/go to school/homework)",
+             ans="上补习班", ans_en="tuition"),
+    ]
+    qq = []
+    for d in dialogs:
+        qid = qc[0]; qc[0] += 1
+        qq.append(dict(question_id=f"Q-CHI-P4-{qid:04d}",topic_id=topic_id,level=4,subject="chinese",
+                       question_type="dialogue_completion",difficulty="medium",
+                       stem_en=f"Complete the dialogue:\n{d['en']}",
+                       stem_zh=f"完成对话：\n{d['zh']}",
+                       answer_en=d['ans_en'], answer_zh=d['ans'],
+                       explanation_en="Read the full dialogue context before filling the blank.",
+                       explanation_zh="先理解整个对话的上下文再填空。",
+                       tags=["dialogue-completion","p4"], hints=[],
+                       moed_code="C-P4-DC-01"))
+    return qq
+
+def gen_p5_dialogue(vocab_batch, qc, topic_id):
+    qs = []
+    dialogs = [
+        dict(zh="A：你觉得我们应该参加这次义工活动吗？\nB：当然应该！帮助别人是一件___的事。（有意义/麻烦/容易）",
+             en="A: Do you think we should join this volunteer activity?\nB: Of course! Helping others is a ___ thing. (meaningful/troublesome/easy)",
+             ans="有意义", ans_en="meaningful"),
+        dict(zh="A：这次考试你准备得怎么样？\nB：我已经复习了___，应该没问题。（好几次/一遍/很久）",
+             en="A: How is your exam preparation going?\nB: I have reviewed ___ times, should be fine. (several/once/a long time)",
+             ans="好几次", ans_en="several"),
+    ]
+    qq = []
+    for d in dialogs:
+        qid = qc[0]; qc[0] += 1
+        qq.append(dict(question_id=f"Q-CHI-P5-{qid:04d}",topic_id=topic_id,level=5,subject="chinese",
+                       question_type="dialogue_completion",difficulty="medium",
+                       stem_en=f"Complete the dialogue:\n{d['en']}",
+                       stem_zh=f"完成对话：\n{d['zh']}",
+                       answer_en=d['ans_en'], answer_zh=d['ans'],
+                       explanation_en="Consider the speakers' relationship and context before answering.",
+                       explanation_zh="考虑说话者的关系和上下文后再回答。",
+                       tags=["dialogue-completion","p5","psle-format"], hints=[],
+                       moed_code="C-P5-DC-01"))
+    return qq
+
 def gen_p6_psle_dialogue(vocab_batch, qc, topic_id):
     qs = []
-    dialogues = [
+    dialogs = [
         dict(zh="A：明天是你的生日，你有什么打算？\nB：我打算和家人在___。（吃饭/去学校/做功课）",
              en="A: Tomorrow is your birthday. Any plans?\nB: I plan to ___ with my family. (eat out/go to school/do homework)",
              ans="吃饭", ans_en="eat out"),
+        dict(zh="A：你觉得我们应该如何保护环境？\nB：我认为每人从小事做起，比如减少使用___。（塑料袋/书本/电视）",
+             en="A: How do you think we should protect the environment?\nB: I think everyone can start with small things, like reducing ___ use. (plastic bags/books/TV)",
+             ans="塑料袋", ans_en="plastic bags"),
+        dict(zh="A：你为什么想当班长？\nB：因为我想帮助老师，也为同学___。（服务/考试/玩）",
+             en="A: Why do you want to be class monitor?\nB: Because I want to help the teacher and ___ classmates. (serve/exam/play)",
+             ans="服务", ans_en="serve"),
     ]
     qq = []
-    for d in dialogues:
+    for d in dialogs:
         qid = qc[0]; qc[0] += 1
         qq.append(dict(question_id=f"Q-CHI-P6-{qid:04d}",topic_id=topic_id,level=6,subject="chinese",
-                       question_type="cloze",difficulty="medium",
+                       question_type="dialogue_completion",difficulty="medium",
                        stem_en=f"Complete the dialogue:\n{d['en']}",
                        stem_zh=f"完成对话：\n{d['zh']}",
                        answer_en=d['ans_en'], answer_zh=d['ans'],
@@ -942,32 +999,34 @@ def generate():
         for i in range(2): qs.extend(gen_p2_oral(P2_VOCAB, qc, tid))
         all_questions.extend(qs)
 
-    # P3: 5 topics, need ~793 more (target 800). ~52 qs/topic/iter, 3 iters ≈ 780
+    # P3: 5 topics, need >800. ~52 qs/topic/iter, 4 iters ≈ 1040
     for tid, lvl in sorted(topic_map.items()):
         if lvl != 3: continue
         print(f"P3 topic: {tid}")
         qs = []
-        for i in range(3): qs.extend(gen_p3_vocab_idiom(P3_VOCAB, qc, tid))
-        for i in range(3): qs.extend(gen_p3_comprehension(P3_VOCAB, qc, tid))
-        for i in range(3): qs.extend(gen_p3_conjunction(P3_VOCAB, qc, tid))
-        for i in range(3): qs.extend(gen_p3_composition(P3_VOCAB, qc, tid))
-        for i in range(3): qs.extend(gen_p3_oral(P3_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p3_vocab_idiom(P3_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p3_comprehension(P3_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p3_conjunction(P3_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p3_composition(P3_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p3_oral(P3_VOCAB, qc, tid))
         all_questions.extend(qs)
 
-    # P4: 6 topics, need ~792 more (target 800). ~40 qs/topic/iter, 3 iters ≈ 720
+    # P4: 6 topics, need >800. ~40 qs/topic/iter, 4 iters ≈ 960
     for tid, lvl in sorted(topic_map.items()):
         if lvl != 4: continue
         print(f"P4 topic: {tid}")
         qs = []
-        for i in range(3): qs.extend(gen_p4_vocab_context(P4_VOCAB, qc, tid))
-        for i in range(3): qs.extend(gen_p4_comprehension(P4_VOCAB, qc, tid))
-        for i in range(3): qs.extend(gen_p4_cloze(P4_VOCAB, qc, tid))
-        for i in range(3): qs.extend(gen_p4_narrative(P4_VOCAB, qc, tid))
-        for i in range(3): qs.extend(gen_p4_oral_conversation(P4_VOCAB, qc, tid))
-        for i in range(3): qs.extend(gen_p4_grammar(P4_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p4_vocab_context(P4_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p4_comprehension(P4_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p4_cloze(P4_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p4_narrative(P4_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p4_oral_conversation(P4_VOCAB, qc, tid))
+        for i in range(4): qs.extend(gen_p4_grammar(P4_VOCAB, qc, tid))
+        # P4 dialogue completion
+        for i in range(4): qs.extend(gen_p4_dialogue(P4_VOCAB, qc, tid))
         all_questions.extend(qs)
 
-    # P5: 6 topics, need ~1192 more (target 1200). ~46 qs/topic/iter, 5 iters ≈ 1380
+    # P5: 6 topics, need >1200. ~46 qs/topic/iter, 5 iters ≈ 1380
     for tid, lvl in sorted(topic_map.items()):
         if lvl != 5: continue
         print(f"P5 topic: {tid}")
@@ -977,21 +1036,23 @@ def generate():
         for i in range(5): qs.extend(gen_p5_cloze_advanced(P5_VOCAB, qc, tid))
         for i in range(5): qs.extend(gen_p5_composition(P5_VOCAB, qc, tid))
         for i in range(5): qs.extend(gen_p5_oral_exam(P5_VOCAB, qc, tid) or [])
-        for i in range(4): qs.extend(gen_p5_grammar_advanced(P5_VOCAB, qc, tid))
+        for i in range(5): qs.extend(gen_p5_grammar_advanced(P5_VOCAB, qc, tid))
+        # P5 dialogue completion
+        for i in range(5): qs.extend(gen_p5_dialogue(P5_VOCAB, qc, tid))
         all_questions.extend(qs)
 
-    # P6: 7 topics, need ~1190 more (target 1200). ~49 qs/topic/iter, 4 iters ≈ 1372
+    # P6: 7 topics, need >1200. ~49 qs/topic/iter, 5 iters ≈ 1715
     for tid, lvl in sorted(topic_map.items()):
         if lvl != 6: continue
         print(f"P6 topic: {tid}")
         qs = []
-        for i in range(4): qs.extend(gen_p6_psle_vocab(P6_VOCAB, qc, tid))
-        for i in range(4): qs.extend(gen_p6_psle_comprehension(P6_VOCAB, qc, tid))
-        for i in range(4): qs.extend(gen_p6_psle_cloze(P6_VOCAB, qc, tid))
-        for i in range(4): qs.extend(gen_p6_psle_composition(P6_VOCAB, qc, tid))
-        for i in range(4): qs.extend(gen_p6_psle_oral(P6_VOCAB, qc, tid) or [])
-        for i in range(4): qs.extend(gen_p6_psle_listening(P6_VOCAB, qc, tid))
-        for i in range(4): qs.extend(gen_p6_psle_dialogue(P6_VOCAB, qc, tid))
+        for i in range(5): qs.extend(gen_p6_psle_vocab(P6_VOCAB, qc, tid))
+        for i in range(5): qs.extend(gen_p6_psle_comprehension(P6_VOCAB, qc, tid))
+        for i in range(5): qs.extend(gen_p6_psle_cloze(P6_VOCAB, qc, tid))
+        for i in range(5): qs.extend(gen_p6_psle_composition(P6_VOCAB, qc, tid))
+        for i in range(5): qs.extend(gen_p6_psle_oral(P6_VOCAB, qc, tid) or [])
+        for i in range(5): qs.extend(gen_p6_psle_listening(P6_VOCAB, qc, tid))
+        for i in range(5): qs.extend(gen_p6_psle_dialogue(P6_VOCAB, qc, tid))
         all_questions.extend(qs)
 
     print(f"\nTotal generated: {len(all_questions)} questions")
