@@ -13,9 +13,7 @@ import type {
 
 // ─── Helpers ─────────────────────────────────────────────────────────
 
-function makeNetworkAdapter(
-  initialType: NetworkState['type'] = 'wifi',
-): NetworkAdapter {
+function makeNetworkAdapter(initialType: NetworkState['type'] = 'wifi'): NetworkAdapter {
   return {
     getNetworkState: vi.fn(async () => ({
       type: initialType,
@@ -55,9 +53,7 @@ class TestFS {
  * Adapter that uses deferred progress to simulate real download timing,
  * backed by an in-memory filesystem.
  */
-function makeAsyncAdapter(
-  delayMs = 20,
-): { adapter: FileDownloadAdapter; fs: TestFS } {
+function makeAsyncAdapter(delayMs = 20): { adapter: FileDownloadAdapter; fs: TestFS } {
   const fs = new TestFS();
   const adapter: FileDownloadAdapter = {
     fileExists: vi.fn(async (path) => fs.exists(path)),
@@ -65,10 +61,7 @@ function makeAsyncAdapter(
     deleteFile: vi.fn(async (path) => fs.delete(path)),
     moveFile: vi.fn(async (from, to) => fs.move(from, to)),
     getFreeSpace: vi.fn(async () => 100_000_000_000),
-    sha256: vi.fn(
-      async () =>
-        'abc123def456abc123def456abc123def456abc123def456abc123def456abc1',
-    ),
+    sha256: vi.fn(async () => 'abc123def456abc123def456abc123def456abc123def456abc123def456abc1'),
     downloadRange: vi.fn(async (opts) => {
       // Simulate download in chunks with delays, checking for abort
       const chunks = 3;
@@ -89,10 +82,7 @@ function makeAsyncAdapter(
             retryable: false,
           };
         }
-        opts.onProgress?.(
-          Math.round((opts.expectedSize * i) / chunks),
-          opts.expectedSize,
-        );
+        opts.onProgress?.(Math.round((opts.expectedSize * i) / chunks), opts.expectedSize);
       }
       // Write the completed file to the in-memory filesystem
       fs.write(opts.destPath, opts.expectedSize);
@@ -118,18 +108,14 @@ function makeConfig(
   };
 }
 
-function addTestModel(
-  manager: ModelDownloadManager,
-  modelId: string,
-): void {
+function addTestModel(manager: ModelDownloadManager, modelId: string): void {
   manager.addToQueue({
     modelId,
     url: `https://cdn.example.com/${modelId}.gguf`,
     destinationPath: `/models/${modelId}.gguf`,
     tempPath: `/tmp/${modelId}.gguf.partial`,
     expectedSize: 1_000_000,
-    expectedSha256:
-      'abc123def456abc123def456abc123def456abc123def456abc123def456abc1',
+    expectedSha256: 'abc123def456abc123def456abc123def456abc123def456abc123def456abc1',
   });
 }
 
@@ -203,9 +189,7 @@ describe('ModelDownloadManager', () => {
   describe('pause and resume', () => {
     it('should allow pausing a running download', async () => {
       const { adapter } = makeAsyncAdapter(200); // 200ms total download
-      const manager = new ModelDownloadManager(
-        makeConfig({ fileAdapter: adapter }),
-      );
+      const manager = new ModelDownloadManager(makeConfig({ fileAdapter: adapter }));
       addTestModel(manager, 'slow-model');
 
       // startAll returns when the item is paused (since state !== 'completed')
@@ -233,9 +217,7 @@ describe('ModelDownloadManager', () => {
 
     it('should not affect completed items on pause', async () => {
       const { adapter } = makeAsyncAdapter(10);
-      const manager = new ModelDownloadManager(
-        makeConfig({ fileAdapter: adapter }),
-      );
+      const manager = new ModelDownloadManager(makeConfig({ fileAdapter: adapter }));
       addTestModel(manager, 'gemma-e2b');
       await manager.startAll();
 
@@ -258,12 +240,8 @@ describe('ModelDownloadManager', () => {
 
   describe('tempPathForModel', () => {
     it('should append .partial to the destination path', () => {
-      expect(tempPathForModel('/models/gemma.gguf')).toBe(
-        '/models/gemma.gguf.partial',
-      );
-      expect(tempPathForModel('/models/qwen.gguf')).toBe(
-        '/models/qwen.gguf.partial',
-      );
+      expect(tempPathForModel('/models/gemma.gguf')).toBe('/models/gemma.gguf.partial');
+      expect(tempPathForModel('/models/qwen.gguf')).toBe('/models/qwen.gguf.partial');
     });
   });
 
@@ -274,7 +252,13 @@ describe('ModelDownloadManager', () => {
       // Track URLs while keeping the existing file-writing behavior
       const origFn = adapter.downloadRange as ReturnType<typeof vi.fn>;
       origFn.mockImplementation(
-        async (opts: { url: string; destPath: string; expectedSize: number; onProgress?: (a: number, b: number) => void; signal?: AbortSignal }) => {
+        async (opts: {
+          url: string;
+          destPath: string;
+          expectedSize: number;
+          onProgress?: (a: number, b: number) => void;
+          signal?: AbortSignal;
+        }) => {
           downloadCalls.push(opts.url);
           // Write the file so getFileSize returns the right value
           fs.write(opts.destPath, opts.expectedSize);
@@ -283,9 +267,7 @@ describe('ModelDownloadManager', () => {
         },
       );
 
-      const manager = new ModelDownloadManager(
-        makeConfig({ fileAdapter: adapter }),
-      );
+      const manager = new ModelDownloadManager(makeConfig({ fileAdapter: adapter }));
       addTestModel(manager, 'model-a');
       addTestModel(manager, 'model-b');
 

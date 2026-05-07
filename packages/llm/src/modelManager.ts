@@ -64,10 +64,7 @@ export class ModelDownloadManager {
 
     // Abort all active downloads
     for (const item of this.items.values()) {
-      if (
-        item.state === 'downloading' ||
-        item.state === 'pending_cellular_approval'
-      ) {
+      if (item.state === 'downloading' || item.state === 'pending_cellular_approval') {
         item.abortController.abort();
       }
     }
@@ -150,11 +147,7 @@ export class ModelDownloadManager {
   resume(modelId: string): void {
     const item = this.items.get(modelId);
     if (!item) return;
-    if (
-      item.state === 'paused' ||
-      item.state === 'failed' ||
-      item.state === 'idle'
-    ) {
+    if (item.state === 'paused' || item.state === 'failed' || item.state === 'idle') {
       item.state = 'idle'; // Reset for re-queue
       this.startItem(item).catch(() => {});
     }
@@ -177,9 +170,7 @@ export class ModelDownloadManager {
 
   /** Get a snapshot of all download queue items. */
   getAllItems(): DownloadQueueItem[] {
-    return this.queue
-      .map((id) => this.items.get(id)!)
-      .filter(Boolean);
+    return this.queue.map((id) => this.items.get(id)!).filter(Boolean);
   }
 
   /** Get a single item by model ID. */
@@ -288,11 +279,7 @@ export class ModelDownloadManager {
   }
 
   private notifyStateChange(item: DownloadQueueItem): void {
-    this.config.onStateChange?.(
-      item.modelId,
-      item.state,
-      item.progress,
-    );
+    this.config.onStateChange?.(item.modelId, item.state, item.progress);
   }
 }
 

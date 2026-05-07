@@ -33,10 +33,8 @@ ReactNative.Dimensions = {
 
 ReactNative.View = (props) => React.createElement('View', props, props.children);
 ReactNative.Text = (props) => React.createElement('Text', props, props.children);
-ReactNative.ScrollView = (props) =>
-  React.createElement('ScrollView', props, props.children);
-ReactNative.SafeAreaView = (props) =>
-  React.createElement('SafeAreaView', props, props.children);
+ReactNative.ScrollView = (props) => React.createElement('ScrollView', props, props.children);
+ReactNative.SafeAreaView = (props) => React.createElement('SafeAreaView', props, props.children);
 ReactNative.ActivityIndicator = (props) =>
   React.createElement('ActivityIndicator', props, props.children);
 ReactNative.StatusBar = (props) => React.createElement('StatusBar', props);
@@ -46,11 +44,7 @@ ReactNative.TouchableOpacity = (props) =>
 function MockPressable({ children, style, onPress, ...rest }) {
   const [pressed, setPressed] = React.useState(false);
   const resolvedStyle = typeof style === 'function' ? style({ pressed }) : style;
-  return React.createElement(
-    'Pressable',
-    { ...rest, style: resolvedStyle, onPress },
-    children,
-  );
+  return React.createElement('Pressable', { ...rest, style: resolvedStyle, onPress }, children);
 }
 ReactNative.Pressable = MockPressable;
 ReactNative.KeyboardAvoidingView = (props) =>

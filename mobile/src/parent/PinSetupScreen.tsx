@@ -12,13 +12,7 @@
  * Accessibility: VoiceOver/TalkBack labels on all interactive elements.
  */
 import React, { useState, useCallback } from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  type TextStyle,
-} from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useI18n } from '@tutor-sg/i18n';
 import { savePin } from './pin-storage';
 
@@ -45,13 +39,8 @@ interface PinSetupScreenProps {
 
 function DigitSlot({ filled, label }: { filled: boolean; label: string }) {
   return (
-    <View
-      style={[styles.digitSlot, filled && styles.digitSlotFilled]}
-      accessibilityLabel={label}
-    >
-      <Text style={[styles.digitText, filled && styles.digitTextFilled]}>
-        {filled ? '●' : ''}
-      </Text>
+    <View style={[styles.digitSlot, filled && styles.digitSlotFilled]} accessibilityLabel={label}>
+      <Text style={[styles.digitText, filled && styles.digitTextFilled]}>{filled ? '●' : ''}</Text>
     </View>
   );
 }
@@ -71,23 +60,13 @@ function KeypadButton({
 }) {
   return (
     <Pressable
-      style={({ pressed }) => [
-        styles.keypadBtn,
-        pressed && styles.keypadBtnPressed,
-      ]}
+      style={({ pressed }) => [styles.keypadBtn, pressed && styles.keypadBtnPressed]}
       onPress={() => onPress(value)}
       disabled={disabled}
       accessibilityRole="button"
       accessibilityLabel={label}
     >
-      <Text
-        style={[
-          styles.keypadBtnText,
-          value === '⌫' && styles.keypadBackspace,
-        ]}
-      >
-        {value}
-      </Text>
+      <Text style={[styles.keypadBtnText, value === '⌫' && styles.keypadBackspace]}>{value}</Text>
     </Pressable>
   );
 }
@@ -211,9 +190,7 @@ export default function PinSetupScreen({
 
         {/* Step label */}
         <Text style={styles.stepLabel}>
-          {step === 'enter'
-            ? t('parent:pin_setup')
-            : t('parent:pin_confirm')}
+          {step === 'enter' ? t('parent:pin_setup') : t('parent:pin_confirm')}
         </Text>
 
         {/* Mismatch error */}
@@ -228,12 +205,7 @@ export default function PinSetupScreen({
         )}
 
         {/* PIN digit slots */}
-        <View
-          style={[
-            styles.pinRow,
-            mismatch && styles.pinRowError,
-          ]}
-        >
+        <View style={[styles.pinRow, mismatch && styles.pinRowError]}>
           {Array.from({ length: PIN_LENGTH }).map((_, i) => (
             <DigitSlot
               key={i}
@@ -282,9 +254,7 @@ export default function PinSetupScreen({
             accessibilityLabel={t('parent:back_to_enter')}
             hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
           >
-            <Text style={styles.backLinkText}>
-              ← {t('parent:pin_setup')}
-            </Text>
+            <Text style={styles.backLinkText}>← {t('parent:pin_setup')}</Text>
           </Pressable>
         )}
 
@@ -297,9 +267,7 @@ export default function PinSetupScreen({
             accessibilityLabel={t('parent:skip_pin_setup')}
             hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
           >
-            <Text style={styles.skipLinkText}>
-              {t('parent:skip_pin_setup')}
-            </Text>
+            <Text style={styles.skipLinkText}>{t('parent:skip_pin_setup')}</Text>
           </Pressable>
         )}
       </View>
@@ -487,4 +455,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textDecorationLine: 'underline',
   },
-} as TextStyle);
+});

@@ -13,19 +13,9 @@
  * Accessibility: VoiceOver/TalkBack labels on all interactive elements.
  */
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  type TextStyle,
-} from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useI18n } from '@tutor-sg/i18n';
-import {
-  verifyPin,
-  MAX_FAILED_ATTEMPTS,
-  COOLDOWN_SECONDS,
-} from './pin-storage';
+import { verifyPin, MAX_FAILED_ATTEMPTS, COOLDOWN_SECONDS } from './pin-storage';
 
 // ── Constants ──────────────────────────────────────────────────────
 
@@ -44,13 +34,8 @@ interface PinGateScreenProps {
 
 function DigitSlot({ filled, label }: { filled: boolean; label: string }) {
   return (
-    <View
-      style={[styles.digitSlot, filled && styles.digitSlotFilled]}
-      accessibilityLabel={label}
-    >
-      <Text style={[styles.digitText, filled && styles.digitTextFilled]}>
-        {filled ? '●' : ''}
-      </Text>
+    <View style={[styles.digitSlot, filled && styles.digitSlotFilled]} accessibilityLabel={label}>
+      <Text style={[styles.digitText, filled && styles.digitTextFilled]}>{filled ? '●' : ''}</Text>
     </View>
   );
 }
@@ -70,41 +55,27 @@ function KeypadButton({
 }) {
   return (
     <Pressable
-      style={({ pressed }) => [
-        styles.keypadBtn,
-        pressed && styles.keypadBtnPressed,
-      ]}
+      style={({ pressed }) => [styles.keypadBtn, pressed && styles.keypadBtnPressed]}
       onPress={() => onPress(value)}
       disabled={disabled}
       accessibilityRole="button"
       accessibilityLabel={label}
     >
-      <Text
-        style={[
-          styles.keypadBtnText,
-          value === '⌫' && styles.keypadBackspace,
-        ]}
-      >
-        {value}
-      </Text>
+      <Text style={[styles.keypadBtnText, value === '⌫' && styles.keypadBackspace]}>{value}</Text>
     </Pressable>
   );
 }
 
 // ── Screen Component ───────────────────────────────────────────────
 
-export default function PinGateScreen({
-  onAuthenticated,
-  onDismiss,
-}: PinGateScreenProps) {
+export default function PinGateScreen({ onAuthenticated, onDismiss }: PinGateScreenProps) {
   const { t } = useI18n();
 
   // ── State ──────────────────────────────────────────────────
 
   const [pin, setPin] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const [remainingAttempts, setRemainingAttempts] =
-    useState<number>(MAX_FAILED_ATTEMPTS);
+  const [remainingAttempts, setRemainingAttempts] = useState<number>(MAX_FAILED_ATTEMPTS);
   const [lockedUntil, setLockedUntil] = useState<number | null>(null);
   const [cooldownSecs, setCooldownSecs] = useState(0);
   const [verifying, setVerifying] = useState(false);
@@ -123,10 +94,7 @@ export default function PinGateScreen({
     }
 
     const tick = () => {
-      const remaining = Math.max(
-        0,
-        Math.ceil((lockedUntil - Date.now()) / 1000),
-      );
+      const remaining = Math.max(0, Math.ceil((lockedUntil - Date.now()) / 1000));
       setCooldownSecs(remaining);
       if (remaining <= 0) {
         setLockedUntil(null);
@@ -249,12 +217,7 @@ export default function PinGateScreen({
         )}
 
         {/* PIN digit slots */}
-        <View
-          style={[
-            styles.pinRow,
-            error && styles.pinRowError,
-          ]}
-        >
+        <View style={[styles.pinRow, !!error && styles.pinRowError]}>
           {Array.from({ length: PIN_LENGTH }).map((_, i) => (
             <DigitSlot
               key={i}
@@ -478,4 +441,4 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
   },
-} as TextStyle);
+});

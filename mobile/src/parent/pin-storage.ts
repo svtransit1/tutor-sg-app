@@ -50,9 +50,7 @@ export async function isPinSet(): Promise<boolean> {
  * Returns an object with { success, remainingAttempts, lockedUntil }.
  * Implements cooldown: MAX_FAILED_ATTEMPTS wrong → COOLDOWN_SECONDS lockout.
  */
-export async function verifyPin(
-  input: string,
-): Promise<{
+export async function verifyPin(input: string): Promise<{
   success: boolean;
   remainingAttempts: number;
   lockedUntil: number | null;

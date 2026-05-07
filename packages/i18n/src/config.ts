@@ -159,14 +159,13 @@ export async function initializeI18n(config: I18nConfig = {}): Promise<typeof i1
     returnEmptyString: true,
 
     // Parse missing key handler for dev
-    parseMissingKeyHandler:
-      __DEV__
-        ? (key: string) => {
-            // eslint-disable-next-line no-undef
-            console.warn(`[tutor-sg/i18n] Missing translation key: "${key}"`);
-            return key;
-          }
-        : undefined,
+    parseMissingKeyHandler: __DEV__
+      ? (key: string) => {
+          // eslint-disable-next-line no-undef
+          console.warn(`[tutor-sg/i18n] Missing translation key: "${key}"`);
+          return key;
+        }
+      : undefined,
   };
 
   // Initialize i18next with the React integration

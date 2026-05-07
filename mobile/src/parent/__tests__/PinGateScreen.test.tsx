@@ -52,14 +52,10 @@ async function pressDigits(getByLabelText: (text: string) => any, digits: string
 
 describe('PinGateScreen', () => {
   it('renders title and subtitle', () => {
-    const { getByText } = render(
-      <PinGateScreen onAuthenticated={vi.fn()} onDismiss={vi.fn()} />,
-    );
+    const { getByText } = render(<PinGateScreen onAuthenticated={vi.fn()} onDismiss={vi.fn()} />);
 
     expect(getByText('Parent PIN')).toBeTruthy();
-    expect(
-      getByText('Enter your 4-digit PIN to access the Parent area'),
-    ).toBeTruthy();
+    expect(getByText('Enter your 4-digit PIN to access the Parent area')).toBeTruthy();
   });
 
   it('shows 4 empty digit slots', () => {
@@ -123,9 +119,7 @@ describe('PinGateScreen', () => {
     }
 
     await waitFor(() => {
-      expect(
-        getByText('Too many attempts. Please wait 60 seconds.'),
-      ).toBeTruthy();
+      expect(getByText('Too many attempts. Please wait 60 seconds.')).toBeTruthy();
     });
   });
 

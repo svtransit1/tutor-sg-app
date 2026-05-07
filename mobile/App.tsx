@@ -77,19 +77,12 @@ const splashStyles = StyleSheet.create({
 
 // ── Demo / main content screen ────────────────────────────────────
 
-function MainContent({
-  onOpenParentArea,
-}: {
-  onOpenParentArea: () => void;
-}) {
+function MainContent({ onOpenParentArea }: { onOpenParentArea: () => void }) {
   const { t, locale, setLocale } = useI18n();
   const isEn = locale === 'en';
 
   return (
-    <ScrollView
-      style={mainStyles.scroll}
-      contentContainerStyle={mainStyles.content}
-    >
+    <ScrollView style={mainStyles.scroll} contentContainerStyle={mainStyles.content}>
       {/* App header */}
       <Text style={mainStyles.title}>{t('app.name')}</Text>
       <Text style={mainStyles.tagline}>{t('app.tagline')}</Text>
@@ -101,29 +94,16 @@ function MainContent({
           onPress={() => setLocale('en')}
           accessibilityLabel="Switch to English"
         >
-          <Text
-            style={[
-              mainStyles.langText,
-              isEn && mainStyles.langTextActive,
-            ]}
-          >
+          <Text style={[mainStyles.langText, isEn && mainStyles.langTextActive]}>
             {t('english')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[
-            mainStyles.langButton,
-            !isEn && mainStyles.langButtonActive,
-          ]}
+          style={[mainStyles.langButton, !isEn && mainStyles.langButtonActive]}
           onPress={() => setLocale('zh-Hans')}
           accessibilityLabel="Switch to Simplified Chinese"
         >
-          <Text
-            style={[
-              mainStyles.langText,
-              !isEn && mainStyles.langTextActive,
-            ]}
-          >
+          <Text style={[mainStyles.langText, !isEn && mainStyles.langTextActive]}>
             {t('chinese')}
           </Text>
         </TouchableOpacity>
@@ -138,9 +118,7 @@ function MainContent({
         accessibilityRole="button"
         accessibilityLabel={t('onboarding:enter_parent_area')}
       >
-        <Text style={mainStyles.parentButtonText}>
-          {t('onboarding:enter_parent_area')}
-        </Text>
+        <Text style={mainStyles.parentButtonText}>{t('onboarding:enter_parent_area')}</Text>
       </TouchableOpacity>
 
       {/* Common namespace demo */}
@@ -159,26 +137,14 @@ function MainContent({
       {/* Parent namespace demo */}
       <Section title="parent namespace">
         <DemoRow label={t('parent:pin_title')} note="t('parent:pin_title')" />
-        <DemoRow
-          label={t('parent:dashboard_title')}
-          note="t('parent:dashboard_title')"
-        />
-        <DemoRow
-          label={t('parent:log_empty')}
-          note="t('parent:log_empty')"
-        />
+        <DemoRow label={t('parent:dashboard_title')} note="t('parent:dashboard_title')" />
+        <DemoRow label={t('parent:log_empty')} note="t('parent:log_empty')" />
       </Section>
     </ScrollView>
   );
 }
 
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <View style={mainStyles.section}>
       <Text style={mainStyles.sectionTitle}>{title}</Text>
@@ -325,9 +291,7 @@ export default function App() {
   if (error) {
     return (
       <SafeAreaView style={splashStyles.container}>
-        <Text style={[splashStyles.text, { color: '#D32F2F' }]}>
-          Error: {error}
-        </Text>
+        <Text style={[splashStyles.text, { color: '#D32F2F' }]}>Error: {error}</Text>
       </SafeAreaView>
     );
   }
@@ -336,9 +300,7 @@ export default function App() {
   return (
     <TutorSGProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-        {parentView === null && (
-          <MainContent onOpenParentArea={handleOpenParentArea} />
-        )}
+        {parentView === null && <MainContent onOpenParentArea={handleOpenParentArea} />}
 
         {parentView === 'loading' && (
           <View style={splashStyles.container}>
@@ -362,9 +324,7 @@ export default function App() {
           />
         )}
 
-        {parentView === 'dashboard' && (
-          <ParentDashboardScreen onDismiss={handleDismissParent} />
-        )}
+        {parentView === 'dashboard' && <ParentDashboardScreen onDismiss={handleDismissParent} />}
       </SafeAreaView>
     </TutorSGProvider>
   );

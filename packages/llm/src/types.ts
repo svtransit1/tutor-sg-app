@@ -164,11 +164,7 @@ export interface ModelDownloadManagerConfig {
   /** Directory for temporary partial downloads. */
   tempDir: string;
   /** Called when any item's state or progress changes. */
-  onStateChange?: (
-    modelId: string,
-    state: DownloadState,
-    progress: DownloadProgress,
-  ) => void;
+  onStateChange?: (modelId: string, state: DownloadState, progress: DownloadProgress) => void;
   /** Whether to show cellular warning. Default true. */
   enableCellularWarning?: boolean;
 }

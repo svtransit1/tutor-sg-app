@@ -53,18 +53,14 @@ async function pressDigits(getByLabelText: (text: string) => any, digits: string
 
 describe('PinSetupScreen', () => {
   it('renders title and step label', () => {
-    const { getByText } = render(
-      <PinSetupScreen onComplete={vi.fn()} onSkip={vi.fn()} />,
-    );
+    const { getByText } = render(<PinSetupScreen onComplete={vi.fn()} onSkip={vi.fn()} />);
 
     expect(getByText('Set Your Parent PIN')).toBeTruthy();
     expect(getByText('Set a 4-digit PIN')).toBeTruthy();
   });
 
   it('shows 4 empty digit slots', () => {
-    const { getByLabelText } = render(
-      <PinSetupScreen onComplete={vi.fn()} onSkip={vi.fn()} />,
-    );
+    const { getByLabelText } = render(<PinSetupScreen onComplete={vi.fn()} onSkip={vi.fn()} />);
 
     expect(getByLabelText('Digit 1 — empty')).toBeTruthy();
     expect(getByLabelText('Digit 2 — empty')).toBeTruthy();
@@ -86,9 +82,7 @@ describe('PinSetupScreen', () => {
 
   it('calls onComplete when PIN and confirm match', async () => {
     const onComplete = vi.fn();
-    const { getByLabelText } = render(
-      <PinSetupScreen onComplete={onComplete} onSkip={vi.fn()} />,
-    );
+    const { getByLabelText } = render(<PinSetupScreen onComplete={onComplete} onSkip={vi.fn()} />);
 
     await pressDigits(getByLabelText, '1234');
     await pressDigits(getByLabelText, '1234');
@@ -111,9 +105,7 @@ describe('PinSetupScreen', () => {
     await pressDigits(getByLabelText, '5678');
 
     await waitFor(() => {
-      expect(
-        getByText("PINs don't match. Try again."),
-      ).toBeTruthy();
+      expect(getByText("PINs don't match. Try again.")).toBeTruthy();
     });
 
     // Advance timers past the 1-second mismatch reset
@@ -128,9 +120,7 @@ describe('PinSetupScreen', () => {
 
   it('calls onSkip when skip button pressed', () => {
     const onSkip = vi.fn();
-    const { getByLabelText } = render(
-      <PinSetupScreen onComplete={vi.fn()} onSkip={onSkip} />,
-    );
+    const { getByLabelText } = render(<PinSetupScreen onComplete={vi.fn()} onSkip={onSkip} />);
 
     fireEvent.press(getByLabelText('Skip — set up later'));
     expect(onSkip).toHaveBeenCalledTimes(1);
@@ -138,11 +128,7 @@ describe('PinSetupScreen', () => {
 
   it('does not show skip button when skippable is false', () => {
     const { queryByLabelText } = render(
-      <PinSetupScreen
-        onComplete={vi.fn()}
-        onSkip={vi.fn()}
-        skippable={false}
-      />,
+      <PinSetupScreen onComplete={vi.fn()} onSkip={vi.fn()} skippable={false} />,
     );
 
     expect(queryByLabelText('Skip — set up later')).toBeNull();

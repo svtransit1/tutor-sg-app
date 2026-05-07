@@ -34,27 +34,19 @@ describe('savePin()', () => {
   });
 
   it('throws on non-numeric PIN', async () => {
-    await expect(savePin('abcd')).rejects.toThrow(
-      'PIN must be exactly 4 numeric digits',
-    );
+    await expect(savePin('abcd')).rejects.toThrow('PIN must be exactly 4 numeric digits');
   });
 
   it('throws on short PIN', async () => {
-    await expect(savePin('123')).rejects.toThrow(
-      'PIN must be exactly 4 numeric digits',
-    );
+    await expect(savePin('123')).rejects.toThrow('PIN must be exactly 4 numeric digits');
   });
 
   it('throws on long PIN', async () => {
-    await expect(savePin('12345')).rejects.toThrow(
-      'PIN must be exactly 4 numeric digits',
-    );
+    await expect(savePin('12345')).rejects.toThrow('PIN must be exactly 4 numeric digits');
   });
 
   it('throws on empty PIN', async () => {
-    await expect(savePin('')).rejects.toThrow(
-      'PIN must be exactly 4 numeric digits',
-    );
+    await expect(savePin('')).rejects.toThrow('PIN must be exactly 4 numeric digits');
   });
 });
 
@@ -119,10 +111,7 @@ describe('verifyPin()', () => {
     }
 
     // Manually set lockout to past
-    mockStore.set(
-      'parent.pin_locked_until',
-      String(Date.now() - 1000),
-    );
+    mockStore.set('parent.pin_locked_until', String(Date.now() - 1000));
     mockStore.set('parent.pin_failed_attempts', String(MAX_FAILED_ATTEMPTS));
 
     const result = await verifyPin('1234');
@@ -180,8 +169,6 @@ describe('getLockedUntil()', () => {
     const lockedUntil = await getLockedUntil();
     expect(lockedUntil).not.toBeNull();
     expect(lockedUntil!).toBeGreaterThan(Date.now());
-    expect(lockedUntil!).toBeLessThan(
-      Date.now() + (COOLDOWN_SECONDS + 1) * 1000,
-    );
+    expect(lockedUntil!).toBeLessThan(Date.now() + (COOLDOWN_SECONDS + 1) * 1000);
   });
 });

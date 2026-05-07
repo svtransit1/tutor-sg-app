@@ -9,81 +9,457 @@
       "levels": {
         "1": {
           "topics": [
-            { "id": "MAT-P1-001", "name_en": "Numbers to 10", "name_zh": "10以内的数", "outcomes": ["Count, read and write numbers to 10", "Compare and order numbers to 10"] },
-            { "id": "MAT-P1-002", "name_en": "Addition and Subtraction within 10", "name_zh": "10以内的加法和减法", "outcomes": ["Write addition and subtraction number sentences", "Solve word problems within 10"] },
-            { "id": "MAT-P1-003", "name_en": "Numbers to 20", "name_zh": "20以内的数", "outcomes": ["Count, read and write numbers to 20", "Compare and order numbers to 20"] },
-            { "id": "MAT-P1-004", "name_en": "Addition and Subtraction within 20", "name_zh": "20以内的加法和减法", "outcomes": ["Write addition and subtraction number sentences within 20", "Solve word problems within 20"] },
-            { "id": "MAT-P1-005", "name_en": "Shapes and Patterns", "name_zh": "图形和模式", "outcomes": ["Recognise and name 2D shapes", "Identify and extend patterns"] },
-            { "id": "MAT-P1-006", "name_en": "Length and Mass", "name_zh": "长度和质量", "outcomes": ["Compare length and mass by direct comparison", "Use non-standard units to measure"] },
-            { "id": "MAT-P1-007", "name_en": "Time and Money", "name_zh": "时间和货币", "outcomes": ["Tell time to the hour", "Identify coins and notes"] }
+            {
+              "id": "MAT-P1-001",
+              "name_en": "Numbers to 10",
+              "name_zh": "10以内的数",
+              "outcomes": ["Count, read and write numbers to 10", "Compare and order numbers to 10"]
+            },
+            {
+              "id": "MAT-P1-002",
+              "name_en": "Addition and Subtraction within 10",
+              "name_zh": "10以内的加法和减法",
+              "outcomes": [
+                "Write addition and subtraction number sentences",
+                "Solve word problems within 10"
+              ]
+            },
+            {
+              "id": "MAT-P1-003",
+              "name_en": "Numbers to 20",
+              "name_zh": "20以内的数",
+              "outcomes": ["Count, read and write numbers to 20", "Compare and order numbers to 20"]
+            },
+            {
+              "id": "MAT-P1-004",
+              "name_en": "Addition and Subtraction within 20",
+              "name_zh": "20以内的加法和减法",
+              "outcomes": [
+                "Write addition and subtraction number sentences within 20",
+                "Solve word problems within 20"
+              ]
+            },
+            {
+              "id": "MAT-P1-005",
+              "name_en": "Shapes and Patterns",
+              "name_zh": "图形和模式",
+              "outcomes": ["Recognise and name 2D shapes", "Identify and extend patterns"]
+            },
+            {
+              "id": "MAT-P1-006",
+              "name_en": "Length and Mass",
+              "name_zh": "长度和质量",
+              "outcomes": [
+                "Compare length and mass by direct comparison",
+                "Use non-standard units to measure"
+              ]
+            },
+            {
+              "id": "MAT-P1-007",
+              "name_en": "Time and Money",
+              "name_zh": "时间和货币",
+              "outcomes": ["Tell time to the hour", "Identify coins and notes"]
+            }
           ]
         },
         "2": {
           "topics": [
-            { "id": "MAT-P2-001", "name_en": "Numbers to 1000", "name_zh": "1000以内的数", "outcomes": ["Count, read and write numbers to 1000", "Understand place value"] },
-            { "id": "MAT-P2-002", "name_en": "Addition and Subtraction within 1000", "name_zh": "1000以内的加法和减法", "outcomes": ["Add and subtract within 1000 with regrouping", "Solve word problems"] },
-            { "id": "MAT-P2-003", "name_en": "Multiplication and Division", "name_zh": "乘法和除法", "outcomes": ["Recall multiplication tables of 2, 3, 5 and 10", "Solve word problems using multiplication and division"] },
-            { "id": "MAT-P2-004", "name_en": "Fractions", "name_zh": "分数", "outcomes": ["Recognise and write fractions as part of a whole", "Compare unit fractions"] },
-            { "id": "MAT-P2-005", "name_en": "Money", "name_zh": "货币", "outcomes": ["Count money in dollars and cents", "Solve money word problems"] },
-            { "id": "MAT-P2-006", "name_en": "Time", "name_zh": "时间", "outcomes": ["Tell time to 5-minute intervals", "Solve time problems"] },
-            { "id": "MAT-P2-007", "name_en": "Length, Mass and Volume", "name_zh": "长度、质量和体积", "outcomes": ["Measure using standard units", "Compare and order measurements"] },
-            { "id": "MAT-P2-008", "name_en": "Shapes and Graphs", "name_zh": "图形和图表", "outcomes": ["Identify properties of 2D and 3D shapes", "Read picture graphs"] }
+            {
+              "id": "MAT-P2-001",
+              "name_en": "Numbers to 1000",
+              "name_zh": "1000以内的数",
+              "outcomes": ["Count, read and write numbers to 1000", "Understand place value"]
+            },
+            {
+              "id": "MAT-P2-002",
+              "name_en": "Addition and Subtraction within 1000",
+              "name_zh": "1000以内的加法和减法",
+              "outcomes": ["Add and subtract within 1000 with regrouping", "Solve word problems"]
+            },
+            {
+              "id": "MAT-P2-003",
+              "name_en": "Multiplication and Division",
+              "name_zh": "乘法和除法",
+              "outcomes": [
+                "Recall multiplication tables of 2, 3, 5 and 10",
+                "Solve word problems using multiplication and division"
+              ]
+            },
+            {
+              "id": "MAT-P2-004",
+              "name_en": "Fractions",
+              "name_zh": "分数",
+              "outcomes": [
+                "Recognise and write fractions as part of a whole",
+                "Compare unit fractions"
+              ]
+            },
+            {
+              "id": "MAT-P2-005",
+              "name_en": "Money",
+              "name_zh": "货币",
+              "outcomes": ["Count money in dollars and cents", "Solve money word problems"]
+            },
+            {
+              "id": "MAT-P2-006",
+              "name_en": "Time",
+              "name_zh": "时间",
+              "outcomes": ["Tell time to 5-minute intervals", "Solve time problems"]
+            },
+            {
+              "id": "MAT-P2-007",
+              "name_en": "Length, Mass and Volume",
+              "name_zh": "长度、质量和体积",
+              "outcomes": ["Measure using standard units", "Compare and order measurements"]
+            },
+            {
+              "id": "MAT-P2-008",
+              "name_en": "Shapes and Graphs",
+              "name_zh": "图形和图表",
+              "outcomes": ["Identify properties of 2D and 3D shapes", "Read picture graphs"]
+            }
           ]
         },
         "3": {
           "topics": [
-            { "id": "MAT-P3-001", "name_en": "Numbers to 10 000", "name_zh": "10000以内的数", "outcomes": ["Count, read and write numbers to 10 000", "Round numbers to nearest 10 or 100"] },
-            { "id": "MAT-P3-002", "name_en": "Addition and Subtraction within 10 000", "name_zh": "10000以内的加法和减法", "outcomes": ["Add and subtract numbers up to 4 digits", "Solve multi-step word problems"] },
-            { "id": "MAT-P3-003", "name_en": "Multiplication and Division", "name_zh": "乘法和除法", "outcomes": ["Multiply 2- or 3-digit by 1-digit", "Divide up to 3-digit by 1-digit", "Recall tables up to 9"] },
-            { "id": "MAT-P3-004", "name_en": "Fractions", "name_zh": "分数", "outcomes": ["Compare and order fractions", "Add and subtract like fractions", "Find equivalent fractions"] },
-            { "id": "MAT-P3-005", "name_en": "Money", "name_zh": "货币", "outcomes": ["Solve multi-step money problems", "Give change from a given amount"] },
-            { "id": "MAT-P3-006", "name_en": "Length, Mass and Volume", "name_zh": "长度、质量和体积", "outcomes": ["Measure in mixed units", "Solve word problems involving length, mass and volume"] },
-            { "id": "MAT-P3-007", "name_en": "Perimeter and Area", "name_zh": "周长和面积", "outcomes": ["Find perimeter of rectilinear shapes", "Find area by counting squares"] },
-            { "id": "MAT-P3-008", "name_en": "Angles", "name_zh": "角", "outcomes": ["Identify angles greater than, less than or equal to a right angle", "Recognise angles in shapes"] },
-            { "id": "MAT-P3-009", "name_en": "Data and Graphs", "name_zh": "数据和图表", "outcomes": ["Read and interpret bar graphs", "Collect and organise data in tables"] },
-            { "id": "MAT-P3-010", "name_en": "Time", "name_zh": "时间", "outcomes": ["Tell time to the minute", "Solve elapsed time problems"] }
+            {
+              "id": "MAT-P3-001",
+              "name_en": "Numbers to 10 000",
+              "name_zh": "10000以内的数",
+              "outcomes": [
+                "Count, read and write numbers to 10 000",
+                "Round numbers to nearest 10 or 100"
+              ]
+            },
+            {
+              "id": "MAT-P3-002",
+              "name_en": "Addition and Subtraction within 10 000",
+              "name_zh": "10000以内的加法和减法",
+              "outcomes": [
+                "Add and subtract numbers up to 4 digits",
+                "Solve multi-step word problems"
+              ]
+            },
+            {
+              "id": "MAT-P3-003",
+              "name_en": "Multiplication and Division",
+              "name_zh": "乘法和除法",
+              "outcomes": [
+                "Multiply 2- or 3-digit by 1-digit",
+                "Divide up to 3-digit by 1-digit",
+                "Recall tables up to 9"
+              ]
+            },
+            {
+              "id": "MAT-P3-004",
+              "name_en": "Fractions",
+              "name_zh": "分数",
+              "outcomes": [
+                "Compare and order fractions",
+                "Add and subtract like fractions",
+                "Find equivalent fractions"
+              ]
+            },
+            {
+              "id": "MAT-P3-005",
+              "name_en": "Money",
+              "name_zh": "货币",
+              "outcomes": ["Solve multi-step money problems", "Give change from a given amount"]
+            },
+            {
+              "id": "MAT-P3-006",
+              "name_en": "Length, Mass and Volume",
+              "name_zh": "长度、质量和体积",
+              "outcomes": [
+                "Measure in mixed units",
+                "Solve word problems involving length, mass and volume"
+              ]
+            },
+            {
+              "id": "MAT-P3-007",
+              "name_en": "Perimeter and Area",
+              "name_zh": "周长和面积",
+              "outcomes": ["Find perimeter of rectilinear shapes", "Find area by counting squares"]
+            },
+            {
+              "id": "MAT-P3-008",
+              "name_en": "Angles",
+              "name_zh": "角",
+              "outcomes": [
+                "Identify angles greater than, less than or equal to a right angle",
+                "Recognise angles in shapes"
+              ]
+            },
+            {
+              "id": "MAT-P3-009",
+              "name_en": "Data and Graphs",
+              "name_zh": "数据和图表",
+              "outcomes": ["Read and interpret bar graphs", "Collect and organise data in tables"]
+            },
+            {
+              "id": "MAT-P3-010",
+              "name_en": "Time",
+              "name_zh": "时间",
+              "outcomes": ["Tell time to the minute", "Solve elapsed time problems"]
+            }
           ]
         },
         "4": {
           "topics": [
-            { "id": "MAT-P4-001", "name_en": "Numbers to 100 000", "name_zh": "100000以内的数", "outcomes": ["Count, read and write numbers to 100 000", "Round to nearest 10, 100, 1000"] },
-            { "id": "MAT-P4-002", "name_en": "Factors and Multiples", "name_zh": "因数和倍数", "outcomes": ["Find factors and multiples", "Identify prime numbers up to 50"] },
-            { "id": "MAT-P4-003", "name_en": "Four Operations", "name_zh": "四则运算", "outcomes": ["Apply order of operations", "Solve multi-step problems with all four operations"] },
-            { "id": "MAT-P4-004", "name_en": "Fractions and Decimals", "name_zh": "分数和小数", "outcomes": ["Convert between fractions and decimals", "Add and subtract unlike fractions", "Multiply fractions by whole numbers"] },
-            { "id": "MAT-P4-005", "name_en": "Decimals", "name_zh": "小数", "outcomes": ["Read, write and order decimals to 2 places", "Add, subtract and multiply decimals"] },
-            { "id": "MAT-P4-006", "name_en": "Area and Perimeter", "name_zh": "面积和周长", "outcomes": ["Find area and perimeter of rectangles and squares", "Solve word problems"] },
-            { "id": "MAT-P4-007", "name_en": "Symmetry and Lines", "name_zh": "对称和线", "outcomes": ["Identify line(s) of symmetry", "Recognise parallel and perpendicular lines"] },
-            { "id": "MAT-P4-008", "name_en": "Angles", "name_zh": "角", "outcomes": ["Estimate and measure angles in degrees", "Draw angles using a protractor"] },
-            { "id": "MAT-P4-009", "name_en": "Data, Tables and Graphs", "name_zh": "数据、表格和图表", "outcomes": ["Read and construct bar graphs", "Interpret data from tables and graphs"] },
-            { "id": "MAT-P4-010", "name_en": "Average", "name_zh": "平均数", "outcomes": ["Calculate average from a data set", "Solve word problems involving average"] }
+            {
+              "id": "MAT-P4-001",
+              "name_en": "Numbers to 100 000",
+              "name_zh": "100000以内的数",
+              "outcomes": [
+                "Count, read and write numbers to 100 000",
+                "Round to nearest 10, 100, 1000"
+              ]
+            },
+            {
+              "id": "MAT-P4-002",
+              "name_en": "Factors and Multiples",
+              "name_zh": "因数和倍数",
+              "outcomes": ["Find factors and multiples", "Identify prime numbers up to 50"]
+            },
+            {
+              "id": "MAT-P4-003",
+              "name_en": "Four Operations",
+              "name_zh": "四则运算",
+              "outcomes": [
+                "Apply order of operations",
+                "Solve multi-step problems with all four operations"
+              ]
+            },
+            {
+              "id": "MAT-P4-004",
+              "name_en": "Fractions and Decimals",
+              "name_zh": "分数和小数",
+              "outcomes": [
+                "Convert between fractions and decimals",
+                "Add and subtract unlike fractions",
+                "Multiply fractions by whole numbers"
+              ]
+            },
+            {
+              "id": "MAT-P4-005",
+              "name_en": "Decimals",
+              "name_zh": "小数",
+              "outcomes": [
+                "Read, write and order decimals to 2 places",
+                "Add, subtract and multiply decimals"
+              ]
+            },
+            {
+              "id": "MAT-P4-006",
+              "name_en": "Area and Perimeter",
+              "name_zh": "面积和周长",
+              "outcomes": [
+                "Find area and perimeter of rectangles and squares",
+                "Solve word problems"
+              ]
+            },
+            {
+              "id": "MAT-P4-007",
+              "name_en": "Symmetry and Lines",
+              "name_zh": "对称和线",
+              "outcomes": [
+                "Identify line(s) of symmetry",
+                "Recognise parallel and perpendicular lines"
+              ]
+            },
+            {
+              "id": "MAT-P4-008",
+              "name_en": "Angles",
+              "name_zh": "角",
+              "outcomes": [
+                "Estimate and measure angles in degrees",
+                "Draw angles using a protractor"
+              ]
+            },
+            {
+              "id": "MAT-P4-009",
+              "name_en": "Data, Tables and Graphs",
+              "name_zh": "数据、表格和图表",
+              "outcomes": ["Read and construct bar graphs", "Interpret data from tables and graphs"]
+            },
+            {
+              "id": "MAT-P4-010",
+              "name_en": "Average",
+              "name_zh": "平均数",
+              "outcomes": [
+                "Calculate average from a data set",
+                "Solve word problems involving average"
+              ]
+            }
           ]
         },
         "5": {
           "topics": [
-            { "id": "MAT-P5-001", "name_en": "Whole Numbers", "name_zh": "整数", "outcomes": ["Read, write and compare numbers up to 10 million", "Round to required place value"] },
-            { "id": "MAT-P5-002", "name_en": "Four Operations on Whole Numbers", "name_zh": "整数的四则运算", "outcomes": ["Multiply and divide by 2-digit numbers", "Use brackets in number sentences"] },
-            { "id": "MAT-P5-003", "name_en": "Fractions", "name_zh": "分数", "outcomes": ["Multiply and divide fractions", "Solve multi-step fraction problems"] },
-            { "id": "MAT-P5-004", "name_en": "Decimals", "name_zh": "小数", "outcomes": ["Divide decimals by whole numbers", "Relate fractions, decimals and percentages"] },
-            { "id": "MAT-P5-005", "name_en": "Percentage", "name_zh": "百分比", "outcomes": ["Express parts as percentages", "Solve percentage word problems"] },
-            { "id": "MAT-P5-006", "name_en": "Ratio", "name_zh": "比", "outcomes": ["Write and simplify ratios", "Solve ratio problems"] },
-            { "id": "MAT-P5-007", "name_en": "Rate", "name_zh": "速率", "outcomes": ["Understand and use rate", "Solve rate problems"] },
-            { "id": "MAT-P5-008", "name_en": "Triangles and Quadrilaterals", "name_zh": "三角形和四边形", "outcomes": ["Identify types of triangles and quadrilaterals", "Use angle sum properties"] },
-            { "id": "MAT-P5-009", "name_en": "Area and Perimeter of Composite Shapes", "name_zh": "组合图形的面积和周长", "outcomes": ["Find area and perimeter of composite rectilinear shapes"] },
-            { "id": "MAT-P5-010", "name_en": "Volume of Cubes and Cuboids", "name_zh": "正方体和长方体的体积", "outcomes": ["Calculate volume in cm³ and m³", "Solve word problems involving volume"] },
-            { "id": "MAT-P5-011", "name_en": "Data and Average", "name_zh": "数据和平均数", "outcomes": ["Read line graphs", "Solve problems involving average, mode and median"] },
-            { "id": "MAT-P5-012", "name_en": "Introduction to Algebra", "name_zh": "代数入门", "outcomes": ["Use letters to represent unknowns", "Form and solve simple linear equations"] }
+            {
+              "id": "MAT-P5-001",
+              "name_en": "Whole Numbers",
+              "name_zh": "整数",
+              "outcomes": [
+                "Read, write and compare numbers up to 10 million",
+                "Round to required place value"
+              ]
+            },
+            {
+              "id": "MAT-P5-002",
+              "name_en": "Four Operations on Whole Numbers",
+              "name_zh": "整数的四则运算",
+              "outcomes": [
+                "Multiply and divide by 2-digit numbers",
+                "Use brackets in number sentences"
+              ]
+            },
+            {
+              "id": "MAT-P5-003",
+              "name_en": "Fractions",
+              "name_zh": "分数",
+              "outcomes": ["Multiply and divide fractions", "Solve multi-step fraction problems"]
+            },
+            {
+              "id": "MAT-P5-004",
+              "name_en": "Decimals",
+              "name_zh": "小数",
+              "outcomes": [
+                "Divide decimals by whole numbers",
+                "Relate fractions, decimals and percentages"
+              ]
+            },
+            {
+              "id": "MAT-P5-005",
+              "name_en": "Percentage",
+              "name_zh": "百分比",
+              "outcomes": ["Express parts as percentages", "Solve percentage word problems"]
+            },
+            {
+              "id": "MAT-P5-006",
+              "name_en": "Ratio",
+              "name_zh": "比",
+              "outcomes": ["Write and simplify ratios", "Solve ratio problems"]
+            },
+            {
+              "id": "MAT-P5-007",
+              "name_en": "Rate",
+              "name_zh": "速率",
+              "outcomes": ["Understand and use rate", "Solve rate problems"]
+            },
+            {
+              "id": "MAT-P5-008",
+              "name_en": "Triangles and Quadrilaterals",
+              "name_zh": "三角形和四边形",
+              "outcomes": [
+                "Identify types of triangles and quadrilaterals",
+                "Use angle sum properties"
+              ]
+            },
+            {
+              "id": "MAT-P5-009",
+              "name_en": "Area and Perimeter of Composite Shapes",
+              "name_zh": "组合图形的面积和周长",
+              "outcomes": ["Find area and perimeter of composite rectilinear shapes"]
+            },
+            {
+              "id": "MAT-P5-010",
+              "name_en": "Volume of Cubes and Cuboids",
+              "name_zh": "正方体和长方体的体积",
+              "outcomes": ["Calculate volume in cm³ and m³", "Solve word problems involving volume"]
+            },
+            {
+              "id": "MAT-P5-011",
+              "name_en": "Data and Average",
+              "name_zh": "数据和平均数",
+              "outcomes": ["Read line graphs", "Solve problems involving average, mode and median"]
+            },
+            {
+              "id": "MAT-P5-012",
+              "name_en": "Introduction to Algebra",
+              "name_zh": "代数入门",
+              "outcomes": [
+                "Use letters to represent unknowns",
+                "Form and solve simple linear equations"
+              ]
+            }
           ]
         },
         "6": {
           "topics": [
-            { "id": "MAT-P6-001", "name_en": "Numbers and Operations", "name_zh": "数和运算", "outcomes": ["Perform mixed operations with fractions, decimals and percentages", "Solve complex word problems"] },
-            { "id": "MAT-P6-002", "name_en": "Ratio, Percentage and Rate", "name_zh": "比、百分比和速率", "outcomes": ["Solve multi-step problems involving ratio, percentage and rate", "Apply to real-world contexts like discounts and GST"] },
-            { "id": "MAT-P6-003", "name_en": "Algebra", "name_zh": "代数", "outcomes": ["Simplify algebraic expressions", "Solve linear equations with one unknown", "Substitute values"] },
-            { "id": "MAT-P6-004", "name_en": "Geometry", "name_zh": "几何", "outcomes": ["Identify nets of 3D solids", "Calculate angles on a straight line and at a point", "Use properties of special triangles"] },
-            { "id": "MAT-P6-005", "name_en": "Area and Volume", "name_zh": "面积和体积", "outcomes": ["Find area of triangles and composite shapes", "Calculate volume of cubes and cuboids in practical contexts"] },
-            { "id": "MAT-P6-006", "name_en": "Speed", "name_zh": "速度", "outcomes": ["Use the relationship distance = speed × time", "Solve word problems involving speed"] },
-            { "id": "MAT-P6-007", "name_en": "Data Analysis", "name_zh": "数据分析", "outcomes": ["Read and interpret pie charts", "Solve problems from tables, graphs and charts"] },
-            { "id": "MAT-P6-008", "name_en": "PSLE Problem Solving", "name_zh": "小六会考解题", "outcomes": ["Apply heuristic strategies: guess and check, before-after, working backwards", "Solve multi-step non-routine problems"] }
+            {
+              "id": "MAT-P6-001",
+              "name_en": "Numbers and Operations",
+              "name_zh": "数和运算",
+              "outcomes": [
+                "Perform mixed operations with fractions, decimals and percentages",
+                "Solve complex word problems"
+              ]
+            },
+            {
+              "id": "MAT-P6-002",
+              "name_en": "Ratio, Percentage and Rate",
+              "name_zh": "比、百分比和速率",
+              "outcomes": [
+                "Solve multi-step problems involving ratio, percentage and rate",
+                "Apply to real-world contexts like discounts and GST"
+              ]
+            },
+            {
+              "id": "MAT-P6-003",
+              "name_en": "Algebra",
+              "name_zh": "代数",
+              "outcomes": [
+                "Simplify algebraic expressions",
+                "Solve linear equations with one unknown",
+                "Substitute values"
+              ]
+            },
+            {
+              "id": "MAT-P6-004",
+              "name_en": "Geometry",
+              "name_zh": "几何",
+              "outcomes": [
+                "Identify nets of 3D solids",
+                "Calculate angles on a straight line and at a point",
+                "Use properties of special triangles"
+              ]
+            },
+            {
+              "id": "MAT-P6-005",
+              "name_en": "Area and Volume",
+              "name_zh": "面积和体积",
+              "outcomes": [
+                "Find area of triangles and composite shapes",
+                "Calculate volume of cubes and cuboids in practical contexts"
+              ]
+            },
+            {
+              "id": "MAT-P6-006",
+              "name_en": "Speed",
+              "name_zh": "速度",
+              "outcomes": [
+                "Use the relationship distance = speed × time",
+                "Solve word problems involving speed"
+              ]
+            },
+            {
+              "id": "MAT-P6-007",
+              "name_en": "Data Analysis",
+              "name_zh": "数据分析",
+              "outcomes": [
+                "Read and interpret pie charts",
+                "Solve problems from tables, graphs and charts"
+              ]
+            },
+            {
+              "id": "MAT-P6-008",
+              "name_en": "PSLE Problem Solving",
+              "name_zh": "小六会考解题",
+              "outcomes": [
+                "Apply heuristic strategies: guess and check, before-after, working backwards",
+                "Solve multi-step non-routine problems"
+              ]
+            }
           ]
         }
       }
@@ -94,63 +470,355 @@
       "levels": {
         "1": {
           "topics": [
-            { "id": "ENG-P1-001", "name_en": "Phonics and Word Recognition", "name_zh": "语音和单词认读", "outcomes": ["Recognise letter-sound correspondence", "Blend sounds to read simple words"] },
-            { "id": "ENG-P1-002", "name_en": "Sight Words and Vocabulary", "name_zh": "常见词和词汇", "outcomes": ["Read and write common sight words", "Use context clues to understand new words"] },
-            { "id": "ENG-P1-003", "name_en": "Simple Sentences", "name_zh": "简单句", "outcomes": ["Write simple sentences with correct capitalisation and full stops", "Use basic subject-verb agreement"] },
-            { "id": "ENG-P1-004", "name_en": "Listening and Speaking", "name_zh": "听力和口语", "outcomes": ["Follow simple oral instructions", "Speak clearly in short sentences about familiar topics"] },
-            { "id": "ENG-P1-005", "name_en": "Picture Composition", "name_zh": "看图写话", "outcomes": ["Write 3-5 sentences based on a picture stimulus", "Use sequencing words (first, next, then)"] },
-            { "id": "ENG-P1-006", "name_en": "Grammar Basics", "name_zh": "语法基础", "outcomes": ["Use singular and plural nouns correctly", "Use basic prepositions of place (in, on, under)"] }
+            {
+              "id": "ENG-P1-001",
+              "name_en": "Phonics and Word Recognition",
+              "name_zh": "语音和单词认读",
+              "outcomes": [
+                "Recognise letter-sound correspondence",
+                "Blend sounds to read simple words"
+              ]
+            },
+            {
+              "id": "ENG-P1-002",
+              "name_en": "Sight Words and Vocabulary",
+              "name_zh": "常见词和词汇",
+              "outcomes": [
+                "Read and write common sight words",
+                "Use context clues to understand new words"
+              ]
+            },
+            {
+              "id": "ENG-P1-003",
+              "name_en": "Simple Sentences",
+              "name_zh": "简单句",
+              "outcomes": [
+                "Write simple sentences with correct capitalisation and full stops",
+                "Use basic subject-verb agreement"
+              ]
+            },
+            {
+              "id": "ENG-P1-004",
+              "name_en": "Listening and Speaking",
+              "name_zh": "听力和口语",
+              "outcomes": [
+                "Follow simple oral instructions",
+                "Speak clearly in short sentences about familiar topics"
+              ]
+            },
+            {
+              "id": "ENG-P1-005",
+              "name_en": "Picture Composition",
+              "name_zh": "看图写话",
+              "outcomes": [
+                "Write 3-5 sentences based on a picture stimulus",
+                "Use sequencing words (first, next, then)"
+              ]
+            },
+            {
+              "id": "ENG-P1-006",
+              "name_en": "Grammar Basics",
+              "name_zh": "语法基础",
+              "outcomes": [
+                "Use singular and plural nouns correctly",
+                "Use basic prepositions of place (in, on, under)"
+              ]
+            }
           ]
         },
         "2": {
           "topics": [
-            { "id": "ENG-P2-001", "name_en": "Reading Comprehension", "name_zh": "阅读理解", "outcomes": ["Read short passages and answer literal questions", "Identify main idea of a short paragraph"] },
-            { "id": "ENG-P2-002", "name_en": "Vocabulary Building", "name_zh": "词汇积累", "outcomes": ["Learn and use new words from context", "Identify synonyms and antonyms"] },
-            { "id": "ENG-P2-003", "name_en": "Sentence Construction", "name_zh": "造句", "outcomes": ["Write compound sentences using conjunctions (and, but, so)", "Form questions and negative sentences correctly"] },
-            { "id": "ENG-P2-004", "name_en": "Writing", "name_zh": "写作", "outcomes": ["Write a short paragraph (5-8 sentences) on a given topic", "Use descriptive words (adjectives)"] },
-            { "id": "ENG-P2-005", "name_en": "Grammar", "name_zh": "语法", "outcomes": ["Use past, present and future tense consistently", "Use articles (a, an, the) correctly"] },
-            { "id": "ENG-P2-006", "name_en": "Oral Communication", "name_zh": "口语交流", "outcomes": ["Participate in short conversations", "Describe pictures using complete sentences"] }
+            {
+              "id": "ENG-P2-001",
+              "name_en": "Reading Comprehension",
+              "name_zh": "阅读理解",
+              "outcomes": [
+                "Read short passages and answer literal questions",
+                "Identify main idea of a short paragraph"
+              ]
+            },
+            {
+              "id": "ENG-P2-002",
+              "name_en": "Vocabulary Building",
+              "name_zh": "词汇积累",
+              "outcomes": ["Learn and use new words from context", "Identify synonyms and antonyms"]
+            },
+            {
+              "id": "ENG-P2-003",
+              "name_en": "Sentence Construction",
+              "name_zh": "造句",
+              "outcomes": [
+                "Write compound sentences using conjunctions (and, but, so)",
+                "Form questions and negative sentences correctly"
+              ]
+            },
+            {
+              "id": "ENG-P2-004",
+              "name_en": "Writing",
+              "name_zh": "写作",
+              "outcomes": [
+                "Write a short paragraph (5-8 sentences) on a given topic",
+                "Use descriptive words (adjectives)"
+              ]
+            },
+            {
+              "id": "ENG-P2-005",
+              "name_en": "Grammar",
+              "name_zh": "语法",
+              "outcomes": [
+                "Use past, present and future tense consistently",
+                "Use articles (a, an, the) correctly"
+              ]
+            },
+            {
+              "id": "ENG-P2-006",
+              "name_en": "Oral Communication",
+              "name_zh": "口语交流",
+              "outcomes": [
+                "Participate in short conversations",
+                "Describe pictures using complete sentences"
+              ]
+            }
           ]
         },
         "3": {
           "topics": [
-            { "id": "ENG-P3-001", "name_en": "Reading Comprehension (Passages)", "name_zh": "阅读理解（短文）", "outcomes": ["Answer literal and inferential questions from passages", "Identify writer's purpose"] },
-            { "id": "ENG-P3-002", "name_en": "Vocabulary and Grammar", "name_zh": "词汇和语法", "outcomes": ["Use homophones and homonyms correctly", "Apply subject-verb agreement with complex subjects"] },
-            { "id": "ENG-P3-003", "name_en": "Cloze Passage", "name_zh": "完形填空", "outcomes": ["Select appropriate words to fill blanks in a passage", "Use context and grammar clues"] },
-            { "id": "ENG-P3-004", "name_en": "Composition Writing", "name_zh": "作文", "outcomes": ["Write a narrative composition (80-100 words) from a title or picture", "Include beginning, middle and end"] },
-            { "id": "ENG-P3-005", "name_en": "Grammar - Tenses", "name_zh": "语法 - 时态", "outcomes": ["Use present perfect tense", "Use continuous tenses correctly"] },
-            { "id": "ENG-P3-006", "name_en": "Oral - Reading Aloud", "name_zh": "口语 - 朗读", "outcomes": ["Read a passage aloud with appropriate pronunciation and intonation", "Pace reading appropriately"] }
+            {
+              "id": "ENG-P3-001",
+              "name_en": "Reading Comprehension (Passages)",
+              "name_zh": "阅读理解（短文）",
+              "outcomes": [
+                "Answer literal and inferential questions from passages",
+                "Identify writer's purpose"
+              ]
+            },
+            {
+              "id": "ENG-P3-002",
+              "name_en": "Vocabulary and Grammar",
+              "name_zh": "词汇和语法",
+              "outcomes": [
+                "Use homophones and homonyms correctly",
+                "Apply subject-verb agreement with complex subjects"
+              ]
+            },
+            {
+              "id": "ENG-P3-003",
+              "name_en": "Cloze Passage",
+              "name_zh": "完形填空",
+              "outcomes": [
+                "Select appropriate words to fill blanks in a passage",
+                "Use context and grammar clues"
+              ]
+            },
+            {
+              "id": "ENG-P3-004",
+              "name_en": "Composition Writing",
+              "name_zh": "作文",
+              "outcomes": [
+                "Write a narrative composition (80-100 words) from a title or picture",
+                "Include beginning, middle and end"
+              ]
+            },
+            {
+              "id": "ENG-P3-005",
+              "name_en": "Grammar - Tenses",
+              "name_zh": "语法 - 时态",
+              "outcomes": ["Use present perfect tense", "Use continuous tenses correctly"]
+            },
+            {
+              "id": "ENG-P3-006",
+              "name_en": "Oral - Reading Aloud",
+              "name_zh": "口语 - 朗读",
+              "outcomes": [
+                "Read a passage aloud with appropriate pronunciation and intonation",
+                "Pace reading appropriately"
+              ]
+            }
           ]
         },
         "4": {
           "topics": [
-            { "id": "ENG-P4-001", "name_en": "Reading Comprehension (Inferential)", "name_zh": "阅读理解（推理）", "outcomes": ["Answer inferential and evaluative questions", "Distinguish between fact and opinion"] },
-            { "id": "ENG-P4-002", "name_en": "Vocabulary in Context", "name_zh": "语境词汇", "outcomes": ["Determine meaning of unfamiliar words from context", "Use phrasal verbs correctly"] },
-            { "id": "ENG-P4-003", "name_en": "Grammar - Complex Structures", "name_zh": "语法 - 复杂结构", "outcomes": ["Use relative clauses", "Use direct and indirect speech", "Apply conditional sentences (Type 1)"] },
-            { "id": "ENG-P4-004", "name_en": "Composition - Narrative", "name_zh": "叙事作文", "outcomes": ["Write a narrative (100-150 words) with plot development", "Use dialogue and show feelings"] },
-            { "id": "ENG-P4-005", "name_en": "Summary Writing", "name_zh": "摘要写作", "outcomes": ["Identify key points from a passage", "Write a short summary in own words"] },
-            { "id": "ENG-P4-006", "name_en": "Oral - Conversation", "name_zh": "口语 - 对话", "outcomes": ["Respond appropriately to questions in conversation", "Express opinions with reasons"] }
+            {
+              "id": "ENG-P4-001",
+              "name_en": "Reading Comprehension (Inferential)",
+              "name_zh": "阅读理解（推理）",
+              "outcomes": [
+                "Answer inferential and evaluative questions",
+                "Distinguish between fact and opinion"
+              ]
+            },
+            {
+              "id": "ENG-P4-002",
+              "name_en": "Vocabulary in Context",
+              "name_zh": "语境词汇",
+              "outcomes": [
+                "Determine meaning of unfamiliar words from context",
+                "Use phrasal verbs correctly"
+              ]
+            },
+            {
+              "id": "ENG-P4-003",
+              "name_en": "Grammar - Complex Structures",
+              "name_zh": "语法 - 复杂结构",
+              "outcomes": [
+                "Use relative clauses",
+                "Use direct and indirect speech",
+                "Apply conditional sentences (Type 1)"
+              ]
+            },
+            {
+              "id": "ENG-P4-004",
+              "name_en": "Composition - Narrative",
+              "name_zh": "叙事作文",
+              "outcomes": [
+                "Write a narrative (100-150 words) with plot development",
+                "Use dialogue and show feelings"
+              ]
+            },
+            {
+              "id": "ENG-P4-005",
+              "name_en": "Summary Writing",
+              "name_zh": "摘要写作",
+              "outcomes": [
+                "Identify key points from a passage",
+                "Write a short summary in own words"
+              ]
+            },
+            {
+              "id": "ENG-P4-006",
+              "name_en": "Oral - Conversation",
+              "name_zh": "口语 - 对话",
+              "outcomes": [
+                "Respond appropriately to questions in conversation",
+                "Express opinions with reasons"
+              ]
+            }
           ]
         },
         "5": {
           "topics": [
-            { "id": "ENG-P5-001", "name_en": "Reading Comprehension (Advanced)", "name_zh": "阅读理解（高级）", "outcomes": ["Analyse tone, mood and writer's craft", "Make predictions and draw conclusions from passages"] },
-            { "id": "ENG-P5-002", "name_en": "Vocabulary - Word Choice", "name_zh": "词汇 - 选词", "outcomes": ["Select precise words for effect", "Understand idioms and figurative language"] },
-            { "id": "ENG-P5-003", "name_en": "Grammar - Advanced", "name_zh": "语法 - 高级", "outcomes": ["Use passive voice appropriately", "Apply conditional sentences (Types 2 and 3)", "Use reported speech correctly"] },
-            { "id": "ENG-P5-004", "name_en": "Composition - Descriptive and Reflective", "name_zh": "描写和反思作文", "outcomes": ["Write descriptive compositions with sensory details", "Include personal reflections and lessons learned"] },
-            { "id": "ENG-P5-005", "name_en": "Summary and Synthesis", "name_zh": "摘要和综合", "outcomes": ["Synthesise information from multiple sources", "Write concise summaries within word limits"] },
-            { "id": "ENG-P5-006", "name_en": "PSLE Oral Preparation", "name_zh": "小六会考口语备考", "outcomes": ["Practice reading aloud with fluency and expression", "Participate in stimulus-based conversation"] }
+            {
+              "id": "ENG-P5-001",
+              "name_en": "Reading Comprehension (Advanced)",
+              "name_zh": "阅读理解（高级）",
+              "outcomes": [
+                "Analyse tone, mood and writer's craft",
+                "Make predictions and draw conclusions from passages"
+              ]
+            },
+            {
+              "id": "ENG-P5-002",
+              "name_en": "Vocabulary - Word Choice",
+              "name_zh": "词汇 - 选词",
+              "outcomes": [
+                "Select precise words for effect",
+                "Understand idioms and figurative language"
+              ]
+            },
+            {
+              "id": "ENG-P5-003",
+              "name_en": "Grammar - Advanced",
+              "name_zh": "语法 - 高级",
+              "outcomes": [
+                "Use passive voice appropriately",
+                "Apply conditional sentences (Types 2 and 3)",
+                "Use reported speech correctly"
+              ]
+            },
+            {
+              "id": "ENG-P5-004",
+              "name_en": "Composition - Descriptive and Reflective",
+              "name_zh": "描写和反思作文",
+              "outcomes": [
+                "Write descriptive compositions with sensory details",
+                "Include personal reflections and lessons learned"
+              ]
+            },
+            {
+              "id": "ENG-P5-005",
+              "name_en": "Summary and Synthesis",
+              "name_zh": "摘要和综合",
+              "outcomes": [
+                "Synthesise information from multiple sources",
+                "Write concise summaries within word limits"
+              ]
+            },
+            {
+              "id": "ENG-P5-006",
+              "name_en": "PSLE Oral Preparation",
+              "name_zh": "小六会考口语备考",
+              "outcomes": [
+                "Practice reading aloud with fluency and expression",
+                "Participate in stimulus-based conversation"
+              ]
+            }
           ]
         },
         "6": {
           "topics": [
-            { "id": "ENG-P6-001", "name_en": "PSLE Reading Comprehension", "name_zh": "小六会考阅读理解", "outcomes": ["Answer open-ended comprehension questions with text evidence", "Analyse writer's techniques (figurative language, structure)"] },
-            { "id": "ENG-P6-002", "name_en": "PSLE Vocabulary", "name_zh": "小六会考词汇", "outcomes": ["Demonstrate mastery of PSLE vocabulary list", "Use vocabulary-in-context MCQ strategies"] },
-            { "id": "ENG-P6-003", "name_en": "PSLE Grammar", "name_zh": "小六会考语法", "outcomes": ["Demonstrate mastery of all primary school grammar structures", "Edit passages for grammatical accuracy"] },
-            { "id": "ENG-P6-004", "name_en": "PSLE Composition", "name_zh": "小六会考作文", "outcomes": ["Write a well-structured narrative (150-200 words) with plot, character development and resolution", "Use varied sentence structures and vocabulary"] },
-            { "id": "ENG-P6-005", "name_en": "PSLE Oral Examination", "name_zh": "小六会考口试", "outcomes": ["Read aloud with confidence, accuracy and expression", "Engage in sustained stimulus-based conversation"] },
-            { "id": "ENG-P6-006", "name_en": "PSLE Listening Comprehension", "name_zh": "小六会考听力理解", "outcomes": ["Understand spoken texts and answer MCQ and open-ended questions", "Identify speaker attitudes and infer meaning"] },
-            { "id": "ENG-P6-007", "name_en": "PSLE Writing (Functional)", "name_zh": "小六会考应用文写作", "outcomes": ["Write formal and informal emails/letters", "Write speeches, reports and reviews with appropriate format"] }
+            {
+              "id": "ENG-P6-001",
+              "name_en": "PSLE Reading Comprehension",
+              "name_zh": "小六会考阅读理解",
+              "outcomes": [
+                "Answer open-ended comprehension questions with text evidence",
+                "Analyse writer's techniques (figurative language, structure)"
+              ]
+            },
+            {
+              "id": "ENG-P6-002",
+              "name_en": "PSLE Vocabulary",
+              "name_zh": "小六会考词汇",
+              "outcomes": [
+                "Demonstrate mastery of PSLE vocabulary list",
+                "Use vocabulary-in-context MCQ strategies"
+              ]
+            },
+            {
+              "id": "ENG-P6-003",
+              "name_en": "PSLE Grammar",
+              "name_zh": "小六会考语法",
+              "outcomes": [
+                "Demonstrate mastery of all primary school grammar structures",
+                "Edit passages for grammatical accuracy"
+              ]
+            },
+            {
+              "id": "ENG-P6-004",
+              "name_en": "PSLE Composition",
+              "name_zh": "小六会考作文",
+              "outcomes": [
+                "Write a well-structured narrative (150-200 words) with plot, character development and resolution",
+                "Use varied sentence structures and vocabulary"
+              ]
+            },
+            {
+              "id": "ENG-P6-005",
+              "name_en": "PSLE Oral Examination",
+              "name_zh": "小六会考口试",
+              "outcomes": [
+                "Read aloud with confidence, accuracy and expression",
+                "Engage in sustained stimulus-based conversation"
+              ]
+            },
+            {
+              "id": "ENG-P6-006",
+              "name_en": "PSLE Listening Comprehension",
+              "name_zh": "小六会考听力理解",
+              "outcomes": [
+                "Understand spoken texts and answer MCQ and open-ended questions",
+                "Identify speaker attitudes and infer meaning"
+              ]
+            },
+            {
+              "id": "ENG-P6-007",
+              "name_en": "PSLE Writing (Functional)",
+              "name_zh": "小六会考应用文写作",
+              "outcomes": [
+                "Write formal and informal emails/letters",
+                "Write speeches, reports and reviews with appropriate format"
+              ]
+            }
           ]
         }
       }
@@ -161,55 +829,286 @@
       "levels": {
         "1": {
           "topics": [
-            { "id": "SCI-P1-001", "name_en": "All About Me", "name_zh": "认识我自己", "outcomes": ["Identify the five senses and their uses", "Recognise that people are different"] },
-            { "id": "SCI-P1-002", "name_en": "Living and Non-Living Things", "name_zh": "生物与非生物", "outcomes": ["Classify objects as living or non-living", "Identify basic needs of living things"] },
-            { "id": "SCI-P1-003", "name_en": "Materials", "name_zh": "材料", "outcomes": ["Describe properties of common materials (hard, soft, rough, smooth)", "Sort objects by material properties"] }
+            {
+              "id": "SCI-P1-001",
+              "name_en": "All About Me",
+              "name_zh": "认识我自己",
+              "outcomes": [
+                "Identify the five senses and their uses",
+                "Recognise that people are different"
+              ]
+            },
+            {
+              "id": "SCI-P1-002",
+              "name_en": "Living and Non-Living Things",
+              "name_zh": "生物与非生物",
+              "outcomes": [
+                "Classify objects as living or non-living",
+                "Identify basic needs of living things"
+              ]
+            },
+            {
+              "id": "SCI-P1-003",
+              "name_en": "Materials",
+              "name_zh": "材料",
+              "outcomes": [
+                "Describe properties of common materials (hard, soft, rough, smooth)",
+                "Sort objects by material properties"
+              ]
+            }
           ]
         },
         "2": {
           "topics": [
-            { "id": "SCI-P2-001", "name_en": "Growing Up", "name_zh": "成长", "outcomes": ["Describe life cycles of plants and animals", "Identify stages of growth in humans"] },
-            { "id": "SCI-P2-002", "name_en": "Habitats", "name_zh": "栖息地", "outcomes": ["Identify different habitats", "Match animals and plants to their habitats"] },
-            { "id": "SCI-P2-003", "name_en": "Uses of Materials", "name_zh": "材料的用途", "outcomes": ["Relate material properties to their uses", "Identify transparent, translucent and opaque materials"] }
+            {
+              "id": "SCI-P2-001",
+              "name_en": "Growing Up",
+              "name_zh": "成长",
+              "outcomes": [
+                "Describe life cycles of plants and animals",
+                "Identify stages of growth in humans"
+              ]
+            },
+            {
+              "id": "SCI-P2-002",
+              "name_en": "Habitats",
+              "name_zh": "栖息地",
+              "outcomes": [
+                "Identify different habitats",
+                "Match animals and plants to their habitats"
+              ]
+            },
+            {
+              "id": "SCI-P2-003",
+              "name_en": "Uses of Materials",
+              "name_zh": "材料的用途",
+              "outcomes": [
+                "Relate material properties to their uses",
+                "Identify transparent, translucent and opaque materials"
+              ]
+            }
           ]
         },
         "3": {
           "topics": [
-            { "id": "SCI-P3-001", "name_en": "Characteristics of Living Things", "name_zh": "生物的特征", "outcomes": ["Describe characteristics that all living things share", "Use a classification key to group organisms"] },
-            { "id": "SCI-P3-002", "name_en": "Animals and Plants", "name_zh": "动物和植物", "outcomes": ["Classify animals into groups (mammals, birds, fish, reptiles, insects)", "Identify parts of a plant and their functions"] },
-            { "id": "SCI-P3-003", "name_en": "Materials and Their Properties", "name_zh": "材料及其特性", "outcomes": ["Compare properties of materials (flexibility, strength, absorbency)", "Select materials for specific uses based on properties"] },
-            { "id": "SCI-P3-004", "name_en": "Magnets", "name_zh": "磁铁", "outcomes": ["Identify magnetic and non-magnetic materials", "Describe poles and attraction/repulsion"] }
+            {
+              "id": "SCI-P3-001",
+              "name_en": "Characteristics of Living Things",
+              "name_zh": "生物的特征",
+              "outcomes": [
+                "Describe characteristics that all living things share",
+                "Use a classification key to group organisms"
+              ]
+            },
+            {
+              "id": "SCI-P3-002",
+              "name_en": "Animals and Plants",
+              "name_zh": "动物和植物",
+              "outcomes": [
+                "Classify animals into groups (mammals, birds, fish, reptiles, insects)",
+                "Identify parts of a plant and their functions"
+              ]
+            },
+            {
+              "id": "SCI-P3-003",
+              "name_en": "Materials and Their Properties",
+              "name_zh": "材料及其特性",
+              "outcomes": [
+                "Compare properties of materials (flexibility, strength, absorbency)",
+                "Select materials for specific uses based on properties"
+              ]
+            },
+            {
+              "id": "SCI-P3-004",
+              "name_en": "Magnets",
+              "name_zh": "磁铁",
+              "outcomes": [
+                "Identify magnetic and non-magnetic materials",
+                "Describe poles and attraction/repulsion"
+              ]
+            }
           ]
         },
         "4": {
           "topics": [
-            { "id": "SCI-P4-001", "name_en": "Heat and Temperature", "name_zh": "热和温度", "outcomes": ["Distinguish between heat and temperature", "Describe how heat flows from hotter to colder objects"] },
-            { "id": "SCI-P4-002", "name_en": "Light and Shadows", "name_zh": "光和影子", "outcomes": ["Describe how light travels in straight lines", "Explain how shadows are formed and change"] },
-            { "id": "SCI-P4-003", "name_en": "Sound", "name_zh": "声音", "outcomes": ["Describe how sound is produced by vibrations", "Identify factors affecting pitch and volume"] },
-            { "id": "SCI-P4-004", "name_en": "Digestive System", "name_zh": "消化系统", "outcomes": ["Identify main organs of the digestive system", "Describe the path of food through the digestive system"] },
-            { "id": "SCI-P4-005", "name_en": "Circulatory and Respiratory Systems", "name_zh": "循环系统和呼吸系统", "outcomes": ["Identify the heart, blood vessels and lungs", "Describe how breathing works"] }
+            {
+              "id": "SCI-P4-001",
+              "name_en": "Heat and Temperature",
+              "name_zh": "热和温度",
+              "outcomes": [
+                "Distinguish between heat and temperature",
+                "Describe how heat flows from hotter to colder objects"
+              ]
+            },
+            {
+              "id": "SCI-P4-002",
+              "name_en": "Light and Shadows",
+              "name_zh": "光和影子",
+              "outcomes": [
+                "Describe how light travels in straight lines",
+                "Explain how shadows are formed and change"
+              ]
+            },
+            {
+              "id": "SCI-P4-003",
+              "name_en": "Sound",
+              "name_zh": "声音",
+              "outcomes": [
+                "Describe how sound is produced by vibrations",
+                "Identify factors affecting pitch and volume"
+              ]
+            },
+            {
+              "id": "SCI-P4-004",
+              "name_en": "Digestive System",
+              "name_zh": "消化系统",
+              "outcomes": [
+                "Identify main organs of the digestive system",
+                "Describe the path of food through the digestive system"
+              ]
+            },
+            {
+              "id": "SCI-P4-005",
+              "name_en": "Circulatory and Respiratory Systems",
+              "name_zh": "循环系统和呼吸系统",
+              "outcomes": [
+                "Identify the heart, blood vessels and lungs",
+                "Describe how breathing works"
+              ]
+            }
           ]
         },
         "5": {
           "topics": [
-            { "id": "SCI-P5-001", "name_en": "Cells", "name_zh": "细胞", "outcomes": ["Identify the basic parts of an animal and plant cell", "Describe cells as the basic unit of life"] },
-            { "id": "SCI-P5-002", "name_en": "Reproduction in Plants", "name_zh": "植物的繁殖", "outcomes": ["Identify parts of a flower", "Describe pollination and seed dispersal"] },
-            { "id": "SCI-P5-003", "name_en": "Reproduction in Humans", "name_zh": "人类的繁殖", "outcomes": ["Describe the life cycle of humans from birth to old age", "Understand basic concepts of human reproduction at an age-appropriate level"] },
-            { "id": "SCI-P5-004", "name_en": "Matter", "name_zh": "物质", "outcomes": ["Describe the three states of matter", "Describe properties of solids, liquids and gases"] },
-            { "id": "SCI-P5-005", "name_en": "Conductors and Insulators", "name_zh": "导体和绝缘体", "outcomes": ["Distinguish between conductors and insulators of heat and electricity", "Relate properties to everyday uses"] },
-            { "id": "SCI-P5-006", "name_en": "Changes of State", "name_zh": "状态变化", "outcomes": ["Describe melting, freezing, boiling and evaporation", "Explain that mass is conserved during changes of state"] }
+            {
+              "id": "SCI-P5-001",
+              "name_en": "Cells",
+              "name_zh": "细胞",
+              "outcomes": [
+                "Identify the basic parts of an animal and plant cell",
+                "Describe cells as the basic unit of life"
+              ]
+            },
+            {
+              "id": "SCI-P5-002",
+              "name_en": "Reproduction in Plants",
+              "name_zh": "植物的繁殖",
+              "outcomes": ["Identify parts of a flower", "Describe pollination and seed dispersal"]
+            },
+            {
+              "id": "SCI-P5-003",
+              "name_en": "Reproduction in Humans",
+              "name_zh": "人类的繁殖",
+              "outcomes": [
+                "Describe the life cycle of humans from birth to old age",
+                "Understand basic concepts of human reproduction at an age-appropriate level"
+              ]
+            },
+            {
+              "id": "SCI-P5-004",
+              "name_en": "Matter",
+              "name_zh": "物质",
+              "outcomes": [
+                "Describe the three states of matter",
+                "Describe properties of solids, liquids and gases"
+              ]
+            },
+            {
+              "id": "SCI-P5-005",
+              "name_en": "Conductors and Insulators",
+              "name_zh": "导体和绝缘体",
+              "outcomes": [
+                "Distinguish between conductors and insulators of heat and electricity",
+                "Relate properties to everyday uses"
+              ]
+            },
+            {
+              "id": "SCI-P5-006",
+              "name_en": "Changes of State",
+              "name_zh": "状态变化",
+              "outcomes": [
+                "Describe melting, freezing, boiling and evaporation",
+                "Explain that mass is conserved during changes of state"
+              ]
+            }
           ]
         },
         "6": {
           "topics": [
-            { "id": "SCI-P6-001", "name_en": "Food Chains and Food Webs", "name_zh": "食物链和食物网", "outcomes": ["Construct food chains and food webs", "Identify producers, consumers and decomposers"] },
-            { "id": "SCI-P6-002", "name_en": "Adaptation to Environment", "name_zh": "对环境的适应", "outcomes": ["Describe how structural and behavioural adaptations help organisms survive", "Explain the relationship between adaptation and habitat"] },
-            { "id": "SCI-P6-003", "name_en": "Electric Circuits", "name_zh": "电路", "outcomes": ["Draw and interpret circuit diagrams", "Describe how switches control circuits", "Identify series and parallel circuits"] },
-            { "id": "SCI-P6-004", "name_en": "Water Cycle", "name_zh": "水循环", "outcomes": ["Describe the processes of evaporation, condensation and precipitation", "Explain the water cycle as a continuous process"] },
-            { "id": "SCI-P6-005", "name_en": "Forces", "name_zh": "力", "outcomes": ["Identify types of forces (friction, gravity, elastic spring, magnetic)", "Describe how forces affect motion"] },
-            { "id": "SCI-P6-006", "name_en": "PSLE Science Application", "name_zh": "小六会考科学应用", "outcomes": ["Apply scientific concepts to novel contexts", "Design fair tests and identify variables", "Draw conclusions from experimental data"] },
-            { "id": "SCI-P6-007", "name_en": "Photosynthesis", "name_zh": "光合作用", "outcomes": ["Describe the process of photosynthesis", "Identify conditions necessary for photosynthesis"] },
-            { "id": "SCI-P6-008", "name_en": "Human Body Systems", "name_zh": "人体系统", "outcomes": ["Describe how body systems work together", "Explain how the nervous system coordinates responses"] }
+            {
+              "id": "SCI-P6-001",
+              "name_en": "Food Chains and Food Webs",
+              "name_zh": "食物链和食物网",
+              "outcomes": [
+                "Construct food chains and food webs",
+                "Identify producers, consumers and decomposers"
+              ]
+            },
+            {
+              "id": "SCI-P6-002",
+              "name_en": "Adaptation to Environment",
+              "name_zh": "对环境的适应",
+              "outcomes": [
+                "Describe how structural and behavioural adaptations help organisms survive",
+                "Explain the relationship between adaptation and habitat"
+              ]
+            },
+            {
+              "id": "SCI-P6-003",
+              "name_en": "Electric Circuits",
+              "name_zh": "电路",
+              "outcomes": [
+                "Draw and interpret circuit diagrams",
+                "Describe how switches control circuits",
+                "Identify series and parallel circuits"
+              ]
+            },
+            {
+              "id": "SCI-P6-004",
+              "name_en": "Water Cycle",
+              "name_zh": "水循环",
+              "outcomes": [
+                "Describe the processes of evaporation, condensation and precipitation",
+                "Explain the water cycle as a continuous process"
+              ]
+            },
+            {
+              "id": "SCI-P6-005",
+              "name_en": "Forces",
+              "name_zh": "力",
+              "outcomes": [
+                "Identify types of forces (friction, gravity, elastic spring, magnetic)",
+                "Describe how forces affect motion"
+              ]
+            },
+            {
+              "id": "SCI-P6-006",
+              "name_en": "PSLE Science Application",
+              "name_zh": "小六会考科学应用",
+              "outcomes": [
+                "Apply scientific concepts to novel contexts",
+                "Design fair tests and identify variables",
+                "Draw conclusions from experimental data"
+              ]
+            },
+            {
+              "id": "SCI-P6-007",
+              "name_en": "Photosynthesis",
+              "name_zh": "光合作用",
+              "outcomes": [
+                "Describe the process of photosynthesis",
+                "Identify conditions necessary for photosynthesis"
+              ]
+            },
+            {
+              "id": "SCI-P6-008",
+              "name_en": "Human Body Systems",
+              "name_zh": "人体系统",
+              "outcomes": [
+                "Describe how body systems work together",
+                "Explain how the nervous system coordinates responses"
+              ]
+            }
           ]
         }
       }
@@ -220,61 +1119,336 @@
       "levels": {
         "1": {
           "topics": [
-            { "id": "CHI-P1-001", "name_en": "Hanyu Pinyin", "name_zh": "汉语拼音", "outcomes": ["Recognise and read initial consonants, finals and tones", "Spell simple words using Hanyu Pinyin"] },
-            { "id": "CHI-P1-002", "name_en": "Basic Stroke Order", "name_zh": "基本笔画和笔顺", "outcomes": ["Write the eight basic strokes correctly", "Follow correct stroke order for simple characters"] },
-            { "id": "CHI-P1-003", "name_en": "Characters and Words", "name_zh": "汉字和词语", "outcomes": ["Read and write ~250-300 common characters", "Form simple 词语 from characters"] },
-            { "id": "CHI-P1-004", "name_en": "Simple Sentences", "name_zh": "简单句", "outcomes": ["Read and write simple sentences with correct punctuation", "Use 是...的 sentences"] },
-            { "id": "CHI-P1-005", "name_en": "Listening and Speaking", "name_zh": "听说", "outcomes": ["Listen to short passages and answer simple questions", "Speak in complete sentences about familiar topics"] },
-            { "id": "CHI-P1-006", "name_en": "Picture Description", "name_zh": "看图说话", "outcomes": ["Describe a picture using 3-5 complete sentences", "Use 有...在... pattern"] }
+            {
+              "id": "CHI-P1-001",
+              "name_en": "Hanyu Pinyin",
+              "name_zh": "汉语拼音",
+              "outcomes": [
+                "Recognise and read initial consonants, finals and tones",
+                "Spell simple words using Hanyu Pinyin"
+              ]
+            },
+            {
+              "id": "CHI-P1-002",
+              "name_en": "Basic Stroke Order",
+              "name_zh": "基本笔画和笔顺",
+              "outcomes": [
+                "Write the eight basic strokes correctly",
+                "Follow correct stroke order for simple characters"
+              ]
+            },
+            {
+              "id": "CHI-P1-003",
+              "name_en": "Characters and Words",
+              "name_zh": "汉字和词语",
+              "outcomes": [
+                "Read and write ~250-300 common characters",
+                "Form simple 词语 from characters"
+              ]
+            },
+            {
+              "id": "CHI-P1-004",
+              "name_en": "Simple Sentences",
+              "name_zh": "简单句",
+              "outcomes": [
+                "Read and write simple sentences with correct punctuation",
+                "Use 是...的 sentences"
+              ]
+            },
+            {
+              "id": "CHI-P1-005",
+              "name_en": "Listening and Speaking",
+              "name_zh": "听说",
+              "outcomes": [
+                "Listen to short passages and answer simple questions",
+                "Speak in complete sentences about familiar topics"
+              ]
+            },
+            {
+              "id": "CHI-P1-006",
+              "name_en": "Picture Description",
+              "name_zh": "看图说话",
+              "outcomes": [
+                "Describe a picture using 3-5 complete sentences",
+                "Use 有...在... pattern"
+              ]
+            }
           ]
         },
         "2": {
           "topics": [
-            { "id": "CHI-P2-001", "name_en": "Character Building", "name_zh": "识字", "outcomes": ["Read and write ~500-600 cumulative characters", "Use radicals to guess meaning of unfamiliar characters"] },
-            { "id": "CHI-P2-002", "name_en": "Sentence Formation", "name_zh": "造句", "outcomes": ["Form sentences using given words", "Use 把 and 被 sentences"] },
-            { "id": "CHI-P2-003", "name_en": "Reading Comprehension", "name_zh": "阅读理解", "outcomes": ["Read short passages (50-80 characters) and answer literal questions", "Identify the main idea"] },
-            { "id": "CHI-P2-004", "name_en": "Writing", "name_zh": "写话", "outcomes": ["Write 5-8 sentences on a familiar topic", "Use appropriate punctuation"] },
-            { "id": "CHI-P2-005", "name_en": "Oral Communication", "name_zh": "口语", "outcomes": ["Engage in short conversations on familiar topics", "Describe pictures using complete sentences"] }
+            {
+              "id": "CHI-P2-001",
+              "name_en": "Character Building",
+              "name_zh": "识字",
+              "outcomes": [
+                "Read and write ~500-600 cumulative characters",
+                "Use radicals to guess meaning of unfamiliar characters"
+              ]
+            },
+            {
+              "id": "CHI-P2-002",
+              "name_en": "Sentence Formation",
+              "name_zh": "造句",
+              "outcomes": ["Form sentences using given words", "Use 把 and 被 sentences"]
+            },
+            {
+              "id": "CHI-P2-003",
+              "name_en": "Reading Comprehension",
+              "name_zh": "阅读理解",
+              "outcomes": [
+                "Read short passages (50-80 characters) and answer literal questions",
+                "Identify the main idea"
+              ]
+            },
+            {
+              "id": "CHI-P2-004",
+              "name_en": "Writing",
+              "name_zh": "写话",
+              "outcomes": ["Write 5-8 sentences on a familiar topic", "Use appropriate punctuation"]
+            },
+            {
+              "id": "CHI-P2-005",
+              "name_en": "Oral Communication",
+              "name_zh": "口语",
+              "outcomes": [
+                "Engage in short conversations on familiar topics",
+                "Describe pictures using complete sentences"
+              ]
+            }
           ]
         },
         "3": {
           "topics": [
-            { "id": "CHI-P3-001", "name_en": "Vocabulary and Phrases", "name_zh": "词汇和短语", "outcomes": ["Read and write ~900-1000 cumulative characters", "Understand and use common 成语 (simple four-character idioms)"] },
-            { "id": "CHI-P3-002", "name_en": "Reading Comprehension (Short Passages)", "name_zh": "阅读理解（短文）", "outcomes": ["Read passages (100-150 characters) and answer literal and simple inferential questions", "Identify the sequence of events"] },
-            { "id": "CHI-P3-003", "name_en": "Sentence Construction", "name_zh": "造句", "outcomes": ["Use 不但...而且..., 虽然...但是... conjunctions", "Rewrite sentences without changing meaning"] },
-            { "id": "CHI-P3-004", "name_en": "Composition", "name_zh": "作文", "outcomes": ["Write a short composition (80-120 characters) based on a picture or title", "Use 看图说话 conventions"] },
-            { "id": "CHI-P3-005", "name_en": "Oral - Reading Aloud", "name_zh": "口语 - 朗读", "outcomes": ["Read a short passage aloud with correct pronunciation and tone", "Pause at appropriate punctuation"] }
+            {
+              "id": "CHI-P3-001",
+              "name_en": "Vocabulary and Phrases",
+              "name_zh": "词汇和短语",
+              "outcomes": [
+                "Read and write ~900-1000 cumulative characters",
+                "Understand and use common 成语 (simple four-character idioms)"
+              ]
+            },
+            {
+              "id": "CHI-P3-002",
+              "name_en": "Reading Comprehension (Short Passages)",
+              "name_zh": "阅读理解（短文）",
+              "outcomes": [
+                "Read passages (100-150 characters) and answer literal and simple inferential questions",
+                "Identify the sequence of events"
+              ]
+            },
+            {
+              "id": "CHI-P3-003",
+              "name_en": "Sentence Construction",
+              "name_zh": "造句",
+              "outcomes": [
+                "Use 不但...而且..., 虽然...但是... conjunctions",
+                "Rewrite sentences without changing meaning"
+              ]
+            },
+            {
+              "id": "CHI-P3-004",
+              "name_en": "Composition",
+              "name_zh": "作文",
+              "outcomes": [
+                "Write a short composition (80-120 characters) based on a picture or title",
+                "Use 看图说话 conventions"
+              ]
+            },
+            {
+              "id": "CHI-P3-005",
+              "name_en": "Oral - Reading Aloud",
+              "name_zh": "口语 - 朗读",
+              "outcomes": [
+                "Read a short passage aloud with correct pronunciation and tone",
+                "Pause at appropriate punctuation"
+              ]
+            }
           ]
         },
         "4": {
           "topics": [
-            { "id": "CHI-P4-001", "name_en": "Vocabulary in Context", "name_zh": "语境词汇", "outcomes": ["Determine word meaning from context", "Use synonyms and antonyms appropriately", "~1300-1500 cumulative characters"] },
-            { "id": "CHI-P4-002", "name_en": "Reading Comprehension", "name_zh": "阅读理解", "outcomes": ["Answer inferential questions from medium-length passages", "Identify the writer's purpose and feelings"] },
-            { "id": "CHI-P4-003", "name_en": "Cloze Passage (综合填空)", "name_zh": "综合填空", "outcomes": ["Select appropriate words to fill blanks in a passage", "Use grammar and context clues"] },
-            { "id": "CHI-P4-004", "name_en": "Composition - Narrative", "name_zh": "叙事作文", "outcomes": ["Write a narrative composition (100-150 characters) with clear beginning, middle and end", "Use dialogue and descriptive language"] },
-            { "id": "CHI-P4-005", "name_en": "Oral - Conversation", "name_zh": "口语 - 会话", "outcomes": ["Respond to questions in a sustained conversation", "Express opinions with reasons in Chinese"] },
-            { "id": "CHI-P4-006", "name_en": "Grammar", "name_zh": "语法", "outcomes": ["Use measure words correctly", "Apply 了, 着, 过 aspect markers appropriately"] }
+            {
+              "id": "CHI-P4-001",
+              "name_en": "Vocabulary in Context",
+              "name_zh": "语境词汇",
+              "outcomes": [
+                "Determine word meaning from context",
+                "Use synonyms and antonyms appropriately",
+                "~1300-1500 cumulative characters"
+              ]
+            },
+            {
+              "id": "CHI-P4-002",
+              "name_en": "Reading Comprehension",
+              "name_zh": "阅读理解",
+              "outcomes": [
+                "Answer inferential questions from medium-length passages",
+                "Identify the writer's purpose and feelings"
+              ]
+            },
+            {
+              "id": "CHI-P4-003",
+              "name_en": "Cloze Passage (综合填空)",
+              "name_zh": "综合填空",
+              "outcomes": [
+                "Select appropriate words to fill blanks in a passage",
+                "Use grammar and context clues"
+              ]
+            },
+            {
+              "id": "CHI-P4-004",
+              "name_en": "Composition - Narrative",
+              "name_zh": "叙事作文",
+              "outcomes": [
+                "Write a narrative composition (100-150 characters) with clear beginning, middle and end",
+                "Use dialogue and descriptive language"
+              ]
+            },
+            {
+              "id": "CHI-P4-005",
+              "name_en": "Oral - Conversation",
+              "name_zh": "口语 - 会话",
+              "outcomes": [
+                "Respond to questions in a sustained conversation",
+                "Express opinions with reasons in Chinese"
+              ]
+            },
+            {
+              "id": "CHI-P4-006",
+              "name_en": "Grammar",
+              "name_zh": "语法",
+              "outcomes": [
+                "Use measure words correctly",
+                "Apply 了, 着, 过 aspect markers appropriately"
+              ]
+            }
           ]
         },
         "5": {
           "topics": [
-            { "id": "CHI-P5-001", "name_en": "Advanced Vocabulary", "name_zh": "高级词汇", "outcomes": ["Use advanced vocabulary and 成语 appropriately", "~1700-1900 cumulative characters"] },
-            { "id": "CHI-P5-002", "name_en": "Reading Comprehension (Advanced)", "name_zh": "阅读理解（高级）", "outcomes": ["Answer open-ended comprehension questions with text evidence", "Analyse character motivation and writer's techniques"] },
-            { "id": "CHI-P5-003", "name_en": "Cloze Passage (Advanced)", "name_zh": "综合填空（高级）", "outcomes": ["Fill blanks using contextual and grammatical analysis", "Distinguish between near-synonyms"] },
-            { "id": "CHI-P5-004", "name_en": "Composition", "name_zh": "作文", "outcomes": ["Write a composition (≥ 120 characters) with plot development, character feelings and a lesson", "Use varied sentence structures and 修辞手法"] },
-            { "id": "CHI-P5-005", "name_en": "Oral Examination Practice", "name_zh": "口试备考", "outcomes": ["Read aloud with fluency, correct tones and expression", "Engage in stimulus-based conversation on social issues"] },
-            { "id": "CHI-P5-006", "name_en": "Grammar and Sentence Manipulation", "name_zh": "语法和句子操作", "outcomes": ["Convert between active and passive (把/被)", "Rewrite sentences using different structures without changing meaning"] }
+            {
+              "id": "CHI-P5-001",
+              "name_en": "Advanced Vocabulary",
+              "name_zh": "高级词汇",
+              "outcomes": [
+                "Use advanced vocabulary and 成语 appropriately",
+                "~1700-1900 cumulative characters"
+              ]
+            },
+            {
+              "id": "CHI-P5-002",
+              "name_en": "Reading Comprehension (Advanced)",
+              "name_zh": "阅读理解（高级）",
+              "outcomes": [
+                "Answer open-ended comprehension questions with text evidence",
+                "Analyse character motivation and writer's techniques"
+              ]
+            },
+            {
+              "id": "CHI-P5-003",
+              "name_en": "Cloze Passage (Advanced)",
+              "name_zh": "综合填空（高级）",
+              "outcomes": [
+                "Fill blanks using contextual and grammatical analysis",
+                "Distinguish between near-synonyms"
+              ]
+            },
+            {
+              "id": "CHI-P5-004",
+              "name_en": "Composition",
+              "name_zh": "作文",
+              "outcomes": [
+                "Write a composition (≥ 120 characters) with plot development, character feelings and a lesson",
+                "Use varied sentence structures and 修辞手法"
+              ]
+            },
+            {
+              "id": "CHI-P5-005",
+              "name_en": "Oral Examination Practice",
+              "name_zh": "口试备考",
+              "outcomes": [
+                "Read aloud with fluency, correct tones and expression",
+                "Engage in stimulus-based conversation on social issues"
+              ]
+            },
+            {
+              "id": "CHI-P5-006",
+              "name_en": "Grammar and Sentence Manipulation",
+              "name_zh": "语法和句子操作",
+              "outcomes": [
+                "Convert between active and passive (把/被)",
+                "Rewrite sentences using different structures without changing meaning"
+              ]
+            }
           ]
         },
         "6": {
           "topics": [
-            { "id": "CHI-P6-001", "name_en": "PSLE Vocabulary", "name_zh": "小六会考词汇", "outcomes": ["Demonstrate mastery of PSLE Chinese vocabulary list", "~2000-2300 cumulative characters"] },
-            { "id": "CHI-P6-002", "name_en": "PSLE Reading Comprehension", "name_zh": "小六会考阅读理解", "outcomes": ["Answer open-ended and MCQ comprehension questions", "Analyse passage structure, writer's techniques and moral lessons"] },
-            { "id": "CHI-P6-003", "name_en": "PSLE Cloze Passage", "name_zh": "小六会考综合填空", "outcomes": ["Complete cloze passages with high accuracy using contextual and grammatical reasoning", "Handle near-synonyms and near-homophones"] },
-            { "id": "CHI-P6-004", "name_en": "PSLE Composition", "name_zh": "小六会考作文", "outcomes": ["Write a composition (≥ 150 characters) based on 三幅图 or a title", "Demonstrate character development, plot progression and a meaningful conclusion"] },
-            { "id": "CHI-P6-005", "name_en": "PSLE Oral Examination", "name_zh": "小六会考口试", "outcomes": ["朗读 with excellent pronunciation, tone accuracy and expression", "会话: sustain discussion on a stimulus image, express well-reasoned opinions"] },
-            { "id": "CHI-P6-006", "name_en": "PSLE Listening Comprehension", "name_zh": "小六会考听力理解", "outcomes": ["Understand spoken Chinese passages and answer MCQ questions", "Identify speaker attitudes and infer meaning from tone"] },
-            { "id": "CHI-P6-007", "name_en": "PSLE 完成对话", "name_zh": "小六会考完成对话", "outcomes": ["Complete missing turns in a dialogue with contextually and grammatically appropriate responses", "Maintain tone and register consistency"] }
+            {
+              "id": "CHI-P6-001",
+              "name_en": "PSLE Vocabulary",
+              "name_zh": "小六会考词汇",
+              "outcomes": [
+                "Demonstrate mastery of PSLE Chinese vocabulary list",
+                "~2000-2300 cumulative characters"
+              ]
+            },
+            {
+              "id": "CHI-P6-002",
+              "name_en": "PSLE Reading Comprehension",
+              "name_zh": "小六会考阅读理解",
+              "outcomes": [
+                "Answer open-ended and MCQ comprehension questions",
+                "Analyse passage structure, writer's techniques and moral lessons"
+              ]
+            },
+            {
+              "id": "CHI-P6-003",
+              "name_en": "PSLE Cloze Passage",
+              "name_zh": "小六会考综合填空",
+              "outcomes": [
+                "Complete cloze passages with high accuracy using contextual and grammatical reasoning",
+                "Handle near-synonyms and near-homophones"
+              ]
+            },
+            {
+              "id": "CHI-P6-004",
+              "name_en": "PSLE Composition",
+              "name_zh": "小六会考作文",
+              "outcomes": [
+                "Write a composition (≥ 150 characters) based on 三幅图 or a title",
+                "Demonstrate character development, plot progression and a meaningful conclusion"
+              ]
+            },
+            {
+              "id": "CHI-P6-005",
+              "name_en": "PSLE Oral Examination",
+              "name_zh": "小六会考口试",
+              "outcomes": [
+                "朗读 with excellent pronunciation, tone accuracy and expression",
+                "会话: sustain discussion on a stimulus image, express well-reasoned opinions"
+              ]
+            },
+            {
+              "id": "CHI-P6-006",
+              "name_en": "PSLE Listening Comprehension",
+              "name_zh": "小六会考听力理解",
+              "outcomes": [
+                "Understand spoken Chinese passages and answer MCQ questions",
+                "Identify speaker attitudes and infer meaning from tone"
+              ]
+            },
+            {
+              "id": "CHI-P6-007",
+              "name_en": "PSLE 完成对话",
+              "name_zh": "小六会考完成对话",
+              "outcomes": [
+                "Complete missing turns in a dialogue with contextually and grammatically appropriate responses",
+                "Maintain tone and register consistency"
+              ]
+            }
           ]
         }
       }

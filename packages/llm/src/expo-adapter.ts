@@ -25,11 +25,7 @@
 // Use the legacy API which has createDownloadResumable with Range support
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Network from 'expo-network';
-import type {
-  FileDownloadAdapter,
-  NetworkAdapter,
-  NetworkState,
-} from './types';
+import type { FileDownloadAdapter, NetworkAdapter, NetworkState } from './types';
 
 // ─── File Download Adapter ──────────────────────────────────────────
 
@@ -99,8 +95,7 @@ export class ExpoFileDownloadAdapter implements FileDownloadAdapter {
     signal?: AbortSignal;
     onProgress?: (bytesDownloaded: number, totalBytes: number) => void;
   }): Promise<{ fileSize: number }> {
-    const { url, destPath, offset, expectedSize, signal, onProgress } =
-      options;
+    const { url, destPath, offset, expectedSize, signal, onProgress } = options;
 
     // Ensure the temp directory exists
     const destDir = destPath.substring(0, destPath.lastIndexOf('/'));
@@ -108,16 +103,10 @@ export class ExpoFileDownloadAdapter implements FileDownloadAdapter {
 
     // Create a resumable download. expo-file-system automatically sends
     // the Range header when resuming from a partial file.
-    const download = FileSystem.createDownloadResumable(
-      url,
-      destPath,
-      {},
-      (downloadProgress) => {
-        const total =
-          downloadProgress.totalBytesExpectedToWrite ?? expectedSize;
-        onProgress?.(downloadProgress.totalBytesWritten, total);
-      },
-    );
+    const download = FileSystem.createDownloadResumable(url, destPath, {}, (downloadProgress) => {
+      const total = downloadProgress.totalBytesExpectedToWrite ?? expectedSize;
+      onProgress?.(downloadProgress.totalBytesWritten, total);
+    });
 
     try {
       const result = await download.downloadAsync();

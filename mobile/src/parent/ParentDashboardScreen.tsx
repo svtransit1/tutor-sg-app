@@ -6,14 +6,7 @@
  * This is the screen shown AFTER PIN authentication succeeds.
  */
 import React from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  ScrollView,
-  type TextStyle,
-} from 'react-native';
+import { View, Text, Pressable, StyleSheet, ScrollView } from 'react-native';
 import { useI18n } from '@tutor-sg/i18n';
 
 // ── Types ──────────────────────────────────────────────────────────
@@ -25,18 +18,14 @@ interface ParentDashboardScreenProps {
 
 // ── Screen Component ───────────────────────────────────────────────
 
-export default function ParentDashboardScreen({
-  onDismiss,
-}: ParentDashboardScreenProps) {
+export default function ParentDashboardScreen({ onDismiss }: ParentDashboardScreenProps) {
   const { t } = useI18n();
 
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>
-          {t('parent:dashboard_title')}
-        </Text>
+        <Text style={styles.headerTitle}>{t('parent:dashboard_title')}</Text>
         <Pressable
           style={styles.dismissButton}
           onPress={onDismiss}
@@ -48,28 +37,21 @@ export default function ParentDashboardScreen({
         </Pressable>
       </View>
 
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
-      >
+      <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
         {/* Empty state */}
         <View style={styles.emptyState}>
           <View style={styles.emptyIconWrap}>
             <Text style={styles.emptyIcon}>📋</Text>
           </View>
-          <Text style={styles.emptyTitle}>
-            {t('parent:log_title')}
-          </Text>
-          <Text style={styles.emptyBody}>
-            {t('parent:log_empty')}
-          </Text>
+          <Text style={styles.emptyTitle}>{t('parent:log_title')}</Text>
+          <Text style={styles.emptyBody}>{t('parent:log_empty')}</Text>
         </View>
 
         {/* Placeholder for M3: actual session log */}
         <View style={styles.placeholder}>
           <Text style={styles.placeholderText}>
-            Session log coming in M3 — sessions will appear here once your
-            child uses the camera homework feature.
+            Session log coming in M3 — sessions will appear here once your child uses the camera
+            homework feature.
           </Text>
         </View>
       </ScrollView>
@@ -171,4 +153,4 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: 'center',
   },
-} as TextStyle);
+});

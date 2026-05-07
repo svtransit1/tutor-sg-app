@@ -103,9 +103,7 @@ async function ensureFreeSpace(
  * 4. SHA-256 integrity verification
  * 5. Move temp → permanent location
  */
-export async function downloadFile(
-  options: DownloadOptions,
-): Promise<DownloadResult> {
+export async function downloadFile(options: DownloadOptions): Promise<DownloadResult> {
   const {
     url,
     destinationPath,
@@ -125,11 +123,7 @@ export async function downloadFile(
   const speedEst = new SpeedEstimator();
 
   // ═══ Phase 1: Storage check ═══════════════════════════════════════
-  const storageErr = await ensureFreeSpace(
-    fileAdapter,
-    tempPath,
-    expectedSize,
-  );
+  const storageErr = await ensureFreeSpace(fileAdapter, tempPath, expectedSize);
   if (storageErr) {
     onStateChange?.('failed');
     return { success: false, error: storageErr, retriesConsumed: 0 };
@@ -278,9 +272,7 @@ export async function downloadFile(
     } catch (err) {
       finalError = {
         type: 'unknown',
-        message: `Integrity check failed: ${
-          err instanceof Error ? err.message : String(err)
-        }`,
+        message: `Integrity check failed: ${err instanceof Error ? err.message : String(err)}`,
         bytesReceived: offset,
         retryable: false,
         cause: err,
@@ -327,8 +319,7 @@ function normalizeError(err: unknown, bytesReceived: number): DownloadError {
       type: err.type,
       message: err.message,
       bytesReceived,
-      retryable:
-        err.retryable ?? (err.type === 'network' || err.type === 'server'),
+      retryable: err.retryable ?? (err.type === 'network' || err.type === 'server'),
       cause: err.cause ?? err,
     };
   }
@@ -359,20 +350,13 @@ function normalizeError(err: unknown, bytesReceived: number): DownloadError {
   };
 }
 
-function isAdapterError(
-  err: unknown,
-): err is {
+function isAdapterError(err: unknown): err is {
   type: DownloadError['type'];
   message: string;
   retryable?: boolean;
   cause?: unknown;
 } {
-  return (
-    typeof err === 'object' &&
-    err !== null &&
-    'type' in err &&
-    'message' in err
-  );
+  return typeof err === 'object' && err !== null && 'type' in err && 'message' in err;
 }
 
 // ─── Utilities ───────────────────────────────────────────────────────

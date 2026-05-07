@@ -19,21 +19,26 @@ The app verifies downloaded model artifacts against SHA-256 checksums in `packag
 ### Refresh hashes (new quant or model variant)
 
 1. Place the `.gguf` or `.mlx` files in a directory:
+
    ```bash
    mkdir -p /tmp/model-staging
    cp path/to/new-model.gguf /tmp/model-staging/
    ```
 
 2. Run the hash computation script:
+
    ```bash
    npx tsx scripts/compute-model-hashes.ts /tmp/model-staging
    ```
+
    This prints a JSON manifest with `sha256` and `sizeBytes` for each file.
 
 3. Update `packages/shared/src/models/integrity.json` — either manually or with `--json`:
+
    ```bash
    npx tsx scripts/compute-model-hashes.ts /tmp/model-staging --json
    ```
+
    This overwrites the integrity manifest. **Review the diff before committing.**
 
 4. Commit the updated `integrity.json`. The app uses these hashes to verify downloads on first launch.

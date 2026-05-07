@@ -17,12 +17,36 @@ import settingsZhHans from './locales/zh-Hans/settings.json';
 
 // --- Namespace integrity tests ---
 
-const NAMESPACES: { name: I18nNamespace; en: Record<string, string>; zh: Record<string, string> }[] = [
-  { name: 'common', en: commonEn as Record<string, string>, zh: commonZhHans as Record<string, string> },
-  { name: 'onboarding', en: onboardingEn as Record<string, string>, zh: onboardingZhHans as Record<string, string> },
-  { name: 'homework', en: homeworkEn as Record<string, string>, zh: homeworkZhHans as Record<string, string> },
-  { name: 'parent', en: parentEn as Record<string, string>, zh: parentZhHans as Record<string, string> },
-  { name: 'settings', en: settingsEn as Record<string, string>, zh: settingsZhHans as Record<string, string> },
+const NAMESPACES: {
+  name: I18nNamespace;
+  en: Record<string, string>;
+  zh: Record<string, string>;
+}[] = [
+  {
+    name: 'common',
+    en: commonEn as Record<string, string>,
+    zh: commonZhHans as Record<string, string>,
+  },
+  {
+    name: 'onboarding',
+    en: onboardingEn as Record<string, string>,
+    zh: onboardingZhHans as Record<string, string>,
+  },
+  {
+    name: 'homework',
+    en: homeworkEn as Record<string, string>,
+    zh: homeworkZhHans as Record<string, string>,
+  },
+  {
+    name: 'parent',
+    en: parentEn as Record<string, string>,
+    zh: parentZhHans as Record<string, string>,
+  },
+  {
+    name: 'settings',
+    en: settingsEn as Record<string, string>,
+    zh: settingsZhHans as Record<string, string>,
+  },
 ];
 
 describe('locale namespace files', () => {
@@ -62,7 +86,9 @@ describe('locale namespace files', () => {
           // If a key uses interpolation, both EN and ZH should use it
           const zhVal = ns.zh[key];
           if (value.includes('{{')) {
-            expect(zhVal, `${ns.name}: key "${key}" missing interpolation in zh-Hans`).toContain('{{');
+            expect(zhVal, `${ns.name}: key "${key}" missing interpolation in zh-Hans`).toContain(
+              '{{',
+            );
           }
         }
       });
@@ -271,7 +297,9 @@ describe('initializeI18n with namespaces', () => {
     expect(mod.default.t('save')).toBe('Save');
     expect(mod.default.t('onboarding:get_started')).toBe('Get Started');
     expect(mod.default.t('homework:capture')).toBe('Take a photo of your homework');
-    expect(mod.default.t('parent:log_empty')).toBe('No homework sessions yet. Ask your child to try the Camera feature!');
+    expect(mod.default.t('parent:log_empty')).toBe(
+      'No homework sessions yet. Ask your child to try the Camera feature!',
+    );
     expect(mod.default.t('settings:subscription_free_tier')).toBe('Free');
 
     // Switch to zh-Hans

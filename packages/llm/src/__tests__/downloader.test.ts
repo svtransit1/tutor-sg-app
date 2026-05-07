@@ -59,10 +59,7 @@ function createSmartAdapter(
     deleteFile: vi.fn(async (path) => fs.delete(path)),
     moveFile: vi.fn(async (from, to) => fs.move(from, to)),
     getFreeSpace: vi.fn(async () => 100_000_000_000),
-    sha256: vi.fn(
-      async () =>
-        'abc123def456abc123def456abc123def456abc123def456abc123def456abc1',
-    ),
+    sha256: vi.fn(async () => 'abc123def456abc123def456abc123def456abc123def456abc123def456abc1'),
     downloadRange: vi.fn(async (opts) => {
       // Simulate successful download — write the file to the mock fs
       fs.writeDownload(opts.destPath, opts.expectedSize);
@@ -79,8 +76,7 @@ function makeDefaultOptions(adapter: FileDownloadAdapter): DownloadOptions {
     destinationPath: '/models/test.gguf',
     tempPath: '/models/test.gguf.partial',
     expectedSize: 1_000_000,
-    expectedSha256:
-      'abc123def456abc123def456abc123def456abc123def456abc123def456abc1',
+    expectedSha256: 'abc123def456abc123def456abc123def456abc123def456abc123def456abc1',
     maxRetries: 3,
     fileAdapter: adapter,
   };
@@ -198,10 +194,7 @@ describe('downloadFile', () => {
 
   it('should fail on integrity mismatch', async () => {
     const adapter = createSmartAdapter(fs, {
-      sha256: vi.fn(
-        async () =>
-          'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-      ),
+      sha256: vi.fn(async () => 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'),
     });
 
     const result = await downloadFile({
@@ -294,9 +287,7 @@ describe('exponentialBackoff', () => {
   });
 
   it('should add jitter (not return exact power of 2 every time)', () => {
-    const delays = Array.from({ length: 10 }, () =>
-      exponentialBackoff.delayMs(2),
-    );
+    const delays = Array.from({ length: 10 }, () => exponentialBackoff.delayMs(2));
     const unique = new Set(delays);
     expect(unique.size).toBeGreaterThan(1);
   });
