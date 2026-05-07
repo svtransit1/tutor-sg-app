@@ -1,0 +1,15 @@
+node_modules
+pnpm-lock.yaml
+dist
+build
+coverage
+.expo
+**/__mocks__
+*.md
+*.mdx
+*.java
+*.m
+*.h
+*.py
+*.txt
+syllabus-pdfs/
