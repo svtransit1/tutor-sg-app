@@ -1,77 +1,34 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/svtransit1/tutor-sg-app/blob/main/packages/shared/src/models/registry.schema.json",
-  "title": "Gemma Model Registry",
-  "description": "Static registry of LLM model artifacts. The app reads this to decide which model to download per device tier, OS, and available CDN.",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "array",
-  "items": {
-    "type": "object",
-    "required": ["modelFamily", "paramCount", "quant", "format", "sizeBytes", "sha256", "cdnUrls", "minDeviceTier"],
-    "properties": {
-      "modelFamily": {
-        "type": "string",
-        "enum": ["gemma-2", "gemma-3"],
-        "description": "The Gemma model generation family."
-      },
-      "paramCount": {
-        "type": "integer",
-        "minimum": 1,
-        "description": "Number of parameters in millions (e.g., 2 for 2B, 4 for 4B, 9 for 9B)."
-      },
-      "quant": {
-        "type": "string",
-        "enum": ["q4_0", "q4_k_m", "q8_0", "fp16"],
-        "description": "Quantization level. Lower bits = smaller file, lower quality."
-      },
-      "format": {
-        "type": "string",
-        "enum": ["gguf", "mlx"],
-        "description": "Model file format. GGUF is cross-platform; MLX is Apple Silicon only."
-      },
-      "sizeBytes": {
-        "type": "integer",
-        "minimum": 1,
-        "description": "File size in bytes of the model artifact."
-      },
-      "sha256": {
-        "type": "string",
-        "pattern": "^[a-f0-9]{64}$",
-        "description": "SHA-256 checksum for integrity verification after download."
-      },
-      "cdnUrls": {
-        "type": "array",
-        "minItems": 1,
-        "items": {
-          "type": "string",
-          "format": "uri"
-        },
-        "description": "One or more CDN mirror URLs for the model artifact."
-      },
-      "minDeviceTier": {
-        "type": "string",
-        "enum": ["low", "mid", "high"],
-        "description": "Minimum device RAM tier required: low (<=4GB), mid (6-8GB), high (>=12GB)."
-      },
-      "iosOnly": {
-        "type": "boolean",
-        "default": false,
-        "description": "If true, this artifact is only available on iOS (e.g., MLX format)."
-      },
-      "androidOnly": {
-        "type": "boolean",
-        "default": false,
-        "description": "If true, this artifact is only available on Android."
-      },
-      "recommended": {
-        "type": "boolean",
-        "default": false,
-        "description": "Marks the default model for this device tier."
-      },
-      "notes": {
-        "type": "string",
-        "description": "Optional human-readable notes (e.g., 'best quality/size tradeoff for mid-tier')."
+  "items": { "$ref": "#/definitions/ModelRegistryEntry" },
+  "definitions": {
+    "ModelRegistryEntry": {
+      "type": "object",
+      "required": [
+        "modelFamily",
+        "paramCount",
+        "quant",
+        "format",
+        "sizeBytes",
+        "sha256",
+        "cdnUrls",
+        "minDeviceTier"
+      ],
+      "properties": {
+        "modelFamily": { "type": "string" },
+        "paramCount": { "type": "number" },
+        "quant": { "type": "string" },
+        "format": { "type": "string" },
+        "sizeBytes": { "type": "number" },
+        "sha256": { "type": "string" },
+        "cdnUrls": { "type": "array", "items": { "type": "string" } },
+        "minDeviceTier": { "type": "string" },
+        "iosOnly": { "type": "boolean" },
+        "androidOnly": { "type": "boolean" },
+        "recommended": { "type": "boolean" },
+        "notes": { "type": "string" }
       }
-    },
-    "additionalProperties": false
+    }
   }
 }
