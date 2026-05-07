@@ -29,7 +29,7 @@ Agent ↔ GitHub account mapping and review rules. Per ADD §11 and [[decisions-
 |-----------------------------|--------------------------|
 | Require PR review           | 1 approval               |
 | Required approval reviewer  | svtransit1 (temporary — replace with Tortoise when provisioned) |
-| Require CI checks           | `test / ci` (from .github/workflows/ci.yml) |
+| Require CI checks           | `CI / Tests` (from .github/workflows/ci.yml) |
 | Require CODEOWNERS review   | Enabled                  |
 | Allow force-push            | Disabled                 |
 | Allow deletions             | Disabled                 |
