@@ -113,7 +113,10 @@ describe('DrawingCanvas', () => {
       />,
     );
 
-    expect(screen.getByLabelText('Drawing canvas')).toBeTruthy();
+    // With the i18n mock, the key string is returned as-is
+    expect(
+      screen.getByLabelText('manualInputFallback.accessibility.drawCanvas'),
+    ).toBeTruthy();
   });
 
   // ── Clear Button ────────────────────────────────────────
@@ -129,8 +132,8 @@ describe('DrawingCanvas', () => {
       />,
     );
 
-    expect(screen.getByLabelText('Clear drawing')).toBeTruthy();
-    expect(screen.getByText('Clear')).toBeTruthy();
+    expect(screen.getByLabelText('manualInputFallback.clear')).toBeTruthy();
+    expect(screen.getByText('manualInputFallback.clear')).toBeTruthy();
   });
 
   it('hides clear button when canvas is empty', () => {
@@ -142,7 +145,7 @@ describe('DrawingCanvas', () => {
       />,
     );
 
-    expect(screen.queryByLabelText('Clear drawing')).toBeNull();
+    expect(screen.queryByLabelText('manualInputFallback.clear')).toBeNull();
   });
 
   it('calls onStrokesChange with empty array when clear is pressed', () => {
@@ -156,7 +159,7 @@ describe('DrawingCanvas', () => {
       />,
     );
 
-    fireEvent.press(screen.getByLabelText('Clear drawing'));
+    fireEvent.press(screen.getByLabelText('manualInputFallback.clear'));
     expect(onStrokesChange).toHaveBeenCalledWith([]);
   });
 
