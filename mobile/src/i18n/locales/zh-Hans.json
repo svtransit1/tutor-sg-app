@@ -21,6 +21,22 @@
       "reassurance": "您随时可以在家长专区查看隐私设置。",
       "accessibility": "隐私承诺：孩子的数据不会离开这台设备。"
     },
+    "kidProfile": {
+      "title": "介绍一下您的孩子",
+      "subtitle": "我们将根据孩子的信息来定制学习体验。",
+      "kidCount": "第 {{number}} 个孩子，共 {{total}} 个",
+      "nameLabel": "姓名",
+      "namePlaceholder": "输入孩子的姓名",
+      "nameError": "姓名长度需在 1 到 30 个字符之间",
+      "gradeLabel": "年级",
+      "continue": "继续",
+      "maxReached": "已添加最多孩子数量。",
+      "avatarLabel": "选择一个头像",
+      "accessibility": {
+        "gradeOption": "{{grade}}",
+        "avatarOption": "选择{{avatar}}头像"
+      }
+    },
     "siblingPrompt": {
       "title": "家里还有其他孩子要用吗？",
       "subtitle": "现在添加，他/她也会有自己的学习记录。",
@@ -155,7 +171,15 @@
     "accessibility": {
       "subjectTile": "{{subject}} 科目",
       "recentSession": "{{subject}}，{{time}}前，{{questions}} 道题",
-      "viewAll": "查看全部学习记录"
+      "viewAll": "查看全部学习记录",
+      "subjectTileHint": "打开{{subject}}练习题",
+      "cameraHint": "拍下功课照片，获取帮助",
+      "firstSessionCtaHint": "拍下第一份功课照片，开始学习",
+      "practiceChipHint": "试试{{subject}}练习题",
+      "dismissHint": "隐藏此欢迎信息，探索应用",
+      "viewAllHint": "查看所有过往学习记录",
+      "switchLanguageHint": "切换中英文",
+      "sessionCardHint": "查看此次{{subject}}学习详情"
     },
     "firstSession": {
       "welcomeTitle": "欢迎来到 tutor-sg！",
@@ -192,6 +216,40 @@
   "common": {
     "back": "返回",
     "goBack": "返回首页"
+  },
+  "homeworkError": {
+    "title": "哎呀！",
+    "llmTimeout": {
+      "title": "处理时间有点长",
+      "description": "AI 处理比平时花了更长时间。轻触「重试」再试一次。",
+      "retry": "重试",
+      "goBack": "返回首页"
+    },
+    "cameraDenied": {
+      "title": "相机无法使用",
+      "description": "我们需要相机来识别你的作业。请在设置中允许相机访问权限。",
+      "typeItOut": "手动输入",
+      "goBack": "返回首页"
+    },
+    "ocrFailure": {
+      "title": "无法识别这份作业",
+      "description": "我们无法清晰地识别这一页。请尝试重新拍照或手动输入答案。",
+      "retake": "重新拍照",
+      "manualInput": "手动输入",
+      "goBack": "返回首页"
+    },
+    "modelNotDownloaded": {
+      "title": "导师还没准备好",
+      "description": "AI 模型还在下载中。请在家长专区等待下载完成。",
+      "goBack": "返回首页",
+      "parentArea": "家长专区"
+    },
+    "unknown": {
+      "title": "出了点问题",
+      "description": "发生了意外错误。请重试。",
+      "retry": "重试",
+      "goBack": "返回首页"
+    }
   },
   "manualInputFallback": {
     "title": "有些内容看不清楚",

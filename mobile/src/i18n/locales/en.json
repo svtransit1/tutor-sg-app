@@ -21,6 +21,22 @@
       "reassurance": "You can review your privacy settings anytime in the Parent area.",
       "accessibility": "Privacy promise: your child's data never leaves this device."
     },
+    "kidProfile": {
+      "title": "Tell us about your child",
+      "subtitle": "We'll use this to tailor the learning experience.",
+      "kidCount": "Child {{number}} of {{total}}",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter your child's name",
+      "nameError": "Name must be between 1 and 30 characters",
+      "gradeLabel": "Grade",
+      "continue": "Continue",
+      "maxReached": "You've added the maximum number of children.",
+      "avatarLabel": "Choose an avatar",
+      "accessibility": {
+        "gradeOption": "Grade {{grade}}",
+        "avatarOption": "Select {{avatar}} avatar"
+      }
+    },
     "siblingPrompt": {
       "title": "Got another child who could use this too?",
       "subtitle": "Add them now and they'll have their own learning log.",
@@ -155,7 +171,15 @@
     "accessibility": {
       "subjectTile": "{{subject}} subject",
       "recentSession": "Session {{subject}}, {{time}} ago, {{questions}} questions",
-      "viewAll": "View all recent sessions"
+      "viewAll": "View all recent sessions",
+      "subjectTileHint": "Opens {{subject}} practice questions",
+      "cameraHint": "Take a photo of your homework to get help",
+      "firstSessionCtaHint": "Take your first homework photo and start learning",
+      "practiceChipHint": "Try a {{subject}} practice question to get started",
+      "dismissHint": "Hide this welcome message and explore the app",
+      "viewAllHint": "See all your past homework sessions",
+      "switchLanguageHint": "Switch between English and Chinese",
+      "sessionCardHint": "View details of this {{subject}} session"
     },
     "firstSession": {
       "welcomeTitle": "Welcome to tutor-sg!",
@@ -192,6 +216,40 @@
   "common": {
     "back": "Back",
     "goBack": "Go back"
+  },
+  "homeworkError": {
+    "title": "Oops!",
+    "llmTimeout": {
+      "title": "Taking too long",
+      "description": "The AI is taking a bit longer than usual. Tap Retry to try again.",
+      "retry": "Retry",
+      "goBack": "Go back home"
+    },
+    "cameraDenied": {
+      "title": "Camera not available",
+      "description": "We need the camera to read your homework. Please allow camera access in Settings.",
+      "typeItOut": "Type it out instead",
+      "goBack": "Go back home"
+    },
+    "ocrFailure": {
+      "title": "Can't read this homework",
+      "description": "We couldn't read this page clearly. Try retaking the photo or type the answers.",
+      "retake": "Try again",
+      "manualInput": "Type the answers",
+      "goBack": "Go back home"
+    },
+    "modelNotDownloaded": {
+      "title": "Tutor not ready yet",
+      "description": "The AI model is still being downloaded. Wait for the download to finish in the Parent area.",
+      "goBack": "Go back home",
+      "parentArea": "Parent area"
+    },
+    "unknown": {
+      "title": "Something went wrong",
+      "description": "An unexpected error happened. Please try again.",
+      "retry": "Retry",
+      "goBack": "Go back home"
+    }
   },
   "manualInputFallback": {
     "title": "Can't read all items",
