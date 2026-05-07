@@ -32,6 +32,7 @@ module.exports = {
     '^expo-localization$': '<rootDir>/__mocks__/expo-localization.ts',
     '^expo-modules-core$': '<rootDir>/__mocks__/expo-modules-core.ts',
     '^expo-(.*)$': '<rootDir>/__mocks__/expo-module-proxy.ts',
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
   setupFiles: [path.join(rnDir, 'jest', 'setup.js')],
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
