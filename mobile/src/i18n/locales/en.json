@@ -1,0 +1,102 @@
+{
+  "app.loading": "tutor-sg — loading...",
+  "app.name": "tutor-sg",
+  "onboarding": {
+    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion" },
+    "done": { "title": "All set!", "subtitle": "Let's start learning" }
+  },
+  "network.offline": "You're offline",
+  "network.offline.description": "Camera homework still works. Downloads need Wi-Fi.",
+  "network.cellular": "On cellular data",
+  "network.cellular.description": "Large downloads are paused to save data.",
+  "parentAuth": {
+    "title": "Parent Access",
+    "enterPin": "Enter your PIN",
+    "wrongPin": "Wrong PIN. Try again.",
+    "cooldown": "Too many attempts. Please wait.",
+    "cooldownTimer": "Try again in {{seconds}}s",
+    "attemptsRemaining": "{{count}} attempt remaining",
+    "attemptsRemaining_plural": "{{count}} attempts remaining",
+    "pinsDontMatch": "PINs don't match. Try again.",
+    "setup": {
+      "title": "Set Up Parent PIN",
+      "enterPin": "Enter a 4-digit PIN",
+      "confirmPin": "Confirm your PIN"
+    },
+    "signIn": {
+      "title": "Create your account",
+      "subtitle": "Sign in to save your child's progress and access parent features. Your child's data never leaves the device.",
+      "emailPlaceholder": "Enter your email address",
+      "sendMagicLink": "Send magic link",
+      "magicLinkSent": "Magic link sent!",
+      "checkEmail": "Check your email for the sign-in link. It expires in 10 minutes.",
+      "orDivider": "or continue with",
+      "continueWithGoogle": "Continue with Google",
+      "continueWithApple": "Continue with Apple",
+      "skip": "Skip for now",
+      "errorInvalidEmail": "Please enter a valid email address",
+      "errorSendFailed": "Failed to send magic link. Please try again.",
+      "errorSignInFailed": "Sign-in failed. Please try again.",
+      "errorAuthSession": "Authentication session was cancelled or failed.",
+      "signedIn": "Signed in successfully",
+      "continue": "Continue"
+    }
+  },
+  "parent": {
+    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
+    "settings": {
+      "title": "Settings",
+      "sectionQuality": "AI Quality",
+      "qualityDescription": "Control the AI model size. Higher quality gives faster, smarter responses but uses more storage and battery.",
+      "qualityAuto": "Auto",
+      "qualityHigh": "High Performance",
+      "qualityStandard": "Standard",
+      "qualityLow": "Low",
+      "tierAuto": "Auto-detected as {{tier}}",
+      "tierOverride": "Manually set to {{tier}}",
+      "modelInfo": "LLM: {{llm}} | Chinese: {{mt}}",
+      "sectionLanguage": "Language",
+      "languageDescription": "Choose the app display language.",
+      "languageEn": "English",
+      "languageZh": "中文",
+      "footerInfo": "Model quality affects performance and battery life. Your choice is saved locally."
+    }
+  },
+  "deviceTierResult": {
+    "title": "Your device is ready!",
+    "tierLabel": "Detected performance level",
+    "highPerformance": "High Performance",
+    "standard": "Standard",
+    "highDescription": "Your device can run the full AI tutor experience with faster responses.",
+    "standardDescription": "Your device will run the AI tutor smoothly with slightly longer response times.",
+    "downloadSize": "Download size: {{size}}",
+    "modelNames": "Models: {{models}}",
+    "consentText": "Models run entirely on this device. Nothing leaves your phone.",
+    "downloadNow": "Download now",
+    "downloadLater": "Download later (Wi-Fi only)",
+    "cellularWarning": "{{size}} download over cellular. Connect to Wi-Fi to save data?",
+    "cellularProceed": "Download anyway",
+    "cellularCancel": "Wait for Wi-Fi",
+    "loading": "Checking your device…",
+    "error": "Could not detect device capabilities. Please try again."
+  },
+  "modelDownload": {
+    "title": "Setting up your tutor...",
+    "progress": "Downloading {{fileName}}…",
+    "progressPercent": "{{percent}}%",
+    "retrying": "Retrying download ({{attempt}}/{{max}})…",
+    "paused": "Download paused",
+    "resuming": "Resuming download…",
+    "completed": "Download complete",
+    "retry": "Retry",
+    "wifiRequired": "Wi-Fi connection required",
+    "errors": {
+      "connectivity_lost": "Wi-Fi connection lost. Download will resume when reconnected.",
+      "disk_insufficient": "Not enough storage space. Need about {{needed}}GB free.",
+      "cdn_unreachable": "Cannot reach server. Please check your internet connection and try again.",
+      "hash_mismatch": "Download file corrupted. Re-downloading…",
+      "download_stuck": "Download seems stuck. Retrying…",
+      "unknown_error": "Something went wrong. Please try again."
+    }
+  }
+}

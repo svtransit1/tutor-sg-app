@@ -1,0 +1,1 @@
+{"name":"tutor-sg","version":"0.1.0","private":true,"scripts":{"typecheck":"pnpm -r typecheck","lint":"pnpm -r lint","test":"pnpm -r test","format:check":"prettier --check .","format:write":"prettier --write ."},"engines":{"node":">=20","pnpm":">=9"},"devDependencies":{"prettier":"^3.5.0","typescript":"^5.8.0"}}
