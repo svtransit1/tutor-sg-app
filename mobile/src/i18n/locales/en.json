@@ -237,6 +237,16 @@
     "accessibility": {
       "cancel": "Go back to home screen",
       "capture": "Take a photo of your homework"
+    },
+    "permissionBlocked": {
+      "title": "Camera access is blocked",
+      "description": "Camera access was previously denied...",
+      "cta": "Open Settings"
+    },
+    "permissionDenied": {
+      "title": "Camera access needed",
+      "description": "Camera access was denied...",
+      "cta": "Try again"
     }
   },
   "cameraResult": {
@@ -252,11 +262,18 @@
     "fullSolution": "Full solution",
     "tryThis": "Try this next",
     "backToHome": "Back to Home",
+    "accessibility": {
+      "backButton": "Go back to the home screen",
+      "followUp": "Ask a follow-up question about this homework"
+    },
     "encouragement": {
       "title": "Great work! 💪",
       "body": "Try the hint first. If you're still stuck, tap 'Show me the steps' for a guided walkthrough."
     },
     "followUp": {
+      "hintTab": "Hint — get a clue to help you solve the problem",
+      "stepsTab": "Steps — see a step-by-step guide to solve this problem",
+      "solutionTab": "Solution — see the full worked answer",
       "placeholder": "Ask a follow-up question…",
       "send": "Send",
       "accessibility": "Type a follow-up question",
@@ -293,7 +310,12 @@
       "allow": "Enable camera access",
       "notNow": "Not now",
       "permanentlyDenied": "Camera access is turned off in system settings.",
-      "openSettings": "Open Settings"
+      "openSettings": "Open Settings",
+      "accessibility": {
+        "allowHint": "Allows the app to use the camera for homework photos",
+        "notNowHint": "Skip this for now — you can enable camera access later in Settings",
+        "settingsHint": "Opens system settings to turn on camera access"
+      }
     },
     "notifications": {
       "title": "Weekly progress summary",
@@ -301,13 +323,21 @@
       "allow": "Allow notifications",
       "notNow": "Not now",
       "permanentlyDenied": "Notifications are turned off in system settings.",
-      "openSettings": "Open Settings"
+      "openSettings": "Open Settings",
+      "accessibility": {
+        "allowHint": "Allows the app to send weekly progress notifications",
+        "notNowHint": "Skip this for now — you can enable notifications later in Settings",
+        "settingsHint": "Opens system settings to turn on notifications"
+      }
     },
     "done": {
       "title": "All set!",
       "bodyAll": "You can always change permissions later in Settings.",
       "bodySome": "You can enable permissions later in Settings.",
-      "continue": "Continue"
+      "continue": "Continue",
+      "accessibility": {
+        "continueHint": "Continue to the next step in setup"
+      }
     }
   }
 }

@@ -237,6 +237,16 @@
     "accessibility": {
       "cancel": "返回首页",
       "capture": "拍下作业照片"
+    },
+    "permissionBlocked": {
+      "title": "相机权限已被屏蔽",
+      "description": "之前拒绝了相机权限。要使用拍照问功课功能，请在设备设置中开启相机权限。",
+      "cta": "前往设置"
+    },
+    "permissionDenied": {
+      "title": "需要相机权限",
+      "description": "相机权限被拒绝。应用需要相机权限来帮助你完成作业。照片不会离开这台设备。",
+      "cta": "重试"
     }
   },
   "cameraResult": {
@@ -252,11 +262,18 @@
     "fullSolution": "完整解答",
     "tryThis": "试试这个",
     "backToHome": "返回首页",
+    "accessibility": {
+      "backButton": "返回到首页",
+      "followUp": "追问这道作业题"
+    },
     "encouragement": {
       "title": "做得很好！💪",
       "body": "先试试提示。如果还是卡住了，点击「显示解题步骤」获取分步指导。"
     },
     "followUp": {
+      "hintTab": "提示 — 获取解题线索",
+      "stepsTab": "步骤 — 查看分步解题指南",
+      "solutionTab": "答案 — 查看完整解答",
       "placeholder": "输入追问…",
       "send": "发送",
       "accessibility": "输入追问内容",
@@ -293,7 +310,12 @@
       "allow": "开启相机权限",
       "notNow": "稍后再说",
       "permanentlyDenied": "相机权限已在系统设置中关闭。",
-      "openSettings": "打开设置"
+      "openSettings": "打开设置",
+      "accessibility": {
+        "allowHint": "允许应用使用相机拍照功课",
+        "notNowHint": "跳过此步 — 您之后可以在设置中开启相机权限",
+        "settingsHint": "打开系统设置以开启相机权限"
+      }
     },
     "notifications": {
       "title": "每周学习总结",
@@ -301,13 +323,21 @@
       "allow": "允许通知",
       "notNow": "稍后再说",
       "permanentlyDenied": "通知权限已在系统设置中关闭。",
-      "openSettings": "打开设置"
+      "openSettings": "打开设置",
+      "accessibility": {
+        "allowHint": "允许应用发送每周学习总结通知",
+        "notNowHint": "跳过此步 — 您之后可以在设置中开启通知权限",
+        "settingsHint": "打开系统设置以开启通知权限"
+      }
     },
     "done": {
       "title": "准备好了！",
       "bodyAll": "您随时可以在设置中更改权限。",
-      "bodySome": "您之后可以在设置中开启权限。",
-      "continue": "继续"
+      "bodySome": "您可以在设置中开启权限。",
+      "continue": "继续",
+      "accessibility": {
+        "continueHint": "继续到设置的下一步"
+      }
     }
   }
 }
