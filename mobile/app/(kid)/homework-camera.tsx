@@ -13,6 +13,7 @@ import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CameraView, useCameraPermissions, type CameraPictureOptions } from 'expo-camera';
 import CameraGuideFrame from '@/components/CameraGuideFrame';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 type CaptureState = 'preview' | 'captured';
 
@@ -178,7 +179,7 @@ export default function HomeworkCameraScreen() {
           <Text style={styles.headerBack}>← {t('common.back')}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{t('cameraGuideFrame.title')}</Text>
-        <View style={styles.headerSpacer} />
+        <LanguageSwitcher />
       </View>
 
       {/* Camera / captured preview */}
@@ -258,10 +259,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     textAlign: 'center',
   } satisfies TextStyle,
-
-  headerSpacer: {
-    width: 50,
-  } satisfies ViewStyle,
 
   // ── Camera area ──
 

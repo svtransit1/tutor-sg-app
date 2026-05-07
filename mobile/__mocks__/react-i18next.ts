@@ -1,10 +1,14 @@
 import React from 'react';
 
+const mockChangeLanguage = jest.fn();
+
 export const useTranslation = () => ({
   t: (key: string) => key,
-  i18n: { language: 'en', changeLanguage: jest.fn() },
+  i18n: { language: 'en', changeLanguage: mockChangeLanguage },
   ready: true,
 });
+
+export const __mockChangeLanguage = mockChangeLanguage;
 
 export const Trans = ({ children }: { children: React.ReactNode }) =>
   React.createElement(React.Fragment, null, children);
