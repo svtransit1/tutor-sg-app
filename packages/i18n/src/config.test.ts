@@ -1,57 +1,73 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import en from './locales/en.json';
-import zhHans from './locales/zh-Hans.json';
+import type { I18nNamespace } from './types';
 
-// --- Locale file integrity tests ---
+// --- Import ALL namespace files for consistency checking ---
 
-describe('locale files', () => {
-  it('en.json and zh-Hans.json have exactly the same keys', () => {
-    const enKeys = Object.keys(en).sort();
-    const zhKeys = Object.keys(zhHans).sort();
-    expect(enKeys).toEqual(zhKeys);
-  });
+import commonEn from './locales/en/common.json';
+import onboardingEn from './locales/en/onboarding.json';
+import homeworkEn from './locales/en/homework.json';
+import parentEn from './locales/en/parent.json';
+import settingsEn from './locales/en/settings.json';
 
-  it('en.json has no empty values', () => {
-    for (const [key, value] of Object.entries(en)) {
-      expect(value, `en.json key "${key}" is empty`).toBeTruthy();
-    }
-  });
+import commonZhHans from './locales/zh-Hans/common.json';
+import onboardingZhHans from './locales/zh-Hans/onboarding.json';
+import homeworkZhHans from './locales/zh-Hans/homework.json';
+import parentZhHans from './locales/zh-Hans/parent.json';
+import settingsZhHans from './locales/zh-Hans/settings.json';
 
-  it('zh-Hans.json has no empty values', () => {
-    for (const [key, value] of Object.entries(zhHans)) {
-      expect(value, `zh-Hans.json key "${key}" is empty`).toBeTruthy();
-    }
-  });
+// --- Namespace integrity tests ---
 
-  it('all key names are valid flat identifiers (no i18next special chars)', () => {
-    const allKeys = [...Object.keys(en), ...Object.keys(zhHans)];
-    for (const key of allKeys) {
-      // Dots are allowed in flat-key mode (keySeparator: false disables dot as path separator)
-      // Only disallow chars that would break i18next even with keySeparator off
-      expect(key).not.toContain(':');
-      expect(key).not.toContain('|');
-    }
-  });
+const NAMESPACES: { name: I18nNamespace; en: Record<string, string>; zh: Record<string, string> }[] = [
+  { name: 'common', en: commonEn as Record<string, string>, zh: commonZhHans as Record<string, string> },
+  { name: 'onboarding', en: onboardingEn as Record<string, string>, zh: onboardingZhHans as Record<string, string> },
+  { name: 'homework', en: homeworkEn as Record<string, string>, zh: homeworkZhHans as Record<string, string> },
+  { name: 'parent', en: parentEn as Record<string, string>, zh: parentZhHans as Record<string, string> },
+  { name: 'settings', en: settingsEn as Record<string, string>, zh: settingsZhHans as Record<string, string> },
+];
 
-  it('interpolation variables in values match known keys', () => {
-    // Keys expected to have interpolation
-    const interpolationKeys = [
-      'onboarding.download_progress',
-      'parent.pin_wrong',
-      'subscription.free_tier_desc',
-      'worksheet.score',
-    ];
+describe('locale namespace files', () => {
+  for (const ns of NAMESPACES) {
+    describe(`${ns.name} namespace`, () => {
+      it('has exactly the same keys in EN and zh-Hans', () => {
+        const enKeys = Object.keys(ns.en).sort();
+        const zhKeys = Object.keys(ns.zh).sort();
+        expect(enKeys).toEqual(zhKeys);
+      });
 
-    for (const key of interpolationKeys) {
-      const enVal = (en as Record<string, string>)[key];
-      const zhVal = (zhHans as Record<string, string>)[key];
-      expect(enVal, `en.json key "${key}" missing`).toBeDefined();
-      expect(zhVal, `zh-Hans.json key "${key}" missing`).toBeDefined();
-      // Check that both have at least one {{variable}}
-      expect(enVal).toMatch(/\{\{/);
-      expect(zhVal).toMatch(/\{\{/);
-    }
-  });
+      it('has no empty values in EN', () => {
+        for (const [key, value] of Object.entries(ns.en)) {
+          expect(value, `en/${ns.name}.json key "${key}" is empty`).toBeTruthy();
+        }
+      });
+
+      it('has no empty values in zh-Hans', () => {
+        for (const [key, value] of Object.entries(ns.zh)) {
+          expect(value, `zh-Hans/${ns.name}.json key "${key}" is empty`).toBeTruthy();
+        }
+      });
+
+      it('keys do not contain i18next special characters', () => {
+        const allKeys = [...Object.keys(ns.en), ...Object.keys(ns.zh)];
+        for (const key of allKeys) {
+          // Dots are allowed (keySeparator: false = literal dots)
+          // Colons would interfere with nsSeparator
+          expect(key, `${ns.name}: key "${key}" contains colon`).not.toContain(':');
+          // Pipes interfere with i18next
+          expect(key, `${ns.name}: key "${key}" contains pipe`).not.toContain('|');
+        }
+      });
+
+      it('interpolation variables in values use correct format', () => {
+        for (const [key, value] of Object.entries(ns.en)) {
+          // If a key uses interpolation, both EN and ZH should use it
+          const zhVal = ns.zh[key];
+          if (value.includes('{{')) {
+            expect(zhVal, `${ns.name}: key "${key}" missing interpolation in zh-Hans`).toContain('{{');
+          }
+        }
+      });
+    });
+  }
 });
 
 // --- Locale detection tests ---
@@ -62,12 +78,8 @@ describe('detectDeviceLocale', () => {
   });
 
   it('returns en for English locale', async () => {
-    // Mock expo-localization
-    const mockLocales = [
-      { languageTag: 'en-SG', languageCode: 'en', regionCode: 'SG' },
-    ];
     vi.doMock('expo-localization', () => ({
-      getLocales: () => mockLocales,
+      getLocales: () => [{ languageTag: 'en-SG', languageCode: 'en', regionCode: 'SG' }],
       getCalendars: () => [],
     }));
 
@@ -76,11 +88,8 @@ describe('detectDeviceLocale', () => {
   });
 
   it('returns zh-Hans for zh-CN locale', async () => {
-    const mockLocales = [
-      { languageTag: 'zh-CN', languageCode: 'zh', regionCode: 'CN' },
-    ];
     vi.doMock('expo-localization', () => ({
-      getLocales: () => mockLocales,
+      getLocales: () => [{ languageTag: 'zh-CN', languageCode: 'zh', regionCode: 'CN' }],
       getCalendars: () => [],
     }));
 
@@ -89,11 +98,8 @@ describe('detectDeviceLocale', () => {
   });
 
   it('returns zh-Hans for zh-SG locale', async () => {
-    const mockLocales = [
-      { languageTag: 'zh-SG', languageCode: 'zh', regionCode: 'SG' },
-    ];
     vi.doMock('expo-localization', () => ({
-      getLocales: () => mockLocales,
+      getLocales: () => [{ languageTag: 'zh-SG', languageCode: 'zh', regionCode: 'SG' }],
       getCalendars: () => [],
     }));
 
@@ -102,11 +108,8 @@ describe('detectDeviceLocale', () => {
   });
 
   it('returns en for zh-TW locale (Traditional Chinese)', async () => {
-    const mockLocales = [
-      { languageTag: 'zh-TW', languageCode: 'zh', regionCode: 'TW' },
-    ];
     vi.doMock('expo-localization', () => ({
-      getLocales: () => mockLocales,
+      getLocales: () => [{ languageTag: 'zh-TW', languageCode: 'zh', regionCode: 'TW' }],
       getCalendars: () => [],
     }));
 
@@ -115,11 +118,8 @@ describe('detectDeviceLocale', () => {
   });
 
   it('returns en for zh-HK locale (Traditional Chinese)', async () => {
-    const mockLocales = [
-      { languageTag: 'zh-HK', languageCode: 'zh', regionCode: 'HK' },
-    ];
     vi.doMock('expo-localization', () => ({
-      getLocales: () => mockLocales,
+      getLocales: () => [{ languageTag: 'zh-HK', languageCode: 'zh', regionCode: 'HK' }],
       getCalendars: () => [],
     }));
 
@@ -190,14 +190,14 @@ describe('detectIsGregorianCalendar', () => {
   });
 });
 
-// --- i18n initialization test ---
+// --- i18n initialization + namespace correctness tests ---
 
-describe('initializeI18n', () => {
+describe('initializeI18n with namespaces', () => {
   beforeEach(async () => {
     vi.resetModules();
   });
 
-  it('initializes with detected locale (en)', async () => {
+  it('initializes with detected locale', async () => {
     vi.doMock('expo-localization', () => ({
       getLocales: () => [{ languageTag: 'en-SG', languageCode: 'en', regionCode: 'SG' }],
       getCalendars: () => [{ calendar: 'gregory' }],
@@ -210,47 +210,80 @@ describe('initializeI18n', () => {
     expect(i18n.language).toBe('en');
   });
 
-  it('sets locale via setLocale() after initialization', async () => {
+  it('resolves common namespace keys directly', async () => {
     vi.doMock('expo-localization', () => ({
       getLocales: () => [{ languageTag: 'en-SG', languageCode: 'en', regionCode: 'SG' }],
-      getCalendars: () => [{ calendar: 'gregory' }],
+      getCalendars: () => [],
     }));
 
     const mod = await import('./config');
     await mod.initializeI18n({ debug: false });
 
-    // Switch to zh-Hans
-    expect(mod.default.language).toBe('en');
-    await mod.default.changeLanguage('zh-Hans');
-    expect(mod.default.language).toBe('zh-Hans');
-
-    // Switch back to en
-    await mod.default.changeLanguage('en');
-    expect(mod.default.language).toBe('en');
+    // Common keys (default namespace) — no prefix needed
+    expect(mod.default.t('save')).toBe('Save');
+    expect(mod.default.t('cancel')).toBe('Cancel');
+    expect(mod.default.t('back')).toBe('Back');
+    expect(mod.default.t('app.name')).toBe('Tutor SG');
+    expect(mod.default.t('math')).toBe('Math');
+    expect(mod.default.t('science')).toBe('Science');
   });
 
-  it('translates known keys correctly (locale switching via changeLanguage)', async () => {
+  it('resolves other namespace keys via ns: prefix', async () => {
     vi.doMock('expo-localization', () => ({
       getLocales: () => [{ languageTag: 'en-SG', languageCode: 'en', regionCode: 'SG' }],
-      getCalendars: () => [{ calendar: 'gregory' }],
+      getCalendars: () => [],
     }));
 
     const mod = await import('./config');
     await mod.initializeI18n({ debug: false });
 
-    // Check a few known translations
-    expect(mod.default.t('app.name')).toBe('Tutor SG');
-    expect(mod.default.t('common.save')).toBe('Save');
-    expect(mod.default.t('common.cancel')).toBe('Cancel');
+    // Namespaced keys via prefix
+    expect(mod.default.t('onboarding:welcome_title')).toBe('Welcome to Tutor SG');
+    expect(mod.default.t('homework:title')).toBe('Homework Camera');
+    expect(mod.default.t('parent:pin_title')).toBe('Parent PIN');
+    expect(mod.default.t('settings:subscription_title')).toBe('Unlock Full Access');
+  });
 
-    // Switch to zh-Hans and verify
+  it('resolves namespace keys via ns option', async () => {
+    vi.doMock('expo-localization', () => ({
+      getLocales: () => [{ languageTag: 'en-SG', languageCode: 'en', regionCode: 'SG' }],
+      getCalendars: () => [],
+    }));
+
+    const mod = await import('./config');
+    await mod.initializeI18n({ debug: false });
+
+    // Namespaced keys via { ns } option
+    expect(mod.default.t('welcome_title', { ns: 'onboarding' })).toBe('Welcome to Tutor SG');
+    expect(mod.default.t('pin_title', { ns: 'parent' })).toBe('Parent PIN');
+  });
+
+  it('switches locale and resolves all namespaces', async () => {
+    vi.doMock('expo-localization', () => ({
+      getLocales: () => [{ languageTag: 'en-SG', languageCode: 'en', regionCode: 'SG' }],
+      getCalendars: () => [],
+    }));
+
+    const mod = await import('./config');
+    await mod.initializeI18n({ debug: false });
+
+    // Verify EN
+    expect(mod.default.t('save')).toBe('Save');
+    expect(mod.default.t('onboarding:get_started')).toBe('Get Started');
+    expect(mod.default.t('homework:capture')).toBe('Take a photo of your homework');
+    expect(mod.default.t('parent:log_empty')).toBe('No homework sessions yet. Ask your child to try the Camera feature!');
+    expect(mod.default.t('settings:subscription_free_tier')).toBe('Free');
+
+    // Switch to zh-Hans
     await mod.default.changeLanguage('zh-Hans');
-    expect(mod.default.t('app.name')).toBe('Tutor SG 学习助手');
-    expect(mod.default.t('common.save')).toBe('保存');
-    expect(mod.default.t('common.cancel')).toBe('取消');
+    expect(mod.default.t('save')).toBe('保存');
+    expect(mod.default.t('onboarding:get_started')).toBe('开始使用');
+    expect(mod.default.t('homework:capture')).toBe('拍一张作业照片');
+    expect(mod.default.t('parent:log_empty')).toBe('还没有作业记录。让孩子试试拍照功能吧！');
+    expect(mod.default.t('settings:subscription_free_tier')).toBe('免费版');
 
     // Switch back
     await mod.default.changeLanguage('en');
-    expect(mod.default.t('common.save')).toBe('Save');
+    expect(mod.default.t('save')).toBe('Save');
   });
 });

@@ -1,0 +1,12 @@
+{
+  "subscription_title": "Unlock Full Access",
+  "subscription_free_tier": "Free",
+  "subscription_free_tier_desc": "{{photos}} homework photos/day\n{{questions}} practice questions/day",
+  "subscription_monthly": "Monthly Unlimited",
+  "subscription_monthly_desc": "Unlimited homework help\nAll practice worksheets\nParent dashboard",
+  "subscription_premium": "PSLE Study Programme",
+  "subscription_premium_desc": "Everything in Monthly\nStructured PSLE prep paths\nMock papers with timed simulation\nProgress dashboards",
+  "subscription_restore": "Restore Purchases",
+  "subscription_terms": "Terms of Service",
+  "subscription_privacy": "Privacy Policy"
+}

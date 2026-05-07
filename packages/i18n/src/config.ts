@@ -1,10 +1,59 @@
-import i18n, { type InitOptions } from 'i18next';
+import i18n, { type InitOptions, type Resource } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { getLocales, getCalendars } from 'expo-localization';
 import type { SupportedLocale } from './types';
 
-import en from './locales/en.json';
-import zhHans from './locales/zh-Hans.json';
+// Namespace resource imports
+import commonEn from './locales/en/common.json';
+import onboardingEn from './locales/en/onboarding.json';
+import homeworkEn from './locales/en/homework.json';
+import parentEn from './locales/en/parent.json';
+import settingsEn from './locales/en/settings.json';
+
+import commonZhHans from './locales/zh-Hans/common.json';
+import onboardingZhHans from './locales/zh-Hans/onboarding.json';
+import homeworkZhHans from './locales/zh-Hans/homework.json';
+import parentZhHans from './locales/zh-Hans/parent.json';
+import settingsZhHans from './locales/zh-Hans/settings.json';
+
+/**
+ * Namespace definitions for Tutor SG.
+ * Organise keys by product domain for maintainability.
+ *
+ * | Namespace     | Scope                                    |
+ * |---------------|------------------------------------------|
+ * | common        | App metadata, shared UI, subjects, errors |
+ * | onboarding    | First-launch flow (model download, setup) |
+ * | homework      | Camera, chat, worksheets                  |
+ * | parent        | Parent dashboard, PIN gate, session log   |
+ * | settings      | Preferences, IAP, subscription            |
+ */
+export const NAMESPACES = ['common', 'onboarding', 'homework', 'parent', 'settings'] as const;
+export type I18nNamespace = (typeof NAMESPACES)[number];
+
+export const DEFAULT_NS: I18nNamespace = 'common';
+
+/**
+ * Build the resource bundle for i18next from per-namespace JSON files.
+ */
+function buildResources(): Resource {
+  return {
+    en: {
+      common: commonEn,
+      onboarding: onboardingEn,
+      homework: homeworkEn,
+      parent: parentEn,
+      settings: settingsEn,
+    },
+    'zh-Hans': {
+      common: commonZhHans,
+      onboarding: onboardingZhHans,
+      homework: homeworkZhHans,
+      parent: parentZhHans,
+      settings: settingsZhHans,
+    },
+  };
+}
 
 /**
  * Detects the best matching locale from the device.
@@ -18,7 +67,7 @@ export function detectDeviceLocale(): SupportedLocale {
       const primary = locales[0];
       if (primary) {
         const langTag = primary.languageTag?.toLowerCase() ?? '';
-        // Match Simplified Chinese variants
+        // Match Simplified Chinese variants (SG, CN, etc.)
         if (
           langTag.startsWith('zh') &&
           !langTag.startsWith('zh-tw') &&
@@ -75,30 +124,22 @@ export async function initializeI18n(config: I18nConfig = {}): Promise<typeof i1
   const detectedLocale = config.locale ?? detectDeviceLocale();
 
   const i18nOptions: InitOptions = {
-    // Flat key structure — no nesting, no key separator
+    // Flat key structure — dots in keys are literal, not path separators
     keySeparator: false,
-    // No namespace separation — single flat file per locale
-    nsSeparator: false,
-    // Not using plural or context suffixes — single flat file
-    pluralSeparator: undefined,
-    contextSeparator: undefined,
 
-    // Only use dot as a key delimiter for log display, not for resolution
-    // This makes `t('common.back')` resolve to the flat key "common.back"
+    // Namespace separator — enables t('ns:key') and t('key', { ns: 'ns' })
+    nsSeparator: ':',
+    // Default namespace so t('save') resolves to common:save
+    defaultNS: DEFAULT_NS,
+    // Declare all available namespaces
+    ns: [...NAMESPACES],
 
     lng: detectedLocale,
     fallbackLng: 'en',
     supportedLngs: ['en', 'zh-Hans'],
 
-    // Resource bundles — flat JSON per locale
-    resources: {
-      en: {
-        translation: en,
-      },
-      'zh-Hans': {
-        translation: zhHans,
-      },
-    },
+    // Resource bundles — keyed by locale → namespace → flat keys
+    resources: buildResources(),
 
     // Interpolation
     interpolation: {

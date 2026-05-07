@@ -1,0 +1,12 @@
+{
+  "subscription_title": "解锁全部功能",
+  "subscription_free_tier": "免费版",
+  "subscription_free_tier_desc": "每天{{photos}}次作业拍照\n每天{{questions}}道练习题",
+  "subscription_monthly": "月度无限版",
+  "subscription_monthly_desc": "无限作业帮助\n所有练习卷\n家长控制面板",
+  "subscription_premium": "PSLE备考课程",
+  "subscription_premium_desc": "包含月度无限版所有功能\n结构化PSLE备考路径\n模拟考卷及时练习\n进度报告",
+  "subscription_restore": "恢复购买",
+  "subscription_terms": "服务条款",
+  "subscription_privacy": "隐私政策"
+}
