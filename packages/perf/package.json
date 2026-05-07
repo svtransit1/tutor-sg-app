@@ -1,0 +1,15 @@
+{
+  "name": "@tutor-sg/perf",
+  "version": "0.1.0",
+  "private": true,
+  "description": "P95 latency measurement harness for the camera→LLM pipeline (M2-8). Per ADD §3.5: photo-to-first-token P95 < 8s (high tier), < 15s (low tier).",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm exec vitest --passWithNoTests"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.5"
+  }
+}
