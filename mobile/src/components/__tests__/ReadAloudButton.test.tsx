@@ -172,6 +172,20 @@ describe('ReadAloudButton', () => {
     expect(screen.getByText('Read aloud')).toBeTruthy();
   });
 
+  it('stops speech on unmount (back nav / swipe / tab switch)', () => {
+    const { unmount } = render(<ReadAloudButton text="Test content" />);
+    fireEvent.press(screen.getByTestId(BTN_TEST_ID));
+    expect(speak).toHaveBeenCalled();
+
+    unmount();
+    expect(stop).toHaveBeenCalled();
+  });
+
+  it('handles unmount even in idle state without throwing', () => {
+    const { unmount } = render(<ReadAloudButton text="Test content" />);
+    expect(() => unmount()).not.toThrow();
+  });
+
   it('accepts a custom style prop', () => {
     render(
       <ReadAloudButton text="Test content" style={{ marginTop: 8 }} />,

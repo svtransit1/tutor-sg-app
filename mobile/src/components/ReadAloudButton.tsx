@@ -49,6 +49,7 @@ export default function ReadAloudButton({
   useEffect(() => {
     return () => {
       mountedRef.current = false;
+      Speech.stop();
     };
   }, []);
 
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
   } satisfies TextStyle,
 
   label: {
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: '600',
   } satisfies TextStyle,
 });
