@@ -1,0 +1,14 @@
+{
+  "name": "@tutor-sg/shared",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "echo ok"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  }
+}
