@@ -1,12 +1,3 @@
-/**
- * Device tier types and thresholds for tutor-sg.
- *
- * Per ADD §3.4: Runtime device detection at first launch.
- * ≥6 GB RAM + modern NPU (A14+/SDM8gen1+/Tensor G2+) → high (E4B / Qwen 4B)
- * 4 GB RAM or older NPU → mid (E2B / Qwen 2B)
- * Below floor (3 GB) → unsupported
- */
-
 export type DeviceTier = 'high' | 'mid' | 'low';
 
 export interface DeviceCapabilities {
@@ -27,6 +18,11 @@ export interface DeviceTierNativeModule {
   getTotalMemory(): Promise<number>;
   getChipset(): Promise<string>;
   isNPUAvailable(): Promise<boolean>;
+}
+
+export interface DeviceTierPersistence {
+  get(): Promise<DeviceCapabilities | null>;
+  set(caps: DeviceCapabilities): Promise<void>;
 }
 
 export const SETTINGS_KEY = 'device_tier';

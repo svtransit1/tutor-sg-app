@@ -1,16 +1,8 @@
-/**
- * Mock for @tutor-sg/device-tier package used in mobile tests.
- * Provides pure-function stubs with BelowFloorModal as a renderable component.
- * Uses .tsx extension because BelowFloorModal contains JSX.
- */
-
 import React from 'react';
 import { View, Text } from 'react-native';
 
 export const TIER_THRESHOLDS = {
-  HIGH_RAM_GB: 6,
-  MID_RAM_GB: 4,
-  FLOOR_RAM_GB: 3,
+  HIGH_RAM_GB: 6, MID_RAM_GB: 4, FLOOR_RAM_GB: 3,
 } as const;
 
 export const HIGH_TIER_CHIPSETS = [
@@ -32,128 +24,44 @@ export const BELOW_FLOOR_MESSAGES = {
 
 export const SETTINGS_KEY = 'device_tier';
 
-export function assignTier(info: {
-  totalRAM: number;
-  chipset: string;
-  npuAvailable: boolean;
-}) {
-  if (info.totalRAM < TIER_THRESHOLDS.FLOOR_RAM_GB) {
-    return { tier: 'low' as const, belowFloor: true };
-  }
-  const isHighTier =
-    info.totalRAM >= TIER_THRESHOLDS.HIGH_RAM_GB &&
-    HIGH_TIER_CHIPSETS.some((c) => info.chipset.includes(c)) &&
-    info.npuAvailable;
-  if (isHighTier) {
-    return { tier: 'high' as const, belowFloor: false };
-  }
+export function assignTier(info: { totalRAM: number; chipset: string; npuAvailable: boolean }) {
+  if (info.totalRAM < TIER_THRESHOLDS.FLOOR_RAM_GB) return { tier: 'low' as const, belowFloor: true };
+  const isHighTier = info.totalRAM >= TIER_THRESHOLDS.HIGH_RAM_GB &&
+    HIGH_TIER_CHIPSETS.some((c) => info.chipset.includes(c)) && info.npuAvailable;
+  if (isHighTier) return { tier: 'high' as const, belowFloor: false };
   return { tier: 'mid' as const, belowFloor: false };
 }
 
-export function buildCapabilities(
-  info: { totalRAM: number; chipset: string; npuAvailable: boolean },
-  tier?: 'high' | 'mid' | 'low',
-) {
+export function buildCapabilities(info: { totalRAM: number; chipset: string; npuAvailable: boolean }, tier?: 'high' | 'mid' | 'low') {
   const { tier: autoTier, belowFloor } = assignTier(info);
-  return {
-    tier: tier ?? autoTier,
-    ramGB: info.totalRAM,
-    chipset: info.chipset,
-    npuAvailable: info.npuAvailable,
-    belowFloor,
-  };
+  return { tier: tier ?? autoTier, ramGB: info.totalRAM, chipset: info.chipset, npuAvailable: info.npuAvailable, belowFloor };
 }
 
-/**
- * DeviceTierProvider — mock that immediately resolves to mid tier.
- * Used so RootLayout tests don't need real detection.
- */
-import React, {
-  createContext,
-  useContext,
-  useMemo,
-  ReactNode,
-} from 'react';
+import React, { createContext, useContext, useMemo, ReactNode } from 'react';
 
 interface DeviceTierContextValue {
   tier: 'high' | 'mid' | 'low';
-  capabilities: {
-    tier: 'high' | 'mid' | 'low';
-    ramGB: number;
-    chipset: string;
-    npuAvailable: boolean;
-    belowFloor: boolean;
-  };
-  belowFloor: boolean;
-  loading: boolean;
-  error: string | null;
-  refresh: () => Promise<void>;
+  capabilities: { tier: 'high' | 'mid' | 'low'; ramGB: number; chipset: string; npuAvailable: boolean; belowFloor: boolean };
+  belowFloor: boolean; loading: boolean; error: string | null; refresh: () => Promise<void>;
 }
 
 const DeviceTierContext = createContext<DeviceTierContextValue | null>(null);
 
-export function DeviceTierProvider({ children }: { children: ReactNode }) {
-  const value = useMemo<DeviceTierContextValue>(
-    () => ({
-      tier: 'mid',
-      capabilities: {
-        tier: 'mid',
-        ramGB: 4,
-        chipset: 'MockChipset',
-        npuAvailable: false,
-        belowFloor: false,
-      },
-      belowFloor: false,
-      loading: false,
-      error: null,
-      refresh: async () => {},
-    }),
-    [],
-  );
-  return (
-    <DeviceTierContext.Provider value={value}>
-      {children}
-    </DeviceTierContext.Provider>
-  );
+export function DeviceTierProvider({ children, persistence: _persistence }: { children: ReactNode; persistence?: { get(): Promise<unknown>; set(_: unknown): Promise<void> } }) {
+  const value = useMemo<DeviceTierContextValue>(() => ({
+    tier: 'mid', capabilities: { tier: 'mid', ramGB: 4, chipset: 'MockChipset', npuAvailable: false, belowFloor: false },
+    belowFloor: false, loading: false, error: null, refresh: async () => {},
+  }), []);
+  return <DeviceTierContext.Provider value={value}>{children}</DeviceTierContext.Provider>;
 }
 
 export function useDeviceTier(): DeviceTierContextValue {
   const ctx = useContext(DeviceTierContext);
-  if (!ctx) {
-    // Return a default value outside of provider (for testing fallback assertions)
-    return {
-      tier: 'mid',
-      capabilities: {
-        tier: 'mid',
-        ramGB: 4,
-        chipset: 'MockChipset',
-        npuAvailable: false,
-        belowFloor: false,
-      },
-      belowFloor: false,
-      loading: false,
-      error: null,
-      refresh: async () => {},
-    };
-  }
+  if (!ctx) return { tier: 'mid', capabilities: { tier: 'mid', ramGB: 4, chipset: 'MockChipset', npuAvailable: false, belowFloor: false }, belowFloor: false, loading: false, error: null, refresh: async () => {} };
   return ctx;
 }
 
-export function BelowFloorModal({
-  visible,
-  language = 'en',
-}: {
-  visible: boolean;
-  language?: 'en' | 'zh-Hans';
-}) {
+export function BelowFloorModal({ visible, language = 'en' }: { visible: boolean; language?: 'en' | 'zh-Hans' }) {
   if (!visible) return null;
-  return (
-    <View accessibilityRole="alert">
-      <Text>
-        {language === 'zh-Hans'
-          ? BELOW_FLOOR_MESSAGES.zh
-          : BELOW_FLOOR_MESSAGES.en}
-      </Text>
-    </View>
-  );
+  return (<View accessibilityRole="alert"><Text>{language === 'zh-Hans' ? BELOW_FLOOR_MESSAGES.zh : BELOW_FLOOR_MESSAGES.en}</Text></View>);
 }
