@@ -1,1 +1,33 @@
-{"name":"tutor-sg","version":"0.1.0","private":true,"scripts":{"typecheck":"pnpm -r typecheck","lint":"pnpm -r lint","test":"pnpm -r test","format:check":"prettier --check .","format:write":"prettier --write ."},"engines":{"node":">=20","pnpm":">=9"},"devDependencies":{"prettier":"^3.5.0","typescript":"^5.8.0"}}
+{
+  "name": "tutor-sg",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@jest/globals": "30.3.0",
+    "@types/jest": "29.5.0",
+    "@types/node": "22.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-native": "^5.0.0",
+    "globals": "^16.0.0",
+    "jest": "29.7.0",
+    "prettier": "^3.8.3",
+    "ts-jest": "29.4.9",
+    "typescript-eslint": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  }
+}
