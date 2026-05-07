@@ -1,36 +1,20 @@
 /**
- * Root index — first screen the app renders.
- *
- * The OnboardingProvider's internal useEffect handles navigation
- * to the correct onboarding or kid screen once initialized.
- * This screen just shows a brief loading state.
+ * App entry — redirects to onboarding or kid home based on state.
  */
+import { useOnboarding } from '../src/onboarding';
+import { View, ActivityIndicator } from 'react-native';
 
-import React from 'react';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
-import { useTranslation } from 'react-i18next';
+export default function Index() {
+  const { initialized } = useOnboarding();
 
-export default function RootIndexScreen() {
-  const { t } = useTranslation();
+  if (!initialized) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#2563EB" />
+      </View>
+    );
+  }
 
-  return (
-    <View style={styles.container}>
-      <ActivityIndicator size="large" color="#2563EB" />
-      <Text style={styles.text}>{t('app.loading', 'tutor-sg — loading...')}</Text>
-    </View>
-  );
+  // The OnboardingProvider handles navigation via the router effect
+  return null;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-  },
-  text: {
-    marginTop: 16,
-    fontSize: 16,
-    color: '#6B7280',
-  },
-});
