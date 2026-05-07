@@ -18,6 +18,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { BelowFloorModal, assignTier, MODEL_MAP } from '@tutor-sg/device-tier';
 import type { DeviceTier, DeviceCapabilities } from '@tutor-sg/device-tier';
+import { Skeleton } from '@/components/Skeleton';
 
 // ── Types ──────────────────────────────────────────────────────────
 
@@ -147,9 +148,12 @@ export default function DeviceTierScreen({ onComplete, _testCellular }: DeviceTi
   if (state.kind === 'checking') {
     return (
       <View style={styles.container}>
-        <View style={styles.center}>
-          <View style={styles.spinner}><Text style={styles.spinText}>⟳</Text></View>
-          <Text style={styles.loadTitle}>{t('deviceTierResult.loading')}</Text>
+        <View style={styles.content}>
+          <Skeleton width={220} height={26} borderRadius={4} isDark={false} style={{ marginBottom: 24 }} />
+          <Skeleton width="100%" height={88} borderRadius={16} isDark={false} style={{ marginBottom: 20 }} />
+          <Skeleton width="100%" height={160} borderRadius={12} isDark={false} style={{ marginBottom: 32 }} />
+          <Skeleton width="100%" height={52} borderRadius={12} isDark={false} style={{ marginBottom: 12 }} />
+          <Skeleton width="100%" height={48} borderRadius={12} isDark={false} />
         </View>
       </View>
     );
