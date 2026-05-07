@@ -26,6 +26,9 @@ importers:
       '@tutor-sg/device-tier':
         specifier: workspace:*
         version: link:../packages/device-tier
+      '@tutor-sg/llm':
+        specifier: workspace:*
+        version: link:../packages/llm
       '@tutor-sg/shared':
         specifier: workspace:*
         version: link:../packages/shared

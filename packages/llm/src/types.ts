@@ -9,8 +9,6 @@
  * @see ADD §4.1 — Camera homework check flow
  */
 
-import type { DeviceTier } from '@tutor-sg/device-tier';
-
 // ── Subject & Grade ─────────────────────────────────────────────────
 
 export type SubjectId = 'math' | 'english' | 'science' | 'chinese_mt';
@@ -129,7 +127,7 @@ export interface InferenceRequest {
   /** Student's grade level */
   grade: GradeLevel;
   /** Device tier for model routing */
-  deviceTier: DeviceTier;
+  deviceTier: 'high' | 'mid' | 'low';
   /** Language for response generation */
   language: 'en' | 'zh-Hans';
 }
@@ -187,10 +185,6 @@ export const MODEL_ROUTING: ModelRoutingTable = {
   science:    { high: 'gemma-e4b', mid: 'gemma-e2b' },
   chinese_mt: { high: 'qwen-4b',   mid: 'qwen-2b' },
 };
-
-export function resolveModel(subject: SubjectId, tier: 'high' | 'mid'): string {
-  return MODEL_ROUTING[subject][tier];
-}
 
 export function resolveModel(subject: SubjectId, tier: 'high' | 'mid'): string {
   return MODEL_ROUTING[subject][tier];
