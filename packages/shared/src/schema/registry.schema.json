@@ -6,7 +6,16 @@
   "type": "array",
   "items": {
     "type": "object",
-    "required": ["modelFamily", "paramCount", "quant", "format", "sizeBytes", "sha256", "cdnUrls", "minDeviceTier"],
+    "required": [
+      "modelFamily",
+      "paramCount",
+      "quant",
+      "format",
+      "sizeBytes",
+      "sha256",
+      "cdnUrls",
+      "minDeviceTier"
+    ],
     "properties": {
       "modelFamily": {
         "type": "string",

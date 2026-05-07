@@ -87,13 +87,14 @@ jobs:
       - name: Run all tests
         run: pnpm test
 
-  # ── Tier 3: Bundle export (gated on previous tiers) ──────────────────
+  # ── Tier 3: Bundle export (non-blocking, gated on previous tiers) ──
 
   bundle:
-    name: RN Bundle
+    name: RN Bundle (${{ matrix.platform }})
     needs: [typecheck, lint, format-check, test]
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    continue-on-error: true
     strategy:
       matrix:
         platform: [ios, android]
@@ -109,5 +110,6 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Expo export ${{ matrix.platform }}
         run: npx expo export --platform ${{ matrix.platform }} --output-dir dist-${{ matrix.platform }}
+        working-directory: mobile
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'

@@ -56,7 +56,11 @@ export type SettingsKey = keyof typeof settingsEn;
  */
 type _assertSameKeys<T, U> = [keyof T, keyof U] extends [keyof U, keyof T]
   ? true
-  : { mismatch: true; missingInSecond: Exclude<keyof T, keyof U>; missingInFirst: Exclude<keyof U, keyof T> };
+  : {
+      mismatch: true;
+      missingInSecond: Exclude<keyof T, keyof U>;
+      missingInFirst: Exclude<keyof U, keyof T>;
+    };
 
 // Each line errors at compile time if the two locale files diverge
 type _commonConsistency = _assertSameKeys<typeof commonEn, typeof commonZhHans>;
@@ -108,6 +112,4 @@ export type TranslationInterpolationMap = {
  * Helper: interpolation params for a given key, or undefined if none.
  */
 export type InterpolationParams<K extends TranslationKey> =
-  K extends keyof TranslationInterpolationMap
-    ? TranslationInterpolationMap[K]
-    : undefined;
+  K extends keyof TranslationInterpolationMap ? TranslationInterpolationMap[K] : undefined;

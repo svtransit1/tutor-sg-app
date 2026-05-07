@@ -41,9 +41,7 @@ function SplashScreen() {
     <SafeAreaView style={splashStyles.container}>
       <StatusBar barStyle="dark-content" />
       <ActivityIndicator size="large" color="#4A90D9" />
-      <Text style={splashStyles.text}>
-        Loading{dots}
-      </Text>
+      <Text style={splashStyles.text}>Loading{dots}</Text>
     </SafeAreaView>
   );
 }
@@ -71,10 +69,7 @@ function DemoContent() {
   const isEn = locale === 'en';
 
   return (
-    <ScrollView
-      style={demoStyles.scroll}
-      contentContainerStyle={demoStyles.content}
-    >
+    <ScrollView style={demoStyles.scroll} contentContainerStyle={demoStyles.content}>
       {/* App header */}
       <Text style={demoStyles.title}>{t('app.name')}</Text>
       <Text style={demoStyles.tagline}>{t('app.tagline')}</Text>
@@ -101,9 +96,7 @@ function DemoContent() {
         </TouchableOpacity>
       </View>
 
-      <Text style={demoStyles.badge}>
-        Current locale: {locale}
-      </Text>
+      <Text style={demoStyles.badge}>Current locale: {locale}</Text>
 
       {/* Common namespace */}
       <Section title="common namespace">
@@ -120,42 +113,18 @@ function DemoContent() {
 
       {/* Onboarding namespace */}
       <Section title="onboarding namespace">
-        <DemoRow
-          label={t('onboarding:welcome_title')}
-          note="t('onboarding:welcome_title')"
-        />
-        <DemoRow
-          label={t('onboarding:get_started')}
-          note="t('onboarding:get_started')"
-        />
-        <DemoRow
-          label={t('onboarding:download_model')}
-          note="t('onboarding:download_model')"
-        />
-        <DemoRow
-          label={t('onboarding:setup_complete')}
-          note="t('onboarding:setup_complete')"
-        />
+        <DemoRow label={t('onboarding:welcome_title')} note="t('onboarding:welcome_title')" />
+        <DemoRow label={t('onboarding:get_started')} note="t('onboarding:get_started')" />
+        <DemoRow label={t('onboarding:download_model')} note="t('onboarding:download_model')" />
+        <DemoRow label={t('onboarding:setup_complete')} note="t('onboarding:setup_complete')" />
       </Section>
 
       {/* Homework namespace */}
       <Section title="homework namespace">
-        <DemoRow
-          label={t('homework:title')}
-          note="t('homework:title')"
-        />
-        <DemoRow
-          label={t('homework:capture')}
-          note="t('homework:capture')"
-        />
-        <DemoRow
-          label={t('homework:chat_hint')}
-          note="t('homework:chat_hint')"
-        />
-        <DemoRow
-          label={t('homework:worksheet_title')}
-          note="t('homework:worksheet_title')"
-        />
+        <DemoRow label={t('homework:title')} note="t('homework:title')" />
+        <DemoRow label={t('homework:capture')} note="t('homework:capture')" />
+        <DemoRow label={t('homework:chat_hint')} note="t('homework:chat_hint')" />
+        <DemoRow label={t('homework:worksheet_title')} note="t('homework:worksheet_title')" />
         <DemoRow
           label={t('homework:worksheet_score', {
             correct: 3,
@@ -167,26 +136,14 @@ function DemoContent() {
 
       {/* Parent namespace */}
       <Section title="parent namespace">
-        <DemoRow
-          label={t('parent:pin_title')}
-          note="t('parent:pin_title')"
-        />
-        <DemoRow
-          label={t('parent:dashboard_title')}
-          note="t('parent:dashboard_title')"
-        />
-        <DemoRow
-          label={t('parent:log_empty')}
-          note="t('parent:log_empty')"
-        />
+        <DemoRow label={t('parent:pin_title')} note="t('parent:pin_title')" />
+        <DemoRow label={t('parent:dashboard_title')} note="t('parent:dashboard_title')" />
+        <DemoRow label={t('parent:log_empty')} note="t('parent:log_empty')" />
       </Section>
 
       {/* Settings namespace */}
       <Section title="settings namespace">
-        <DemoRow
-          label={t('settings:subscription_title')}
-          note="t('settings:subscription_title')"
-        />
+        <DemoRow label={t('settings:subscription_title')} note="t('settings:subscription_title')" />
         <DemoRow
           label={t('settings:subscription_free_tier')}
           note="t('settings:subscription_free_tier')"
@@ -290,9 +247,7 @@ export default function App() {
   if (error) {
     return (
       <SafeAreaView style={splashStyles.container}>
-        <Text style={[splashStyles.text, { color: '#D32F2F' }]}>
-          Error: {error}
-        </Text>
+        <Text style={[splashStyles.text, { color: '#D32F2F' }]}>Error: {error}</Text>
       </SafeAreaView>
     );
   }

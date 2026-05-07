@@ -19,10 +19,7 @@ export interface I18nContextValue {
   /** Switch locale at runtime */
   setLocale: (locale: SupportedLocale) => void;
   /** Type-safe translation function */
-  t: <K extends TranslationKey>(
-    key: K,
-    params?: InterpolationParams<K>,
-  ) => string;
+  t: <K extends TranslationKey>(key: K, params?: InterpolationParams<K>) => string;
   /** Whether i18n is initialized */
   ready: boolean;
 }

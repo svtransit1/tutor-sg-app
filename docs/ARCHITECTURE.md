@@ -43,21 +43,21 @@
 
 ## 2. Stack
 
-| Layer | Choice |
-|---|---|
-| App framework | React Native + Expo + TypeScript |
-| Build service | Expo EAS |
-| On-device LLM (iOS) | ExecuTorch + Gemma 4 E2B/E4B via `react-native-executorch` |
-| On-device LLM (Android) | LiteRT-LM + Gemma 4 E2B/E4B |
-| Chinese MT LLM | Qwen 3.5 2B/4B via ExecuTorch (iOS) / LiteRT-LM (Android) |
-| Vision/OCR (iOS) | Apple Vision Framework |
-| Vision/OCR (Android) | Google ML Kit Text Recognition |
-| On-device DB | SQLite + sqlite-vec |
-| Backend | Supabase (auth, billing webhooks, parent dashboard sync) |
-| Payments | HitPay (Apple Pay, Google Pay, PayNow) |
-| IAP SDK | Apple StoreKit 2, Google Play Billing v6 |
-| CDN | Cloudflare R2 (model files, signed URLs) |
-| i18n | Flat phrase-keyed JSON, `keySeparator: false`, EN + zh-Hans-SG |
+| Layer                   | Choice                                                         |
+| ----------------------- | -------------------------------------------------------------- |
+| App framework           | React Native + Expo + TypeScript                               |
+| Build service           | Expo EAS                                                       |
+| On-device LLM (iOS)     | ExecuTorch + Gemma 4 E2B/E4B via `react-native-executorch`     |
+| On-device LLM (Android) | LiteRT-LM + Gemma 4 E2B/E4B                                    |
+| Chinese MT LLM          | Qwen 3.5 2B/4B via ExecuTorch (iOS) / LiteRT-LM (Android)      |
+| Vision/OCR (iOS)        | Apple Vision Framework                                         |
+| Vision/OCR (Android)    | Google ML Kit Text Recognition                                 |
+| On-device DB            | SQLite + sqlite-vec                                            |
+| Backend                 | Supabase (auth, billing webhooks, parent dashboard sync)       |
+| Payments                | HitPay (Apple Pay, Google Pay, PayNow)                         |
+| IAP SDK                 | Apple StoreKit 2, Google Play Billing v6                       |
+| CDN                     | Cloudflare R2 (model files, signed URLs)                       |
+| i18n                    | Flat phrase-keyed JSON, `keySeparator: false`, EN + zh-Hans-SG |
 
 ---
 
@@ -65,12 +65,12 @@
 
 ### 3.1 Model inventory
 
-| Model | Size | Use | Inference Engine |
-|---|---|---|---|
+| Model       | Size    | Use                                | Inference Engine       |
+| ----------- | ------- | ---------------------------------- | ---------------------- |
 | Gemma 4 E4B | ~2.5 GB | English, Math, Science — high tier | ExecuTorch / LiteRT-LM |
-| Gemma 4 E2B | ~1.3 GB | English, Math, Science — mid tier | ExecuTorch / LiteRT-LM |
-| Qwen 3.5 4B | ~2.4 GB | Chinese Mother Tongue — high tier | ExecuTorch / LiteRT-LM |
-| Qwen 3.5 2B | ~1.2 GB | Chinese Mother Tongue — mid tier | ExecuTorch / LiteRT-LM |
+| Gemma 4 E2B | ~1.3 GB | English, Math, Science — mid tier  | ExecuTorch / LiteRT-LM |
+| Qwen 3.5 4B | ~2.4 GB | Chinese Mother Tongue — high tier  | ExecuTorch / LiteRT-LM |
+| Qwen 3.5 2B | ~1.2 GB | Chinese Mother Tongue — mid tier   | ExecuTorch / LiteRT-LM |
 
 ### 3.2 Model routing
 
@@ -84,10 +84,10 @@ Routing is a static config map — never hardcode model IDs in conditionals:
 
 ```ts
 const MODEL_ROUTING: ModelRoutingTable = {
-  english:    { high: "gemma-e4b", mid: "gemma-e2b" },
-  math:       { high: "gemma-e4b", mid: "gemma-e2b" },
-  science:    { high: "gemma-e4b", mid: "gemma-e2b" },
-  chinese_mt: { high: "qwen-4b",    mid: "qwen-2b" },
+  english: { high: 'gemma-e4b', mid: 'gemma-e2b' },
+  math: { high: 'gemma-e4b', mid: 'gemma-e2b' },
+  science: { high: 'gemma-e4b', mid: 'gemma-e2b' },
+  chinese_mt: { high: 'qwen-4b', mid: 'qwen-2b' },
 };
 ```
 
@@ -95,11 +95,11 @@ const MODEL_ROUTING: ModelRoutingTable = {
 
 Each feature declares a `modelTier` in its manifest:
 
-| Capability | Model tier | Rationale |
-|---|---|---|
-| `photo_solve` | E4B | Multi-step reasoning |
-| `quick_chat` | E2B | Casual, low latency |
-| `chinese_stroke_check` | E4B | Stroke-order precision |
+| Capability             | Model tier | Rationale              |
+| ---------------------- | ---------- | ---------------------- |
+| `photo_solve`          | E4B        | Multi-step reasoning   |
+| `quick_chat`           | E2B        | Casual, low latency    |
+| `chinese_stroke_check` | E4B        | Stroke-order precision |
 
 If the device is mid-tier but the capability demands E4B, the router downgrades to E2B and the capability adapts (shorter response, fewer reasoning steps). The user is not shown the downgrade.
 
@@ -107,11 +107,11 @@ If the device is mid-tier but the capability demands E4B, the router downgrades 
 
 Run once at first launch, persisted in SQLite.
 
-| Tier | RAM | NPU | Models |
-|---|---|---|---|
-| `high` | ≥ 6 GB | Modern NPU (A14+ / SD8Gen1+ / Dimensity 9000+) | E4B / Qwen 4B |
-| `mid` | 3–5 GB | Any | E2B / Qwen 2B |
-| `unsupported` | < 3 GB | — | None (blocked) |
+| Tier          | RAM    | NPU                                            | Models         |
+| ------------- | ------ | ---------------------------------------------- | -------------- |
+| `high`        | ≥ 6 GB | Modern NPU (A14+ / SD8Gen1+ / Dimensity 9000+) | E4B / Qwen 4B  |
+| `mid`         | 3–5 GB | Any                                            | E2B / Qwen 2B  |
+| `unsupported` | < 3 GB | —                                              | None (blocked) |
 
 **iOS:** `NSProcessInfo.processInfo.physicalMemory` via native module.
 **Android:** `/proc/meminfo` + `ActivityManager.MemoryInfo` via native module.
@@ -130,6 +130,7 @@ Model files are never bundled in the app package (app stays under 50 MB). On-dev
 ### 3.6 Model version upgrades
 
 When CDN `index.json` version increments:
+
 1. New models download in the background (non-blocking)
 2. After verification, old model is swapped atomically on next cold launch
 3. Old files deleted after successful swap
@@ -177,17 +178,18 @@ Feature gates are evaluated from a static table:
 
 ```ts
 const FEATURE_GATES: FeatureGate[] = [
-  { feature: "photo_solve",              minimumTier: "free" },
-  { feature: "photo_solve_unlimited",    minimumTier: "trial" },
-  { feature: "parent_report",            minimumTier: "trial" },
-  { feature: "chinese_stroke_check",     minimumTier: "trial" },
-  { feature: "study_programme",          minimumTier: "paid" },
+  { feature: 'photo_solve', minimumTier: 'free' },
+  { feature: 'photo_solve_unlimited', minimumTier: 'trial' },
+  { feature: 'parent_report', minimumTier: 'trial' },
+  { feature: 'chinese_stroke_check', minimumTier: 'trial' },
+  { feature: 'study_programme', minimumTier: 'paid' },
 ];
 ```
 
 ### 4.4 Offline resilience
 
 All core features work fully offline. Only these require connectivity:
+
 - Model download (first launch only)
 - IAP purchase
 - Parent report sync (queued locally, synced when online)
@@ -199,12 +201,12 @@ All core features work fully offline. Only these require connectivity:
 
 ### 5.1 Separation
 
-| | Child UI | Parent Dashboard |
-|---|---|---|
-| Access | Always available | PIN-protected |
-| Content | Homework camera, chat, worksheets | Session logs, progress summaries, flagging |
-| Data source | Live LLM interactions | SQLite sessions table (read-only) |
-| Network | None required | Sync queued locally; POST to Supabase when online |
+|             | Child UI                          | Parent Dashboard                                  |
+| ----------- | --------------------------------- | ------------------------------------------------- |
+| Access      | Always available                  | PIN-protected                                     |
+| Content     | Homework camera, chat, worksheets | Session logs, progress summaries, flagging        |
+| Data source | Live LLM interactions             | SQLite sessions table (read-only)                 |
+| Network     | None required                     | Sync queued locally; POST to Supabase when online |
 
 ### 5.2 PIN gate
 
@@ -230,15 +232,15 @@ All core features work fully offline. Only these require connectivity:
 
 ### 6.1 Child data isolation
 
-| Data | Storage | Leaves device? |
-|---|---|---|
-| Photos (homework) | In-memory only during session | Never |
-| OCR text | In-memory + session SQLite row | Never |
-| Kid free-text chat | SQLite sessions table | Never |
-| Session summaries | SQLite | Only if parent opts in to sync |
-| Anonymized usage counters | SQLite | Opt-in telemetry only |
-| Kid profile (name, level) | SQLite | Never |
-| Parent email / auth token | Secure store (Keychain / Keystore) | Supabase auth only |
+| Data                      | Storage                            | Leaves device?                 |
+| ------------------------- | ---------------------------------- | ------------------------------ |
+| Photos (homework)         | In-memory only during session      | Never                          |
+| OCR text                  | In-memory + session SQLite row     | Never                          |
+| Kid free-text chat        | SQLite sessions table              | Never                          |
+| Session summaries         | SQLite                             | Only if parent opts in to sync |
+| Anonymized usage counters | SQLite                             | Opt-in telemetry only          |
+| Kid profile (name, level) | SQLite                             | Never                          |
+| Parent email / auth token | Secure store (Keychain / Keystore) | Supabase auth only             |
 
 ### 6.2 Model integrity
 
@@ -266,16 +268,16 @@ All core features work fully offline. Only these require connectivity:
 
 ## 7. Implementation order
 
-| Phase | What | Parallel track |
-|---|---|---|
-| 1 | RAM tier detection + model downloader | — |
-| 2 | Model routing + inference engine integration | — |
-| 3 | OCR pipeline (platform Vision/MLKit → Gemma) | — |
-| 4 | Freemium gating + entitlement system | Parallel with 1–3 |
-| 5 | IAP integration (StoreKit 2 + Play Billing v6) | After 4 |
-| 6 | OCR fallback UI (manual input) | After 3 |
-| 7 | Parent dashboard sync | After 5 |
-| 8 | End-to-end integration testing on device matrix | After all |
+| Phase | What                                            | Parallel track    |
+| ----- | ----------------------------------------------- | ----------------- |
+| 1     | RAM tier detection + model downloader           | —                 |
+| 2     | Model routing + inference engine integration    | —                 |
+| 3     | OCR pipeline (platform Vision/MLKit → Gemma)    | —                 |
+| 4     | Freemium gating + entitlement system            | Parallel with 1–3 |
+| 5     | IAP integration (StoreKit 2 + Play Billing v6)  | After 4           |
+| 6     | OCR fallback UI (manual input)                  | After 3           |
+| 7     | Parent dashboard sync                           | After 5           |
+| 8     | End-to-end integration testing on device matrix | After all         |
 
 ---
 
