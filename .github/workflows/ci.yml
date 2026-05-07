@@ -49,9 +49,25 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
 
+  validate-structure:
+    name: Validate Structure
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: npx tsx scripts/validate-monorepo-structure.ts
+
   bundle:
     name: RN Bundle
-    needs: [typecheck, lint]
+    needs: [typecheck, lint, validate-structure]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
