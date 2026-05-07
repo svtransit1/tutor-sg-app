@@ -3,11 +3,14 @@ import {
   listTemplateKeys,
   renderPrompt,
   TIER_TOKEN_BUDGETS,
+  type PromptTemplate,
   type PromptSubject,
   type PromptTier,
   type PromptLanguage,
   type RenderContext,
+  type RenderedPrompt,
 } from '../index';
+import SAMPLE_QUESTIONS from './fixtures/sample-questions';
 
 const SUBJECTS: PromptSubject[] = ['math', 'english', 'science', 'chinese_mt'];
 const TIERS: PromptTier[] = ['hint', 'guided', 'solution'];
@@ -220,5 +223,82 @@ describe('renderPrompt edge cases', () => {
       defaultRenderCtx({ problemText: longText }),
     );
     expect(result.userPrompt).toContain('x'.repeat(2000));
+  });
+});
+
+describe('sample questions — rendered prompt validation', () => {
+  it.each(SAMPLE_QUESTIONS.map((q) => [q.description, q]))(
+    '%s — renders valid prompts for all 3 tiers',
+    (_desc: string, q: typeof SAMPLE_QUESTIONS[number]) => {
+      for (const tier of TIERS) {
+        const ctx: RenderContext = {
+          problemText: q.problemText,
+          grade: q.grade,
+          language: q.language,
+          attempt: 1,
+          topic: q.topic,
+        };
+        const result = renderPrompt(getTemplate(q.subject, tier), q.subject, tier, ctx);
+
+        expect(result.subject).toBe(q.subject);
+        expect(result.tier).toBe(tier);
+        expect(result.maxTokens).toBe(TIER_TOKEN_BUDGETS[tier]);
+        expect(typeof result.temperature).toBe('number');
+        expect(result.systemPrompt.length).toBeGreaterThan(50);
+        expect(result.userPrompt.length).toBeGreaterThan(20);
+        expect(result.userPrompt).toContain(q.problemText);
+        expect(result.userPrompt).toContain(q.grade);
+      }
+    },
+  );
+
+  it('all 12 sample questions render hint prompts that forbid giving answers', () => {
+    for (const q of SAMPLE_QUESTIONS) {
+      const ctx: RenderContext = {
+        problemText: q.problemText,
+        grade: q.grade,
+        language: q.language,
+        attempt: 1,
+        topic: q.topic,
+      };
+      const result = renderPrompt(getTemplate(q.subject, 'hint'), q.subject, 'hint', ctx);
+
+      if (q.language === 'zh-Hans') {
+        expect(result.systemPrompt).toMatch(/不要直接|不给答案|不给.*答案/);
+      } else {
+        expect(result.systemPrompt).toMatch(/NEVER|never give|Hint/i);
+      }
+    }
+  });
+
+  it('sample questions produce distinct prompts per tier per subject', () => {
+    const promptsBySubject: Record<string, Set<string>> = {};
+    for (const q of SAMPLE_QUESTIONS) {
+      const key = `${q.subject}:${q.description}`;
+      const prompts = new Set<string>();
+      for (const tier of TIERS) {
+        const ctx: RenderContext = {
+          problemText: q.problemText,
+          grade: q.grade,
+          language: q.language,
+          attempt: 1,
+          topic: q.topic,
+        };
+        const result = renderPrompt(getTemplate(q.subject, tier), q.subject, tier, ctx);
+        prompts.add(result.systemPrompt);
+      }
+      expect(prompts.size).toBe(3);
+      promptsBySubject[key] = prompts;
+    }
+  });
+
+  it('all 4 subjects have at least 3 sample questions', () => {
+    const counts: Record<string, number> = {};
+    for (const q of SAMPLE_QUESTIONS) {
+      counts[q.subject] = (counts[q.subject] ?? 0) + 1;
+    }
+    for (const subject of SUBJECTS) {
+      expect(counts[subject]).toBeGreaterThanOrEqual(3);
+    }
   });
 });
