@@ -24,6 +24,7 @@
     "@tutor-sg/shared": "workspace:*",
     "@tutor-sg/device-tier": "workspace:*",
     "@tutor-sg/llm": "workspace:*",
+    "@tutor-sg/llm": "workspace:*",
     "expo": "~54.0.0",
     "expo-auth-session": "^55.0.15",
     "expo-camera": "~17.0.0",

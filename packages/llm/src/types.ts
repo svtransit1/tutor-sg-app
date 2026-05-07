@@ -191,3 +191,7 @@ export const MODEL_ROUTING: ModelRoutingTable = {
 export function resolveModel(subject: SubjectId, tier: 'high' | 'mid'): string {
   return MODEL_ROUTING[subject][tier];
 }
+
+export function resolveModel(subject: SubjectId, tier: 'high' | 'mid'): string {
+  return MODEL_ROUTING[subject][tier];
+}
