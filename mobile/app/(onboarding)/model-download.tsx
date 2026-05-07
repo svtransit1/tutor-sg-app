@@ -1,12 +1,11 @@
 /**
- * Model Download route — Onboarding step 9/10.
+ * Model Download route — Onboarding step 9/11.
  * Route: /onboarding/model-download
  *
+ * Wired controls: pause/cancel/retry + cellular warning via NetInfo.
  * Per Article 12 §3.9: Download progress screen with resumable download,
  * progress bar, pause/resume, cellular warning, hash verification.
- * Most users see this for 1–3 minutes.
  */
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View,
@@ -16,14 +15,14 @@ import {
   type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import NetInfo from '@react-native-community/netinfo';
 import { useOnboarding } from '../../src/onboarding';
 
-type DownloadPhase = 'downloading' | 'paused' | 'verifying' | 'completed' | 'error';
+type DownloadPhase = 'downloading' | 'paused' | 'verifying' | 'completed' | 'error' | 'cellular_warning';
 
-const MOCK_TOTAL_BYTES = 2_000_000_000; // ~2 GB for demo
-const MOCK_SPEED = 10_000_000; // ~10 MB/s
+const MOCK_TOTAL_BYTES = 2_000_000_000;
+const MOCK_SPEED = 10_000_000;
 
-// Format bytes to human-readable size
 function formatBytes(bytes: number): string {
   if (bytes >= 1_000_000_000) return `${(bytes / 1_000_000_000).toFixed(1)} GB`;
   if (bytes >= 1_000_000) return `${(bytes / 1_000_000).toFixed(0)} MB`;
@@ -33,19 +32,32 @@ function formatBytes(bytes: number): string {
 
 export default function ModelDownloadRoute() {
   const { t } = useTranslation();
-  const { goNext, state, updateState } = useOnboarding();
+  const { goNext } = useOnboarding();
 
   const [phase, setPhase] = useState<DownloadPhase>('downloading');
   const [downloadedBytes, setDownloadedBytes] = useState(0);
+  const [isCellular, setIsCellular] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [wifiOnly, setWifiOnly] = useState(true);
-  const [showCellularWarning, setShowCellularWarning] = useState(false);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const cellularNotifiedRef = useRef(false);
 
   const percent = Math.min(100, Math.round((downloadedBytes / MOCK_TOTAL_BYTES) * 100));
 
-  // Simulate download progress
+  // Detect network type on mount
+  useEffect(() => {
+    NetInfo.fetch().then((s) => {
+      const cellular =
+        s.isConnected === true &&
+        (s.type === 'cellular' ||
+          s.type === 'cellular_2g' ||
+          s.type === 'cellular_3g' ||
+          s.type === 'cellular_4g' ||
+          s.type === 'cellular_5g');
+      setIsCellular(cellular);
+    });
+  }, []);
+
   const startDownload = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
 
@@ -53,13 +65,9 @@ export default function ModelDownloadRoute() {
       setDownloadedBytes((prev) => {
         const next = prev + MOCK_SPEED;
         if (next >= MOCK_TOTAL_BYTES) {
-          // Complete
           if (intervalRef.current) clearInterval(intervalRef.current);
           setPhase('verifying');
-          // Simulate hash verification
-          setTimeout(() => {
-            setPhase('completed');
-          }, 1000);
+          setTimeout(() => setPhase('completed'), 1000);
           return MOCK_TOTAL_BYTES;
         }
         return next;
@@ -68,11 +76,18 @@ export default function ModelDownloadRoute() {
   }, []);
 
   useEffect(() => {
+    // Show cellular warning before starting download
+    if (isCellular && !cellularNotifiedRef.current) {
+      cellularNotifiedRef.current = true;
+      setPhase('cellular_warning');
+      return;
+    }
+
     startDownload();
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [startDownload]);
+  }, [isCellular, startDownload]);
 
   const handlePause = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
@@ -85,6 +100,15 @@ export default function ModelDownloadRoute() {
     setErrorMessage(null);
   }, [startDownload]);
 
+  const handleCancel = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setDownloadedBytes(0);
+    setPhase('downloading');
+    setErrorMessage(null);
+    cellularNotifiedRef.current = false;
+    goNext();
+  }, [goNext]);
+
   const handleRetry = useCallback(() => {
     setDownloadedBytes(0);
     setErrorMessage(null);
@@ -92,122 +116,133 @@ export default function ModelDownloadRoute() {
     setPhase('downloading');
   }, [startDownload]);
 
-  const handleWifiToggle = useCallback(() => {
-    setWifiOnly((prev) => !prev);
-  }, []);
-
   const handleContinue = useCallback(() => {
     goNext();
   }, [goNext]);
 
-  const handleCancel = useCallback(() => {
-    // Persist progress and allow user to exit to a limited state
-    // For now, just go to the next step
-    goNext();
-  }, [goNext]);
-
-  const handleShowCellularWarning = useCallback(() => {
-    if (wifiOnly) {
-      setShowCellularWarning(true);
-    }
-  }, [wifiOnly]);
-
   const handleCellularProceed = useCallback(() => {
-    setWifiOnly(false);
-    setShowCellularWarning(false);
-    handleResume();
-  }, [handleResume]);
+    setPhase('downloading');
+    startDownload();
+  }, [startDownload]);
 
   const handleCellularCancel = useCallback(() => {
-    setShowCellularWarning(false);
-    handlePause();
-  }, [handlePause]);
-
-  // ── Error simulation (for testing) ──
-  // Can be triggered by pressing a hidden debug area
+    setPhase('paused');
+    goNext();
+  }, [goNext]);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        {/* Mascot illustration area */}
+        {/* Mascot */}
         <View style={styles.mascotWrap}>
           <Text style={styles.mascot}>📚</Text>
         </View>
 
         {/* Title */}
-        <Text style={styles.title}>
-          {t('modelDownload.title', 'Setting up your tutor...')}
-        </Text>
+        <Text style={styles.title}>{t('modelDownload.title')}</Text>
 
-        {/* Privacy reassurance */}
+        {/* Privacy note */}
         <Text style={styles.privacyText}>
-          This is a one-time download. Once done, the tutor works fully
-          offline and keeps your child's data on this device.
+          {t('modelDownload.privacyNote')}
         </Text>
 
-        {/* Progress section */}
-        {phase !== 'error' && (
-          <View style={styles.progressSection}>
-            {/* Progress bar */}
-            <View style={styles.progressBar}>
-              <View
-                style={[
-                  styles.progressFill,
-                  { width: `${percent}%` },
-                  phase === 'paused' && styles.progressPaused,
-                  phase === 'completed' && styles.progressComplete,
-                ]}
-              />
+        {/* Progress / error section */}
+        {phase !== 'error' && phase !== 'cellular_warning' && (
+          <>
+            <View style={styles.progressSection}>
+              <View style={styles.progressBar}>
+                <View
+                  style={[
+                    styles.progressFill,
+                    { width: `${percent}%` },
+                    phase === 'paused' && styles.progressPaused,
+                    phase === 'completed' && styles.progressComplete,
+                  ]}
+                />
+              </View>
+
+              <Text style={styles.progressText}>
+                {formatBytes(downloadedBytes)} / {formatBytes(MOCK_TOTAL_BYTES)}
+              </Text>
+
+              <Text style={styles.percentText}>
+                {phase === 'downloading' && t('modelDownload.progressPercent', { percent })}
+                {phase === 'paused' && t('modelDownload.paused')}
+                {phase === 'verifying' && 'Verifying...'}
+                {phase === 'completed' && t('modelDownload.completed')}
+              </Text>
             </View>
-
-            {/* Progress text */}
-            <Text style={styles.progressText}>
-              {formatBytes(downloadedBytes)} / {formatBytes(MOCK_TOTAL_BYTES)}
-            </Text>
-
-            {/* Percentage */}
-            <Text style={styles.percentText}>
-              {t('modelDownload.progressPercent', { percent })} — {phase === 'downloading' && t('modelDownload.progress', { fileName: 'AI Model' })}
-              {phase === 'paused' && t('modelDownload.paused')}
-              {phase === 'verifying' && 'Verifying...'}
-              {phase === 'completed' && t('modelDownload.completed')}
-            </Text>
 
             {/* Controls */}
             <View style={styles.controls}>
               {phase === 'downloading' && (
-                <TouchableOpacity
-                  style={styles.controlBtn}
-                  onPress={handlePause}
-                  activeOpacity={0.7}
-                >
-                  <Text style={styles.controlBtnText}>⏸ {t('common.cancel', 'Pause')}</Text>
-                </TouchableOpacity>
+                <>
+                  <TouchableOpacity
+                    style={styles.controlBtn}
+                    onPress={handlePause}
+                    activeOpacity={0.7}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('modelDownload.pause')}
+                  >
+                    <Text style={styles.controlBtnText}>
+                      {t('modelDownload.pause')}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.controlBtn}
+                    onPress={handleCancel}
+                    activeOpacity={0.7}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('modelDownload.cancel')}
+                  >
+                    <Text style={styles.controlBtnTextCancel}>
+                      {t('modelDownload.cancel')}
+                    </Text>
+                  </TouchableOpacity>
+                </>
               )}
               {phase === 'paused' && (
-                <TouchableOpacity
-                  style={[styles.controlBtn, styles.controlBtnPrimary]}
-                  onPress={handleResume}
-                  activeOpacity={0.7}
-                >
-                  <Text style={[styles.controlBtnText, styles.controlBtnTextPrimary]}>
-                    ▶ {t('common.cancel', 'Resume')}
-                  </Text>
-                </TouchableOpacity>
+                <>
+                  <TouchableOpacity
+                    style={[styles.controlBtn, styles.controlBtnPrimary]}
+                    onPress={handleResume}
+                    activeOpacity={0.7}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('modelDownload.resume')}
+                  >
+                    <Text style={[styles.controlBtnText, styles.controlBtnTextPrimary]}>
+                      {t('modelDownload.resume')}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.controlBtn}
+                    onPress={handleCancel}
+                    activeOpacity={0.7}
+                    accessibilityRole="button"
+                    accessibilityLabel={t('modelDownload.cancel')}
+                  >
+                    <Text style={styles.controlBtnTextCancel}>
+                      {t('modelDownload.cancel')}
+                    </Text>
+                  </TouchableOpacity>
+                </>
               )}
             </View>
 
-            {/* Wi-Fi toggle */}
-            <TouchableOpacity
-              style={styles.wifiToggle}
-              onPress={handleWifiToggle}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.wifiToggleText}>
-                {wifiOnly ? '📶 Wi-Fi only' : '📶 Any network'}
-              </Text>
-            </TouchableOpacity>
-          </View>
+            {phase === 'completed' && (
+              <TouchableOpacity
+                style={styles.btnPrimary}
+                onPress={handleContinue}
+                activeOpacity={0.8}
+                accessibilityRole="button"
+                accessibilityLabel={t('common.continue', 'Continue')}
+              >
+                <Text style={styles.btnPrimaryText}>
+                  {t('common.continue', 'Continue')}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </>
         )}
 
         {/* Error state */}
@@ -215,71 +250,77 @@ export default function ModelDownloadRoute() {
           <View style={styles.errorSection}>
             <Text style={styles.errorIcon}>⚠️</Text>
             <Text style={styles.errorText}>
-              {errorMessage || 'Something went wrong. Please check your connection.'}
+              {errorMessage || t('modelDownload.errors.unknown_error')}
             </Text>
             <TouchableOpacity
               style={styles.retryBtn}
               onPress={handleRetry}
               activeOpacity={0.8}
+              accessibilityRole="button"
+              accessibilityLabel={t('modelDownload.retry')}
             >
               <Text style={styles.retryBtnText}>
-                {t('modelDownload.retry', 'Retry')}
+                {t('modelDownload.retry')}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.cancelLink}
+              onPress={handleCancel}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel={t('modelDownload.cancel')}
+            >
+              <Text style={styles.cancelLinkText}>
+                {t('modelDownload.cancel')}
               </Text>
             </TouchableOpacity>
           </View>
         )}
 
-        {/* Continue button (after completion) */}
-        {phase === 'completed' && (
-          <TouchableOpacity
-            style={styles.btnPrimary}
-            onPress={handleContinue}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.btnPrimaryText}>
-              {t('common.cancel', 'Continue')}
-            </Text>
-          </TouchableOpacity>
-        )}
-
-        {/* "Why is this needed?" link */}
+        {/* Why is this needed? */}
         <TouchableOpacity
           style={styles.whyLink}
           onPress={() => {}}
           activeOpacity={0.7}
         >
           <Text style={styles.whyLinkText}>
-            Why is this needed? / 为什么需要下载？
+            {t('modelDownload.whyNeeded')}
           </Text>
         </TouchableOpacity>
       </View>
 
       {/* Cellular warning overlay */}
-      {showCellularWarning && (
+      {phase === 'cellular_warning' && (
         <View style={styles.overlay}>
           <View style={styles.modal}>
             <Text style={styles.modalIcon}>📶</Text>
             <Text style={styles.modalTitle}>
-              Large download over cellular
-            </Text>
-            <Text style={styles.modalBody}>
-              Downloading {formatBytes(MOCK_TOTAL_BYTES)} over cellular may
-              use a lot of data. Switch to Wi-Fi to save data?
+              {t('modelDownload.cellularWarning', {
+                size: formatBytes(MOCK_TOTAL_BYTES),
+              })}
             </Text>
             <View style={styles.modalBtns}>
               <TouchableOpacity
                 style={styles.modalBtnSec}
                 onPress={handleCellularCancel}
                 activeOpacity={0.7}
+                accessibilityRole="button"
+                accessibilityLabel={t('modelDownload.cellularCancel')}
               >
-                <Text style={styles.modalBtnSecText}>Wait for Wi-Fi</Text>
+                <Text style={styles.modalBtnSecText}>
+                  {t('modelDownload.cellularCancel')}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.modalBtnPri}
                 onPress={handleCellularProceed}
                 activeOpacity={0.8}
+                accessibilityRole="button"
+                accessibilityLabel={t('modelDownload.cellularProceed')}
               >
-                <Text style={styles.modalBtnPriText}>Download anyway</Text>
+                <Text style={styles.modalBtnPriText}>
+                  {t('modelDownload.cellularProceed')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -349,12 +390,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#2563EB',
     borderRadius: 4,
   },
-  progressPaused: {
-    backgroundColor: '#F59E0B',
-  },
-  progressComplete: {
-    backgroundColor: '#22C55E',
-  },
+  progressPaused: { backgroundColor: '#F59E0B' },
+  progressComplete: { backgroundColor: '#22C55E' },
 
   progressText: {
     fontSize: 16,
@@ -371,7 +408,7 @@ const styles = StyleSheet.create({
   controls: {
     flexDirection: 'row',
     gap: 12,
-    marginBottom: 16,
+    marginBottom: 32,
   },
   controlBtn: {
     paddingVertical: 12,
@@ -390,20 +427,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#374151',
   },
-  controlBtnTextPrimary: {
-    color: '#FFFFFF',
+  controlBtnTextCancel: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#DC2626',
   },
+  controlBtnTextPrimary: { color: '#FFFFFF' },
 
-  wifiToggle: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-  },
-  wifiToggleText: {
-    fontSize: 13,
-    color: '#6B7280',
-  },
-
-  // Error
   errorSection: {
     alignItems: 'center',
     marginBottom: 32,
@@ -426,8 +456,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  cancelLink: {
+    marginTop: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  cancelLinkText: {
+    fontSize: 14,
+    color: '#9CA3AF',
+    textDecorationLine: 'underline',
+  },
 
-  // Continue
   btnPrimary: {
     width: '100%',
     maxWidth: 400,
@@ -454,7 +493,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
 
-  // Overlay
   overlay: {
     position: 'absolute',
     top: 0,
@@ -476,23 +514,13 @@ const styles = StyleSheet.create({
   },
   modalIcon: { fontSize: 40, marginBottom: 16 },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 16,
+    lineHeight: 24,
     color: '#1A1A1A',
     textAlign: 'center',
-    marginBottom: 12,
-  },
-  modalBody: {
-    fontSize: 15,
-    color: '#6B7280',
-    textAlign: 'center',
-    lineHeight: 22,
     marginBottom: 24,
-  },
-  modalBtns: {
-    width: '100%',
-    gap: 10,
-  },
+  } as TextStyle,
+  modalBtns: { width: '100%', gap: 10 },
   modalBtnPri: {
     height: 48,
     backgroundColor: '#2563EB',
@@ -500,11 +528,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  modalBtnPriText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  modalBtnPriText: { color: '#FFFFFF', fontSize: 16, fontWeight: '600' },
   modalBtnSec: {
     height: 48,
     alignItems: 'center',
@@ -514,9 +538,5 @@ const styles = StyleSheet.create({
     borderColor: '#D1D5DB',
     backgroundColor: '#FFFFFF',
   },
-  modalBtnSecText: {
-    color: '#374151',
-    fontSize: 15,
-    fontWeight: '500',
-  },
-} as TextStyle);
+  modalBtnSecText: { color: '#374151', fontSize: 15, fontWeight: '500' },
+});
