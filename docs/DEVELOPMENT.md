@@ -105,32 +105,32 @@ tutor-sg-app/
 ├── docs/
 │   ├── ARCHITECTURE.md              # Architecture doc (source of truth)
 │   ├── GOVERNANCE.md                # Agent fleet, review rules, branch protection
-│   ├── development-setup.md         # ← you are here
+│   ├── DEVELOPMENT.md               # ← you are here
 │   └── reviews/                     # Review records
 ├── tsconfig.base.json               # Shared TS config
 ├── pnpm-workspace.yaml
 └── package.json
 ```
 
-## 4. Running the app
-
-### iOS Simulator
+## 4. Running on iOS
 
 ```bash
 cd mobile
 pnpm ios
 ```
 
-This runs Expo dev client on the default iOS simulator. The native device-tier module is iOS-only and will be active.
+This runs Expo dev client on the default iOS Simulator. The native device-tier module is iOS-only and will be active.
 
-### Android emulator
+Requires Xcode ≥ 16 and at least one iOS Simulator installed (e.g. iPhone 16).
+
+## 5. Running on Android
 
 ```bash
 cd mobile
 pnpm android
 ```
 
-Ensure an AVD is running first. The native device-tier module returns fallback values on Android (no native bridging yet).
+Ensure an AVD is running first (Pixel 9 API 35 recommended). The native device-tier module returns fallback values on Android (no native bridging yet).
 
 ### Dev server only (no simulator)
 
@@ -141,14 +141,14 @@ pnpm start
 
 Press `i` for iOS or `a` for Android in the terminal.
 
-## 5. Quality commands
+## 6. Running tests
 
 ```bash
-pnpm typecheck              # All packages
-pnpm lint                   # All packages (ESLint)
-pnpm test                   # All packages (Jest)
-pnpm format:check           # Prettier
-pnpm format:write           # Fix Prettier
+pnpm test          # All workspace tests
+pnpm typecheck     # TypeScript across all packages
+pnpm lint          # ESLint across all packages
+pnpm format:check  # Prettier formatting check
+pnpm format:write  # Fix Prettier formatting
 
 # Per-package (faster when iterating)
 pnpm --filter @tutor-sg/device-tier test
@@ -159,7 +159,22 @@ pnpm --filter tutor-sg-mobile test
 pnpm --filter tutor-sg-mobile e2e:smoke   # Maestro (requires app build)
 ```
 
-## 6. Environment variables
+## 7. Linting
+
+```bash
+pnpm lint                    # All packages
+pnpm format:check            # Prettier
+pnpm format:write            # Fix Prettier
+```
+
+## 8. Typechecking
+
+```bash
+pnpm typecheck               # All packages
+pnpm --filter @tutor-sg/device-tier typecheck   # Single package
+```
+
+## 9. Environment variables
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -179,7 +194,7 @@ ENABLE_DEV_TOOLS=true
 
 Public vars (`EXPO_PUBLIC_*`) are bundled into the binary. Secret vars are never committed — they live in EAS/CI secrets.
 
-## 7. Git conventions
+## 10. Git conventions
 
 - `main` is protected. No direct pushes.
 - Feature branches: `feat/<short-name>`
@@ -196,7 +211,7 @@ Agent tags: `[owl]`, `[wolf]`, `[bee]`, `[foxy]`, `[flutter]`, `[sage]`, `[torto
 3. Check branch hygiene: no secrets, no `node_modules`, no model files, no `.env`.
 4. Push to origin and create a PR against `main`.
 
-## 8. Native modules
+## 11. Native modules
 
 The only native module currently is `tutor-sg-device-tier` (iOS Swift):
 
@@ -218,7 +233,7 @@ npx expo generate modules my-new-module
 
 Then register in `expo-module.config.json` and create the TS bridge.
 
-## 9. i18n workflow
+## 12. i18n workflow
 
 Two i18n systems coexist during migration:
 
@@ -236,7 +251,7 @@ Two i18n systems coexist during migration:
 
 **Hard rule:** Every user-facing string MUST have both English and Simplified Chinese (`zh-Hans`) translations. No partial locales.
 
-## 10. On-device LLM model files
+## 13. On-device LLM model files
 
 Model files are **never bundled** in the app package (app stays <50 MB). They are downloaded on first launch from Cloudflare R2 CDN.
 
@@ -246,7 +261,7 @@ Model files are **never bundled** in the app package (app stays <50 MB). They ar
 
 During development, the app uses placeholder hashes (all-zero). The download verifier skips hash checks in dev/staging builds.
 
-## 11. Common issues
+## 14. Common issues
 
 | Symptom | Fix |
 |---------|-----|
@@ -258,7 +273,7 @@ During development, the app uses placeholder hashes (all-zero). The download ver
 | `expo start` hangs | Delete `mobile/node_modules` and `pnpm install` again |
 | `Cannot find module 'expo-sqlite'` in tests | Mock is at `packages/device-tier/__mocks__/expo-sqlite.ts` — verify jest config includes `moduleNameMapper` |
 
-## 12. Further reading
+## 15. Further reading
 
 - [Architecture doc](./ARCHITECTURE.md) — system topology, stack, data flow, security
 - [Governance doc](./GOVERNANCE.md) — agent roles, review rules, escalation path
