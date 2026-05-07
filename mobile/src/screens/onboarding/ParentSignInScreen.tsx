@@ -29,7 +29,7 @@ import {
   type TextStyle,
 } from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
-import { useTranslation } from "react-i18next";;
+import { useTranslation } from "react-i18next";
 import * as Linking from 'expo-linking';
 import {
   signInWithMagicLink,

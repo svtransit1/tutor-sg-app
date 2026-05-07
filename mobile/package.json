@@ -45,7 +45,8 @@
     "react-native-worklets": "0.5.1",
     "typescript": "^5.8.0",
     "uuid": "^10.0.0",
-    "zod": "^3.24.0"
+    "zod": "^3.24.0",
+    "@expo/vector-icons": "^15.0.0"
   },
   "devDependencies": {
     "@testing-library/react-native": "^13.3.3",
