@@ -77,6 +77,49 @@
       "instructions": "We couldn't recognise this item. Please type or write it.",
       "placeholder": "Type here...",
       "continue": "Continue"
+    },
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Your AI tutor is ready to help"
+    },
+    "consent": {
+      "title": "Privacy & Consent",
+      "promiseTitle": "Your child’s homework stays on this device",
+      "promiseBody": "Photos, OCR text, written answers, and AI explanations are processed on this phone or tablet. They are not sent to our servers.",
+      "detailPhotos": "• Homework photos never leave the device.",
+      "detailAnswers": "• Typed or written answers stay local.",
+      "detailTelemetry": "• Anonymous app-health telemetry is optional and starts off.",
+      "telemetryTitle": "Share anonymous app health data",
+      "telemetryBody": "Helps us fix crashes and download issues. It never includes photos, OCR text, or your child’s answers.",
+      "telemetryAccessibility": "Share anonymous app health data",
+      "accept": "I agree to the privacy policy",
+      "policyLink": "Read the full privacy policy"
+    },
+    "deviceTier": {
+      "title": "Device Ready!",
+      "subtitle": "Your device can run the AI tutor.",
+      "checking": "Checking your device...",
+      "unsupported": "Device Not Supported",
+      "unsupportedBody": "Your device does not meet the minimum requirements. This app needs a device with at least 4 GB RAM."
+    },
+    "modelDownload": {
+      "title": "Setting up your tutor...",
+      "downloading": "Downloading AI model...",
+      "ready": "Ready!"
+    },
+    "firstHomework": {
+      "title": "Try your first homework!",
+      "subtitle": "Snap a photo of your homework and get AI-powered help.",
+      "step1": "1. Point your camera at the homework",
+      "step2": "2. Take a clear photo",
+      "step3": "3. Get hints and guidance — not just answers!",
+      "cta": "Let’s go!"
+    },
+    "done": {
+      "title": "All set!",
+      "subtitle": "Your AI tutor is ready.",
+      "greeting": "Hi {{name}}! Let’s learn!",
+      "cta": "Start learning"
     }
   }
 }

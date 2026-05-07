@@ -5,7 +5,11 @@ import { useOnboarding } from '../OnboardingProvider';
 
 export function DoneScreen() {
   const { t } = useTranslation();
-  const { state } = useOnboarding();
+  const { state, goNext } = useOnboarding();
+
+  const handleStart = () => {
+    goNext();
+  };
 
   return (
     <View style={styles.container}>
@@ -20,7 +24,7 @@ export function DoneScreen() {
           {t('onboarding.done.greeting', `Hi ${state.kidName}! Let's learn!`)}
         </Text>
       ) : null}
-      <TouchableOpacity style={styles.button} testID="done-start">
+      <TouchableOpacity style={styles.button} testID="done-start" onPress={handleStart}>
         <Text style={styles.buttonText}>
           {t('onboarding.done.cta', 'Start learning')}
         </Text>

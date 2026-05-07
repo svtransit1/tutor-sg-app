@@ -77,6 +77,49 @@
       "instructions": "我们无法识别这一项。请输入或书写。",
       "placeholder": "在这里输入...",
       "continue": "继续"
+    },
+    "welcome": {
+      "title": "欢迎！",
+      "subtitle": "你的AI导师已经准备好了"
+    },
+    "consent": {
+      "title": "隐私与同意",
+      "promiseTitle": "孩子的作业数据仅保存在本设备",
+      "promiseBody": "照片、OCR文本、手写答案和AI解释均在本手机或平板电脑上处理，不会发送到我们的服务器。",
+      "detailPhotos": "• 作业照片不会离开设备。",
+      "detailAnswers": "• 输入或手写的答案保存在本地。",
+      "detailTelemetry": "• 匿名应用健康数据是可选的，默认关闭。",
+      "telemetryTitle": "分享匿名应用健康数据",
+      "telemetryBody": "帮助我们修复崩溃和下载问题。绝不会包含照片、OCR文本或孩子的答案。",
+      "telemetryAccessibility": "分享匿名应用健康数据",
+      "accept": "我同意隐私政策",
+      "policyLink": "阅读完整隐私政策"
+    },
+    "deviceTier": {
+      "title": "设备就绪！",
+      "subtitle": "你的设备可以运行AI导师。",
+      "checking": "正在检查设备...",
+      "unsupported": "设备不支持",
+      "unsupportedBody": "你的设备不满足最低要求。此应用需要至少4 GB RAM的设备。"
+    },
+    "modelDownload": {
+      "title": "正在设置你的导师...",
+      "downloading": "正在下载AI模型...",
+      "ready": "准备好了！"
+    },
+    "firstHomework": {
+      "title": "尝试你的第一份作业！",
+      "subtitle": "拍一张作业照片，获取AI驱动的帮助。",
+      "step1": "1. 将摄像头对准作业",
+      "step2": "2. 拍一张清晰的照片",
+      "step3": "3. 获取提示和指导——不只有答案！",
+      "cta": "开始吧！"
+    },
+    "done": {
+      "title": "全部就绪！",
+      "subtitle": "你的AI导师已准备好。",
+      "greeting": "你好 {{name}}！开始学习吧！",
+      "cta": "开始学习"
     }
   }
 }

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useCallback, useEffect, use
 import {
   OnboardingState,
   initialOnboardingState,
+  STEP_CONFIG,
 } from './types';
 import { transition, resumeOnboarding, isOnboardingComplete } from './machine';
 import { getOnboardingState, setOnboardingState, clearOnboardingState, PersistedOnboardingState } from '../storage';
@@ -118,7 +119,6 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   const complete = isOnboardingComplete(state);
-  const { STEP_CONFIG } = require('./types');
   const canGoBack = STEP_CONFIG[state.currentStep]?.reversible && state.currentStep !== 'welcome';
   const canGoNext = state.currentStep !== 'done';
 
