@@ -169,14 +169,19 @@ export function getStepNumber(step: OnboardingStep): {
   current: number;
   total: number;
 } {
-  // Exclude splash and done from display count
+  // Exclude splash and done from display count; they have no step indicator.
   const displaySteps = ONBOARDING_STEPS.filter(
-    (s) => s !== 'splash' && s !== 'done',
+    (s): s is Exclude<OnboardingStep, 'splash' | 'done'> =>
+      s !== 'splash' && s !== 'done',
   );
+  const total = displaySteps.length;
+  if (step === 'splash' || step === 'done') {
+    return { current: 1, total };
+  }
   const idx = displaySteps.indexOf(step);
   return {
     current: idx >= 0 ? idx + 1 : 1,
-    total: displaySteps.length,
+    total,
   };
 }
 

@@ -119,6 +119,14 @@ export const onboardingCompletedSchema = z.object({
 });
 export type OnboardingCompletedEvent = z.infer<typeof onboardingCompletedSchema>;
 
+/** Step viewed during onboarding navigation. */
+export const stepViewedSchema = z.object({
+  event: z.literal('onboarding_step_viewed'),
+  timestamp: z.number(),
+  step: z.string().min(1),
+});
+export type StepViewedEvent = z.infer<typeof stepViewedSchema>;
+
 /** First time kid opens the camera after onboarding. */
 export const firstCameraOpenSchema = z.object({
   event: z.literal('first_camera_open_after_onboarding'),
@@ -146,6 +154,7 @@ export const telemetryEventSchema = z.discriminatedUnion('event', [
   downloadFailedSchema,
   onboardingCompletedSchema,
   firstCameraOpenSchema,
+  stepViewedSchema,
 ]);
 
 export type TelemetryEvent = z.infer<typeof telemetryEventSchema>;
