@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Chinese MT question generator via Ollama/Gemma 4. Use to batch-generate questions."""
+"""Chinese MT question generator via Ollama/Qwen 3.5. Use to batch-generate questions.
+Per locked decisions: Qwen 3.5 2B/4B is the Chinese MT model (not Gemma 4).
+"""
 import json, re, sys, time, subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
 DATA = Path(__file__).resolve().parent.parent / "data"
-MODEL = "gemma4:e4b-nvfp4"
+# High tier: qwen3.5:4b; mid tier: qwen3.5:2b. Change this as needed.
+MODEL = "qwen3.5:4b"
 CHAR_BUDGET = {1:"250-300",2:"500-600",3:"900-1000",4:"1300-1500",5:"1700-1900",6:"2000-2300"}
 PASSAGE_LEN = {1:30,2:50,3:80,4:120,5:160,6:200}
 
