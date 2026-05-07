@@ -99,8 +99,8 @@ export default function StepsSection({
 const styles = StyleSheet.create({
   container: { gap: 8 },
   header: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  icon: { fontSize: 16 },
-  heading: { fontSize: 15, fontWeight: '700' as const },
+  icon: { fontSize: 20 },
+  heading: { fontSize: 16, fontWeight: '700' as const },
 
   stepRow: { flexDirection: 'row', gap: 10, paddingLeft: 2 },
   stepCircle: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   stepNumber: { fontSize: 12, fontWeight: '700' as const },
   stepContent: { flex: 1, gap: 4, paddingBottom: 8 },
-  stepDescription: { fontSize: 14, lineHeight: 20 },
+  stepDescription: { fontSize: 16, lineHeight: 24 },
   workingBox: {
     paddingHorizontal: 12,
     paddingVertical: 8,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   workingText: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '500' as const,
     fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace' as const,
   },

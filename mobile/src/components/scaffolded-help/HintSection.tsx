@@ -44,7 +44,7 @@ export default function HintSection({ hint, headingLabel }: HintSectionProps) {
 const styles = StyleSheet.create({
   container: { gap: 8 },
   header: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  icon: { fontSize: 16 },
-  heading: { fontSize: 15, fontWeight: '700' as const },
-  body: { fontSize: 14, lineHeight: 20, paddingLeft: 22 },
+  icon: { fontSize: 20 },
+  heading: { fontSize: 16, fontWeight: '700' as const },
+  body: { fontSize: 16, lineHeight: 24, paddingLeft: 22 },
 });

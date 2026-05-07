@@ -57,6 +57,11 @@ export interface ScaffoldedQuestionProps {
     showSolution: string;
     fullSolution: string;
     tryThis: string;
+    /** Confirmation dialog before revealing full worked solution */
+    confirmSolutionTitle: string;
+    confirmSolutionMessage: string;
+    confirmCancel: string;
+    confirmReveal: string;
   };
 }
 
@@ -76,13 +81,23 @@ export default function ScaffoldedQuestion({
   const isDark = useColorScheme() === 'dark';
   const [revealedSteps, setRevealedSteps] = useState(false);
   const [revealedSolution, setRevealedSolution] = useState(false);
+  const [showingConfirm, setShowingConfirm] = useState(false);
 
   const handleRevealSteps = useCallback(() => {
     setRevealedSteps(true);
   }, []);
 
-  const handleRevealSolution = useCallback(() => {
+  const handleRequestSolution = useCallback(() => {
+    setShowingConfirm(true);
+  }, []);
+
+  const handleConfirmSolution = useCallback(() => {
+    setShowingConfirm(false);
     setRevealedSolution(true);
+  }, []);
+
+  const handleCancelSolution = useCallback(() => {
+    setShowingConfirm(false);
   }, []);
 
   // Subject colour for the question number circle
@@ -170,14 +185,14 @@ export default function ScaffoldedQuestion({
         <View style={styles.revealedSection}>
           <StepsSection steps={steps} headingLabel={labels.steps} />
 
-          {/* Full solution (revealed on demand, after steps) */}
-          {!revealedSolution ? (
+          {/* Full solution (inline confirmation required before revealing) */}
+          {!revealedSolution && !showingConfirm && (
             <TouchableOpacity
               style={[
                 styles.revealButton,
                 { borderColor: '#4CAF50', marginTop: 12 },
               ]}
-              onPress={handleRevealSolution}
+              onPress={handleRequestSolution}
               accessibilityRole="button"
               accessibilityLabel={labels.showSolution}
             >
@@ -185,7 +200,60 @@ export default function ScaffoldedQuestion({
                 {labels.showSolution}
               </Text>
             </TouchableOpacity>
-          ) : (
+          )}
+
+          {/* Inline confirmation dialog */}
+          {showingConfirm && (
+            <View
+              style={[
+                styles.confirmBox,
+                { backgroundColor: isDark ? '#2A1A1A' : '#FFF5F5' },
+              ]}
+              accessibilityLabel={labels.confirmSolutionTitle}
+            >
+              <Text
+                style={[
+                  styles.confirmTitle,
+                  { color: isDark ? '#FFCCCC' : '#C0392B' },
+                ]}
+              >
+                {labels.confirmSolutionTitle}
+              </Text>
+              <Text
+                style={[
+                  styles.confirmMessage,
+                  { color: isDark ? '#CCCCCC' : '#4A5568' },
+                ]}
+              >
+                {labels.confirmSolutionMessage}
+              </Text>
+              <View style={styles.confirmActions}>
+                <TouchableOpacity
+                  style={[styles.confirmButton, styles.confirmCancelButton]}
+                  onPress={handleCancelSolution}
+                  accessibilityRole="button"
+                  accessibilityLabel={labels.confirmCancel}
+                >
+                  <Text style={styles.confirmCancelText}>
+                    {labels.confirmCancel}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.confirmButton, styles.confirmAcceptButton]}
+                  onPress={handleConfirmSolution}
+                  accessibilityRole="button"
+                  accessibilityLabel={labels.confirmReveal}
+                >
+                  <Text style={styles.confirmAcceptText}>
+                    {labels.confirmReveal}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+
+          {/* Solution (shown after confirmation) */}
+          {revealedSolution && (
             <SolutionSection
               solution={fullSolution}
               headingLabel={labels.fullSolution}
@@ -265,9 +333,9 @@ const styles = StyleSheet.create({
   topicLabel: { fontSize: 11, fontWeight: '600' as const, marginTop: 1 },
 
   questionText: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '500' as const,
-    lineHeight: 22,
+    lineHeight: 24,
   },
   divider: { height: 1 },
 
@@ -278,9 +346,56 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     alignItems: 'center',
   },
-  revealButtonText: { fontSize: 14, fontWeight: '700' as const },
+  revealButtonText: { fontSize: 16, fontWeight: '700' as const },
 
   revealedSection: { gap: 8 },
+
+  // Inline confirmation dialog
+  confirmBox: {
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: '#E74C3C',
+    gap: 10,
+    marginTop: 8,
+  },
+  confirmTitle: {
+    fontSize: 16,
+    fontWeight: '700' as const,
+  },
+  confirmMessage: {
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  confirmActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 10,
+    marginTop: 4,
+  },
+  confirmButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  confirmCancelButton: {
+    backgroundColor: '#E5E7EB',
+  },
+  confirmAcceptButton: {
+    backgroundColor: '#E74C3C',
+  },
+  confirmCancelText: {
+    fontSize: 15,
+    fontWeight: '600' as const,
+    color: '#374151',
+  },
+  confirmAcceptText: {
+    fontSize: 15,
+    fontWeight: '700' as const,
+    color: '#FFFFFF',
+  },
 
   followUpSuggestion: {
     padding: 12,
@@ -293,5 +408,5 @@ const styles = StyleSheet.create({
     fontWeight: '600' as const,
     textTransform: 'uppercase' as const,
   },
-  followUpText: { fontSize: 14, lineHeight: 20 },
+  followUpText: { fontSize: 16, lineHeight: 24 },
 });

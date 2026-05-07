@@ -34,14 +34,22 @@ describe('FollowUpChat', () => {
     jest.clearAllMocks();
   });
 
-  // ── Empty State ────────────────────────────────────────
+  // ── Input Bar Always Visible ────────────────────────────
 
-  it('renders nothing when no messages and empty input', () => {
-    const { UNSAFE_root } = render(<FollowUpChat {...defaultProps} />);
+  it('renders the input bar even with no messages and empty input', () => {
+    render(<FollowUpChat {...defaultProps} />);
 
-    // No messages, no input bar to show
-    // Empty render — nothing to query
-    expect(UNSAFE_root.children.length).toBe(0);
+    // Input bar should always be visible per AC
+    const input = screen.getByLabelText('Type a follow-up question');
+    expect(input).toBeTruthy();
+  });
+
+  it('renders the send button even with no messages', () => {
+    render(<FollowUpChat {...defaultProps} />);
+
+    // Send button should be visible
+    const sendButton = screen.getByLabelText('Send');
+    expect(sendButton).toBeTruthy();
   });
 
   // ── Messages ───────────────────────────────────────────
@@ -70,20 +78,7 @@ describe('FollowUpChat', () => {
 
   // ── Input Field ────────────────────────────────────────
 
-  it('renders input field when there are messages', () => {
-    render(
-      <FollowUpChat
-        {...defaultProps}
-        messages={[{ role: 'user', text: 'Hello' }]}
-        inputValue=""
-      />,
-    );
 
-    const input = screen.getByLabelText(
-      'Type a follow-up question',
-    );
-    expect(input).toBeTruthy();
-  });
 
   it('calls onInputChange when text is typed', () => {
     const onInputChange = jest.fn();

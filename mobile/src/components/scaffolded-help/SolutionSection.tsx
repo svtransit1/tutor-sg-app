@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   header: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  icon: { fontSize: 16 },
-  heading: { fontSize: 15, fontWeight: '700' as const },
-  body: { fontSize: 14, lineHeight: 20 },
+  icon: { fontSize: 20 },
+  heading: { fontSize: 16, fontWeight: '700' as const },
+  body: { fontSize: 16, lineHeight: 24 },
 });

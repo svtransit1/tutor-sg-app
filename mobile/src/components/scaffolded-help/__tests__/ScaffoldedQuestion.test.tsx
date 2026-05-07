@@ -42,6 +42,10 @@ const defaultProps = {
     showSolution: 'Show me the full answer',
     fullSolution: 'Full solution',
     tryThis: 'Try this next',
+    confirmSolutionTitle: 'See the answer?',
+    confirmSolutionMessage: 'Are you sure you want to see the full solution? Try solving it yourself first!',
+    confirmCancel: 'Not yet',
+    confirmReveal: 'Show answer',
   },
 };
 
@@ -113,21 +117,67 @@ describe('ScaffoldedQuestion', () => {
     expect(screen.queryByText('Show me the steps')).toBeNull();
   });
 
-  // ── Reveal Solution ─────────────────────────────────────
+  // ── Inline Confirmation ─────────────────────────────────
 
-  it('reveals full solution when "Show full answer" is pressed', () => {
+  it('shows inline confirmation when "Show full answer" is pressed', () => {
     render(<ScaffoldedQuestion {...defaultProps} />);
 
     // First reveal steps
     fireEvent.press(screen.getByText('Show me the steps'));
-    // Then reveal solution
+    // Then press "Show full answer"
     fireEvent.press(screen.getByText('Show me the full answer'));
+
+    // Confirmation dialog should be shown with title, message, and both buttons
+    expect(screen.getByText('See the answer?')).toBeTruthy();
+    expect(
+      screen.getByText('Are you sure you want to see the full solution? Try solving it yourself first!'),
+    ).toBeTruthy();
+    expect(screen.getByText('Not yet')).toBeTruthy();
+    expect(screen.getByText('Show answer')).toBeTruthy();
+  });
+
+  it('hides "Show full answer" button when confirmation is shown', () => {
+    render(<ScaffoldedQuestion {...defaultProps} />);
+
+    fireEvent.press(screen.getByText('Show me the steps'));
+    fireEvent.press(screen.getByText('Show me the full answer'));
+
+    // The "Show me the full answer" button should be replaced by the confirmation
+    expect(screen.queryByText('Show me the full answer')).toBeNull();
+  });
+
+  it('cancelling confirmation returns to "Show full answer" button', () => {
+    render(<ScaffoldedQuestion {...defaultProps} />);
+
+    fireEvent.press(screen.getByText('Show me the steps'));
+    fireEvent.press(screen.getByText('Show me the full answer'));
+
+    // Now press "Not yet" to cancel
+    fireEvent.press(screen.getByText('Not yet'));
+
+    // "Show full answer" button returns
+    expect(screen.getByText('Show me the full answer')).toBeTruthy();
+    // Confirmation gone
+    expect(screen.queryByText('See the answer?')).toBeNull();
+  });
+
+  it('reveals full solution after confirming the dialog', () => {
+    render(<ScaffoldedQuestion {...defaultProps} />);
+
+    // First reveal steps
+    fireEvent.press(screen.getByText('Show me the steps'));
+    // Press "Show full answer" to show confirmation
+    fireEvent.press(screen.getByText('Show me the full answer'));
+    // Confirm by pressing "Show answer"
+    fireEvent.press(screen.getByText('Show answer'));
 
     // Solution visible
     expect(screen.getByText('Full solution')).toBeTruthy();
     expect(screen.getByText('5 + 3 = 8 apples.')).toBeTruthy();
     // "Show full answer" button hidden
     expect(screen.queryByText('Show me the full answer')).toBeNull();
+    // Confirmation hidden
+    expect(screen.queryByText('See the answer?')).toBeNull();
     // Steps still visible
     expect(screen.getByText('Read the problem carefully.')).toBeTruthy();
   });

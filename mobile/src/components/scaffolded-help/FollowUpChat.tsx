@@ -67,9 +67,7 @@ export default function FollowUpChat({
     onSend();
   };
 
-  if (messages.length === 0 && !inputValue) {
-    return null;
-  }
+
 
   return (
     <View style={styles.container}>
@@ -197,7 +195,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderBottomLeftRadius: 4,
   },
-  bubbleText: { fontSize: 14, lineHeight: 20 },
+  bubbleText: { fontSize: 16, lineHeight: 24 },
 
   inputRow: {
     flexDirection: 'row',
@@ -210,7 +208,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 10,
-    fontSize: 15,
+    fontSize: 16,
     maxHeight: 44,
   },
   sendButton: {
