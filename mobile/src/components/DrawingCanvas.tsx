@@ -17,6 +17,7 @@
  */
 
 import React, { useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   View,
   PanResponder,
@@ -73,9 +74,11 @@ export default function DrawingCanvas({
   strokeColor = DEFAULT_STROKE_COLOR,
   strokeWidth = DEFAULT_STROKE_WIDTH,
   placeholder,
-  accessibilityLabel = 'Drawing canvas',
+  accessibilityLabel,
   testID,
 }: DrawingCanvasProps) {
+  const { t } = useTranslation();
+  const canvasAccessibilityLabel = accessibilityLabel ?? t('manualInputFallback.accessibility.drawCanvas', { number: '' });
   const isDark = useColorScheme() === 'dark';
   const currentStrokeRef = useRef<Point[]>([]);
   const canvasRef = useRef<View>(null);
@@ -199,7 +202,7 @@ export default function DrawingCanvas({
             borderColor: isDark ? '#444' : '#D1D5DB',
           },
         ]}
-        accessibilityLabel={accessibilityLabel}
+        accessibilityLabel={canvasAccessibilityLabel}
         accessibilityRole="image"
         {...panResponder.panHandlers}
       >
@@ -226,11 +229,11 @@ export default function DrawingCanvas({
           ]}
           onPress={handleClear}
           accessibilityRole="button"
-          accessibilityLabel="Clear drawing"
+          accessibilityLabel={t('manualInputFallback.clear')}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
           <Text style={[styles.clearText, { color: isDark ? '#CCCCCC' : '#6B7280' }]}>
-            Clear
+            {t('manualInputFallback.clear')}
           </Text>
         </TouchableOpacity>
       )}
