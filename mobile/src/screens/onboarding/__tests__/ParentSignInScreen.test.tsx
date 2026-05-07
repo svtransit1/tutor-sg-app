@@ -100,6 +100,11 @@ describe('ParentSignInScreen', () => {
     expect(getByText('or continue with')).toBeTruthy();
   });
 
+  it('renders the skip arrow indicator', () => {
+    const { getByText } = render(<ParentSignInScreen />);
+    expect(getByText('→')).toBeTruthy();
+  });
+
   it('renders with onSkip and onSignedIn callbacks', () => {
     const { getByText } = render(
       <ParentSignInScreen onSkip={jest.fn()} onSignedIn={jest.fn()} />,
