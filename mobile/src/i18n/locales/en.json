@@ -63,6 +63,28 @@
     "loading": "Checking your device…",
     "error": "Could not detect device capabilities. Please try again."
   },
+  "manualInputFallback": {
+    "title": "Fix unrecognised text",
+    "subtitle": "Some text couldn't be read. Please type or write it below.",
+    "itemLabel": "Item {{number}}",
+    "originalText": "Detected as:",
+    "typeHere": "Type the correct text here...",
+    "drawHere": "Write or draw your answer",
+    "subjectLabel": "Subject",
+    "continue": "Continue to help",
+    "prev": "Previous",
+    "next": "Next",
+    "done": "Done",
+    "draftSaved": "Draft saved",
+    "draftRestored": "Resumed from saved draft",
+    "stylusTab": "Write",
+    "typeTab": "Type",
+    "switchToType": "Switch to typing",
+    "switchToStylus": "Switch to writing",
+    "errors": {
+      "emptyItem": "Please enter something for Item {{number}}."
+    }
+  },
   "modelDownload": {
     "title": "Setting up your tutor...",
     "progress": "Downloading {{fileName}}…",
@@ -81,5 +103,22 @@
       "download_stuck": "Download seems stuck. Retrying…",
       "unknown_error": "Something went wrong. Please try again."
     }
+  },
+  "cameraResult": {
+    "title": "Homework Review",
+    "question": "Question {{number}}",
+    "questionLabel": "Question"
+  },
+  "ocrReview": {
+    "title": "Review Scan",
+    "summaryTitle_one": "{{count}} region detected",
+    "summaryTitle_other": "{{count}} regions detected",
+    "confidenceHigh": "High",
+    "confidenceMedium": "Medium",
+    "confidenceLow": "Low",
+    "detectedRegions": "Detected Regions",
+    "retake": "Retake",
+    "confirm": "Looks good",
+    "manualInputNotice": "Some text wasn't clearly recognised. You may need to type those answers manually."
   }
 }

@@ -63,6 +63,28 @@
     "loading": "正在检测你的设备…",
     "error": "无法检测设备性能，请重试。"
   },
+  "manualInputFallback": {
+    "title": "修正无法识别的文字",
+    "subtitle": "部分文字未能识别。请在下方输入或书写正确的文字。",
+    "itemLabel": "第 {{number}} 题",
+    "originalText": "识别为：",
+    "typeHere": "在此输入正确答案...",
+    "drawHere": "书写或画出你的答案",
+    "subjectLabel": "科目",
+    "continue": "继续获取帮助",
+    "prev": "上一题",
+    "next": "下一题",
+    "done": "完成",
+    "draftSaved": "草稿已保存",
+    "draftRestored": "已恢复保存的草稿",
+    "stylusTab": "书写",
+    "typeTab": "打字",
+    "switchToType": "切换到打字",
+    "switchToStylus": "切换到书写",
+    "errors": {
+      "emptyItem": "请输入第 {{number}} 题的内容。"
+    }
+  },
   "modelDownload": {
     "title": "正在设置你的导师...",
     "progress": "正在下载 {{fileName}}...",
@@ -81,5 +103,22 @@
       "download_stuck": "下载似乎卡住了，正在重试...",
       "unknown_error": "出现错误，请重试。"
     }
+  },
+  "cameraResult": {
+    "title": "作业检查",
+    "question": "第 {{number}} 题",
+    "questionLabel": "题目"
+  },
+  "ocrReview": {
+    "title": "检查扫描结果",
+    "summaryTitle_one": "检测到 {{count}} 个区域",
+    "summaryTitle_other": "检测到 {{count}} 个区域",
+    "confidenceHigh": "高",
+    "confidenceMedium": "中",
+    "confidenceLow": "低",
+    "detectedRegions": "检测到的区域",
+    "retake": "重拍",
+    "confirm": "没问题",
+    "manualInputNotice": "部分文字识别不清。这些题目可能需要手动输入答案。"
   }
 }
