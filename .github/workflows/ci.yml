@@ -87,3 +87,142 @@ jobs:
         run: npx expo export --platform ${{ matrix.platform }} --output-dir dist-${{ matrix.platform }}
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
+
+  # ── E2E Maestro: Android emulator ───────────────────────────────
+  e2e-android:
+    name: E2E Maestro (Android)
+    needs: [bundle]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      # Install Maestro CLI
+      - name: Install Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+
+      # Set up Android emulator
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger
+
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          ram-size: 4096M
+          script: |
+            # The emulator is running at this point.
+            # Build the Expo dev client APK
+            cd mobile
+            npm install
+            npx expo run:android --no-install --variant release
+
+            # Run the full E2E flow with timing capture
+            cd ..
+            chmod +x scripts/ci-e2e.sh
+            ./scripts/ci-e2e.sh android onboarding-to-feedback.yaml || true
+
+      # Upload timing report as CI artifact
+      - name: Upload timing report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-timing-android
+          path: |
+            e2e-timing-report-android.json
+            maestro-run-android.log
+          retention-days: 30
+
+      # Fail the job if the timing budget was exceeded
+      - name: Check timing budget
+        run: |
+          if [ -f e2e-timing-report-android.json ]; then
+            STATUS=$(jq -r '.status' e2e-timing-report-android.json)
+            if [ "$STATUS" != "passed" ]; then
+              echo "E2E failed: $(jq -r '.failure_reason' e2e-timing-report-android.json)"
+              exit 1
+            fi
+          else
+            echo "Timing report not found — E2E did not complete"
+            exit 1
+          fi
+
+  # ── E2E Maestro: iOS simulator ──────────────────────────────────
+  e2e-ios:
+    name: E2E Maestro (iOS)
+    needs: [bundle]
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      # Install Maestro CLI
+      - name: Install Maestro
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+
+      # Build iOS dev client and run E2E
+      - name: Build & run E2E
+        run: |
+          cd mobile
+          npm install
+
+          # Install CocoaPods deps
+          cd ios
+          pod install --repo-update
+          cd ..
+
+          # Build the dev client for the simulator
+          npx expo run:ios --no-install --scheme tutor-sg
+
+          # Run the full E2E flow with timing capture
+          cd ..
+          chmod +x scripts/ci-e2e.sh
+          ./scripts/ci-e2e.sh ios onboarding-to-feedback.yaml || true
+
+      # Upload timing report as CI artifact
+      - name: Upload timing report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-timing-ios
+          path: |
+            e2e-timing-report-ios.json
+            maestro-run-ios.log
+          retention-days: 30
+
+      # Fail the job if the timing budget was exceeded
+      - name: Check timing budget
+        run: |
+          if [ -f e2e-timing-report-ios.json ]; then
+            STATUS=$(jq -r '.status' e2e-timing-report-ios.json)
+            if [ "$STATUS" != "passed" ]; then
+              echo "E2E failed: $(jq -r '.failure_reason' e2e-timing-report-ios.json)"
+              exit 1
+            fi
+          else
+            echo "Timing report not found — E2E did not complete"
+            exit 1
+          fi

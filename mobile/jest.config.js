@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const path = require('path');
 const rnDir = path.dirname(require.resolve('react-native'));
 
@@ -52,4 +53,15 @@ module.exports = {
   ],
   coverageThreshold: { global: { lines: 0, branches: 0, functions: 0 } },
   testTimeout: 30000,
+=======
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  roots: ['<rootDir>/src'],
+  testMatch: ['**/__tests__/**/*.test.ts'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleNameMapper: {
+    '^@react-native-async-storage/async-storage$': '<rootDir>/__mocks__/@react-native-async-storage/async-storage.ts',
+  },
+>>>>>>> origin/feat/aaas-42-consent-privacy-current
 };

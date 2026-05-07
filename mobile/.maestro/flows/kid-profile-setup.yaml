@@ -1,0 +1,257 @@
+# Maestro E2E: Kid profile setup — add 2 kids, restart, verify persistence
+#
+# Acceptance: add 2 kids, restart app, both present
+# No network call made during this flow (Tortoise privacy review)
+#
+# Prerequisites:
+#   1. Build the dev client: expo run:ios (or expo run:android)
+#   2. Then run: maestro test .maestro/flows/kid-profile-setup.yaml
+
+appId: com.aaas.tutorsg
+
+---
+# ═══════════════════════════════════════════════════════════════════
+# STEP 1: Fresh install — launch with cleared state
+# ═══════════════════════════════════════════════════════════════════
+- launchApp:
+    appId: com.aaas.tutorsg
+    clearState: true
+    stopApp: true
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 2: Welcome screen — tap Next
+# ═══════════════════════════════════════════════════════════════════
+- extendedWaitUntil:
+    visible:
+      text: 'Welcome'
+    timeout: 15000
+
+- tapOn:
+    id: 'welcome-continue'
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 3: Consent screen — accept privacy, continue
+# ═══════════════════════════════════════════════════════════════════
+- extendedWaitUntil:
+    visible:
+      text: 'Privacy'
+    timeout: 10000
+
+- tapOn:
+    id: 'consent-checkbox'
+
+- tapOn:
+    id: 'consent-continue'
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 4: Device-tier screen — wait for check, continue
+# ═══════════════════════════════════════════════════════════════════
+- extendedWaitUntil:
+    visible:
+      text: 'Ready'
+    timeout: 10000
+
+- tapOn:
+    id: 'deviceTier-continue'
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 5: Model download — wait for auto-complete
+# ═══════════════════════════════════════════════════════════════════
+- extendedWaitUntil:
+    visible:
+      text: 'Ready'
+    timeout: 30000
+
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# The model download auto-advances to kid-profile when complete
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 6: Kid profile — add first child (Alice, P3, English)
+# ═══════════════════════════════════════════════════════════════════
+- extendedWaitUntil:
+    visible:
+      text: 'child'
+    timeout: 15000
+
+# Tap "Add your first child" button
+- tapOn:
+    testID: 'kidProfile-add'
+
+# Wait for form to appear
+- extendedWaitUntil:
+    visible:
+      text: 'name'
+    timeout: 5000
+
+# Enter child's name
+- tapOn:
+    testID: 'kidProfile-name'
+- inputText: 'Alice'
+
+# Select level P3
+- tapOn:
+    testID: 'kidProfile-level-P3'
+
+# Language already set to English (default), so skip
+
+# Save
+- tapOn:
+    testID: 'kidProfile-save'
+
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Verify Alice appears in the list
+- assertVisible:
+    text: 'Alice'
+    timeout: 5000
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 7: Kid profile — add second child (Bob, P1, zh-Hans)
+# ═══════════════════════════════════════════════════════════════════
+- tapOn:
+    testID: 'kidProfile-add'
+
+- waitForAnimationToEnd:
+    timeout: 2000
+
+- tapOn:
+    testID: 'kidProfile-name'
+- inputText: 'Bob'
+
+# Select level P1
+- tapOn:
+    testID: 'kidProfile-level-P1'
+
+# Select language zh-Hans
+- tapOn:
+    testID: 'kidProfile-lang-zh'
+
+# Save
+- tapOn:
+    testID: 'kidProfile-save'
+
+- waitForAnimationToEnd:
+    timeout: 2000
+
+# Verify Bob appears in the list
+- assertVisible:
+    text: 'Bob'
+    timeout: 5000
+
+# Verify both kids visible on the screen
+- assertVisible:
+    text: 'Alice'
+- assertVisible:
+    text: 'Bob'
+
+# Verify counter shows 2/4
+- assertVisible:
+    text: '2/4'
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 8: Continue to next onboarding step
+# ═══════════════════════════════════════════════════════════════════
+- tapOn:
+    testID: 'kidProfile-continue'
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 9: First homework intro — tap "Let's go!"
+# ═══════════════════════════════════════════════════════════════════
+- extendedWaitUntil:
+    visible:
+      text: 'Let'
+    timeout: 10000
+
+- tapOn:
+    testID: 'firstHomework-start'
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 10: Done screen — tap "Start learning" to complete onboarding
+# ═══════════════════════════════════════════════════════════════════
+- extendedWaitUntil:
+    visible:
+      text: 'All set'
+    timeout: 10000
+
+- tapOn:
+    testID: 'done-start'
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 11: Home screen — verify both kids present
+# ═══════════════════════════════════════════════════════════════════
+- extendedWaitUntil:
+    visible:
+      text: 'Ready to start'
+    timeout: 15000
+    optional: true
+
+- extendedWaitUntil:
+    visible:
+      text: 'Alice'
+    timeout: 10000
+
+- assertVisible:
+    text: 'Alice'
+    timeout: 5000
+
+- assertVisible:
+    text: 'Bob'
+    timeout: 5000
+
+# Verify the kids are displayed with their levels
+- assertVisible:
+    text: 'Primary 3'
+    timeout: 3000
+    optional: true
+
+- assertVisible:
+    text: '小一'
+    timeout: 3000
+    optional: true
+
+# Screenshot for verification evidence
+- takeScreenshot: 'kid-profile-two-kids-on-home'
+
+# ═══════════════════════════════════════════════════════════════════
+# STEP 12: Kill app, relaunch, verify kids persist
+# ═══════════════════════════════════════════════════════════════════
+- stopApp:
+    appId: com.aaas.tutorsg
+
+- launchApp:
+    appId: com.aaas.tutorsg
+
+# Onboarding complete — should skip straight to home
+# Verify we don't see the Welcome screen
+- assertNotVisible:
+    text: 'Welcome'
+    timeout: 5000
+
+# Wait for home screen to load
+- extendedWaitUntil:
+    visible:
+      text: 'Alice'
+    timeout: 15000
+
+# Verify both kids persist after restart
+- assertVisible:
+    text: 'Alice'
+    timeout: 5000
+
+- assertVisible:
+    text: 'Bob'
+    timeout: 5000
+
+# Verify the counter still shows 2/4
+- assertVisible:
+    text: '2/4'
+    timeout: 3000
+
+# Screenshot for verification evidence
+- takeScreenshot: 'kid-profile-persist-after-restart'
+
+- stopApp:
+    appId: com.aaas.tutorsg

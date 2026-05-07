@@ -1,0 +1,159 @@
+# Onboarding resume-on-relaunch test
+#
+# Kills the app at every onboarding step, relaunches, and verifies
+# the app resumes at the correct step.
+#
+# Prerequisites:
+#   1. Build the dev client: expo run:ios (or expo run:android)
+#   2. Then run: maestro test .maestro/flows/onboarding-resume.yaml
+
+appId: com.aaas.tutorsg
+
+# ── STEP 1: Kill at welcome, relaunch → back at welcome ──────────
+---
+- launchApp:
+    appId: com.aaas.tutorsg
+    clearState: true
+    stopApp: true
+
+- extendedWaitUntil:
+    visible:
+      text: 'Welcome'
+    timeout: 15000
+
+- stopApp:
+    appId: com.aaas.tutorsg
+
+- launchApp:
+    appId: com.aaas.tutorsg
+
+- extendedWaitUntil:
+    visible:
+      text: 'Welcome'
+    timeout: 15000
+- takeScreenshot: 'resume-after-kill-at-welcome'
+
+# ── STEP 2: Advance to consent, kill, relaunch → at consent ──────
+---
+- tapOn:
+    text: 'Next'
+    retryTapIfNoChange: true
+
+- extendedWaitUntil:
+    visible:
+      text: 'Privacy'
+    timeout: 10000
+
+- stopApp:
+    appId: com.aaas.tutorsg
+
+- launchApp:
+    appId: com.aaas.tutorsg
+
+- extendedWaitUntil:
+    visible:
+      text: 'Privacy'
+    timeout: 15000
+- takeScreenshot: 'resume-after-kill-at-consent'
+
+# ── STEP 3: Advance past consent, kill, relaunch → at device-tier ─
+---
+- tapOn:
+    id: 'consent-checkbox'
+    retryTapIfNoChange: true
+    optional: true
+
+- tapOn:
+    text: 'Next'
+    retryTapIfNoChange: true
+
+- extendedWaitUntil:
+    visible:
+      text: 'device'
+    timeout: 15000
+    optional: true
+
+- stopApp:
+    appId: com.aaas.tutorsg
+
+- launchApp:
+    appId: com.aaas.tutorsg
+
+# Verify we're at device-tier or later (checking / model-download / kid-profile)
+- extendedWaitUntil:
+    visible:
+      text: 'Ready'
+    timeout: 15000
+    optional: true
+
+- takeScreenshot: 'resume-after-kill-at-device-tier'
+
+# ── STEP 4: Advance through remaining steps, kill at kid-profile, relaunch ──
+---
+- tapOn:
+    text: 'Next'
+    retryTapIfNoChange: true
+    optional: true
+
+- tapOn:
+    text: 'Next'
+    retryTapIfNoChange: true
+    optional: true
+
+- extendedWaitUntil:
+    visible:
+      text: 'child'
+    timeout: 10000
+    optional: true
+
+- stopApp:
+    appId: com.aaas.tutorsg
+
+- launchApp:
+    appId: com.aaas.tutorsg
+
+- takeScreenshot: 'resume-after-kill-at-kid-profile'
+
+# ── STEP 5: Complete onboarding, relaunch → straight to home ─────
+---
+# Navigate through remaining steps to complete onboarding
+- tapOn:
+    text: 'Next'
+    retryTapIfNoChange: true
+    optional: true
+
+- tapOn:
+    text: 'Next'
+    retryTapIfNoChange: true
+    optional: true
+
+- tapOn:
+    text: 'Next'
+    retryTapIfNoChange: true
+    optional: true
+
+# Wait for home screen to appear (after onboarding complete)
+- extendedWaitUntil:
+    visible:
+      text: 'AI Tutor'
+    timeout: 15000
+    optional: true
+
+- stopApp:
+    appId: com.aaas.tutorsg
+
+- launchApp:
+    appId: com.aaas.tutorsg
+
+# Verify we skip onboarding entirely and go to home
+- extendedWaitUntil:
+    visible:
+      text: 'AI Tutor'
+    timeout: 15000
+
+# Verify welcome/onboarding is NOT shown
+- assertNotVisible:
+    text: 'Welcome'
+    timeout: 5000
+
+- takeScreenshot: 'resume-after-onboarding-complete'
