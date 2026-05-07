@@ -93,7 +93,10 @@
       "errorSendFailed": "发送登录链接失败，请重试。",
       "errorSignInFailed": "登录失败，请重试。",
       "errorAuthSession": "登录会话已取消或失败。",
-      "signedIn": "登录成功"
+      "signedIn": "登录成功",
+      "continue": "继续",
+      "continueSignedIn": "继续",
+      "completingSignIn": "正在完成登录…"
     }
   },
   "parent": {

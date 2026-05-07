@@ -93,7 +93,10 @@
       "errorSendFailed": "Failed to send magic link. Please try again.",
       "errorSignInFailed": "Sign-in failed. Please try again.",
       "errorAuthSession": "Authentication session was cancelled or failed.",
-      "signedIn": "Signed in successfully"
+      "signedIn": "Signed in successfully",
+      "continue": "Continue",
+      "continueSignedIn": "Continue",
+      "completingSignIn": "Completing sign-in…"
     }
   },
   "parent": {
