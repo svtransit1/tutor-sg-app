@@ -21,7 +21,7 @@ export function DoneScreen() {
       </Text>
       {state.kidName ? (
         <Text style={styles.greeting}>
-          {t('onboarding.done.greeting', `Hi ${state.kidName}! Let's learn!`)}
+          {t('onboarding.done.greeting', { name: state.kidName })}
         </Text>
       ) : null}
       <TouchableOpacity style={styles.button} testID="done-start" onPress={handleStart}>
