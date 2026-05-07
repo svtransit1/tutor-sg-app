@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Pressable, StyleSheet, type TextStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
 import { usePinGate } from '../../src/parent-auth/pin-context';
 
 const PIN_LENGTH = 4;

@@ -2,11 +2,9 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 import {
   isPinSet as checkPinExists,
   verifyPin,
-  getFailedAttempts,
-  incrementFailedAttempts,
-  clearFailedAttempts,
-  getCooldownRemaining,
-  MAX_ATTEMPTS,
+  getRemainingAttempts,
+  getLockedUntil,
+  MAX_FAILED_ATTEMPTS,
   COOLDOWN_SECONDS,
 } from '../storage/pin-storage'
 
@@ -41,7 +39,7 @@ export function PinGateProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<PinState>({
     status: 'loading',
     error: null,
-    attemptsRemaining: MAX_ATTEMPTS,
+    attemptsRemaining: MAX_FAILED_ATTEMPTS,
     cooldownRemaining: 0,
   })
 
@@ -58,21 +56,24 @@ export function PinGateProvider({ children }: { children: React.ReactNode }) {
     ;(async () => {
       try {
         const pinExists = await checkPinExists()
-        const attempts = await getFailedAttempts()
-        const remaining = await getCooldownRemaining()
+        const attempts = await getRemainingAttempts()
+        const lockedUntil = await getLockedUntil()
+        const now = Date.now()
+        const cooldown = lockedUntil !== null && now < lockedUntil ? lockedUntil - now : 0
 
         setState((prev) => ({
           ...prev,
           status: pinExists ? 'needs-verify' : 'needs-setup',
-          attemptsRemaining: Math.max(0, MAX_ATTEMPTS - attempts),
-          cooldownRemaining: remaining,
+          attemptsRemaining: attempts,
+          cooldownRemaining: cooldown,
         }))
 
-        if (remaining > 0) {
+        if (cooldown > 0) {
           cooldownTimer.current = setInterval(async () => {
-            const r = await getCooldownRemaining()
-            setState((prev) => ({ ...prev, cooldownRemaining: r }))
-            if (r <= 0) {
+            const lu = await getLockedUntil()
+            const cd = lu !== null && lu > Date.now() ? lu - Date.now() : 0
+            setState((prev) => ({ ...prev, cooldownRemaining: cd }))
+            if (cd <= 0) {
               stopCooldownTimer()
             }
           }, COOLDOWN_POLL_MS)
@@ -120,42 +121,34 @@ export function PinGateProvider({ children }: { children: React.ReactNode }) {
 
   const handleVerifyPin = useCallback(
     async (pin: string): Promise<boolean> => {
-      const remaining = await getCooldownRemaining()
-      if (remaining > 0) {
-        setState((prev) => ({ ...prev, cooldownRemaining: remaining }))
-        return false
-      }
+      const { success, remainingAttempts, lockedUntil } = await verifyPin(pin)
 
-      const isValid = await verifyPin(pin)
-
-      if (isValid) {
-        await clearFailedAttempts()
+      if (success) {
         setState((prev) => ({
           ...prev,
           status: 'verified',
           error: null,
-          attemptsRemaining: MAX_ATTEMPTS,
+          attemptsRemaining: MAX_FAILED_ATTEMPTS,
           cooldownRemaining: 0,
         }))
         stopCooldownTimer()
         return true
       }
 
-      const attempts = await incrementFailedAttempts()
-      const left = Math.max(0, MAX_ATTEMPTS - attempts)
-
-      if (left <= 0) {
-        const cd = await getCooldownRemaining()
+      if (remainingAttempts <= 0 && lockedUntil !== null) {
+        const now = Date.now()
+        const cooldown = lockedUntil > now ? lockedUntil - now : 0
         setState((prev) => ({
           ...prev,
           error: null,
           attemptsRemaining: 0,
-          cooldownRemaining: cd,
+          cooldownRemaining: cooldown,
         }))
         cooldownTimer.current = setInterval(async () => {
-          const r = await getCooldownRemaining()
-          setState((prev) => ({ ...prev, cooldownRemaining: r }))
-          if (r <= 0) {
+          const lu = await getLockedUntil()
+          const cd = lu !== null && lu > Date.now() ? lu - Date.now() : 0
+          setState((prev) => ({ ...prev, cooldownRemaining: cd }))
+          if (cd <= 0) {
             stopCooldownTimer()
           }
         }, COOLDOWN_POLL_MS)
@@ -163,7 +156,7 @@ export function PinGateProvider({ children }: { children: React.ReactNode }) {
         setState((prev) => ({
           ...prev,
           error: 'parentAuth.wrongPin',
-          attemptsRemaining: left,
+          attemptsRemaining: remainingAttempts,
         }))
       }
 
