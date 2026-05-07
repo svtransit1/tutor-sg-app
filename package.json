@@ -2,10 +2,6 @@
   "name": "tutor-sg",
   "private": true,
   "version": "0.1.0",
-  "workspaces": [
-    "mobile",
-    "packages/*"
-  ],
   "scripts": {
     "dev": "npm run start --workspace=mobile",
     "mobile": "npm run --workspace=mobile",
@@ -40,7 +36,8 @@
     "lint-staged": "^15.5.2",
     "prettier": "^3.8.3",
     "react-test-renderer": "^19.2.6",
-    "typescript-eslint": "^8.59.2"
+    "typescript-eslint": "^8.59.2",
+    "vitest": "^4.1.5"
   },
   "dependencies": {
     "expo-speech": "~14.0.8"

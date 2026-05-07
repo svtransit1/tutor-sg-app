@@ -6,12 +6,12 @@
   "scripts": {
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "node ../../node_modules/jest/bin/jest.js --passWithNoTests --maxWorkers=2"
+    "test": "jest --passWithNoTests --maxWorkers=2"
   },
   "dependencies": {
-    "@tutor-sg/device-tier": "*",
-    "@tutor-sg/features": "*",
-    "@tutor-sg/llm": "*"
+    "@tutor-sg/device-tier": "workspace:*",
+    "@tutor-sg/features": "workspace:*",
+    "@tutor-sg/llm": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",

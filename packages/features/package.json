@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "node ../../node_modules/jest/bin/jest.js --passWithNoTests"
+    "test": "jest --passWithNoTests"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
