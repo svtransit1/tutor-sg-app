@@ -342,6 +342,19 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
           });
           break;
         case 'grade_subject_pick':
+          if (state.grade) {
+            trackEvent({
+              event: 'onboarding_grade_picked',
+              timestamp: Date.now(),
+              grade: state.grade,
+            });
+          }
+          trackEvent({
+            event: 'onboarding_subjects_picked',
+            timestamp: Date.now(),
+            subjects: state.subjects,
+          });
+          break;
         case 'sibling_prompt':
           trackEvent({
             event: 'onboarding_sibling_added',
@@ -411,6 +424,11 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
         // Fire step_viewed telemetry when navigating to a new step
         if (previousStep.current !== state.currentStep) {
           previousStep.current = state.currentStep;
+          trackEvent({
+            event: 'onboarding_step_viewed',
+            timestamp: Date.now(),
+            step: state.currentStep,
+          });
         }
         router.replace(onboardingPath as any);
       }
