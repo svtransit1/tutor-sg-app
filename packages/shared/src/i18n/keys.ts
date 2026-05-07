@@ -14,6 +14,8 @@ export type I18nKey =
   | `modelDownload.${ModelDownloadKey}`
   | `homeworkFeedback.${HomeworkFeedbackKey}`
   | `cameraGuideFrame.${CameraGuideFrameKey}`
+  | `kidHome.${KidHomeKey}`
+  | `kidHistory.${KidHistoryKey}`
 
 export type ParentAuthKey =
   | 'title'
@@ -86,6 +88,47 @@ export type CameraGuideFrameAccessibilityKey =
   | 'alignFrame'
   | 'aligned'
 
+export type KidHomeKey =
+  | `header.${KidHomeHeaderKey}`
+  | `subjects.${SubjectsKey}`
+  | `subjectsDescriptions.${SubjectsKey}`
+  | `camera.${KidHomeCameraKey}`
+  | `recentSessions.${KidHomeRecentSessionsKey}`
+  | `accessibility.${KidHomeAccessibilityKey}`
+  | `firstSession.${KidHomeFirstSessionKey}`
+export type KidHomeHeaderKey = 'greeting' | 'levelBadge' | 'switchLanguage'
+export type SubjectsKey = 'math' | 'english' | 'science' | 'chinese'
+export type KidHomeCameraKey = 'title' | 'subtitle' | 'accessibility'
+export type KidHomeRecentSessionsKey =
+  | 'title'
+  | 'empty'
+  | 'viewAll'
+  | `timeAgo.${KidHomeTimeAgoKey}`
+  | 'questions'
+  | 'questions_plural'
+export type KidHomeTimeAgoKey = 'justNow' | 'minutesAgo' | 'hoursAgo' | 'yesterday'
+export type KidHomeAccessibilityKey = 'subjectTile' | 'recentSession' | 'viewAll'
+export type KidHomeFirstSessionKey =
+  | 'welcomeTitle'
+  | 'welcomeBody'
+  | 'ctaCamera'
+  | 'ctaPractice'
+  | 'subjectsHint'
+  | 'dismiss'
+  | `accessibility.${KidHomeFirstSessionAccessibilityKey}`
+export type KidHomeFirstSessionAccessibilityKey = 'welcomeBanner' | 'practiceTile'
+
+export type KidHistoryKey =
+  | 'title'
+  | 'empty'
+  | 'yesterday'
+  | 'questions'
+  | 'questions_plural'
+  | `status.${KidHistoryStatusKey}`
+  | `accessibility.${KidHistoryAccessibilityKey}`
+export type KidHistoryStatusKey = 'completed' | 'inProgress' | 'opened'
+export type KidHistoryAccessibilityKey = 'sessionCard'
+
 export type ModelDownloadKey =
   | 'title'
   | 'progress'
@@ -94,8 +137,19 @@ export type ModelDownloadKey =
   | 'paused'
   | 'resuming'
   | 'completed'
+  | 'verifying'
   | 'retry'
   | 'wifiRequired'
+  | 'etaTime'
+  | 'speed'
+  | 'pause'
+  | 'resume'
+  | 'cancel'
+  | 'cellularWarning'
+  | 'cellularProceed'
+  | 'cellularCancel'
+  | 'privacyNote'
+  | 'whyNeeded'
   | `errors.${ModelDownloadErrorKey}`
 export type ModelDownloadErrorKey =
   | 'connectivity_lost'
@@ -178,6 +232,49 @@ export const I18N_KEYS = [
   'cameraGuideFrame.retake',
   'cameraGuideFrame.accessibility.alignFrame',
   'cameraGuideFrame.accessibility.aligned',
+  'kidHome.header.greeting',
+  'kidHome.header.levelBadge',
+  'kidHome.header.switchLanguage',
+  'kidHome.subjects.math',
+  'kidHome.subjects.english',
+  'kidHome.subjects.science',
+  'kidHome.subjects.chinese',
+  'kidHome.subjectsDescriptions.math',
+  'kidHome.subjectsDescriptions.english',
+  'kidHome.subjectsDescriptions.science',
+  'kidHome.subjectsDescriptions.chinese',
+  'kidHome.camera.title',
+  'kidHome.camera.subtitle',
+  'kidHome.camera.accessibility',
+  'kidHome.recentSessions.title',
+  'kidHome.recentSessions.empty',
+  'kidHome.recentSessions.viewAll',
+  'kidHome.recentSessions.timeAgo.justNow',
+  'kidHome.recentSessions.timeAgo.minutesAgo',
+  'kidHome.recentSessions.timeAgo.hoursAgo',
+  'kidHome.recentSessions.timeAgo.yesterday',
+  'kidHome.recentSessions.questions',
+  'kidHome.recentSessions.questions_plural',
+  'kidHome.accessibility.subjectTile',
+  'kidHome.accessibility.recentSession',
+  'kidHome.accessibility.viewAll',
+  'kidHome.firstSession.welcomeTitle',
+  'kidHome.firstSession.welcomeBody',
+  'kidHome.firstSession.ctaCamera',
+  'kidHome.firstSession.ctaPractice',
+  'kidHome.firstSession.subjectsHint',
+  'kidHome.firstSession.dismiss',
+  'kidHome.firstSession.accessibility.welcomeBanner',
+  'kidHome.firstSession.accessibility.practiceTile',
+  'kidHistory.title',
+  'kidHistory.empty',
+  'kidHistory.yesterday',
+  'kidHistory.questions',
+  'kidHistory.questions_plural',
+  'kidHistory.status.completed',
+  'kidHistory.status.inProgress',
+  'kidHistory.status.opened',
+  'kidHistory.accessibility.sessionCard',
   'modelDownload.title',
   'modelDownload.progress',
   'modelDownload.progressPercent',
@@ -187,6 +284,17 @@ export const I18N_KEYS = [
   'modelDownload.completed',
   'modelDownload.retry',
   'modelDownload.wifiRequired',
+  'modelDownload.etaTime',
+  'modelDownload.speed',
+  'modelDownload.pause',
+  'modelDownload.resume',
+  'modelDownload.cancel',
+  'modelDownload.cellularWarning',
+  'modelDownload.cellularProceed',
+  'modelDownload.cellularCancel',
+  'modelDownload.privacyNote',
+  'modelDownload.whyNeeded',
+  'modelDownload.verifying',
   'modelDownload.errors.connectivity_lost',
   'modelDownload.errors.disk_insufficient',
   'modelDownload.errors.cdn_unreachable',
