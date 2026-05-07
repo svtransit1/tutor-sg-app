@@ -1,15 +1,11 @@
 {
-  "name": "@tutor-sg/shared",
+  "name": "@tutor-sg/features",
   "version": "0.1.0",
   "private": true,
   "main": "src/index.ts",
   "scripts": {
-    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "jest --passWithNoTests --maxWorkers=2"
-  },
-  "dependencies": {
-    "zod": "^3.25.0"
+    "test": "jest --passWithNoTests"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
