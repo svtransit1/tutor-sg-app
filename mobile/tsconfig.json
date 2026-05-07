@@ -4,6 +4,7 @@
     "jsx": "react-jsx"
   },
   "include": [
+    "app.config.ts",
     "app/**/*.ts",
     "app/**/*.tsx",
     "src/**/*.ts",

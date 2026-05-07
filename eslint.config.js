@@ -59,6 +59,7 @@ export default tseslint.config(
       '@typescript-eslint/unbound-method': 'off',
       '@typescript-eslint/no-unnecessary-type-assertion': 'off',
       '@typescript-eslint/no-unnecessary-condition': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
 
