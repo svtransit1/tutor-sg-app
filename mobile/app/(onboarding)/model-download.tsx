@@ -168,7 +168,7 @@ export default function ModelDownloadRoute() {
               <Text style={styles.percentText}>
                 {phase === 'downloading' && t('modelDownload.progressPercent', { percent })}
                 {phase === 'paused' && t('modelDownload.paused')}
-                {phase === 'verifying' && 'Verifying...'}
+                {phase === 'verifying' && t('modelDownload.verifying')}
                 {phase === 'completed' && t('modelDownload.completed')}
               </Text>
             </View>

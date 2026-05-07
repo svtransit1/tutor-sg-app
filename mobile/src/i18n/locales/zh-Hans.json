@@ -255,6 +255,7 @@
     "paused": "下载已暂停",
     "resuming": "正在恢复下载...",
     "completed": "下载完成",
+    "verifying": "验证中…",
     "pause": "暂停",
     "resume": "恢复",
     "cancel": "取消",

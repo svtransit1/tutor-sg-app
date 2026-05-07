@@ -255,6 +255,7 @@
     "paused": "Download paused",
     "resuming": "Resuming download…",
     "completed": "Download complete",
+    "verifying": "Verifying...",
     "pause": "Pause",
     "resume": "Resume",
     "cancel": "Cancel",
