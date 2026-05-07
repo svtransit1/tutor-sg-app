@@ -1,0 +1,11 @@
+{
+  "onboarding": {
+    "langPick": {
+      "title": "选择语言",
+      "english": "英文",
+      "englishSub": "English",
+      "chinese": "中文（简体）",
+      "chineseSub": "简体中文"
+    }
+  }
+}
