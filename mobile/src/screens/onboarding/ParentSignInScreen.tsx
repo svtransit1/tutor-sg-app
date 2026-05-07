@@ -365,7 +365,9 @@ export default function ParentSignInScreen({
                 {screenState === 'loading_oauth' ? (
                   <ActivityIndicator color="#333" />
                 ) : (
-                  <Text style={styles.oauthButtonText}>G</Text>
+                  <View style={styles.brandIconWrap}>
+                    <Text style={styles.googleIcon}>G</Text>
+                  </View>
                 )}
                 <Text style={styles.oauthButtonLabel}>
                   {t('parentAuth.signIn.continueWithGoogle')}
@@ -382,7 +384,9 @@ export default function ParentSignInScreen({
                 {screenState === 'loading_oauth' ? (
                   <ActivityIndicator color="#fff" />
                 ) : (
-                  <Text style={[styles.oauthButtonText, styles.oauthButtonTextApple]}></Text>
+                  <View style={styles.brandIconWrap}>
+                    <Text style={styles.appleIcon}></Text>
+                  </View>
                 )}
                 <Text style={[styles.oauthButtonLabel, styles.oauthButtonLabelApple]}>
                   {t('parentAuth.signIn.continueWithApple')}
@@ -404,6 +408,7 @@ export default function ParentSignInScreen({
               accessibilityRole="button"
               accessibilityLabel={t('parentAuth.signIn.skip')}
             >
+              <Text style={styles.skipButtonIcon}>→</Text>
               <Text style={styles.skipButtonText}>
                 {t('parentAuth.signIn.skip')}
               </Text>
@@ -533,15 +538,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     borderColor: '#000000',
   },
-  oauthButtonText: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#333',
-    width: 24,
-    textAlign: 'center',
+  brandIconWrap: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
   },
-  oauthButtonTextApple: {
-    color: '#FFFFFF',
+  googleIcon: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#4285F4',
+  },
+  appleIcon: {
+    fontSize: 18,
+    color: '#000000',
+    marginTop: 1,
   },
   oauthButtonLabel: {
     fontSize: 16,
@@ -570,12 +584,23 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   skipButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: '#D1D5DB',
+    backgroundColor: '#FFFFFF',
+  },
+  skipButtonIcon: {
+    fontSize: 15,
+    color: '#6B7280',
   },
   skipButtonText: {
     fontSize: 15,
-    color: '#9CA3AF',
-    textDecorationLine: 'underline',
+    fontWeight: '600',
+    color: '#6B7280',
   },
 });
