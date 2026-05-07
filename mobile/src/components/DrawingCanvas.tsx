@@ -84,6 +84,16 @@ export default function DrawingCanvas({
   const canvasRef = useRef<View>(null);
   const canvasLayoutRef = useRef({ x: 0, y: 0, width: 0, height: 0 });
 
+  // Refs to avoid stale closure in PanResponder (created once via useRef)
+  const strokesRef = useRef(strokes);
+  strokesRef.current = strokes;
+  const onStrokesChangeRef = useRef(onStrokesChange);
+  onStrokesChangeRef.current = onStrokesChange;
+  const strokeColorRef = useRef(strokeColor);
+  strokeColorRef.current = strokeColor;
+  const strokeWidthRef = useRef(strokeWidth);
+  strokeWidthRef.current = strokeWidth;
+
   // ── PanResponder for touch drawing ─────────────────────────────
 
   const panResponder = useRef(
@@ -120,10 +130,10 @@ export default function DrawingCanvas({
         if (currentStrokeRef.current.length > 0) {
           const newStroke: Stroke = {
             points: currentStrokeRef.current,
-            color: strokeColor,
-            width: strokeWidth,
+            color: strokeColorRef.current,
+            width: strokeWidthRef.current,
           };
-          onStrokesChange([...strokes, newStroke]);
+          onStrokesChangeRef.current([...strokesRef.current, newStroke]);
           currentStrokeRef.current = [];
         }
       },
