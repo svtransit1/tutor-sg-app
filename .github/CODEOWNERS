@@ -1,15 +1,16 @@
 # CODEOWNERS — tutor-sg
-# Per ADD §11: Tortoise reviews every PR; Foxy approves merges to main; Owl gates architecture-touching PRs.
+# Per ADD §11: Foxy approves merges to main; Owl gates architecture-touching PRs; Wolf owns mobile/.
 #
-# NOTE: @tortoise-tutor-sg bot account not yet provisioned (pending approval 67b2d57e).
-# Until provisioned, @svtransit1 serves as the repo owner gate.
-# Once the bot is live, replace @svtransit1 with @tortoise-tutor-sg below.
+# BLOCKED: @tortoise-tutor-sg bot account not yet provisioned (approval 67b2d57e).
+# Once Boss provisions the bot, replace the global default below with @tortoise-tutor-sg.
 
-# Global default — all PRs require review
+# Global default — all PRs require Foxy review
 * @svtransit1
 
 # Architecture-touching paths — escalate to Owl (CTO)
 /docs/ARCHITECTURE.md @svtransit1
 /packages/llm/ @svtransit1
 /packages/device-tier/ @svtransit1
-/mobile/src/ @svtransit1
+
+# Mobile code — Wolf (primary mobile coder)
+/mobile/ @muatan
