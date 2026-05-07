@@ -2,8 +2,16 @@
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
-    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language." },
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Your personal learning companion",
+      "tagline": "Smart learning, made fun!",
+      "cta": "Get Started"
+    },
+    "langPick": {
+      "title": "Choose your language",
+      "subtitle": "Your app will use this language."
+    },
     "parentGate": {
       "title": "Parent setup",
       "body": "This app needs a parent or guardian to set things up first. Please pass the phone to a grown-up.",
@@ -54,7 +62,15 @@
         "subjectOff": "not selected"
       }
     },
-    "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "done": {
+      "title": "All set!",
+      "subtitle": "Let's start learning",
+      "greeting": "Hi {{name}}! Ready to learn?",
+      "cameraCta": "Snap your homework",
+      "cameraSubtitle": "Take a photo to get help",
+      "practicePrompt": "Or try a practice question",
+      "parentArea": "Parent area"
+    },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
@@ -97,8 +113,14 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "dashboard": {
+      "title": "Parent Dashboard",
+      "placeholder": "Session log and progress coming soon"
+    },
+    "settings": {
+      "title": "Settings",
+      "placeholder": "Language, quality, model, privacy"
+    }
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
@@ -261,6 +283,31 @@
       "hash_mismatch": "Download file corrupted. Re-downloading…",
       "download_stuck": "Download seems stuck. Retrying…",
       "unknown_error": "Something went wrong. Please try again."
+    }
+  },
+  "permissionPrimer": {
+    "step": "Step 8 of 10",
+    "camera": {
+      "title": "Camera access",
+      "body": "We need the camera so your child can snap a photo of their homework. The photo never leaves the device.",
+      "allow": "Enable camera access",
+      "notNow": "Not now",
+      "permanentlyDenied": "Camera access is turned off in system settings.",
+      "openSettings": "Open Settings"
+    },
+    "notifications": {
+      "title": "Weekly progress summary",
+      "body": "We'll send a gentle weekly summary to you (the parent), so you can see how your child is doing. No spam.",
+      "allow": "Allow notifications",
+      "notNow": "Not now",
+      "permanentlyDenied": "Notifications are turned off in system settings.",
+      "openSettings": "Open Settings"
+    },
+    "done": {
+      "title": "All set!",
+      "bodyAll": "You can always change permissions later in Settings.",
+      "bodySome": "You can enable permissions later in Settings.",
+      "continue": "Continue"
     }
   }
 }

@@ -2,8 +2,16 @@
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
-    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。" },
+    "welcome": {
+      "title": "欢迎！",
+      "subtitle": "你的个人学习伙伴",
+      "tagline": "聪明学习，快乐成长！",
+      "cta": "开始使用"
+    },
+    "langPick": {
+      "title": "选择语言",
+      "subtitle": "应用将使用此语言。"
+    },
     "parentGate": {
       "title": "家长设置",
       "body": "这个应用需要爸爸妈妈或监护人先完成设置。请把手机交给大人。",
@@ -54,7 +62,15 @@
         "subjectOff": "未选"
       }
     },
-    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
+    "done": {
+      "title": "准备好了！",
+      "subtitle": "让我们开始学习吧",
+      "greeting": "{{name}}，你好！准备好了吗？",
+      "cameraCta": "拍一下作业",
+      "cameraSubtitle": "拍张照片，立即获取帮助",
+      "practicePrompt": "或试试练习题",
+      "parentArea": "家长专区"
+    },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
@@ -97,8 +113,14 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
-    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+    "dashboard": {
+      "title": "家长面板",
+      "placeholder": "学习记录和进度即将上线"
+    },
+    "settings": {
+      "title": "设置",
+      "placeholder": "语言、质量、模型、隐私"
+    }
   },
   "deviceTierResult": {
     "title": "你的设备已就绪！",
@@ -261,6 +283,31 @@
       "hash_mismatch": "下载文件已损坏，正在重新下载...",
       "download_stuck": "下载似乎卡住了，正在重试...",
       "unknown_error": "出现错误，请重试。"
+    }
+  },
+  "permissionPrimer": {
+    "step": "第 8 步，共 10 步",
+    "camera": {
+      "title": "相机权限",
+      "body": "我们需要使用相机，让孩子可以拍下作业。照片不会离开这台设备。",
+      "allow": "开启相机权限",
+      "notNow": "稍后再说",
+      "permanentlyDenied": "相机权限已在系统设置中关闭。",
+      "openSettings": "打开设置"
+    },
+    "notifications": {
+      "title": "每周学习总结",
+      "body": "我们会每周给您（家长）发送一份学习总结，让您了解孩子的进度。不会打扰。",
+      "allow": "允许通知",
+      "notNow": "稍后再说",
+      "permanentlyDenied": "通知权限已在系统设置中关闭。",
+      "openSettings": "打开设置"
+    },
+    "done": {
+      "title": "准备好了！",
+      "bodyAll": "您随时可以在设置中更改权限。",
+      "bodySome": "您之后可以在设置中开启权限。",
+      "continue": "继续"
     }
   }
 }
