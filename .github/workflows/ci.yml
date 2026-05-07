@@ -68,6 +68,6 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
       - name: Expo export ${{ matrix.platform }}
-        run: npx expo export --platform ${{ matrix.platform }} --output-dir dist-${{ matrix.platform }}
+        run: cd mobile && npx expo export --platform ${{ matrix.platform }} --output-dir dist-${{ matrix.platform }}
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
