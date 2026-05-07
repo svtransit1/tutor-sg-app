@@ -47,6 +47,7 @@ export type {
 export {
   CAPABILITY_MANIFESTS,
   MODEL_ROUTING,
+  resolveModel,
 } from './types';
 
 // ── Prompt Builder ─────────────────────────────────────────────────

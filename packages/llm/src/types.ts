@@ -187,3 +187,7 @@ export const MODEL_ROUTING: ModelRoutingTable = {
   science:    { high: 'gemma-e4b', mid: 'gemma-e2b' },
   chinese_mt: { high: 'qwen-4b',   mid: 'qwen-2b' },
 };
+
+export function resolveModel(subject: SubjectId, tier: 'high' | 'mid'): string {
+  return MODEL_ROUTING[subject][tier];
+}
