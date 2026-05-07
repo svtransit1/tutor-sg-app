@@ -1,0 +1,14 @@
+{
+  "privacy": {
+    "title": "Your child's data stays private",
+    "body": "All homework photos and answers are processed on this device. Nothing ever leaves your phone."
+  },
+  "valueProp": {
+    "title": "Snap a photo. Get help instantly.",
+    "body": "Take a picture of homework, and the AI tutor explains it step by step — like having a quiet tutor beside them."
+  },
+  "offline": {
+    "title": "Works anywhere, even offline",
+    "body": "On the bus, at the playground, at grandma's house. No internet needed once the app is set up."
+  }
+}
