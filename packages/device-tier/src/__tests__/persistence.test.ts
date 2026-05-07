@@ -1,5 +1,5 @@
-import { ensureSettingsTable, saveDeviceTier, loadDeviceTier } from '../persistence';
-import { __getMockDb, __resetMockDb } from '../__mocks__/expo-sqlite';
+import { ensureSettingsTable, saveDeviceTier, loadDeviceTier, clearDeviceTier } from '../persistence';
+import { __getMockDb, __resetMockDb } from '../../__mocks__/expo-sqlite';
 
 describe('persistence', () => {
   const db = __getMockDb();
@@ -24,6 +24,16 @@ describe('persistence', () => {
         expect.stringContaining('INSERT OR REPLACE'),
         'device_tier',
         'high',
+      );
+    });
+  });
+
+  describe('clearDeviceTier', () => {
+    it('deletes the tier override row', async () => {
+      await clearDeviceTier(db);
+      expect(db.runAsync).toHaveBeenCalledWith(
+        expect.stringContaining('DELETE FROM settings'),
+        'device_tier',
       );
     });
   });

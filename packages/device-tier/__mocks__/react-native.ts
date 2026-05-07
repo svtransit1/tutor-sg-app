@@ -4,5 +4,8 @@ export const Platform = {
 };
 
 export const NativeModules = {};
+export const StyleSheet = {
+  create: <T extends Record<string, object>>(styles: T): T => styles,
+};
 
-export default { Platform, NativeModules };
+export default { Platform, NativeModules, StyleSheet };
