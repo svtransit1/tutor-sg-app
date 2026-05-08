@@ -71,8 +71,12 @@
     "attemptsRemaining": "{{count}} attempt remaining",
     "attemptsRemaining_plural": "{{count}} attempts remaining",
     "pinsDontMatch": "PINs don't match. Try again.",
+    "delete": "Delete",
+    "forgotPin": "Forgot PIN? Reset",
+    "backToEnter": "Go back to enter PIN",
     "setup": {
       "title": "Set Up Parent PIN",
+      "body": "Choose a 4-digit PIN to protect the Parent area. You'll need this to view your child's learning log.",
       "enterPin": "Enter a 4-digit PIN",
       "confirmPin": "Confirm your PIN"
     },
@@ -111,7 +115,16 @@
       "questions": "{{count}} question",
       "questions_plural": "{{count}} questions"
     },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "settings": {
+      "title": "Settings",
+      "sectionLanguage": "App Language",
+      "languageDescription": "Choose your preferred language for the app interface.",
+      "languageEn": "English",
+      "languageZh": "中文",
+      "sectionPrivacy": "Privacy Promise",
+      "privacyDescription": "How we protect your child's data",
+      "privacyBody": "All AI processing happens on this device. Photos, answers, and chat history never leave. No cloud servers, no uploads, no data collection. Anonymized usage stats are only sent after you explicitly opt in."
+    }
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
@@ -193,8 +206,21 @@
     "paused": "Download paused",
     "resuming": "Resuming download…",
     "completed": "Download complete",
+    "verifying": "Verifying download integrity…",
+    "checkingSpace": "Checking available space…",
+    "fileProgress": "File {{current}} of {{total}} (total: {{totalSize}})",
     "retry": "Retry",
     "wifiRequired": "Wi-Fi connection required",
+    "etaTime": "~{{eta}} remaining",
+    "speed": "{{speed}}",
+    "pause": "Pause",
+    "resume": "Resume",
+    "cancel": "Cancel",
+    "cellularWarning": "This download uses {{size}} of data over cellular. Switch to Wi-Fi to save data?",
+    "cellularProceed": "Download anyway",
+    "cellularCancel": "Wait for Wi-Fi",
+    "privacyNote": "This is a one-time download. The AI tutor works fully offline and never sends your child's data off this device.",
+    "whyNeeded": "Why is this needed?",
     "errors": {
       "connectivity_lost": "Wi-Fi connection lost. Download will resume when reconnected.",
       "disk_insufficient": "Not enough storage space. Need about {{needed}}GB free.",
@@ -252,7 +278,8 @@
   },
   "common": {
     "back": "Back",
-    "goBack": "Go back"
+    "goBack": "Go back",
+    "continue": "Continue"
   },
   "manualInputFallback": {
     "title": "Can't read all items",

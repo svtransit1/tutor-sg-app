@@ -23,6 +23,7 @@ module.exports = {
     '^expo-speech$': '<rootDir>/__mocks__/expo-speech.ts',
     '^react-i18next$': '<rootDir>/__mocks__/react-i18next.ts',
     '^i18next$': '<rootDir>/__mocks__/i18next.ts',
+    '^expo-secure-store$': '<rootDir>/__mocks__/expo-secure-store.ts',
   },
   setupFiles: [path.join(rnDir, 'jest', 'setup.js')],
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],

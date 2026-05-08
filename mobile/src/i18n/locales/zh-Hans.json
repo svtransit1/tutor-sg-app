@@ -71,8 +71,12 @@
     "attemptsRemaining": "还剩 {{count}} 次机会",
     "attemptsRemaining_plural": "还剩 {{count}} 次机会",
     "pinsDontMatch": "PIN 码不匹配，请重试。",
+    "delete": "删除",
+    "forgotPin": "忘记 PIN 码？重置",
+    "backToEnter": "返回输入 PIN 码",
     "setup": {
       "title": "设置家长 PIN 码",
+      "body": "设置一个 4 位数字 PIN 码来保护家长专区。查看孩子的学习记录时需输入此 PIN 码。",
       "enterPin": "输入 4 位数字 PIN 码",
       "confirmPin": "确认您的 PIN 码"
     },
@@ -111,7 +115,16 @@
       "questions": "{{count}} 道题",
       "questions_plural": "{{count}} 道题"
     },
-    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+    "settings": {
+      "title": "设置",
+      "sectionLanguage": "应用语言",
+      "languageDescription": "选择应用界面的首选语言。",
+      "languageEn": "English",
+      "languageZh": "中文",
+      "sectionPrivacy": "隐私承诺",
+      "privacyDescription": "我们如何保护您孩子的数据",
+      "privacyBody": "所有 AI 处理都在本设备上完成。照片、答案和聊天记录永远不会离开本设备。没有云服务器，没有上传，没有数据收集。匿名使用统计仅在您明确同意后才会发送。"
+    }
   },
   "deviceTierResult": {
     "title": "你的设备已就绪！",
@@ -193,8 +206,21 @@
     "paused": "下载已暂停",
     "resuming": "正在恢复下载...",
     "completed": "下载完成",
+    "verifying": "正在验证下载完整性...",
+    "checkingSpace": "正在检查可用空间...",
+    "fileProgress": "第 {{current}} / {{total}} 个文件（总计：{{totalSize}}）",
     "retry": "重试",
     "wifiRequired": "需要 Wi-Fi 连接",
+    "etaTime": "预计剩余 {{eta}}",
+    "speed": "{{speed}}",
+    "pause": "暂停",
+    "resume": "继续",
+    "cancel": "取消",
+    "cellularWarning": "这个下载将使用 {{size}} 的移动数据。切换到 Wi-Fi 以节省流量？",
+    "cellularProceed": "继续下载",
+    "cellularCancel": "等待 Wi-Fi",
+    "privacyNote": "这是一次性下载。AI 导师完全离线运行，绝不会将孩子的数据发送到设备之外。",
+    "whyNeeded": "为什么需要下载？",
     "errors": {
       "connectivity_lost": "Wi-Fi 连接中断。重新连接后将恢复下载。",
       "disk_insufficient": "存储空间不足。需要约 {{needed}}GB 可用空间。",
@@ -252,7 +278,8 @@
   },
   "common": {
     "back": "返回",
-    "goBack": "返回首页"
+    "goBack": "返回首页",
+    "continue": "继续"
   },
   "manualInputFallback": {
     "title": "有些内容看不清楚",
