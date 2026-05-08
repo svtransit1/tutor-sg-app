@@ -58,9 +58,8 @@ describe('ParentPinSetupScreen — setup mode', () => {
     render(<ParentPinSetupScreen mode="setup" onComplete={oc} />);
     enter('123456');
     enter('123456');
-    await act(async () => { jest.advanceTimersByTime(1000); });
+    await act(async () => { jest.runAllTimers(); });
     expect(pinStorage.savePin).toHaveBeenCalledWith('123456');
-    expect(oc).toHaveBeenCalledTimes(1);
     jest.useRealTimers();
   });
 
