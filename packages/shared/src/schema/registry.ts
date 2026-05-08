@@ -19,3 +19,4 @@ export interface ModelRegistryEntry {
 }
 
 export type ModelRegistry = ModelRegistryEntry[];
+
