@@ -2,7 +2,6 @@
   "name": "tutor-sg",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
     "typecheck": "pnpm --recursive typecheck",
