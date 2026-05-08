@@ -251,7 +251,7 @@ export default function KidHomeScreen() {
           {sessions.length === 0 ? (
             <View style={styles.emptyState}>
               <Text style={styles.emptyIcon}>📝</Text>
-              <Text style={[styles.emptyText, { color: isDark ? '#888888' : '#9CA3AF' }]}>
+              <Text style={[styles.emptyText, { color: isDark ? '#AAAAAA' : '#6B7280' }]}>
                 {t('kidHome.recentSessions.empty')}
               </Text>
             </View>
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
   headerLeft: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   greeting: { fontSize: 22, fontWeight: '700' },
   levelBadge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12 },
-  levelText: { fontSize: 13, fontWeight: '600' },
+  levelText: { fontSize: 16, fontWeight: '600' },
   langButton: {
     paddingHorizontal: 14,
     paddingVertical: 8,
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
   },
-  langText: { fontSize: 14, fontWeight: '700' },
+  langText: { fontSize: 16, fontWeight: '700' },
 
   subjectsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 8, marginBottom: 16 },
   subjectTile: {
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
   },
   subjectIcon: { fontSize: 36, marginBottom: 8 },
   subjectTitle: { fontSize: 18, fontWeight: '700', marginBottom: 4 },
-  subjectDescription: { fontSize: 13, lineHeight: 18 },
+  subjectDescription: { fontSize: 16, lineHeight: 22 },
 
   cameraButton: {
     borderRadius: CORNER_RADIUS,
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
   cameraIcon: { fontSize: 32 },
   cameraTextBlock: { flex: 1 },
   cameraTitle: { fontSize: 20, fontWeight: '700', color: '#FFFFFF', marginBottom: 2 },
-  cameraSubtitle: { fontSize: 14, color: '#FFFFFF', opacity: 0.85 },
+  cameraSubtitle: { fontSize: 16, color: '#FFFFFF', opacity: 0.85 },
 
   recentSection: { marginBottom: 8 },
   recentHeader: {
@@ -369,10 +369,10 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   recentTitle: { fontSize: 18, fontWeight: '700' },
-  viewAllLink: { fontSize: 14, fontWeight: '600' },
+  viewAllLink: { fontSize: 16, fontWeight: '600' },
   emptyState: { alignItems: 'center', paddingVertical: 32, gap: 8 },
   emptyIcon: { fontSize: 36 },
-  emptyText: { fontSize: 15, textAlign: 'center', lineHeight: 22, paddingHorizontal: 24 },
+  emptyText: { fontSize: 16, textAlign: 'center', lineHeight: 24, paddingHorizontal: 24 },
   sessionList: { gap: 10 },
   sessionCard: {
     flexDirection: 'row',
@@ -389,5 +389,5 @@ const styles = StyleSheet.create({
   sessionIcon: { fontSize: 28, width: 40, textAlign: 'center' },
   sessionInfo: { flex: 1 },
   sessionSubject: { fontSize: 16, fontWeight: '600', marginBottom: 2 },
-  sessionMeta: { fontSize: 13, color: '#9CA3AF' },
+  sessionMeta: { fontSize: 16, color: '#6B7280' },
 });

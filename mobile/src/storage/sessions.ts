@@ -15,6 +15,7 @@ export interface KidSession {
   id: number;
   subject: 'math' | 'english' | 'science' | 'chinese';
   questionCount: number;
+  timeSpent: number; // seconds
   createdAt: string; // ISO 8601
 }
 
@@ -30,6 +31,7 @@ function getDb() {
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           subject TEXT NOT NULL CHECK(subject IN ('math','english','science','chinese')),
           question_count INTEGER NOT NULL DEFAULT 0,
+          time_spent INTEGER NOT NULL DEFAULT 0,
           created_at TEXT NOT NULL DEFAULT (datetime('now'))
         );
       `);
@@ -45,12 +47,14 @@ function getDb() {
 export async function insertSession(
   subject: KidSession['subject'],
   questionCount: number,
+  timeSpent: number = 0,
 ): Promise<number> {
   const db = await getDb();
   const result = await db.runAsync(
-    'INSERT INTO kid_sessions (subject, question_count, created_at) VALUES (?, ?, ?)',
+    'INSERT INTO kid_sessions (subject, question_count, time_spent, created_at) VALUES (?, ?, ?, ?)',
     subject,
     questionCount,
+    timeSpent,
     new Date().toISOString(),
   );
   return result.lastInsertRowId;
@@ -65,15 +69,17 @@ export async function getRecentSessions(limit = 3): Promise<KidSession[]> {
     id: number;
     subject: string;
     question_count: number;
+    time_spent: number;
     created_at: string;
   }>(
-    'SELECT id, subject, question_count, created_at FROM kid_sessions ORDER BY created_at DESC LIMIT ?',
+    'SELECT id, subject, question_count, time_spent, created_at FROM kid_sessions ORDER BY created_at DESC LIMIT ?',
     limit,
   );
   return rows.map((r) => ({
     id: r.id,
     subject: r.subject as KidSession['subject'],
     questionCount: r.question_count,
+    timeSpent: r.time_spent,
     createdAt: r.created_at,
   }));
 }
@@ -113,9 +119,10 @@ export async function getPaginatedSessions(
     id: number;
     subject: string;
     question_count: number;
+    time_spent: number;
     created_at: string;
   }>(
-    'SELECT id, subject, question_count, created_at FROM kid_sessions ORDER BY created_at DESC LIMIT ? OFFSET ?',
+    'SELECT id, subject, question_count, time_spent, created_at FROM kid_sessions ORDER BY created_at DESC LIMIT ? OFFSET ?',
     pageSize,
     offset,
   );
@@ -125,6 +132,7 @@ export async function getPaginatedSessions(
       id: r.id,
       subject: r.subject as KidSession['subject'],
       questionCount: r.question_count,
+      timeSpent: r.time_spent,
       createdAt: r.created_at,
     })),
     total,

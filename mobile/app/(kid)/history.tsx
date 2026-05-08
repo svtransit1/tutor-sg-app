@@ -151,7 +151,7 @@ export default function KidHistoryScreen() {
     if (sessions.length >= total && total > 0) {
       return (
         <View style={styles.footerEnd}>
-          <Text style={[styles.footerEndText, { color: isDark ? '#888888' : '#9CA3AF' }]}>
+          <Text style={[styles.footerEndText, { color: isDark ? '#AAAAAA' : '#6B7280' }]}>
             {t('history.noMore')}
           </Text>
         </View>
@@ -168,7 +168,7 @@ export default function KidHistoryScreen() {
         <Text style={[styles.emptyTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
           {t('history.title')}
         </Text>
-        <Text style={[styles.emptyText, { color: isDark ? '#888888' : '#9CA3AF' }]}>
+        <Text style={[styles.emptyText, { color: isDark ? '#AAAAAA' : '#6B7280' }]}>
           {t('history.empty')}
         </Text>
       </View>
@@ -282,12 +282,12 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   sessionMeta: {
-    fontSize: 13,
-    color: '#9CA3AF',
+    fontSize: 16,
+    color: '#6B7280',
   },
   chevron: {
     fontSize: 22,
-    color: '#9CA3AF',
+    color: '#6B7280',
     fontWeight: '300',
   },
 
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footerEndText: {
-    fontSize: 13,
+    fontSize: 16,
   },
 
   emptyState: {
@@ -320,8 +320,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   emptyText: {
-    fontSize: 15,
+    fontSize: 16,
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: 24,
   },
 });

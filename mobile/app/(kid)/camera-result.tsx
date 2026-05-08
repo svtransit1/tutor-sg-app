@@ -1,18 +1,19 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, useColorScheme } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
-/**
- * Camera result screen — placeholder.
- * Will show AI-graded homework results for a given session.
- */
 export default function KidCameraResultScreen() {
+  const { t } = useTranslation();
   const { sessionId } = useLocalSearchParams<{ sessionId: string }>();
+  const isDark = useColorScheme() === 'dark';
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Kid — Session Result</Text>
-      <Text style={styles.subtitle}>
-        Placeholder — session results for {sessionId}
+    <View style={[styles.container, { backgroundColor: isDark ? '#121212' : '#F8F9FA' }]}>
+      <Text style={[styles.title, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
+        {t('cameraResult.title')}
+      </Text>
+      <Text style={[styles.subtitle, { color: isDark ? '#AAAAAA' : '#6B7280' }]}>
+        {t('cameraResult.followUp.placeholder')}
       </Text>
     </View>
   );
@@ -23,17 +24,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#000000',
     paddingHorizontal: 24,
   },
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#ffffff',
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#aaaaaa',
+    textAlign: 'center',
+    lineHeight: 24,
   },
 });

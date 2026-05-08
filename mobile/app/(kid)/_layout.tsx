@@ -6,6 +6,7 @@ export default function KidLayout() {
       <Stack.Screen name="home" />
       <Stack.Screen name="camera" />
       <Stack.Screen name="history" />
+      <Stack.Screen name="camera-result" />
     </Stack>
   );
 }
