@@ -12,6 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "types": ["vitest/globals"],
     "declaration": true,
     "noEmit": true,
     "outDir": "./dist",
