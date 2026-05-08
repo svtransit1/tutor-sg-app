@@ -52,6 +52,8 @@ export default function RootLayout() {
           <Stack.Screen name="(onboarding)" />
           {/* Kid app group */}
           <Stack.Screen name="(kid)" />
+          {/* Parent auth group */}
+          <Stack.Screen name="(parent)" />
         </Stack>
       </OnboardingProvider>
     </SafeAreaProvider>
