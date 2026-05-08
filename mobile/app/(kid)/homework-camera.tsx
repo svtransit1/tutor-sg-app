@@ -14,6 +14,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CameraView, useCameraPermissions, type CameraPictureOptions } from 'expo-camera';
 import CameraGuideFrame from '@/components/CameraGuideFrame';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import { useParentSession } from '@/hooks/useParentSession';
 
 type CaptureState = 'preview' | 'captured';
 
@@ -28,6 +30,8 @@ export default function HomeworkCameraScreen() {
   const [isAligned, setIsAligned] = useState(false);
   const [captureState, setCaptureState] = useState<CaptureState>('preview');
   const [capturedUri, setCapturedUri] = useState<string | null>(null);
+  const { startParentSession } = useParentSession();
+  const parentSessionIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (permission && !permission.granted && permission.canAskAgain) {
@@ -56,11 +60,16 @@ export default function HomeworkCameraScreen() {
       if (photo?.uri) {
         setCapturedUri(photo.uri);
         setCaptureState('captured');
+        // Start parent session on first capture (subject defaults to math until OCR classifies it)
+        if (!parentSessionIdRef.current) {
+          const sessionId = await startParentSession('math')
+          parentSessionIdRef.current = sessionId
+        }
       }
     } catch {
       // Camera capture failed — stay in preview state
     }
-  }, []);
+  }, [startParentSession]);
 
   // ── Retake ──
   const handleRetake = useCallback(() => {
@@ -74,7 +83,10 @@ export default function HomeworkCameraScreen() {
     if (!capturedUri) return;
     router.replace({
       pathname: '/(kid)/homework-feedback',
-      params: { result: capturedUri },
+      params: {
+        result: capturedUri,
+        parentSessionId: parentSessionIdRef.current ?? '',
+      },
     });
   }, [capturedUri, router]);
 
@@ -82,6 +94,22 @@ export default function HomeworkCameraScreen() {
   const handleBack = useCallback(() => {
     router.back();
   }, [router]);
+
+  const handleErrorRetry = useCallback(() => {
+    setCaptureState('preview');
+    setCapturedUri(null);
+    setIsAligned(false);
+    if (permission && !permission.granted && permission.canAskAgain) {
+      requestPermission();
+    }
+  }, [permission, requestPermission]);
+
+  const handleErrorManualInput = useCallback(() => {
+    router.push({
+      pathname: '/(kid)/manual-input',
+      params: { items: '[]', capturedPageUris: capturedUri ?? '' },
+    });
+  }, [capturedUri, router]);
 
   if (!permission) {
     return (
@@ -162,12 +190,13 @@ export default function HomeworkCameraScreen() {
   );
 
   return (
-    <View
-      style={[
-        styles.container,
-        { paddingTop: insets.top, paddingBottom: insets.bottom },
-      ]}
-    >
+    <ErrorBoundary onRetry={handleErrorRetry} onManualInput={handleErrorManualInput}>
+      <View
+        style={[
+          styles.container,
+          { paddingTop: insets.top, paddingBottom: insets.bottom },
+        ]}
+      >
       {/* Header bar */}
       <View style={[styles.header, { backgroundColor: isDark ? '#1A1A1A' : '#000000' }]}>
         <TouchableOpacity
@@ -202,6 +231,7 @@ export default function HomeworkCameraScreen() {
         </View>
       )}
     </View>
+    </ErrorBoundary>
   );
 }
 

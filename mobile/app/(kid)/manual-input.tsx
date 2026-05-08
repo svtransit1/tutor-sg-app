@@ -32,6 +32,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import DrawingCanvas, { type Stroke } from '@/components/DrawingCanvas';
 import { Skeleton } from '@/components/Skeleton';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import {
   saveDraft,
   loadDraft,
@@ -357,6 +358,14 @@ export default function ManualInputFallbackScreen() {
     router.back();
   }, [router]);
 
+  const handleErrorRetry = useCallback(() => {
+    router.back();
+  }, [router]);
+
+  const handleErrorManualInput = useCallback(() => {
+    router.back();
+  }, [router]);
+
   // ── Parse error state ─────────────────────────────────────────
 
   if (parseError) {
@@ -431,14 +440,15 @@ export default function ManualInputFallbackScreen() {
   const remaining = items.length - answeredCount;
 
   return (
-    <KeyboardAvoidingView
-      style={[
-        styles.container,
-        { backgroundColor: isDark ? '#121212' : '#F8F9FA' },
-      ]}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
-    >
+    <ErrorBoundary onRetry={handleErrorRetry} onManualInput={handleErrorManualInput}>
+      <KeyboardAvoidingView
+        style={[
+          styles.container,
+          { backgroundColor: isDark ? '#121212' : '#F8F9FA' },
+        ]}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+      >
       {/* Header */}
       <View
         style={[
@@ -752,6 +762,7 @@ export default function ManualInputFallbackScreen() {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
+    </ErrorBoundary>
   );
 }
 

@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
   } satisfies TextStyle,
 
   body: {
-    fontSize: 15,
-    lineHeight: 22,
+    fontSize: 16,
+    lineHeight: 24,
     textAlign: 'center',
   } satisfies TextStyle,
 

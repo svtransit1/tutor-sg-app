@@ -19,7 +19,9 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import VoiceRecorder from '@/components/VoiceRecorder';
 import ReadAloudButton from '@/components/ReadAloudButton';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import { useHomeworkSession } from '@/hooks/useHomeworkSession';
+import { useParentSession } from '@/hooks/useParentSession';
 import type {
   HomeworkFeedbackResult,
   QuestionFeedback,
@@ -42,7 +44,7 @@ export default function HomeworkFeedbackScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const isDark = useColorScheme() === 'dark';
-  const params = useLocalSearchParams<{ result: string }>();
+  const params = useLocalSearchParams<{ result: string; parentSessionId?: string }>();
 
   const [feedback] = useState<HomeworkFeedbackResult | null>(() => {
     try {
@@ -71,7 +73,9 @@ export default function HomeworkFeedbackScreen() {
     sessionId,
     isLoading: sessionLoading,
   } = useHomeworkSession();
+  const { logQuestionAttempt, endParentSession } = useParentSession();
   const sessionInitDone = useRef(false);
+  const parentSessionId = params.parentSessionId;
 
   useEffect(() => {
     if (!feedback || feedback.questions.length === 0) return;
@@ -96,12 +100,23 @@ export default function HomeworkFeedbackScreen() {
             solution: q.scaffoldedHelp.workedSolution,
           });
           await incrementQuestionCount();
+
+          // Also log to parent session if active
+          if (parentSessionId) {
+            await logQuestionAttempt(parentSessionId, {
+              questionNumber: q.questionNumber,
+              topic: q.topic,
+              hintNeeded: !!q.scaffoldedHelp.hint,
+              guidedSteps: q.scaffoldedHelp.guidedSteps,
+              workedSolution: q.scaffoldedHelp.workedSolution,
+            })
+          }
         }
       } catch {
         // Session save is best-effort — never block the UI
       }
     })();
-  }, [feedback, startSession, addEvent, incrementQuestionCount]);
+  }, [feedback, startSession, addEvent, incrementQuestionCount, logQuestionAttempt, parentSessionId]);
 
   const handleTabChange = useCallback(
     (questionNumber: number, tab: ScaffoldedHelpTab) => {
@@ -155,8 +170,11 @@ export default function HomeworkFeedbackScreen() {
     if (sessionId) {
       closeSession().catch(() => {});
     }
+    if (parentSessionId) {
+      endParentSession(parentSessionId).catch(() => {});
+    }
     router.back();
-  }, [router, sessionId, closeSession]);
+  }, [router, sessionId, closeSession, parentSessionId, endParentSession]);
 
   const bgColor = isDark ? '#121212' : '#F8F9FA';
   const surfaceColor = isDark ? '#1E1E1E' : '#FFFFFF';
@@ -266,11 +284,12 @@ export default function HomeworkFeedbackScreen() {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={[styles.container, { backgroundColor: bgColor }]}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
-    >
+    <ErrorBoundary onRetry={handleErrorRetry} onManualInput={handleErrorManualInput}>
+      <KeyboardAvoidingView
+        style={[styles.container, { backgroundColor: bgColor }]}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+      >
       {/* Header */}
       <View
         style={[
@@ -491,6 +510,7 @@ export default function HomeworkFeedbackScreen() {
         </Text>
       </View>
     </KeyboardAvoidingView>
+    </ErrorBoundary>
   );
 }
 
