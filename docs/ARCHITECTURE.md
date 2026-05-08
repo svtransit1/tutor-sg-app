@@ -264,7 +264,46 @@ All core features work fully offline. Only these require connectivity:
 
 ---
 
-## 7. Implementation order
+
+## 7. Stylus input architecture
+
+### 7.1 Platform integration
+
+| Platform | API                                          | Purpose                                      |
+| -------- | -------------------------------------------- | -------------------------------------------- |
+| iOS      | PencilKit (`PKCanvasView`)                   | Stroke capture on generated worksheets       |
+| Android  | `Stylus` API (Android 14+) + InputMethodService | Pressure-sensitive stroke capture            |
+| Android  | Samsung S Pen SDK (optional)                 | Enhanced pressure/tilt detection on Galaxy   |
+
+### 7.2 Data flow
+
+```
+Stylus down → native stroke capture → raw strokes (array of points + pressure + timestamp)
+  → Debounce/deduplicate (20ms window)
+  → Render strokes as ink layer over worksheet canvas
+  → On stylus up after 1.5s idle: evaluate answer
+    → Stroke-to-text recognition (platform-native shape/text recognition)
+    → Compare against expected answer via LLM
+    → Return result (correct / incorrect with explanation)
+```
+
+### 7.3 Worksheet rendering
+
+- Worksheets are generated as PDF-like layouts via `react-native-canvas` or `@shopify/react-native-skia`
+- The stylus ink layer is rendered as a transparent overlay on top of the worksheet
+- Answer evaluation happens on-device:
+  - Math: LLM compares digit/expression recognition against expected numeric answer
+  - Chinese MT: LLM evaluates stroke order + character correctness
+  - English/Science: LLM evaluates written text against model answer
+
+### 7.4 Integration points
+
+- **Worksheet generator** (§4.1 pipeline) produces the rendered worksheet → stylus layer captures input
+- **LLM runtime** (§3) receives stroke-recognized text and evaluates correctness
+- **Session logger** writes stylus interactions to SQLite sessions table for parent review
+
+
+## 8. Implementation order
 
 | Phase | What | Parallel track |
 |---|---|---|
@@ -279,7 +318,7 @@ All core features work fully offline. Only these require connectivity:
 
 ---
 
-## 8. Cross-references
+## 9. Cross-references
 
 - **Product spec:** [wiki ADD](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fapp-design-document.md)
 - **Locked decisions:** [wiki decisions-locked](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fdecisions-locked.md)
