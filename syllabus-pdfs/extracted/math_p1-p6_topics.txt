@@ -1,6 +1,267 @@
-MOE Primary Mathematics Syllabus - Level P6
-华文: 数学 P6
+MOE Primary Mathematics Syllabus — Complete P1-P6 Topic Tree
+华文: 数学 P1-P6 完整主题树
 Source: MOE Primary School Syllabus (public Crown Copyright, paraphrased)
+
+=======================================================================
+Level P1 — Primary 1
+=======================================================================
+
+Topic: Numbers to 10 (10以内的数)
+Code: MAT-P1-001
+  Learning Outcome 1: Count, read and write numbers to 10
+  Learning Outcome 2: Compare and order numbers to 10
+
+Topic: Addition and Subtraction within 10 (10以内的加法和减法)
+Code: MAT-P1-002
+  Learning Outcome 1: Write addition and subtraction number sentences
+  Learning Outcome 2: Solve word problems within 10
+
+Topic: Numbers to 20 (20以内的数)
+Code: MAT-P1-003
+  Learning Outcome 1: Count, read and write numbers to 20
+  Learning Outcome 2: Compare and order numbers to 20
+
+Topic: Addition and Subtraction within 20 (20以内的加法和减法)
+Code: MAT-P1-004
+  Learning Outcome 1: Write addition and subtraction number sentences within 20
+  Learning Outcome 2: Solve word problems within 20
+
+Topic: Shapes and Patterns (图形和模式)
+Code: MAT-P1-005
+  Learning Outcome 1: Recognise and name 2D shapes
+  Learning Outcome 2: Identify and extend patterns
+
+Topic: Length and Mass (长度和质量)
+Code: MAT-P1-006
+  Learning Outcome 1: Compare length and mass by direct comparison
+  Learning Outcome 2: Use non-standard units to measure
+
+Topic: Time and Money (时间和货币)
+Code: MAT-P1-007
+  Learning Outcome 1: Tell time to the hour
+  Learning Outcome 2: Identify coins and notes
+
+=======================================================================
+Level P2 — Primary 2
+=======================================================================
+
+Topic: Numbers to 1000 (1000以内的数)
+Code: MAT-P2-001
+  Learning Outcome 1: Count, read and write numbers to 1000
+  Learning Outcome 2: Understand place value
+
+Topic: Addition and Subtraction within 1000 (1000以内的加法和减法)
+Code: MAT-P2-002
+  Learning Outcome 1: Add and subtract within 1000 with regrouping
+  Learning Outcome 2: Solve word problems
+
+Topic: Multiplication and Division (乘法和除法)
+Code: MAT-P2-003
+  Learning Outcome 1: Recall multiplication tables of 2, 3, 5 and 10
+  Learning Outcome 2: Solve word problems using multiplication and division
+
+Topic: Fractions (分数)
+Code: MAT-P2-004
+  Learning Outcome 1: Recognise and write fractions as part of a whole
+  Learning Outcome 2: Compare unit fractions
+
+Topic: Money (货币)
+Code: MAT-P2-005
+  Learning Outcome 1: Count money in dollars and cents
+  Learning Outcome 2: Solve money word problems
+
+Topic: Time (时间)
+Code: MAT-P2-006
+  Learning Outcome 1: Tell time to 5-minute intervals
+  Learning Outcome 2: Solve time problems
+
+Topic: Length, Mass and Volume (长度、质量和体积)
+Code: MAT-P2-007
+  Learning Outcome 1: Measure using standard units
+  Learning Outcome 2: Compare and order measurements
+
+Topic: Shapes and Graphs (图形和图表)
+Code: MAT-P2-008
+  Learning Outcome 1: Identify properties of 2D and 3D shapes
+  Learning Outcome 2: Read picture graphs
+
+=======================================================================
+Level P3 — Primary 3
+=======================================================================
+
+Topic: Numbers to 10 000 (10000以内的数)
+Code: MAT-P3-001
+  Learning Outcome 1: Count, read and write numbers to 10 000
+  Learning Outcome 2: Round numbers to nearest 10 or 100
+
+Topic: Addition and Subtraction within 10 000 (10000以内的加法和减法)
+Code: MAT-P3-002
+  Learning Outcome 1: Add and subtract numbers up to 4 digits
+  Learning Outcome 2: Solve multi-step word problems
+
+Topic: Multiplication and Division (乘法和除法)
+Code: MAT-P3-003
+  Learning Outcome 1: Multiply 2- or 3-digit by 1-digit
+  Learning Outcome 2: Divide up to 3-digit by 1-digit
+  Learning Outcome 3: Recall tables up to 9
+
+Topic: Fractions (分数)
+Code: MAT-P3-004
+  Learning Outcome 1: Compare and order fractions
+  Learning Outcome 2: Add and subtract like fractions
+  Learning Outcome 3: Find equivalent fractions
+
+Topic: Money (货币)
+Code: MAT-P3-005
+  Learning Outcome 1: Solve multi-step money problems
+  Learning Outcome 2: Give change from a given amount
+
+Topic: Length, Mass and Volume (长度、质量和体积)
+Code: MAT-P3-006
+  Learning Outcome 1: Measure in mixed units
+  Learning Outcome 2: Solve word problems involving length, mass and volume
+
+Topic: Perimeter and Area (周长和面积)
+Code: MAT-P3-007
+  Learning Outcome 1: Find perimeter of rectilinear shapes
+  Learning Outcome 2: Find area by counting squares
+
+Topic: Angles (角)
+Code: MAT-P3-008
+  Learning Outcome 1: Identify angles greater than, less than or equal to a right angle
+  Learning Outcome 2: Recognise angles in shapes
+
+Topic: Data and Graphs (数据和图表)
+Code: MAT-P3-009
+  Learning Outcome 1: Read and interpret bar graphs
+  Learning Outcome 2: Collect and organise data in tables
+
+Topic: Time (时间)
+Code: MAT-P3-010
+  Learning Outcome 1: Tell time to the minute
+  Learning Outcome 2: Solve elapsed time problems
+
+=======================================================================
+Level P4 — Primary 4
+=======================================================================
+
+Topic: Numbers to 100 000 (100000以内的数)
+Code: MAT-P4-001
+  Learning Outcome 1: Count, read and write numbers to 100 000
+  Learning Outcome 2: Round to nearest 10, 100, 1000
+
+Topic: Factors and Multiples (因数和倍数)
+Code: MAT-P4-002
+  Learning Outcome 1: Find factors and multiples
+  Learning Outcome 2: Identify prime numbers up to 50
+
+Topic: Four Operations (四则运算)
+Code: MAT-P4-003
+  Learning Outcome 1: Apply order of operations
+  Learning Outcome 2: Solve multi-step problems with all four operations
+
+Topic: Fractions and Decimals (分数和小数)
+Code: MAT-P4-004
+  Learning Outcome 1: Convert between fractions and decimals
+  Learning Outcome 2: Add and subtract unlike fractions
+  Learning Outcome 3: Multiply fractions by whole numbers
+
+Topic: Decimals (小数)
+Code: MAT-P4-005
+  Learning Outcome 1: Read, write and order decimals to 2 places
+  Learning Outcome 2: Add, subtract and multiply decimals
+
+Topic: Area and Perimeter (面积和周长)
+Code: MAT-P4-006
+  Learning Outcome 1: Find area and perimeter of rectangles and squares
+  Learning Outcome 2: Solve word problems
+
+Topic: Symmetry and Lines (对称和线)
+Code: MAT-P4-007
+  Learning Outcome 1: Identify line(s) of symmetry
+  Learning Outcome 2: Recognise parallel and perpendicular lines
+
+Topic: Angles (角)
+Code: MAT-P4-008
+  Learning Outcome 1: Estimate and measure angles in degrees
+  Learning Outcome 2: Draw angles using a protractor
+
+Topic: Data, Tables and Graphs (数据、表格和图表)
+Code: MAT-P4-009
+  Learning Outcome 1: Read and construct bar graphs
+  Learning Outcome 2: Interpret data from tables and graphs
+
+Topic: Average (平均数)
+Code: MAT-P4-010
+  Learning Outcome 1: Calculate average from a data set
+  Learning Outcome 2: Solve word problems involving average
+
+=======================================================================
+Level P5 — Primary 5
+=======================================================================
+
+Topic: Whole Numbers (整数)
+Code: MAT-P5-001
+  Learning Outcome 1: Read, write and compare numbers up to 10 million
+  Learning Outcome 2: Round to required place value
+
+Topic: Four Operations on Whole Numbers (整数的四则运算)
+Code: MAT-P5-002
+  Learning Outcome 1: Multiply and divide by 2-digit numbers
+  Learning Outcome 2: Use brackets in number sentences
+
+Topic: Fractions (分数)
+Code: MAT-P5-003
+  Learning Outcome 1: Multiply and divide fractions
+  Learning Outcome 2: Solve multi-step fraction problems
+
+Topic: Decimals (小数)
+Code: MAT-P5-004
+  Learning Outcome 1: Divide decimals by whole numbers
+  Learning Outcome 2: Relate fractions, decimals and percentages
+
+Topic: Percentage (百分比)
+Code: MAT-P5-005
+  Learning Outcome 1: Express parts as percentages
+  Learning Outcome 2: Solve percentage word problems
+
+Topic: Ratio (比)
+Code: MAT-P5-006
+  Learning Outcome 1: Write and simplify ratios
+  Learning Outcome 2: Solve ratio problems
+
+Topic: Rate (速率)
+Code: MAT-P5-007
+  Learning Outcome 1: Understand and use rate
+  Learning Outcome 2: Solve rate problems
+
+Topic: Triangles and Quadrilaterals (三角形和四边形)
+Code: MAT-P5-008
+  Learning Outcome 1: Identify types of triangles and quadrilaterals
+  Learning Outcome 2: Use angle sum properties
+
+Topic: Area and Perimeter of Composite Shapes (组合图形的面积和周长)
+Code: MAT-P5-009
+  Learning Outcome 1: Find area and perimeter of composite rectilinear shapes
+
+Topic: Volume of Cubes and Cuboids (正方体和长方体的体积)
+Code: MAT-P5-010
+  Learning Outcome 1: Calculate volume in cm³ and m³
+  Learning Outcome 2: Solve word problems involving volume
+
+Topic: Data and Average (数据和平均数)
+Code: MAT-P5-011
+  Learning Outcome 1: Read line graphs
+  Learning Outcome 2: Solve problems involving average, mode and median
+
+Topic: Introduction to Algebra (代数入门)
+Code: MAT-P5-012
+  Learning Outcome 1: Use letters to represent unknowns
+  Learning Outcome 2: Form and solve simple linear equations
+
+=======================================================================
+Level P6 — Primary 6
+=======================================================================
 
 Topic: Numbers and Operations (数和运算)
 Code: MAT-P6-001
@@ -43,6 +304,12 @@ Topic: PSLE Problem Solving (小六会考解题)
 Code: MAT-P6-008
   Learning Outcome 1: Apply heuristic strategies: guess and check, before-after, working backwards
   Learning Outcome 2: Solve multi-step non-routine problems
+
+=======================================================================
+Summary
+=======================================================================
+P1: 7 topics | P2: 8 topics | P3: 10 topics | P4: 10 topics | P5: 12 topics | P6: 8 topics
+Total: 55 topics across 6 primary levels
 
 ---
 Note: This is a paraphrased topic extraction for content-authoring reference.
