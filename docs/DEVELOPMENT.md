@@ -1,7 +1,7 @@
 # Development Setup Guide
 
 > **Audience:** Fleet agents (Owl, Wolf, Bee, Flutter, Sage, Tortoise) onboarding to the tutor-sg codebase.
-> **Last updated:** 2026-05-07
+> **Last updated:** 2026-05-08
 
 ## 1. Prerequisites
 
@@ -28,7 +28,7 @@
 ## 2. Clone & install
 
 ```bash
-git clone git@github.com:aaas-pte-ltd/tutor-sg-app.git
+git clone git@github.com:svtransit1/tutor-sg-app.git
 cd tutor-sg-app
 corepack enable
 pnpm install
@@ -62,18 +62,42 @@ tutor-sg-app/
 │   │       ├── _layout.tsx
 │   │       └── settings.tsx
 │   ├── src/
-│   │   └── i18n/                    # App-level i18n (legacy — migrating to @tutor-sg/i18n)
-│   │       ├── index.ts
-│   │       └── locales/
-│   │           ├── en.json
-│   │           └── zh-Hans.json
+│   │   ├── components/              # Shared UI components
+│   │   ├── i18n/                    # App-level i18n (legacy — migrating to @tutor-sg/i18n)
+│   │   │   ├── index.ts
+│   │   │   └── locales/
+│   │   │       ├── en.json
+│   │   │       └── zh-Hans.json
+│   │   └── services/                # App-level services
 │   ├── modules/
-│   │   └── tutor-sg-device-tier/    # Native iOS module (Swift)
-│   │       ├── index.ts             # TS bridge
+│   │   ├── device-tier/             # Native device-tier module (Expo Modules API)
+│   │   │   ├── src/
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── DeviceTierModule.ts
+│   │   │   │   └── DeviceTierModule.types.ts
+│   │   │   ├── ios/
+│   │   │   │   ├── DeviceTierModule.swift
+│   │   │   │   └── DeviceTierModule.podspec
+│   │   │   └── android/
+│   │   │       └── src/main/java/com/aaas/tutorsg/devicetier/
+│   │   │           └── DeviceTierModule.kt
+│   │   └── tutor-sg-llm-runtime/    # Native LLM runtime module (Swift/Kotlin)
 │   │       └── src/
-│   │           └── TutorSgDeviceTierModule.swift
+│   │           ├── TutorSgLlmRuntimeModule.swift
+│   │           └── TutorSgLlmRuntimeModule.kt
+│   ├── babel.config.js
+│   ├── jest.config.js
 │   └── app.config.ts                # Expo config (env vars, plugins)
 ├── packages/
+│   ├── database/                    # @tutor-sg/database — SQLite schema, sessions, profiles, usage
+│   │   └── src/
+│   │       ├── index.ts
+│   │       ├── schema.ts
+│   │       ├── sessions.ts
+│   │       ├── profiles.ts
+│   │       ├── syllabus.ts
+│   │       ├── usage-counters.ts
+│   │       └── types.ts
 │   ├── device-tier/                 # @tutor-sg/device-tier — RAM/NPU detection + persistence
 │   │   └── src/
 │   │       ├── index.ts             # assignTier, buildCapabilities, detectNativeDeviceInfo
@@ -81,20 +105,32 @@ tutor-sg-app/
 │   │       ├── persistence.ts       # SQLite read/write for saved tier
 │   │       ├── components/BelowFloorModal.tsx
 │   │       └── __tests__/           # Jest tests
-│   ├── features/                    # @tutor-sg/features — feature gates & entitlements (stub)
+│   ├── features/                    # @tutor-sg/features — feature gates & entitlements
 │   │   └── src/index.ts
-│   ├── i18n/                        # @tutor-sg/i18n — shared i18n package (in-use)
+│   ├── i18n/                        # @tutor-sg/i18n — shared i18n package
 │   │   └── src/
 │   │       ├── i18n.ts              # i18next init, locale detection, persist
 │   │       ├── LanguageProvider.tsx  # React provider
 │   │       ├── useLanguage.ts       # React hook
 │   │       └── locales/{en,zh-Hans}/*.json
+│   ├── llm/                         # @tutor-sg/llm — inference bridge, prompt builder
+│   │   └── src/
+│   │       ├── index.ts
+│   │       ├── inference-bridge.ts
+│   │       ├── prompt-builder.ts
+│   │       ├── response-parser.ts
+│   │       └── types.ts
+│   ├── perf/                        # @tutor-sg/perf — performance monitoring
+│   │   └── src/index.ts
 │   └── shared/                      # @tutor-sg/shared — types, config, i18n keys
 │       └── src/
+│           ├── index.ts
 │           ├── config/env.ts        # Zod-validated env config
 │           ├── schema/registry.ts   # Model registry types
 │           ├── i18n/keys.ts         # Typed i18n key registry
-│           └── models/integrity.json # SHA-256 manifest for model files
+│           └── models/
+│               ├── integrity.json   # SHA-256 manifest for model files
+│               └── integrity.ts
 ├── data/                            # Static data
 │   ├── question-bank.json
 │   └── taxonomy.json
@@ -119,7 +155,7 @@ cd mobile
 pnpm ios
 ```
 
-This runs Expo dev client on the default iOS Simulator. The native device-tier module is iOS-only and will be active.
+This runs Expo dev client on the default iOS Simulator.
 
 Requires Xcode ≥ 16 and at least one iOS Simulator installed (e.g. iPhone 16).
 
@@ -130,7 +166,7 @@ cd mobile
 pnpm android
 ```
 
-Ensure an AVD is running first (Pixel 9 API 35 recommended). The native device-tier module returns fallback values on Android (no native bridging yet).
+Ensure an AVD is running first (Pixel 9 API 35 recommended).
 
 ### Dev server only (no simulator)
 
@@ -213,25 +249,45 @@ Agent tags: `[owl]`, `[wolf]`, `[bee]`, `[foxy]`, `[flutter]`, `[sage]`, `[torto
 
 ## 11. Native modules
 
-The only native module currently is `tutor-sg-device-tier` (iOS Swift):
+### Device tier module
+
+Located at `mobile/modules/device-tier/`. Uses the Expo Modules API pattern.
 
 ```
-mobile/modules/tutor-sg-device-tier/
-├── index.ts                        # TS API (getTotalMemory, getChipset, isNPUAvailable, getDeviceInfo)
-├── src/TutorSgDeviceTierModule.swift  # Native implementation
-└── expo-module.config.json          # Expo module registration
+mobile/modules/device-tier/
+├── src/
+│   ├── index.ts                    # Re-exports
+│   ├── DeviceTierModule.ts         # TS bridge
+│   └── DeviceTierModule.types.ts   # Type definitions
+├── ios/
+│   ├── DeviceTierModule.swift      # iOS native implementation
+│   └── DeviceTierModule.podspec    # CocoaPods spec
+└── android/
+    └── src/main/java/com/aaas/tutorsg/devicetier/
+        └── DeviceTierModule.kt     # Android native implementation
 ```
 
-The `@tutor-sg/device-tier` package wraps this module with a JS fallback (returns zero values when the native module is unavailable, e.g. on Android or web).
+The `@tutor-sg/device-tier` package wraps this module with JS fallback for platforms without the native module.
 
-**Adding a new native module:**
+### LLM runtime module
+
+Located at `mobile/modules/tutor-sg-llm-runtime/`. Native module for on-device LLM inference.
+
+```
+mobile/modules/tutor-sg-llm-runtime/
+└── src/
+    ├── TutorSgLlmRuntimeModule.swift  # iOS inference runtime
+    └── TutorSgLlmRuntimeModule.kt     # Android inference runtime
+```
+
+### Adding a new native module
 
 ```bash
 cd mobile
-npx expo generate modules my-new-module
+npx expo modules create my-new-module
 ```
 
-Then register in `expo-module.config.json` and create the TS bridge.
+This generates the template with Expo Modules API structure (`.podspec` for iOS, Kotlin for Android, TS bridge). Register the module in the Expo config if needed.
 
 ## 12. i18n workflow
 
@@ -257,7 +313,6 @@ Model files are **never bundled** in the app package (app stays <50 MB). They ar
 
 - Integrity manifest: `packages/shared/src/models/integrity.json`
 - Hash computation: `scripts/compute-model-hashes.ts`
-- See [`README.md`](../README.md) for refresh instructions.
 
 During development, the app uses placeholder hashes (all-zero). The download verifier skips hash checks in dev/staging builds.
 
@@ -268,14 +323,15 @@ During development, the app uses placeholder hashes (all-zero). The download ver
 | `pod install` fails | `brew install cocoapods` or `sudo gem install cocoapods` |
 | `pnpm typecheck` fails in packages | Ensure you ran `pnpm install` from root (workspace dependencies) |
 | iOS simulator crashes on launch | `cd mobile && npx pod-install` then rebuild |
-| Native module not found | Check `mobile/modules/tutor-sg-device-tier/expo-module.config.json` has `"platforms":["ios"]` |
+| Native module not found | Verify the module's `.podspec` or Expo config is registered |
 | `ts-jest` config errors | Run `pnpm install` again (jest deps are hoisted to root `node_modules`) |
 | `expo start` hangs | Delete `mobile/node_modules` and `pnpm install` again |
 | `Cannot find module 'expo-sqlite'` in tests | Mock is at `packages/device-tier/__mocks__/expo-sqlite.ts` — verify jest config includes `moduleNameMapper` |
+| `pnpm test` fails with `@types/jest` error | Ensure `@types/jest` is in the package's `tsconfig.json` types array |
 
 ## 15. Further reading
 
 - [Architecture doc](./ARCHITECTURE.md) — system topology, stack, data flow, security
 - [Governance doc](./GOVERNANCE.md) — agent roles, review rules, escalation path
-- [Locked decisions](./ARCHITECTURE.md) — product decisions from Boss (in wiki)
-- [App Design Document](./ARCHITECTURE.md) — authoritative product spec (Obsidian ADD is source of truth)
+- Locked decisions — see [wiki/decisions-locked.md](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fdecisions-locked.md) (Obsidian) for Boss-locked product decisions
+- App Design Document — see [wiki/app-design-document.md](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fapp-design-document.md) (Obsidian) for the authoritative product spec
