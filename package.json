@@ -3,11 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "bootstrap": "./scripts/bootstrap.sh",
     "typecheck": "pnpm --recursive typecheck",
-    "test": "pnpm --recursive test",
-    "mobile:start": "pnpm --filter tutor-sg-mobile start",
-    "mobile:ios": "pnpm --filter tutor-sg-mobile ios",
-    "mobile:android": "pnpm --filter tutor-sg-mobile android"
+    "lint": "pnpm --recursive lint",
+    "test": "pnpm --recursive test"
   }
 }
