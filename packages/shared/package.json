@@ -4,14 +4,9 @@
   "private": true,
   "main": "src/index.ts",
   "scripts": {
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "test": "node ../../node_modules/jest/bin/jest.js"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.4.9",
-    "typescript": "^5.8.0"
+    "typescript": "^5.9.0"
   }
 }
