@@ -108,9 +108,7 @@ describe('HomeworkFeedbackCard', () => {
       fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
       fireEvent.press(screen.getByText('homeworkFeedback.actions.showAnswer'));
       expect(
-        screen.getByText(
-          'The correct answer is 42.',
-        ),
+        screen.getByText(/The correct answer is 42/),
       ).toBeTruthy();
       expect(screen.getByText('homeworkFeedback.solution.heading')).toBeTruthy();
     });

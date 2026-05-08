@@ -79,33 +79,38 @@ function InlineMath({ text, style }: { text: string; style?: TextStyle }) {
   );
 }
 
-function AnimatedSection({
-  visible,
+function AnimatedBody({
+  tab,
+  currentTab,
   children,
 }: {
-  visible: boolean;
+  tab: ScaffoldedHelpTab;
+  currentTab: ScaffoldedHelpTab;
   children: React.ReactNode;
 }) {
+  const visible = tab === currentTab;
   const anim = useRef(new Animated.Value(visible ? 1 : 0)).current;
 
   useEffect(() => {
     Animated.timing(anim, {
       toValue: visible ? 1 : 0,
-      duration: 250,
+      duration: 200,
       useNativeDriver: false,
     }).start();
   }, [visible, anim]);
 
   return (
     <Animated.View
-      style={{
-        maxHeight: anim.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, 500],
-        }),
-        opacity: anim,
-        overflow: 'hidden',
-      }}
+      style={[
+        cardStyles.bodyOuter,
+        {
+          maxHeight: anim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 300],
+          }),
+          opacity: anim,
+        },
+      ]}
     >
       {children}
     </Animated.View>
@@ -359,7 +364,7 @@ export default function HomeworkFeedbackCard({
           </View>
         </View>
 
-        <AnimatedSection visible={currentLevel === 'hint'}>
+        <AnimatedBody tab={currentLevel} currentTab={currentLevel}>
           <ScrollView
             style={cardStyles.bodyScroll}
             contentContainerStyle={cardStyles.bodyContent}
@@ -368,29 +373,7 @@ export default function HomeworkFeedbackCard({
           >
             {renderLevelBody()}
           </ScrollView>
-        </AnimatedSection>
-
-        <AnimatedSection visible={currentLevel === 'steps'}>
-          <ScrollView
-            style={cardStyles.bodyScroll}
-            contentContainerStyle={cardStyles.bodyContent}
-            showsVerticalScrollIndicator={true}
-            nestedScrollEnabled
-          >
-            {renderLevelBody()}
-          </ScrollView>
-        </AnimatedSection>
-
-        <AnimatedSection visible={currentLevel === 'solution'}>
-          <ScrollView
-            style={cardStyles.bodyScroll}
-            contentContainerStyle={cardStyles.bodyContent}
-            showsVerticalScrollIndicator={true}
-            nestedScrollEnabled
-          >
-            {renderLevelBody()}
-          </ScrollView>
-        </AnimatedSection>
+        </AnimatedBody>
 
         <View style={cardStyles.actions}>
           {nextTab === 'steps' && (
@@ -541,6 +524,10 @@ const cardStyles = StyleSheet.create({
 
   dotInactive: {
     backgroundColor: '#D1D5DB',
+  } satisfies ViewStyle,
+
+  bodyOuter: {
+    overflow: 'hidden',
   } satisfies ViewStyle,
 
   bodyScroll: {
