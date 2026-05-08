@@ -16,7 +16,8 @@
     "e2e:full": "maestro test .maestro/flows/onboarding-to-feedback.yaml",
     "eas:build:ios:internal": "eas build --platform ios --profile internal --non-interactive",
     "eas:build:android:internal": "eas build --platform android --profile internal --non-interactive",
-    "eas:build:all": "eas build --platform all --profile internal --non-interactive"
+    "eas:build:all": "eas build --platform all --profile internal --non-interactive",
+    "prepare": "husky"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "latest",
@@ -25,10 +26,13 @@
     "expo-camera": "~16.0.0",
     "expo-constants": "~17.0.0",
     "expo-file-system": "~18.0.0",
+    "expo-font": "^55.0.7",
     "expo-image-picker": "~16.0.0",
     "expo-linking": "~7.0.0",
     "expo-localization": "~16.0.0",
     "expo-router": "~4.0.0",
+    "expo-secure-store": "^55.0.13",
+    "expo-speech": "^55.0.13",
     "expo-splash-screen": "~0.29.0",
     "expo-sqlite": "~15.0.0",
     "expo-status-bar": "~2.0.0",
@@ -52,10 +56,22 @@
     "@types/react": "~18.3.0",
     "@types/uuid": "^10.0.0",
     "babel-preset-expo": "~55.0.21",
+    "eslint": "^9.0.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-native": "^5.0.0",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jest-expo": "~55.0.0",
+    "lint-staged": "^17.0.3",
     "prettier": "^3.8.3",
     "react-test-renderer": "^18.3.1",
     "ts-jest": "^29.4.9"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "tsc --noEmit"
+    ]
   }
 }
