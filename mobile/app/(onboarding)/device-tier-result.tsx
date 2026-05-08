@@ -20,7 +20,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
-  type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useOnboarding } from '../../src/onboarding';
@@ -231,4 +230,4 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
   },
-} as TextStyle);
+});

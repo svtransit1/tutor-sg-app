@@ -183,3 +183,11 @@ export function loadFullState(): OnboardingState {
     completed: isOnboardingCompleted(),
   };
 }
+
+export function persistPrivacyConsent(consented: boolean): void {
+  store().set('privacy_consent', consented);
+}
+
+export function persistEulaConsent(consented: boolean): void {
+  store().set('eula_consent', consented);
+}

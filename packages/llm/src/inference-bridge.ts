@@ -15,7 +15,7 @@
 
 import type { InferenceRequest, InferenceResponse, ModelTier } from './types';
 import { buildPrompt } from './prompt-builder';
-import { parseInferenceResponse } from './response-parser';
+
 import { MOCK_RESPONSES } from './mock-data';
 
 // ── Interface ──────────────────────────────────────────────────────

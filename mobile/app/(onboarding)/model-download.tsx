@@ -13,7 +13,6 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useOnboarding } from '../../src/onboarding';
@@ -33,7 +32,7 @@ function formatBytes(bytes: number): string {
 
 export default function ModelDownloadRoute() {
   const { t } = useTranslation();
-  const { goNext, state, updateState } = useOnboarding();
+  const { goNext } = useOnboarding();
 
   const [phase, setPhase] = useState<DownloadPhase>('downloading');
   const [downloadedBytes, setDownloadedBytes] = useState(0);
@@ -99,18 +98,6 @@ export default function ModelDownloadRoute() {
   const handleContinue = useCallback(() => {
     goNext();
   }, [goNext]);
-
-  const handleCancel = useCallback(() => {
-    // Persist progress and allow user to exit to a limited state
-    // For now, just go to the next step
-    goNext();
-  }, [goNext]);
-
-  const handleShowCellularWarning = useCallback(() => {
-    if (wifiOnly) {
-      setShowCellularWarning(true);
-    }
-  }, [wifiOnly]);
 
   const handleCellularProceed = useCallback(() => {
     setWifiOnly(false);
@@ -519,4 +506,4 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
   },
-} as TextStyle);
+});

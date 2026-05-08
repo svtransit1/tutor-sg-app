@@ -24,7 +24,6 @@ import {
   StyleSheet,
   Linking,
   Platform,
-  type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Camera } from 'expo-camera';
@@ -634,4 +633,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#6B7280',
   },
-} as TextStyle);
+});

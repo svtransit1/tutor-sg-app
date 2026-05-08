@@ -55,6 +55,17 @@ jest.mock('../../storage/onboarding-state', () => ({
   markFirstHomeVisitComplete: () => mockMarkFirstHomeVisitComplete(),
 }));
 
+// ── Mock KidWalkthroughOverlay — simplified to test integration ─
+
+jest.mock('../../components/KidWalkthroughOverlay', () => ({
+  KidWalkthroughOverlay: ({ visible }: { visible: boolean }) => {
+    if (!visible) return null;
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const react = require('react');
+    return react.createElement('View', { testID: 'kid-walkthrough-overlay' });
+  },
+}));
+
 // ── Test data ─────────────────────────────────────────────────
 
 const makeSession = (overrides?: Partial<{

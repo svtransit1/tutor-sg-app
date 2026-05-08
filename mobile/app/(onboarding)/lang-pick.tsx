@@ -12,7 +12,6 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useOnboarding } from '../../src/onboarding';
@@ -129,4 +128,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#6B7280',
   },
-} as TextStyle);
+});

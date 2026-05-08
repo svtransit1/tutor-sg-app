@@ -47,7 +47,6 @@ import {
   loadGrade,
   persistGrade,
   loadSubjects,
-  persistSubjects,
   markOnboardingCompleted,
   isOnboardingCompleted,
 } from '../storage/onboarding-state';
@@ -96,6 +95,7 @@ let _machineStore: any = null;
 
 function machineStore(): any {
   if (!_machineStore) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { MMKV } = require('react-native-mmkv');
     _machineStore = new MMKV({ id: 'onboarding' });
   }
@@ -155,6 +155,7 @@ async function detectDeviceTierInBackground(): Promise<'high' | 'mid' | 'unsuppo
     await new Promise<void>((r) => setTimeout(() => r(), 1200));
 
     // Use Platform from react-native instead of navigator (not available in RN)
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { Platform } = require('react-native');
     const sim = Platform.OS === 'ios' || Platform.OS === 'android';
     const totalRAM = sim ? 8 : 4;
@@ -556,6 +557,7 @@ export function useOnboarding(): OnboardingContextValue {
 
 function persistSubjectsFromState(subjects: string[]): void {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { subjects: persistSubjectsFn } = require('../storage/onboarding-state');
     persistSubjectsFn(subjects);
   } catch {

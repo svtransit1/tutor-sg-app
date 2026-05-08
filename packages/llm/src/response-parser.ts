@@ -85,7 +85,7 @@ function extractJson(raw: string): unknown {
  */
 export function parseInferenceResponse(
   rawOutput: string,
-  questionCount: number,
+  _questionCount: number,
 ): InferenceResponse {
   const parsed = extractJson(rawOutput) as RawInferenceResponse;
 

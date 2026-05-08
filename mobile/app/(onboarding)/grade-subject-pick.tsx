@@ -13,7 +13,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useOnboarding } from '../../src/onboarding';
@@ -26,7 +25,7 @@ const GRADES: Grade[] = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
 const ALL_SUBJECTS: SubjectId[] = ['math', 'english', 'chinese', 'science'];
 
 export default function GradeSubjectPickRoute() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { goNext, updateState } = useOnboarding();
 
   const [selectedGrade, setSelectedGrade] = useState<Grade | null>(null);
@@ -61,8 +60,6 @@ export default function GradeSubjectPickRoute() {
 
     goNext();
   }, [selectedGrade, selectedSubjects, goNext, updateState]);
-
-  const isZh = i18n.language === 'zh-Hans';
 
   return (
     <ScrollView
@@ -288,4 +285,4 @@ const styles = StyleSheet.create({
   continueBtnTextDisabled: {
     color: '#9CA3AF',
   },
-} as TextStyle);
+});

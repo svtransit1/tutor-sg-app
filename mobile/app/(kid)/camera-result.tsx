@@ -92,44 +92,52 @@ export default function CameraResultScreen() {
   // ── Load Session Data ───────────────────────────────────────────
 
   useEffect(() => {
-    if (!sessionId) {
-      setError('No session data found');
-      setLoading(false);
-      return;
-    }
+    let cancelled = false;
 
-    try {
-      const raw = await getSessionById(sessionId);
-      if (!raw) {
-        setError('Session not found. The result may have expired.');
+    async function loadSession() {
+      if (!sessionId) {
+        setError('No session data found');
         setLoading(false);
         return;
       }
 
-      const parsed = JSON.parse(raw.inferenceResult);
-      const qs: QuestionDisplay[] = (parsed.questions ?? []).map(
-        (q: Record<string, unknown>, i: number) => ({
-          index: (q.questionIndex as number) ?? i + 1,
-          text: (q.questionText as string) ?? '',
-          subject: q.detectedSubject as string | undefined,
-          topic: q.detectedTopic as string | undefined,
-          hint: (q.hint as string) ?? '',
-          steps: (q.steps as QuestionDisplay['steps']) ?? [],
-          fullSolution: (q.fullSolution as string) ?? '',
-          followUp: q.suggestedFollowUp as string | undefined,
-          revealedSteps: false,
-          revealedSolution: false,
-        }),
-      );
+      try {
+        const raw = await getSessionById(sessionId);
+        if (cancelled) return;
+        if (!raw) {
+          setError('Session not found. The result may have expired.');
+          setLoading(false);
+          return;
+        }
 
-      setSessionData(raw);
-      setQuestions(qs);
-      setLoading(false);
-    } catch (err) {
-      console.error('Failed to load session:', err);
-      setError('Failed to load session data');
-      setLoading(false);
+        const parsed = JSON.parse(raw.inferenceResult);
+        const qs: QuestionDisplay[] = (parsed.questions ?? []).map(
+          (q: Record<string, unknown>, i: number) => ({
+            index: (q.questionIndex as number) ?? i + 1,
+            text: (q.questionText as string) ?? '',
+            subject: q.detectedSubject as string | undefined,
+            topic: q.detectedTopic as string | undefined,
+            hint: (q.hint as string) ?? '',
+            steps: (q.steps as QuestionDisplay['steps']) ?? [],
+            fullSolution: (q.fullSolution as string) ?? '',
+            followUp: q.suggestedFollowUp as string | undefined,
+            revealedSteps: false,
+            revealedSolution: false,
+          }),
+        );
+
+        setSessionData(raw);
+        setQuestions(qs);
+        setLoading(false);
+      } catch (err) {
+        console.error('Failed to load session:', err);
+        setError('Failed to load session data');
+        setLoading(false);
+      }
     }
+
+    loadSession();
+    return () => { cancelled = true; };
   }, [sessionId]);
 
   // ── Toggle Steps / Solution ─────────────────────────────────────

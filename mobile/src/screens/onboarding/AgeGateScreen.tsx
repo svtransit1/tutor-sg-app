@@ -16,7 +16,6 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -168,4 +167,4 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
   },
-} as TextStyle);
+});

@@ -10,5 +10,5 @@
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "src/**/*.ts", "src/**/*.tsx", "app/**/*.ts", "app/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "e2e", "src/screens/__tests__", "src/**/__tests__", "__mocks__"]
 }

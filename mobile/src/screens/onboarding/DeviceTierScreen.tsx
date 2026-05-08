@@ -13,7 +13,6 @@ import {
   StyleSheet,
   ScrollView,
   Platform,
-  type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { BelowFloorModal, assignTier, MODEL_MAP } from '@tutor-sg/device-tier';
@@ -58,8 +57,6 @@ type NetworkType = 'wifi' | 'cellular' | 'none' | 'unknown';
  * Injected network type — used by tests to simulate cellular connection.
  * Default 'wifi'. Tests override via DeviceTierScreen.__testNetworkType.
  */
-let networkTypeOverride: NetworkType | null = null;
-
 // ── Component ──────────────────────────────────────────────────────
 
 export default function DeviceTierScreen({ onComplete, _testCellular }: DeviceTierScreenProps) {
@@ -293,4 +290,4 @@ const styles = StyleSheet.create({
   modalBtnPriText: { color: '#FFFFFF', fontSize: 16, fontWeight: '600' },
   modalBtnSec: { height: 48, alignItems: 'center', justifyContent: 'center', borderRadius: 12, borderWidth: 1.5, borderColor: '#D1D5DB', backgroundColor: '#FFFFFF' },
   modalBtnSecText: { color: '#374151', fontSize: 15, fontWeight: '500' },
-} as TextStyle);
+});

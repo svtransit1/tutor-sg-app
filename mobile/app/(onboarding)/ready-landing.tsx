@@ -12,7 +12,6 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useOnboarding } from '../../src/onboarding';
@@ -29,8 +28,7 @@ export default function ReadyLandingRoute() {
     complete();
   }, [complete]);
 
-  const handlePracticeQuestion = useCallback((subject: string) => {
-    // First call complete, then the (kid) home can route to practice
+  const handlePracticeQuestion = useCallback((_subject: string) => {
     complete();
   }, [complete]);
 
@@ -235,4 +233,4 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
     textDecorationLine: 'underline',
   },
-} as TextStyle);
+});

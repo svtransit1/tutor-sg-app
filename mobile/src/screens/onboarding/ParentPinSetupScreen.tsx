@@ -20,7 +20,6 @@ import {
   Text,
   Pressable,
   StyleSheet,
-  type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { savePin } from '../../storage/pin-storage';
@@ -443,4 +442,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textDecorationLine: 'underline',
   },
-} as TextStyle);
+});

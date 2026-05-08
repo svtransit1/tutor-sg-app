@@ -13,7 +13,7 @@
  * @see ADD §4.1 — Camera homework check
  */
 
-import type { InferenceRequest, DetectedQuestion } from './types';
+import type { InferenceRequest } from './types';
 
 // ── Prompt Templates ────────────────────────────────────────────────
 
@@ -118,7 +118,7 @@ export function buildPrompt(request: InferenceRequest): BuiltPrompt {
   if (request.questions && request.questions.length > 0) {
     userParts.push('');
     userParts.push(`[DETECTED QUESTIONS]`);
-    request.questions.forEach((q, i) => {
+    request.questions.forEach((q, _i) => {
       const source = q.manuallyEntered ? '(manually entered)' : '';
       userParts.push(`Q${q.index}: ${q.text} ${source}`);
     });
