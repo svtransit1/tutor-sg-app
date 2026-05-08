@@ -87,6 +87,14 @@ export default function HomeworkFeedbackScreen() {
     (async () => {
       try {
         await startSession(storageSubject);
+
+        if (feedback.photoUri || feedback.ocrText) {
+          await addEvent('ocr', {
+            photoUri: feedback.photoUri ?? null,
+            ocrText: feedback.ocrText ?? null,
+          });
+        }
+
         for (const q of feedback.questions) {
           await addEvent('llm_response', {
             questionNumber: q.questionNumber,

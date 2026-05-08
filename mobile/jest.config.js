@@ -1,22 +1,14 @@
-const path = require('path');
-const rnDir = path.dirname(require.resolve('react-native'));
-
 module.exports = {
-  preset: 'react-native',
+  preset: 'ts-jest',
+  testEnvironment: 'node',
   rootDir: '.',
   roots: ['<rootDir>/src'],
-  testMatch: ['**/__tests__/**/*.test.(ts|tsx|js)'],
-  testPathIgnorePatterns: ['<rootDir>/src/home/'],
-  transformIgnorePatterns: [
-    'node_modules/(?!(jest-)?react-native|@react-native(-community)?|expo(-.*)?|@expo(-.*)?|react-native-.*)/',
-  ],
+  testMatch: ['**/__tests__/**/*.test.(ts|tsx)'],
   transform: {
-    '^.+\\.(js|ts|tsx)$': ['babel-jest', { configFile: './babel.config.js' }],
-    '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$': path.join(
-      rnDir,
-      'jest',
-      'assetFileTransformer.js',
-    ),
+    '^.+\\.(js|ts|tsx)$': ['ts-jest', {
+      tsconfig: './tsconfig.json',
+      diagnostics: false,
+    }],
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -24,7 +16,6 @@ module.exports = {
     '^react-i18next$': '<rootDir>/__mocks__/react-i18next.ts',
     '^i18next$': '<rootDir>/__mocks__/i18next.ts',
   },
-  setupFiles: [path.join(rnDir, 'jest', 'setup.js')],
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
   clearMocks: true,
   collectCoverage: false,

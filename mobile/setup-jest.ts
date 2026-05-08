@@ -4,6 +4,8 @@
  * Individual test files can override these with their own jest.mock calls.
  */
 
+jest.mock('react-native', () => require('./__mocks__/react-native'))
+
 // Global mock for react-i18next — test files with different needs override this
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
