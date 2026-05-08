@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react-native';
+import { render, screen, fireEvent, act } from '@testing-library/react-native';
 import ReadAloudButton from '../ReadAloudButton';
 import { speak, stop } from 'expo-speech';
 
@@ -140,7 +140,7 @@ describe('ReadAloudButton', () => {
     fireEvent.press(screen.getByTestId(BTN_TEST_ID));
 
     const speakCallArgs = (speak as jest.Mock).mock.calls[0][1];
-    speakCallArgs.onDone();
+    act(() => { speakCallArgs.onDone(); });
 
     expect(onDone).toHaveBeenCalled();
     expect(screen.getByText('Read aloud')).toBeTruthy();
@@ -153,7 +153,7 @@ describe('ReadAloudButton', () => {
     fireEvent.press(screen.getByTestId(BTN_TEST_ID));
 
     const speakCallArgs = (speak as jest.Mock).mock.calls[0][1];
-    speakCallArgs.onError(new Error('Speech failed'));
+    act(() => { speakCallArgs.onError(new Error('Speech failed')); });
 
     expect(onError).toHaveBeenCalledWith(
       expect.objectContaining({ message: 'Speech failed' }),
@@ -167,7 +167,7 @@ describe('ReadAloudButton', () => {
     fireEvent.press(screen.getByTestId(BTN_TEST_ID));
 
     const speakCallArgs = (speak as jest.Mock).mock.calls[0][1];
-    speakCallArgs.onStopped();
+    act(() => { speakCallArgs.onStopped(); });
 
     expect(screen.getByText('Read aloud')).toBeTruthy();
   });

@@ -1,7 +1,10 @@
-import '@testing-library/react-native/extend-expect';
+/**
+ * Jest setup file — runs before every test suite.
+ * Registers global mocks used across all tests.
+ * Individual test files can override these with their own jest.mock calls.
+ */
 
-jest.mock('expo-speech', () => require('./__mocks__/expo-speech'));
-
+// Global mock for react-i18next — test files with different needs override this
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string, options?: Record<string, unknown>) => {
@@ -55,4 +58,11 @@ jest.mock('react-native-safe-area-context', () => ({
 jest.mock('expo-router', () => ({
   useLocalSearchParams: () => ({}),
   useRouter: () => ({ back: jest.fn(), push: jest.fn(), replace: jest.fn() }),
+}));
+
+jest.mock('expo-speech', () => ({
+  speak: jest.fn(),
+  stop: jest.fn(),
+  isSpeakingAsync: jest.fn(() => Promise.resolve(false)),
+  getVoicesAsync: jest.fn(() => Promise.resolve([])),
 }));
