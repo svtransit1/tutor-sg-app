@@ -20,5 +20,3 @@ export interface ModelRegistryEntry {
 
 export type ModelRegistry = ModelRegistryEntry[];
 
-// INTENTIONAL TYPE ERROR FOR CI VERIFICATION — AAAS-644
-const ciVerification: string = 42;
