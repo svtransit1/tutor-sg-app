@@ -1,0 +1,132 @@
+name: Build (iOS + Android)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "mobile/**"
+      - "packages/**"
+      - "package-lock.json"
+      - "package.json"
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "EAS build profile (internal, preview, production)"
+        required: true
+        default: "internal"
+        type: choice
+        options:
+          - internal
+          - preview
+          - production
+      platform:
+        description: "Target platform"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - all
+          - ios
+          - android
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "20"
+
+jobs:
+  ios:
+    name: iOS (${{ inputs.profile || 'internal' }})
+    if: >-
+      ${{ github.event_name == 'push' ||
+      inputs.platform == 'all' ||
+      inputs.platform == 'ios' }}
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: npm ci
+        working-directory: mobile
+      - name: EAS Build iOS
+        run: |
+          PROFILE="${{ inputs.profile || 'internal' }}"
+          npx eas build --platform ios --profile "$PROFILE" --non-interactive
+        working-directory: mobile
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+
+  android:
+    name: Android (${{ inputs.profile || 'internal' }})
+    if: >-
+      ${{ github.event_name == 'push' ||
+      inputs.platform == 'all' ||
+      inputs.platform == 'android' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: npm ci
+        working-directory: mobile
+      - name: EAS Build Android
+        run: |
+          PROFILE="${{ inputs.profile || 'internal' }}"
+          npx eas build --platform android --profile "$PROFILE" --non-interactive
+        working-directory: mobile
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+  submit:
+    name: Submit to Stores
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' &&
+      inputs.profile == 'production' }}
+    needs: [ios, android]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: npm ci
+        working-directory: mobile
+      - name: Submit iOS to App Store
+        run: npx eas submit --platform ios --profile production --non-interactive
+        working-directory: mobile
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+      - name: Submit Android to Play Store
+        run: npx eas submit --platform android --profile production --non-interactive
+        working-directory: mobile
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EAS_ANDROID_SERVICE_ACCOUNT_KEY_PATH: ${{ secrets.EAS_ANDROID_SERVICE_ACCOUNT_KEY_PATH }}
