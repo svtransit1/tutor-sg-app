@@ -6,9 +6,10 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-  ActivityIndicator,
+  useColorScheme,
 } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Skeleton } from '@/components/Skeleton'
 import type { SQLiteDatabase } from 'expo-sqlite'
 import type { DeviceTier } from '@tutor-sg/device-tier'
 import {
@@ -40,6 +41,7 @@ const TIER_DISPLAY: Record<DeviceTier, string> = {
 export default function ParentSettingsScreen() {
   const { t, i18n } = useTranslation()
   const router = useRouter()
+  const isDark = useColorScheme() === 'dark'
   const [db, setDb] = useState<SQLiteDatabase | null>(null)
   const [overrideTier, setOverrideTier] = useState<QualityOption>('auto')
   const [loadingDb, setLoadingDb] = useState(true)
@@ -112,7 +114,7 @@ export default function ParentSettingsScreen() {
 
         {loadingDb ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="small" color="#4A90D9" />
+            <Skeleton.Card height={200} isDark={isDark} />
           </View>
         ) : (
           <>
