@@ -1,0 +1,825 @@
+{
+  "version": "1.0.0",
+  "source": "MOE Primary Chinese MTL Syllabus 2015 (public Crown Copyright, paraphrased). Character lists and vocabulary are originally compiled by AaaS for syllabus alignment reference — not reproduced from any textbook (forbidden: 欢乐伙伴, MCE materials).",
+  "description": "P1-P6 Chinese Mother Tongue character budgets, vocabulary lists, and grammar patterns aligned to MOE syllabus. Reference spine for Qwen-based question generation.",
+  "levels": {
+    "P1": {
+      "label_en": "Primary 1",
+      "label_zh": "小学一年级",
+      "char_total": 300,
+      "char_cumulative": 300,
+      "characters": {
+        "core": [
+          "一","二","三","四","五","六","七","八","九","十",
+          "大","小","上","下","左","右","前","后","里","外",
+          "人","口","手","目","耳","鼻","足","走","坐","立",
+          "日","月","水","火","山","石","土","木","花","草",
+          "天","地","风","云","雨","雪","星","光","明","暗",
+          "白","红","蓝","绿","黄","黑","多","少","长","短",
+          "来","去","出","入","开","关","看","听","说","读",
+          "写","画","唱","跳","飞","跑","吃","喝","睡","衣",
+          "头","脸","牙","学","校","书","包","笔","刀","尺",
+          "马","牛","羊","虫","鱼","鸟","鸡","鸭","猫","狗"
+        ],
+        "examples": [
+          "一 (one)","二 (two)","人 (person)","大 (big)","小 (small)",
+          "上 (up)","下 (down)","日 (sun)","月 (moon)","水 (water)",
+          "火 (fire)","山 (mountain)","花 (flower)","鸟 (bird)","鱼 (fish)",
+          "来 (come)","去 (go)","看 (see)","说 (speak)","吃 (eat)"
+        ]
+      },
+      "vocabulary": {
+        "themes": [
+          {
+            "theme_en": "Numbers and quantity",
+            "theme_zh": "数字和数量",
+            "words": ["一个","两个","三只","四本","五条","六张","七把","八朵","九颗","十片"]
+          },
+          {
+            "theme_en": "Family and people",
+            "theme_zh": "家人和人",
+            "words": ["爸爸","妈妈","哥哥","姐姐","弟弟","妹妹","爷爷","奶奶","老师","同学"]
+          },
+          {
+            "theme_en": "Body and senses",
+            "theme_zh": "身体和感官",
+            "words": ["眼睛","耳朵","嘴巴","鼻子","头发","小手","大脚","左右","前后","里面"]
+          },
+          {
+            "theme_en": "Nature and weather",
+            "theme_zh": "自然和天气",
+            "words": ["太阳","月亮","星星","白云","下雨","刮风","天气","花草","树木","石头"]
+          },
+          {
+            "theme_en": "School and daily life",
+            "theme_zh": "学校和日常生活",
+            "words": ["学校","书包","铅笔","橡皮","尺子","书本","写字","画画","唱歌","回家"]
+          },
+          {
+            "theme_en": "Colors and shapes",
+            "theme_zh": "颜色和形状",
+            "words": ["红色","白色","蓝色","绿色","黑色","黄色","大的","小的","长的","短的"]
+          },
+          {
+            "theme_en": "Actions and movement",
+            "theme_zh": "动作和运动",
+            "words": ["走来","跑去","坐下","站起来","看见","听到","说话","读书","吃饭","喝水"]
+          },
+          {
+            "theme_en": "Animals and food",
+            "theme_zh": "动物和食物",
+            "words": ["小猫","小狗","小鸟","小鱼","公鸡","鸭子","苹果","面包","牛奶","鸡蛋"]
+          }
+        ]
+      },
+      "grammar_patterns": [
+        {"pattern": "是...的", "example_zh": "我是小学生。", "example_en": "I am a primary school student.", "moel_code": "C-P1-G-01"},
+        {"pattern": "有...", "example_zh": "我有一个书包。", "example_en": "I have a school bag.", "moel_code": "C-P1-G-02"},
+        {"pattern": "在...里/上", "example_zh": "书在桌子上。", "example_en": "The book is on the table.", "moel_code": "C-P1-G-03"},
+        {"pattern": "和 (connector)", "example_zh": "我和妈妈去公园。", "example_en": "Mum and I go to the park.", "moel_code": "C-P1-G-04"},
+        {"pattern": "很 + adjective", "example_zh": "天气很好。", "example_en": "The weather is very good.", "moel_code": "C-P1-G-05"},
+        {"pattern": "会 + verb", "example_zh": "我会写字。", "example_en": "I can write.", "moel_code": "C-P1-G-06"},
+        {"pattern": "不 + verb (negation)", "example_zh": "我不去。", "example_en": "I am not going.", "moel_code": "C-P1-G-07"},
+        {"pattern": "吗？(question)", "example_zh": "这是你的书吗？", "example_en": "Is this your book?", "moel_code": "C-P1-G-08"}
+      ]
+    },
+    "P2": {
+      "label_en": "Primary 2",
+      "label_zh": "小学二年级",
+      "char_total": 300,
+      "char_cumulative": 600,
+      "characters": {
+        "new": [
+          "春","夏","秋","冬","暖","冷","热","凉","晴","阴",
+          "星","期","今","昨","明","午","早","晚","夜","时",
+          "圆","方","角","边","面","体","元","角","分","钱",
+          "班","级","组","队","号","名","字","纸","信","图",
+          "花","园","草","坪","树","林","森","河","海","湖",
+          "狗","兔","猴","虎","狮","象","鹿","熊","狼","猪",
+          "饭","菜","汤","肉","鱼","虾","米","面","糕","饼",
+          "衣","裤","鞋","帽","袜","巾","床","桌","椅","灯",
+          "快","慢","高","矮","胖","瘦","新","旧","对","错",
+          "问","答","教","学","做","玩","放","拿","送","给"
+        ],
+        "core": [
+          "春 (spring)","夏 (summer)","秋 (autumn)","冬 (winter)","冷 (cold)",
+          "热 (hot)","晴 (sunny)","阴 (overcast)","星期 (week)","今天 (today)",
+          "明天 (tomorrow)","昨天 (yesterday)","早上 (morning)","晚上 (evening)","时间 (time)",
+          "花园 (garden)","森林 (forest)","大象 (elephant)","兔子 (rabbit)","猴子 (monkey)",
+          "衣服 (clothes)","桌子 (table)","椅子 (chair)","老师 (teacher)","同学 (classmate)"
+        ]
+      },
+      "vocabulary": {
+        "themes": [
+          {
+            "theme_en": "Time and calendar",
+            "theme_zh": "时间和日历",
+            "words": ["今天","明天","昨天","早上","中午","晚上","星期","月份","今年","去年"]
+          },
+          {
+            "theme_en": "Seasons and weather",
+            "theme_zh": "季节和天气",
+            "words": ["春天","夏天","秋天","冬天","暖和","炎热","凉爽","寒冷","晴天","阴天"]
+          },
+          {
+            "theme_en": "School subjects and activities",
+            "theme_zh": "科目和活动",
+            "words": ["华文","英文","数学","科学","音乐","体育","美术","上课","下课","考试"]
+          },
+          {
+            "theme_en": "Nature and places",
+            "theme_zh": "自然和地点",
+            "words": ["花园","草地","河边","海边","公园","动物园","图书馆","食堂","教室","礼堂"]
+          },
+          {
+            "theme_en": "Animals (extended)",
+            "theme_zh": "动物（扩展）",
+            "words": ["猴子","大象","老虎","狮子","兔子","熊猫","长颈鹿","企鹅","海豚","松鼠"]
+          },
+          {
+            "theme_en": "Food and meals",
+            "theme_zh": "食物和餐饮",
+            "words": ["早餐","午餐","晚餐","米饭","面条","蔬菜","水果","蛋糕","饼干","冰淇淋"]
+          },
+          {
+            "theme_en": "Daily routines",
+            "theme_zh": "日常作息",
+            "words": ["起床","刷牙","洗脸","上学","放学","做作业","洗澡","睡觉","帮忙","打扫"]
+          },
+          {
+            "theme_en": "Comparisons",
+            "theme_zh": "比较",
+            "words": ["大一点","小一些","最高","最矮","比较","一样","不同","比...大","比...小","差不多"]
+          }
+        ]
+      },
+      "grammar_patterns": [
+        {"pattern": "比 (comparison)", "example_zh": "我比妹妹高。", "example_en": "I am taller than my sister.", "moel_code": "C-P2-G-01"},
+        {"pattern": "最 (superlative)", "example_zh": "他是我最好的朋友。", "example_en": "He is my best friend.", "moel_code": "C-P2-G-02"},
+        {"pattern": "正在 + verb (progressive)", "example_zh": "我正在写字。", "example_en": "I am writing.", "moel_code": "C-P2-G-03"},
+        {"pattern": "会/可以 (ability/permission)", "example_zh": "我会游泳。", "example_en": "I can swim.", "moel_code": "C-P2-G-04"},
+        {"pattern": "把 sentence", "example_zh": "把门打开。", "example_en": "Open the door.", "moel_code": "C-P2-G-05"},
+        {"pattern": "被 sentence", "example_zh": "书被弟弟拿走了。", "example_en": "The book was taken by my brother.", "moel_code": "C-P2-G-06"},
+        {"pattern": "一边...一边...", "example_zh": "我一边吃饭一边看电视。", "example_en": "I eat while watching TV.", "moel_code": "C-P2-G-07"},
+        {"pattern": "因为...所以...", "example_zh": "因为下雨，所以不能去公园。", "example_en": "Because it's raining, we can't go to the park.", "moel_code": "C-P2-G-08"},
+        {"pattern": "了 (completion)", "example_zh": "我吃了早餐。", "example_en": "I have eaten breakfast.", "moel_code": "C-P2-G-09"},
+        {"pattern": "要...了 (about to)", "example_zh": "要上课了。", "example_en": "Class is about to start.", "moel_code": "C-P2-G-10"}
+      ]
+    },
+    "P3": {
+      "label_en": "Primary 3",
+      "label_zh": "小学三年级",
+      "char_total": 400,
+      "char_cumulative": 1000,
+      "characters": {
+        "new": [
+          "勇","敢","诚","实","秘","密","消","息","消","失",
+          "奇","怪","美","丽","漂","亮","聪","明","勤","劳",
+          "偷","懒","骄","傲","谦","虚","感","谢","帮","助",
+          "整","齐","干","净","脏","乱","吵","闹","安","静",
+          "愿","意","决","定","选","择","配","合","鼓","励",
+          "猜","测","推","理","证","明","结","论","解","释",
+          "著","名","古","代","故","事","童","话","寓","言",
+          "冒","险","旅","行","游","戏","运","动","比","赛",
+          "卫","生","健","康","运","动","锻","炼","休","息",
+          "困","难","简","单","容","易","麻","烦","辛","苦"
+        ],
+        "core": [
+          "勇敢 (brave)","诚实 (honest)","美丽 (beautiful)","聪明 (clever)","勤劳 (hardworking)",
+          "骄傲 (proud)","谦虚 (modest)","感谢 (thank)","帮助 (help)","鼓励 (encourage)",
+          "决定 (decide)","选择 (choose)","故事 (story)","童话 (fairy tale)","寓言 (fable)",
+          "冒险 (adventure)","旅行 (travel)","比赛 (competition)","健康 (healthy)","困难 (difficult)"
+        ]
+      },
+      "vocabulary": {
+        "themes": [
+          {
+            "theme_en": "Character and values",
+            "theme_zh": "品德和价值观",
+            "words": ["勇敢","诚实","谦虚","骄傲","勤劳","懒惰","帮助","感谢","分享","合作"]
+          },
+          {
+            "theme_en": "Descriptive adjectives",
+            "theme_zh": "描述性形容词",
+            "words": ["美丽","漂亮","可爱","有趣","奇怪","精彩","著名","整齐","干净","安静"]
+          },
+          {
+            "theme_en": "Reading and stories",
+            "theme_zh": "阅读和故事",
+            "words": ["故事","童话","寓言","古诗","文章","段落","内容","题目","作者","人物"]
+          },
+          {
+            "theme_en": "Travel and adventure",
+            "theme_zh": "旅行和冒险",
+            "words": ["旅行","冒险","参观","出发","到达","经过","发现","探索","地图","方向"]
+          },
+          {
+            "theme_en": "Health and body",
+            "theme_zh": "健康和身体",
+            "words": ["健康","锻炼","运动","休息","生病","感冒","发烧","咳嗽","医生","医院"]
+          },
+          {
+            "theme_en": "Emotions and feelings",
+            "theme_zh": "情感和感受",
+            "words": ["高兴","难过","生气","害怕","惊讶","着急","担心","满意","失望","感动"]
+          },
+          {
+            "theme_en": "Simple idioms (成语)",
+            "theme_zh": "简单成语",
+            "words": ["井底之蛙","画蛇添足","守株待兔","亡羊补牢","坐井观天","叶公好龙","狐假虎威","拔苗助长"]
+          },
+          {
+            "theme_en": "Singapore places",
+            "theme_zh": "新加坡地点",
+            "words": ["巴刹","小贩中心","组屋","巴士站","地铁站","游乐场","图书馆","游泳池","植物园","动物园"]
+          }
+        ]
+      },
+      "grammar_patterns": [
+        {"pattern": "不但...而且...", "example_zh": "他不但聪明，而且勤奋。", "example_en": "He is not only clever but also hardworking.", "moel_code": "C-P3-G-01"},
+        {"pattern": "虽然...但是...", "example_zh": "虽然下雨，但是我很开心。", "example_en": "Although it's raining, I am very happy.", "moel_code": "C-P3-G-02"},
+        {"pattern": "如果...就...", "example_zh": "如果你努力，就能成功。", "example_en": "If you work hard, you will succeed.", "moel_code": "C-P3-G-03"},
+        {"pattern": "除了...以外", "example_zh": "除了华文，我还喜欢英文。", "example_en": "Apart from Chinese, I also like English.", "moel_code": "C-P3-G-04"},
+        {"pattern": "先...然后...", "example_zh": "先做作业，然后玩耍。", "example_en": "Do homework first, then play.", "moel_code": "C-P3-G-05"},
+        {"pattern": "一边...一边... (extended)", "example_zh": "老师一边讲课，一边写黑板。", "example_en": "The teacher talks while writing on the board.", "moel_code": "C-P3-G-06"},
+        {"pattern": "有的...有的...", "example_zh": "有的同学在看书，有的在写字。", "example_en": "Some classmates are reading, some are writing.", "moel_code": "C-P3-G-07"},
+        {"pattern": "越来越...", "example_zh": "天气越来越热。", "example_en": "The weather is getting hotter.", "moel_code": "C-P3-G-08"},
+        {"pattern": "着 (continuous state)", "example_zh": "门开着。", "example_en": "The door is open.", "moel_code": "C-P3-G-09"},
+        {"pattern": "过 (past experience)", "example_zh": "我去过植物园。", "example_en": "I have been to the Botanic Gardens.", "moel_code": "C-P3-G-10"}
+      ]
+    },
+    "P4": {
+      "label_en": "Primary 4",
+      "label_zh": "小学四年级",
+      "char_total": 500,
+      "char_cumulative": 1500,
+      "characters": {
+        "new": [
+          "遵","守","规","律","秩","序","责","任","义","务",
+          "观","察","研","究","探","讨","比","较","分","析",
+          "适","应","环","境","保","护","污","染","浪","费",
+          "节","约","资","源","循","环","持","续","发","展",
+          "通","信","网","络","科","技","创","新","发","明",
+          "预","防","治","疗","免","疫","营","养","均","衡",
+          "和","平","尊","敬","宽","容","理","解","沟","通",
+          "传","统","文","化","历","史","价","值","贡","献",
+          "困","境","挑","战","克","服","坚","持","毅","力",
+          "逐","渐","仿","佛","似","乎","依","然","终","于"
+        ],
+        "core": [
+          "遵守 (obey)","责任 (responsibility)","观察 (observe)","研究 (research)","比较 (compare)",
+          "分析 (analyse)","保护 (protect)","污染 (pollution)","节约 (save/conserve)","资源 (resources)",
+          "科技 (technology)","创新 (innovate)","发明 (invention)","传统 (tradition)","文化 (culture)",
+          "历史 (history)","尊重 (respect)","理解 (understand)","沟通 (communicate)","坚持 (persist)"
+        ]
+      },
+      "vocabulary": {
+        "themes": [
+          {
+            "theme_en": "Rules, responsibility, and values",
+            "theme_zh": "规则、责任和价值观",
+            "words": ["遵守","规则","秩序","责任","义务","尊重","宽容","理解","和平","礼貌"]
+          },
+          {
+            "theme_en": "Science and observation",
+            "theme_zh": "科学和观察",
+            "words": ["观察","研究","探讨","分析","比较","实验","结论","证据","解释","证明"]
+          },
+          {
+            "theme_en": "Environment and conservation",
+            "theme_zh": "环境和保护",
+            "words": ["环境","保护","污染","浪费","节约","资源","循环","垃圾","回收","绿化"]
+          },
+          {
+            "theme_en": "Technology and innovation",
+            "theme_zh": "科技和创新",
+            "words": ["科技","网络","发明","创新","电脑","手机","互联网","信息","通讯","设备"]
+          },
+          {
+            "theme_en": "Culture and heritage",
+            "theme_zh": "文化和传统",
+            "words": ["传统","文化","历史","节日","春节","中秋节","端午节","美食","习俗","纪念"]
+          },
+          {
+            "theme_en": "Challenges and perseverance",
+            "theme_zh": "挑战和坚持",
+            "words": ["困境","挑战","克服","坚持","毅力","努力","奋斗","成功","失败","吸取"]
+          },
+          {
+            "theme_en": "Emotions (advanced)",
+            "theme_zh": "情感（进阶）",
+            "words": ["仿佛","似乎","依然","终于","渐渐","忽然","原来","其实","难道","究竟"]
+          },
+          {
+            "theme_en": "Mid-level idioms",
+            "theme_zh": "中级成语",
+            "words": ["鸦雀无声","异口同声","目不转睛","五颜六色","千辛万苦","兴高采烈","争先恐后","四面八方"]
+          }
+        ]
+      },
+      "grammar_patterns": [
+        {"pattern": "只要...就...", "example_zh": "只要努力，就能进步。", "example_en": "As long as you work hard, you will improve.", "moel_code": "C-P4-G-01"},
+        {"pattern": "只有...才...", "example_zh": "只有坚持，才能成功。", "example_en": "Only through persistence can you succeed.", "moel_code": "C-P4-G-02"},
+        {"pattern": "无论...都...", "example_zh": "无论多么困难，我都要试试。", "example_en": "No matter how difficult, I will try.", "moel_code": "C-P4-G-03"},
+        {"pattern": "不但不...反而...", "example_zh": "他不但不生气，反而笑了。", "example_en": "He was not angry; instead, he laughed.", "moel_code": "C-P4-G-04"},
+        {"pattern": "既然...就...", "example_zh": "既然你答应了，就要做到。", "example_en": "Since you promised, you must do it.", "moel_code": "C-P4-G-05"},
+        {"pattern": "即使...也...", "example_zh": "即使下雨，我也要去上学。", "example_en": "Even if it rains, I will go to school.", "moel_code": "C-P4-G-06"},
+        {"pattern": "是...的 (emphasis)", "example_zh": "这个礼物是妈妈买的。", "example_en": "This gift was bought by Mum.", "moel_code": "C-P4-G-07"},
+        {"pattern": "把 (disposal construction)", "example_zh": "我把作业做完了。", "example_en": "I have finished my homework.", "moel_code": "C-P4-G-08"},
+        {"pattern": "被 (passive)", "example_zh": "他被老师表扬了。", "example_en": "He was praised by the teacher.", "moel_code": "C-P4-G-09"},
+        {"pattern": "连...都...", "example_zh": "他连早饭都没吃就上学了。", "example_en": "He went to school without even having breakfast.", "moel_code": "C-P4-G-10"},
+        {"pattern": "除了...还/也...", "example_zh": "他除了会画画，还会弹钢琴。", "example_en": "Besides painting, he can also play the piano.", "moel_code": "C-P4-G-11"},
+        {"pattern": "并 (emphasis negation)", "example_zh": "这件事并不简单。", "example_en": "This matter is not simple at all.", "moel_code": "C-P4-G-12"}
+      ]
+    },
+    "P5": {
+      "label_en": "Primary 5",
+      "label_zh": "小学五年级",
+      "char_total": 400,
+      "char_cumulative": 1900,
+      "characters": {
+        "new": [
+          "鼓","励","赞","赏","批","评","建","议","劝","告",
+          "矛","盾","挣","扎","妥","协","退","让","包","容",
+          "权","衡","利","弊","风","险","策","略","规","划",
+          "崇","拜","尊","敬","仰","慕","羡","慕","嫉","妒",
+          "贫","困","富","裕","公","平","正","义","歧","视",
+          "灵","敏","敏","捷","迅","速","敏","锐","果","断",
+          "勤","奋","刻","苦","专","注","投","入","钻","研",
+          "表","达","抒","发","描","述","刻","画","渲","染",
+          "构","思","布","局","结","构","层","次","细","节",
+          "取","舍","得","失","成","败","荣","辱","利","害"
+        ],
+        "core": [
+          "鼓励 (encourage)","欣赏 (appreciate)","批评 (criticise)","建议 (suggest)","矛盾 (contradiction)",
+          "权衡 (weigh)","策略 (strategy)","规划 (plan)","崇拜 (admire)","羡慕 (envy)",
+          "公平 (fair)","正义 (justice)","歧视 (discriminate)","勤奋 (diligent)","刻苦 (hardworking)",
+          "专注 (focused)","表达 (express)","描述 (describe)","构思 (conceive)","结构 (structure)"
+        ]
+      },
+      "vocabulary": {
+        "themes": [
+          {
+            "theme_en": "Social and interpersonal",
+            "theme_zh": "社交和人际",
+            "words": ["鼓励","欣赏","批评","建议","劝告","支持","反对","信任","尊重","沟通"]
+          },
+          {
+            "theme_en": "Conflict and resolution",
+            "theme_zh": "冲突和解决",
+            "words": ["矛盾","挣扎","妥协","退让","包容","误解","和解","体谅","商议","共识"]
+          },
+          {
+            "theme_en": "Thinking and strategy",
+            "theme_zh": "思维和策略",
+            "words": ["权衡","利弊","风险","策略","规划","分析","判断","决策","评估","预测"]
+          },
+          {
+            "theme_en": "Social issues",
+            "theme_zh": "社会议题",
+            "words": ["贫困","富裕","公平","正义","歧视","平等","权利","义务","贡献","责任"]
+          },
+          {
+            "theme_en": "Writing and composition",
+            "theme_zh": "写作和作文",
+            "words": ["表达","抒发","描述","刻画","渲染","构思","布局","结构","层次","细节"]
+          },
+          {
+            "theme_en": "Character traits",
+            "theme_zh": "性格品质",
+            "words": ["勤奋","刻苦","专注","果断","敏锐","灵敏","坚韧","乐观","悲观","豁达"]
+          },
+          {
+            "theme_en": "Advanced idioms",
+            "theme_zh": "高级成语",
+            "words": ["百折不挠","持之以恒","全力以赴","坚持不懈","废寝忘食","专心致志","举一反三","集思广益","不耻下问","实事求是"]
+          },
+          {
+            "theme_en": "PSLE exam vocabulary",
+            "theme_zh": "小六会考常见词汇",
+            "words": ["显然","仍然","逐渐","突然","顿时","毕竟","竟然","果然","其实","甚至"]
+          }
+        ]
+      },
+      "grammar_patterns": [
+        {"pattern": "与其...不如...", "example_zh": "与其抱怨，不如行动。", "example_en": "Rather than complain, it's better to act.", "moel_code": "C-P5-G-01"},
+        {"pattern": "宁可...也不...", "example_zh": "我宁可走路，也不迟到。", "example_en": "I would rather walk than be late.", "moel_code": "C-P5-G-02"},
+        {"pattern": "凡是...都...", "example_zh": "凡是参加比赛的同学都要练习。", "example_en": "All students joining the competition must practise.", "moel_code": "C-P5-G-03"},
+        {"pattern": "非...不可", "example_zh": "我非把这件事做好不可。", "example_en": "I must get this done well.", "moel_code": "C-P5-G-04"},
+        {"pattern": "之所以...是因为...", "example_zh": "他之所以进步，是因为努力。", "example_en": "The reason he improved is because he worked hard.", "moel_code": "C-P5-G-05"},
+        {"pattern": "以...为...", "example_zh": "他以助人为快乐。", "example_en": "He takes helping others as his joy.", "moel_code": "C-P5-G-06"},
+        {"pattern": "从...中 (perspective)", "example_zh": "从这件事中，我学到了很多。", "example_en": "From this incident, I learned a lot.", "moel_code": "C-P5-G-07"},
+        {"pattern": "对...来说", "example_zh": "对我来说，健康最重要。", "example_en": "For me, health is the most important.", "moel_code": "C-P5-G-08"},
+        {"pattern": "当...的时候", "example_zh": "当遇到困难的时候，不要放弃。", "example_en": "When facing difficulties, don't give up.", "moel_code": "C-P5-G-09"},
+        {"pattern": "以...为主", "example_zh": "饮食应以蔬菜为主。", "example_en": "The diet should mainly consist of vegetables.", "moel_code": "C-P5-G-10"},
+        {"pattern": "在...方面", "example_zh": "在学习方面，他非常认真。", "example_en": "In terms of studying, he is very serious.", "moel_code": "C-P5-G-11"},
+        {"pattern": "无论...都 (advanced)", "example_zh": "无论遇到什么挫折，他都坚持下去。", "example_en": "No matter what setbacks he faces, he persists.", "moel_code": "C-P5-G-12"},
+        {"pattern": "修辞手法: 比喻", "example_zh": "月亮像小船。", "example_en": "The moon is like a little boat. (simile)", "moel_code": "C-P5-G-13"},
+        {"pattern": "修辞手法: 拟人", "example_zh": "太阳公公笑了。", "example_en": "The sun smiled. (personification)", "moel_code": "C-P5-G-14"}
+      ]
+    },
+    "P6": {
+      "label_en": "Primary 6",
+      "label_zh": "小学六年级",
+      "char_total": 400,
+      "char_cumulative": 2300,
+      "characters": {
+        "new": [
+          "扎","实","渊","博","涵","养","修","养","境","界",
+          "创","造","奉","献","承","担","使","命","使","唤",
+          "正","确","错","误","偏","差","差","错","疏","忽",
+          "珍","惜","珍","贵","宝","贵","宝","藏","财","富",
+          "反","省","反","思","检","讨","领","悟","觉","醒",
+          "危","机","转","机","机","遇","挑","战","策","略",
+          "追","求","梦","想","理","想","抱","负","志","向",
+          "广","阔","辽","阔","遥","远","无","限","永","恒",
+          "根","据","依","据","凭","借","透","过","通","过",
+          "逐","渐","日","益","愈","加","倍","增","激","增"
+        ],
+        "core": [
+          "扎实 (solid)","渊博 (profound)","修养 (cultivation)","境界 (realm)","创造 (create)",
+          "奉献 (dedicate)","承担 (undertake)","珍惜 (cherish)","宝贵 (precious)","财富 (wealth)",
+          "反省 (reflect)","领悟 (comprehend)","危机 (crisis)","转机 (turning point)","机遇 (opportunity)",
+          "梦想 (dream)","理想 (ideal)","抱负 (ambition)","广阔 (vast)","永恒 (eternal)"
+        ]
+      },
+      "vocabulary": {
+        "themes": [
+          {
+            "theme_en": "PSLE abstract vocabulary",
+            "theme_zh": "小六会考抽象词汇",
+            "words": ["扎实","渊博","修养","境界","创造","奉献","承担","使命","珍惜","宝贵"]
+          },
+          {
+            "theme_en": "Values and philosophy",
+            "theme_zh": "价值观和哲理",
+            "words": ["正确","错误","偏差","疏忽","反省","反思","检讨","领悟","觉醒","感悟"]
+          },
+          {
+            "theme_en": "Life challenges and growth",
+            "theme_zh": "人生挑战和成长",
+            "words": ["危机","转机","机遇","挑战","挫折","磨练","考验","突破","成长","蜕变"]
+          },
+          {
+            "theme_en": "Aspirations and dreams",
+            "theme_zh": "理想和抱负",
+            "words": ["追求","梦想","理想","抱负","志向","目标","方向","前途","未来","希望"]
+          },
+          {
+            "theme_en": "Causality and reasoning",
+            "theme_zh": "因果和推理",
+            "words": ["根据","依据","凭借","透过","通过","原因","结果","影响","因素","关系"]
+          },
+          {
+            "theme_en": "Change and continuity",
+            "theme_zh": "变化和延续",
+            "words": ["逐渐","日益","愈加","倍增","激增","持续","不断","仍然","依旧","始终"]
+          },
+          {
+            "theme_en": "PSLE composition vocabulary",
+            "theme_zh": "小六会考作文词汇",
+            "words": ["恍然大悟","迫不及待","目不暇接","争先恐后","不约而同","若有所思","津津有味","目不转睛","无忧无虑","得意洋洋"]
+          },
+          {
+            "theme_en": "PSLE cloze passage vocabulary",
+            "theme_zh": "小六会考综合填空词汇",
+            "words": ["毕竟","竟然","果然","显然","当然","忽然","突然","顿时","其实","甚至","尤其","简直","几乎","总之","因此"]
+          },
+          {
+            "theme_en": "Higher Chinese (extension)",
+            "theme_zh": "高级华文（扩展）",
+            "words": ["固然","纵然","倘若","若非","尚且","况且","何况","进而","加以","反之"]
+          }
+        ]
+      },
+      "grammar_patterns": [
+        {"pattern": "不但...而且... (advanced)", "example_zh": "他不但成绩优异，而且品德高尚。", "example_en": "He not only excels academically but is also noble in character.", "moel_code": "C-P6-G-01"},
+        {"pattern": "无论...都... (PSLE)", "example_zh": "无论遇到多大的困难，我们都不能放弃希望。", "example_en": "No matter how big the difficulty, we must not give up hope.", "moel_code": "C-P6-G-02"},
+        {"pattern": "既然...就... (PSLE)", "example_zh": "既然选择了这条路，就要坚持走下去。", "example_en": "Since you chose this path, you must persevere.", "moel_code": "C-P6-G-03"},
+        {"pattern": "即使...也... (PSLE)", "example_zh": "即使失败了，也不要气馁。", "example_en": "Even if you fail, don't be discouraged.", "moel_code": "C-P6-G-04"},
+        {"pattern": "宁可...也不... (PSLE)", "example_zh": "他宁可自己受苦，也不让别人吃亏。", "example_en": "He would rather suffer himself than let others lose out.", "moel_code": "C-P6-G-05"},
+        {"pattern": "与其...不如... (PSLE)", "example_zh": "与其浪费时间，不如多学点东西。", "example_en": "Rather than waste time, it's better to learn more.", "moel_code": "C-P6-G-06"},
+        {"pattern": "非...不可 (PSLE)", "example_zh": "今天我非把这篇作文写完不可。", "example_en": "I must finish this composition today.", "moel_code": "C-P6-G-07"},
+        {"pattern": "双重否定 (double negative)", "example_zh": "这件事他不可能不知道。", "example_en": "It's impossible that he doesn't know about this.", "moel_code": "C-P6-G-08"},
+        {"pattern": "反问句 (rhetorical question)", "example_zh": "难道我们不应该帮助别人吗？", "example_en": "Shouldn't we help others?", "moel_code": "C-P6-G-09"},
+        {"pattern": "转折关系 (contrast)", "example_zh": "虽然这次考试很难，但是他还是考得很好。", "example_en": "Although this exam was very hard, he still did well.", "moel_code": "C-P6-G-10"},
+        {"pattern": "递进关系 (progression)", "example_zh": "不但要学好知识，更要学会做人。", "example_en": "Not only must we learn knowledge, we must also learn to be a good person.", "moel_code": "C-P6-G-11"},
+        {"pattern": "条件关系 (conditional)", "example_zh": "只有付出努力，才能取得好成绩。", "example_en": "Only by putting in effort can you achieve good results.", "moel_code": "C-P6-G-12"},
+        {"pattern": "因果关系 (causality)", "example_zh": "因为平时努力练习，所以他在比赛中获得了好成绩。", "example_en": "Because he practised hard, he achieved good results in the competition.", "moel_code": "C-P6-G-13"},
+        {"pattern": "修辞: 排比 (parallelism)", "example_zh": "我们要努力学习、努力奋斗、努力创造美好的未来。", "example_en": "We must study hard, work hard, and create a bright future.", "moel_code": "C-P6-G-14"},
+        {"pattern": "修辞: 对比 (contrast rhetoric)", "example_zh": "以前他很不认真，现在他非常努力。", "example_en": "Before, he was not serious; now, he is very hardworking.", "moel_code": "C-P6-G-15"}
+      ]
+    }
+  },
+  "level_topics": {
+    "P1": {
+      "topics": [
+        {
+          "topic_id": "CHI-P1-001",
+          "name_en": "Hanyu Pinyin",
+          "name_zh": "汉语拼音",
+          "characters": "— (phonetics focus, no character requirement)",
+          "vocab": ["bā","mā","dà","tǔ","mǎ","lù","lǘ","yā","é","yú"],
+          "grammar": "N/A (phonetics foundation)"
+        },
+        {
+          "topic_id": "CHI-P1-002",
+          "name_en": "Basic Stroke Order",
+          "name_zh": "基本笔画和笔顺",
+          "characters": "一丨丿丶乛亅",
+          "vocab": ["十","八","人","大","小","上","下"],
+          "grammar": "N/A (stroke practice)"
+        },
+        {
+          "topic_id": "CHI-P1-003",
+          "name_en": "Characters and Words",
+          "name_zh": "汉字和词语",
+          "characters": "~250-300 common characters",
+          "vocab": ["老师","同学","学校","书包","铅笔","花朵","太阳","月亮","星星","白云"],
+          "grammar": "是...的, 有..."
+        },
+        {
+          "topic_id": "CHI-P1-004",
+          "name_en": "Simple Sentences",
+          "name_zh": "简单句",
+          "characters": "Core characters from CHI-P1-003",
+          "vocab": ["喜欢","看见","听见","走来","跑去","吃饭","喝水","读书","写字","画画"],
+          "grammar": "Subject+Verb+Object, 很+adj, 吗 questions"
+        },
+        {
+          "topic_id": "CHI-P1-005",
+          "name_en": "Listening and Speaking",
+          "name_zh": "听说",
+          "characters": "Oral focus — characters from all P1 topics",
+          "vocab": ["你好","再见","谢谢","对不起","没关系","请问","我叫..."],
+          "grammar": "Simple question-answer, greetings"
+        },
+        {
+          "topic_id": "CHI-P1-006",
+          "name_en": "Picture Description",
+          "name_zh": "看图说话",
+          "characters": "Oral + written — ~50 characters",
+          "vocab": ["图片","里面","上面","旁边","前面","后面","左边","右边","颜色","动作"],
+          "grammar": "有...在..., 在...有..., 是...的"
+        }
+      ]
+    },
+    "P2": {
+      "topics": [
+        {
+          "topic_id": "CHI-P2-001",
+          "name_en": "Character Building",
+          "name_zh": "识字",
+          "characters": "~300 new, ~600 cumulative",
+          "vocab": ["花园","森林","动物","春天","夏天","秋天","冬天","星期","时间","快乐"],
+          "grammar": "Radical classification, compound character formation"
+        },
+        {
+          "topic_id": "CHI-P2-002",
+          "name_en": "Sentence Formation",
+          "name_zh": "造句",
+          "characters": "All P1-P2 characters",
+          "vocab": ["因为","所以","但是","然后","而且","一边","正在","已经","可以","应该"],
+          "grammar": "把 sentences, 被 sentences, 因为...所以..."
+        },
+        {
+          "topic_id": "CHI-P2-003",
+          "name_en": "Reading Comprehension",
+          "name_zh": "阅读理解",
+          "characters": "P1-P2 character set",
+          "vocab": ["文章","内容","题目","故事","人物","地方","时间","事情","开头","结尾"],
+          "grammar": "Comprehension: WHO/WHAT/WHEN/WHERE extraction"
+        },
+        {
+          "topic_id": "CHI-P2-004",
+          "name_en": "Writing",
+          "name_zh": "写话",
+          "characters": "P1-P2 + production characters",
+          "vocab": ["昨天","今天","明天","早上","下午","晚上","快乐","难过","开心","伤心"],
+          "grammar": "First…next…then…last structure, 了 (completion)"
+        },
+        {
+          "topic_id": "CHI-P2-005",
+          "name_en": "Oral Communication",
+          "name_zh": "口语",
+          "characters": "Oral-focused, all P1-P2",
+          "vocab": ["因为...所以...","先...然后...","有的...有的...","我觉得...","最喜欢..."],
+          "grammar": "Opinion expression, sequencing, comparison"
+        }
+      ]
+    },
+    "P3": {
+      "topics": [
+        {
+          "topic_id": "CHI-P3-001",
+          "name_en": "Vocabulary and Phrases",
+          "name_zh": "词汇和短语",
+          "characters": "~400 new, ~1000 cumulative",
+          "vocab": ["勇敢","诚实","谦虚","骄傲","勤劳","懒惰","帮助","感谢","分享","合作","井底之蛙","画蛇添足"],
+          "grammar": "Idiom usage context, 成语 meaning"
+        },
+        {
+          "topic_id": "CHI-P3-002",
+          "name_en": "Reading Comprehension (Short Passages)",
+          "name_zh": "阅读理解（短文）",
+          "characters": "All P1-P3 character set",
+          "vocab": ["段落","大意","细节","顺序","起因","经过","结果","道理","启示","教训"],
+          "grammar": "Main idea identification, sequence of events, moral extraction"
+        },
+        {
+          "topic_id": "CHI-P3-003",
+          "name_en": "Sentence Construction",
+          "name_zh": "造句",
+          "characters": "All P1-P3 character set",
+          "vocab": ["不但...而且...","虽然...但是...","如果...就...","除了...以外","越来越..."],
+          "grammar": "Compound sentence connectors"
+        },
+        {
+          "topic_id": "CHI-P3-004",
+          "name_en": "Composition",
+          "name_zh": "作文",
+          "characters": "All P1-P3 + production",
+          "vocab": ["开头","内容","结尾","人物","对话","心情","景色","动作","表情","感受"],
+          "grammar": "Narrative structure: beginning → middle → end"
+        },
+        {
+          "topic_id": "CHI-P3-005",
+          "name_en": "Oral - Reading Aloud",
+          "name_zh": "口语 - 朗读",
+          "characters": "P1-P3 character set (accuracy focus)",
+          "vocab": ["（朗读文本 — 短文）","（注意语气和停顿）"],
+          "grammar": "Pronunciation, tone accuracy, pausing at punctuation"
+        }
+      ]
+    },
+    "P4": {
+      "topics": [
+        {
+          "topic_id": "CHI-P4-001",
+          "name_en": "Vocabulary in Context",
+          "name_zh": "语境词汇",
+          "characters": "~500 new, ~1500 cumulative",
+          "vocab": ["遵守","观察","研究","比较","分析","保护","污染","浪费","节约","资源"],
+          "grammar": "Contextual word meaning deduction"
+        },
+        {
+          "topic_id": "CHI-P4-002",
+          "name_en": "Reading Comprehension",
+          "name_zh": "阅读理解",
+          "characters": "All P1-P4 character set",
+          "vocab": ["内容","理解","分析","推理","结论","作者","意图","态度","观点","立场"],
+          "grammar": "Inferential comprehension, writer's purpose"
+        },
+        {
+          "topic_id": "CHI-P4-003",
+          "name_en": "Cloze Passage (综合填空)",
+          "name_zh": "综合填空",
+          "characters": "All P1-P4 character set",
+          "vocab": ["语境","搭配","词义","辨析","词性","逻辑","承接","转折","因果","并列"],
+          "grammar": "Collocation, near-synonym discrimination, context logic"
+        },
+        {
+          "topic_id": "CHI-P4-004",
+          "name_en": "Composition - Narrative",
+          "name_zh": "叙事作文",
+          "characters": "All P1-P4 + production",
+          "vocab": ["回忆","经历","感受","启发","教训","难忘","感动","启示","成长","改变"],
+          "grammar": "Narrative with dialogue, flashback introduction"
+        },
+        {
+          "topic_id": "CHI-P4-005",
+          "name_en": "Oral - Conversation",
+          "name_zh": "口语 - 会话",
+          "characters": "All P1-P4 character set",
+          "vocab": ["我认为","我觉得","理由是","一方面...另一方面...","总的来说","比如","例如","其实","当然","可能"],
+          "grammar": "Opinion + reason structure, sustained conversation"
+        },
+        {
+          "topic_id": "CHI-P4-006",
+          "name_en": "Grammar",
+          "name_zh": "语法",
+          "characters": "N/A (grammar focus)",
+          "vocab": ["了","着","过","把","被","的","地","得"],
+          "grammar": "Aspect markers (了着过), 把/被 construction, 的地得 distinction"
+        }
+      ]
+    },
+    "P5": {
+      "topics": [
+        {
+          "topic_id": "CHI-P5-001",
+          "name_en": "Advanced Vocabulary",
+          "name_zh": "高级词汇",
+          "characters": "~400 new, ~1900 cumulative",
+          "vocab": ["鼓励","欣赏","批评","矛盾","权衡","策略","勤奋","专注","表达","描述",
+                   "百折不挠","持之以恒","全力以赴","坚持不懈"],
+          "grammar": "Advanced idiom usage, abstract noun formation"
+        },
+        {
+          "topic_id": "CHI-P5-002",
+          "name_en": "Reading Comprehension (Advanced)",
+          "name_zh": "阅读理解（高级）",
+          "characters": "All P1-P5 character set",
+          "vocab": ["分析","判断","推理","概括","归纳","总结","评价","鉴赏","比较","对比"],
+          "grammar": "Analysis-level comprehension, writer's technique identification"
+        },
+        {
+          "topic_id": "CHI-P5-003",
+          "name_en": "Cloze Passage (Advanced)",
+          "name_zh": "综合填空（高级）",
+          "characters": "All P1-P5 character set",
+          "vocab": ["毕竟","竟然","果然","显然","当然","忽然","突然","顿时","其实","甚至"],
+          "grammar": "Near-synonym discrimination, abstract adverb usage"
+        },
+        {
+          "topic_id": "CHI-P5-004",
+          "name_en": "Composition",
+          "name_zh": "作文",
+          "characters": "≥120 per composition",
+          "vocab": ["开头","展开","高潮","结尾","人物","情节","环境","对话","心理","细节"],
+          "grammar": "修辞 (simile, metaphor, personification), paragraph transition"
+        },
+        {
+          "topic_id": "CHI-P5-005",
+          "name_en": "Oral Examination Practice",
+          "name_zh": "口试备考",
+          "characters": "All P1-P5 (朗读 accuracy)",
+          "vocab": ["朗读：注意声调","会话：表达观点","我的看法是...","我认为...","除了...还有..."],
+          "grammar": "朗读: tone + fluency; 会话: opinion + evidence + conclusion"
+        },
+        {
+          "topic_id": "CHI-P5-006",
+          "name_en": "Grammar and Sentence Manipulation",
+          "name_zh": "语法和句子操作",
+          "characters": "N/A (manipulation focus)",
+          "vocab": ["与其...不如...","宁可...也不...","凡是...都...","非...不可","之所以...是因为..."],
+          "grammar": "Active/passive conversion, sentence type transformation"
+        }
+      ]
+    },
+    "P6": {
+      "topics": [
+        {
+          "topic_id": "CHI-P6-001",
+          "name_en": "PSLE Vocabulary",
+          "name_zh": "小六会考词汇",
+          "characters": "~400 new, ~2300 cumulative",
+          "vocab": ["扎实","渊博","修养","境界","创造","奉献","珍惜","宝贵","反省","领悟",
+                   "危机","转机","理想","抱负","广阔","永恒","尽管...还是...","既然...就..."],
+          "grammar": "All P1-P6 grammar review, near-synonym mastery"
+        },
+        {
+          "topic_id": "CHI-P6-002",
+          "name_en": "PSLE Reading Comprehension",
+          "name_zh": "小六会考阅读理解",
+          "characters": "All P1-P6 character set",
+          "vocab": ["归纳","概括","推断","隐含","主旨","意图","态度","手法","结构","线索"],
+          "grammar": "Higher-order: theme, writer's craft, moral analysis"
+        },
+        {
+          "topic_id": "CHI-P6-003",
+          "name_en": "PSLE Cloze Passage",
+          "name_zh": "小六会考综合填空",
+          "characters": "All P1-P6 character set",
+          "vocab": ["甚至","尤其","简直","几乎","总之","因此","反而","尚且","况且","何况"],
+          "grammar": "Advanced connective usage, nuance discrimination"
+        },
+        {
+          "topic_id": "CHI-P6-004",
+          "name_en": "PSLE Composition",
+          "name_zh": "小六会考作文",
+          "characters": "≥150 per composition",
+          "vocab": ["题目","三幅图","开头","发展","高潮","结尾","心理描写","对话描写","环境描写","细节描写",
+                   "恍然大悟","迫不及待","若有所思","津津有味","得意洋洋"],
+          "grammar": "Full narrative arc, 修辞 integration, character emotion expression"
+        },
+        {
+          "topic_id": "CHI-P6-005",
+          "name_en": "PSLE Oral Examination",
+          "name_zh": "小六会考口试",
+          "characters": "朗读: P1-P6 accuracy",
+          "vocab": ["朗读：语速适当","会话：针对图片","我认为...","我的理由是...","总的来说...","举个例子..."],
+          "grammar": "朗读: expression + tone accuracy; 会话: sustained structured response"
+        },
+        {
+          "topic_id": "CHI-P6-006",
+          "name_en": "PSLE Listening Comprehension",
+          "name_zh": "小六会考听力理解",
+          "characters": "Aural comprehension of all P1-P6 vocabulary",
+          "vocab": ["主旨","细节","推断","态度","语气","暗示","确认","否定","建议","要求"],
+          "grammar": "Aural discrimination, speaker attitude inference"
+        },
+        {
+          "topic_id": "CHI-P6-007",
+          "name_en": "PSLE 完成对话",
+          "name_zh": "小六会考完成对话",
+          "characters": "All P1-P6 character set",
+          "vocab": ["好的，我会...","是的，我也是...","为什么？因为...","我同意你的看法...",
+                   "我觉得不对，因为...","你的意思是...","我明白了，谢谢。","对不起，我不这么认为。"],
+          "grammar": "Contextually appropriate response, tone/register maintenance"
+        }
+      ]
+    }
+  },
+  "copyright_notice": "All character lists, vocabulary, and grammar patterns are originally compiled by AaaS from the MOE 2015 Chinese MTL Syllabus topic structure (public Crown Copyright, paraphrased). No textbook content (欢乐伙伴, MCE, SAP, Casco) has been reproduced or closely paraphrased. This data is for internal syllabus alignment reference in the tutor-sg app."
+}

@@ -31,6 +31,18 @@ def _mc_options(en_list, zh_list, correct_idx=0):
     return opts
 
 
+VOCAB_DATA_PATH = os.path.join(DATA_DIR, "chinese-vocab.json")
+
+def load_chinese_vocab():
+    """Load P1-P6 Chinese vocabulary data for targeted question generation."""
+    path = VOCAB_DATA_PATH
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return None
+
+CHINESE_VOCAB = load_chinese_vocab()
+
 def generate_questions():
     questions = []
     qid_counter = 1
@@ -1799,6 +1811,27 @@ def main():
     for q in questions:
         for field in required:
             assert field in q and q[field], f"Question {q.get('question_id', '???')} missing {field}"
+
+    # --- Chinese vocabulary enrichment ---
+    vocab = load_chinese_vocab()
+    if vocab:
+        enriched = 0
+        for t in topics:
+            if t["subject"] not in ("chinese", "chinese_mt"):
+                continue
+            level_key = f"P{t['level']}"
+            if level_key not in vocab.get("level_topics", {}):
+                continue
+            lt = vocab["level_topics"][level_key]
+            for vt in lt["topics"]:
+                if vt["topic_id"] != t["topic_id"]:
+                    continue
+                t["characters"] = vt.get("characters")
+                t["vocab"] = vt.get("vocab")
+                t["grammar"] = vt.get("grammar")
+                enriched += 1
+                break
+        print(f"Enriched {enriched} Chinese topics with vocabulary data.")
 
     # Write question-bank.json
     qb = {
