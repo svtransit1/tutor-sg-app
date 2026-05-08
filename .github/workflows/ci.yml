@@ -21,6 +21,9 @@ jobs:
     name: Typecheck
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: ./mobile
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -37,6 +40,9 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: ./mobile
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -49,11 +55,33 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
 
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ./mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+
   bundle:
     name: RN Bundle
-    needs: [typecheck, lint]
+    needs: [typecheck, lint, test]
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: ./mobile
     strategy:
       matrix:
         platform: [ios, android]
