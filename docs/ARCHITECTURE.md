@@ -195,9 +195,149 @@ All core features work fully offline. Only these require connectivity:
 
 ---
 
-## 5. Parent dashboard boundary
+## 5. Stylus input architecture
 
-### 5.1 Separation
+The stylus subsystem enables kids to write answers directly on AI-generated practice worksheets. It spans iOS (Apple Pencil via PencilKit) and Android (active stylus via S Pen SDK / stylus-aware gesture APIs), with platform-native handwriting recognition and on-device LLM-powered marking.
+
+### 5.1 Platform-specific APIs
+
+| Platform | Stylus capture | Handwriting recognition | Pressure/tilt |
+|---|---|---|---|
+| iOS (Apple Pencil) | PencilKit `PKCanvasView` | Apple Vision `VNRecognizeTextRequest` | `PKStroke` (native) |
+| Android (active stylus) | `MotionEvent.getToolType()` / `STYLUS` | ML Kit Digital Ink Recognition | `getPressure()` / `getAxisValue()` |
+
+**iOS detail:** A custom React Native native module wraps `PKCanvasView`. Apple Pencil input is automatically distinguished from finger touch (palm rejection is a PencilKit built-in). Double-tap gesture on Apple Pencil 2 toggles between pen and eraser modes. Ink strokes are captured as `PKStroke` objects, rendered at 60 fps, and destructively serialized for session replay.
+
+**Android detail:** A custom React Native native view handles `MotionEvent` stream classification — stylus events are routed to the ink layer, touch events are ignored when stylus proximity is detected. Samsung S Pen-specific extensions (`SpenEvent`, `SpenRemoteKeyEvent`) are available but the core path uses the universal `MotionEvent.TOOL_TYPE_STYLUS` API covering Wacom-powered, USI, and other active styli.
+
+### 5.2 Cross-platform abstraction
+
+```ts
+type InkStroke = {
+  points: Array<{ x: number; y: number; pressure: number; timestamp: number }>;
+  tool: "pen" | "eraser";
+  color: string;
+  width: number;
+};
+
+type RecognizedText = {
+  text: string;
+  confidence: number;        // 0.0–1.0
+  boundingBox: Rect;
+};
+
+interface HandwritingRecognitionResult {
+  rawText: string;
+  characters: RecognizedText[];
+  language: "en" | "zh-Hans" | "math";
+}
+
+interface MarkingFeedback {
+  isCorrect: boolean;
+  explanation?: string;      // LLM-generated, if wrong
+  strokeOrderIssues?: Array<{ character: string; correctOrder: string }>;
+}
+
+// Platform-specific native modules expose a common interface:
+const StylusBridge: {
+  startCapture(worksheetId: string, answerZone: Rect): void;
+  stopCapture(): Promise<InkStroke[]>;
+  recognize(strokes: InkStroke[], language: Language): Promise<HandwritingRecognitionResult>;
+  clear(): void;
+  undo(): void;
+  setTool(tool: "pen" | "eraser"): void;
+};
+```
+
+### 5.3 Handwriting recognition pipeline
+
+```
+Stylus strokes captured
+  → Platform handwriting recognition (Apple Vision / ML Kit Digital Ink)
+    → Confidence scoring per character/word:
+      ├── ≥ 0.8: auto-accepted (green)
+      ├── 0.5–0.79: flagged in yellow, suggested text shown
+      └── < 0.5: red squiggle underline, "Tap to type" fallback prompt
+  → Subject-aware validation (routed through model router, §3.2):
+      ├── Math answers    → parsed ± compared against computed answer
+      ├── Chinese MT      → Qwen 4B stroke-order + character correctness check
+      └── English answers → Gemma E4B/E2B spelling + grammar check
+  → Real-time marking:
+      ├── Correct → green checkmark
+      └── Wrong   → red cross + expandable LLM-generated explanation
+```
+
+### 5.4 Worksheet rendering + stylus integration
+
+- Worksheets are rendered as a scrollable React Native view with an embedded native canvas layer (iOS: `PKCanvasView`, Android: custom stylus-aware `View`).
+- Each worksheet carries a **zone manifest** — a JSON map of answer areas with coordinates, expected answer type, and correct answer hash:
+
+```ts
+type AnswerZone = {
+  id: string;
+  rect: Rect;               // absolute coordinates on the worksheet
+  type: "handwriting" | "drawing" | "typed";
+  subject: Subject;
+  expectedHash: string;     // SHA-256 of expected answer (never plaintext in UI)
+  maxStrokes?: number;
+};
+```
+
+- Zones can overlap and scroll independently of the canvas. A zone becomes active when the kid taps it (finger) or starts writing inside it (stylus).
+- Drawing zones support math diagrams (model-drawing, number bonds, bar models — core P3–P6 Math techniques).
+- Zones default to stylus input; typed fallback is available via a long-press action.
+
+### 5.5 Chinese MT stroke-order checking
+
+Chinese Mother Tongue handwriting is a first-class stylus use case (per [[decisions-locked]] and ADD §7). Stroke order is a graded criterion in MOE Chinese exams.
+
+Architecture:
+1. Kid writes a character in a stylus zone, language = `zh-Hans`.
+2. Apple Vision / ML Kit Digital Ink returns the recognized character and its stroke sequence.
+3. The stroke sequence is sent to Qwen 4B via the model router with a structured prompt: "Check if 我 is written with correct stroke order. Strokes observed: [sequence]. Return: { isCorrect, issues }."
+4. If incorrect, the LLM returns the correct stroke order sequence; the app renders an animated stroke-order overlay on the character area.
+5. Stroke-order data is sourced from the curated content corpus (static SQLite database, per [[decisions-locked]] and [[articles/01-product-thesis]]).
+
+### 5.6 Data flow summary
+
+```
+Worksheet render (from corpus DB)
+  → Kid writes in stylus zone → Strokes captured
+    → Handwriting recognition (on-device, platform-native)
+      → Subject router (§3.2) → LLM validation (Gemma / Qwen)
+        → Marking feedback rendered on worksheet
+          → Session event auto-saved → Parent Log (§6.3 via SQLite)
+```
+
+### 5.7 Performance budget
+
+| Metric | Target |
+|---|---|
+| Stroke rendering | < 16 ms per frame (60 fps during writing) |
+| Handwriting recognition | < 500 ms per answer zone (after last stroke) |
+| LLM validation (Math/English) | < 3 seconds (E4B tier), < 6 seconds (E2B tier) |
+| LLM validation (Chinese stroke-order) | < 5 seconds (Qwen 4B), < 10 seconds (Qwen 2B) |
+| Zone rendering on worksheet scroll | No jank; virtualized canvas for worksheets > 2 screen heights |
+
+### 5.8 Device tier implications
+
+- **High tier (≥6 GB RAM):** Full stylus feature set — pressure sensitivity, stroke-order animations, real-time preview.
+- **Mid tier (3–5 GB RAM):** Stylus works but stroke-order animations are static (no playback); pressure data captured but not animated.
+- **Unsupported (<3 GB RAM):** Stylus features disabled — worksheet interaction is typed-input only.
+
+### 5.9 Privacy boundary
+
+All stylus input stays on-device, consistent with §6.4:
+- Ink strokes: in-memory during session, serialized to SQLite for session replay in Parent Log
+- Recognized text: session SQLite row only
+- Stroke sequence + recognized answer: never leave device, even in opt-in telemetry
+- Telemetry collects only anonymized counts: "worksheet completed", "stylus answer marked correct/incorrect" — no strokes, no text, no character data
+
+---
+
+## 6. Parent dashboard boundary
+
+### 6.1 Separation
 
 | | Child UI | Parent Dashboard |
 |---|---|---|
@@ -206,29 +346,29 @@ All core features work fully offline. Only these require connectivity:
 | Data source | Live LLM interactions | SQLite sessions table (read-only) |
 | Network | None required | Sync queued locally; POST to Supabase when online |
 
-### 5.2 PIN gate
+### 6.2 PIN gate
 
 - 4-digit PIN set by parent during onboarding
 - Required to enter the Parent area
 - PIN hash stored locally in SQLite (never leaves device)
 - 5 failed attempts → 60-second cooldown
 
-### 5.3 What parents see
+### 6.3 What parents see
 
 - Daily/weekly view of every kid session
 - Per session: subject, topic, time spent, questions attempted, struggle indicators, AI help summary
 - All summaries generated on-device from session events
 - Parent can flag a session ("this looks wrong") → feeds the question-bank improvement loop
 
-### 5.4 Privacy boundary
+### 6.4 Privacy boundary
 
 **Hard rule:** Photos and OCR text never leave the device, even to our servers. Only anonymized usage telemetry leaves — and only after parent opts in via the Parent Dashboard settings toggle (default: OFF).
 
 ---
 
-## 6. Security boundaries
+## 7. Security boundaries
 
-### 6.1 Child data isolation
+### 7.1 Child data isolation
 
 | Data | Storage | Leaves device? |
 |---|---|---|
@@ -240,23 +380,23 @@ All core features work fully offline. Only these require connectivity:
 | Kid profile (name, level) | SQLite | Never |
 | Parent email / auth token | Secure store (Keychain / Keystore) | Supabase auth only |
 
-### 6.2 Model integrity
+### 7.2 Model integrity
 
 - All model files hosted on Cloudflare R2 with SHA-256 manifests
 - App verifies integrity hash before loading any model into the inference engine
 - Failed verification → delete file, retry download once, then error
 
-### 6.3 Purchase security
+### 7.3 Purchase security
 
 - All purchases require parent gate (birth-year challenge, age ≥ 18)
 - Entitlement cross-checked against Supabase on every app foreground
 - Device-side purchase alone is not trusted
 
-### 6.4 Analytics constraint
+### 7.4 Analytics constraint
 
 **No third-party analytics SDKs in child-facing code paths.** Parent dashboard analytics are isolated to the web companion. This is a hard architectural boundary — any code in a child-facing React Native screen must not import or transitively depend on an analytics library.
 
-### 6.5 Auth model
+### 7.5 Auth model
 
 - Parent: email + magic link or Google/Apple sign-in (Supabase Auth)
 - Kid profile: local only, no login, no auth token
@@ -264,7 +404,7 @@ All core features work fully offline. Only these require connectivity:
 
 ---
 
-## 7. Implementation order
+## 8. Implementation order
 
 | Phase | What | Parallel track |
 |---|---|---|
@@ -279,7 +419,7 @@ All core features work fully offline. Only these require connectivity:
 
 ---
 
-## 8. Cross-references
+## 9. Cross-references
 
 - **Product spec:** [wiki ADD](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fapp-design-document.md)
 - **Locked decisions:** [wiki decisions-locked](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fdecisions-locked.md)
