@@ -38,6 +38,8 @@ dist/
 # Only track JSON manifests, not actual model weights
 packages/shared/src/models/*
 !packages/shared/src/models/*.json
+# Exception: mobile src models dir (TypeScript types, not model weights)
+!mobile/src/models/
 
 # Test outputs
 coverage/

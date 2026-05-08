@@ -1,39 +1,27 @@
 {
   "expo": {
-    "name": "tutor-sg",
+    "name": "Tutor SG",
     "slug": "tutor-sg",
     "version": "0.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
     "scheme": "tutor-sg",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#4A90D9"
-    },
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.aaas.tutorsg",
+      "config": { "usesNonExemptEncryption": false },
       "infoPlist": {
-        "NSCameraUsageDescription": "Take photos of homework for AI tutoring"
+        "NSCameraUsageDescription": "Tutor SG needs camera access to scan homework questions.",
+        "NSMicrophoneUsageDescription": "Tutor SG needs microphone access for voice input."
       }
     },
     "android": {
+      "adaptiveIcon": { "backgroundColor": "#4A90D9" },
       "package": "com.aaas.tutorsg",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#4A90D9"
-      },
-      "permissions": ["android.permission.CAMERA"]
+      "permissions": ["android.permission.CAMERA", "android.permission.RECORD_AUDIO"]
     },
-    "plugins": [
-      "expo-router",
-      "expo-localization",
-      "./modules/expo-document-camera"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    }
+    "plugins": ["expo-router", "expo-sqlite"],
+    "experiments": { "typedRoutes": true }
   }
 }
