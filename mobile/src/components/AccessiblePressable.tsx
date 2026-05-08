@@ -7,20 +7,12 @@ import {
   TextStyle,
   useColorScheme,
 } from 'react-native';
-
-const MIN_TOUCH_TARGET = 44;
-const MIN_BODY_SIZE = 16;
-
-const COLORS = {
-  light: {
-    primary: '#2563EB',
-    textInverse: '#FFFFFF',
-  },
-  dark: {
-    primary: '#60A5FA',
-    textInverse: '#FFFFFF',
-  },
-};
+import {
+  lightColors as lightC,
+  darkColors as darkC,
+  scaledFontSize,
+  scaledTouchTarget,
+} from '@tutor-sg/theme';
 
 interface AccessiblePressableProps {
   onPress: () => void;
@@ -42,10 +34,18 @@ export default function AccessiblePressable({
   textStyle,
 }: AccessiblePressableProps) {
   const isDark = useColorScheme() === 'dark';
-  const C = isDark ? COLORS.dark : COLORS.light;
+  const C = isDark ? darkC : lightC;
+  const touchTarget = scaledTouchTarget();
+  const bodySize = scaledFontSize('body');
 
-  const containerStyle: ViewStyle[] = [baseStyles.base];
-  const labelStyle: TextStyle[] = [baseStyles.label];
+  const containerStyle: ViewStyle[] = [
+    styles.base,
+    { minHeight: touchTarget },
+  ];
+  const labelStyle: TextStyle[] = [
+    styles.label,
+    { fontSize: bodySize },
+  ];
 
   switch (variant) {
     case 'primary':
@@ -94,16 +94,14 @@ export default function AccessiblePressable({
   );
 }
 
-const baseStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   base: {
-    minHeight: MIN_TOUCH_TARGET,
     paddingVertical: 12,
     paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   label: {
-    fontSize: MIN_BODY_SIZE,
     fontWeight: '600',
   },
 });

@@ -1,15 +1,26 @@
 import { Stack } from 'expo-router';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, useColorScheme } from 'react-native';
+import {
+  lightColors as lightC,
+  darkColors as darkC,
+  scaledFontSize,
+  scaledTouchTarget,
+} from '@tutor-sg/theme';
 import HomeworkErrorBoundary from '@/components/ErrorBoundary';
 
 function KidScreenHeader({ title }: { title: string }) {
+  const isDark = useColorScheme() === 'dark';
+  const C = isDark ? darkC : lightC;
+
   return (
     <View
-      style={styles.screenHeader}
+      style={[styles.screenHeader, { minHeight: scaledTouchTarget() }]}
       accessibilityRole="header"
       accessibilityLabel={title}
     >
-      <Text style={styles.screenTitle}>{title}</Text>
+      <Text style={[styles.screenTitle, { color: C.textPrimary, fontSize: scaledFontSize('h3') }]}>
+        {title}
+      </Text>
     </View>
   );
 }
@@ -17,7 +28,20 @@ function KidScreenHeader({ title }: { title: string }) {
 export default function KidLayout() {
   return (
     <HomeworkErrorBoundary>
-      <Stack screenOptions={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="home"
+          options={{ header: () => <KidScreenHeader title="Home" /> }}
+        />
+        <Stack.Screen
+          name="camera"
+          options={{ header: () => <KidScreenHeader title="Camera" /> }}
+        />
+        <Stack.Screen
+          name="camera-result"
+          options={{ header: () => <KidScreenHeader title="Result" /> }}
+        />
+      </Stack>
     </HomeworkErrorBoundary>
   );
 }
@@ -26,12 +50,9 @@ const styles = StyleSheet.create({
   screenHeader: {
     paddingHorizontal: 16,
     paddingVertical: 12,
-    minHeight: 44,
     justifyContent: 'center',
   },
   screenTitle: {
-    fontSize: 18,
     fontWeight: '700',
-    color: '#1A1A1A',
   },
 });

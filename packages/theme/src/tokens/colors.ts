@@ -78,3 +78,11 @@ export const darkColors: ColorTokens = {
   disabledText: '#6B7280',
   overlay: 'rgba(0, 0, 0, 0.6)',
 };
+
+/** Kid mode uses light palette (vibrant, playful) */
+export const kidColors = lightColors;
+export type KidColors = typeof kidColors;
+
+/** Parent mode uses dark palette (professional, calm) */
+export const parentColors = darkColors;
+export type ParentColors = typeof parentColors;

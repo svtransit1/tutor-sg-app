@@ -10,33 +10,17 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
+  lightColors as lightC,
+  darkColors as darkC,
+  scaledFontSize,
+  scaledTouchTarget,
+} from '@tutor-sg/theme';
+import {
   classifyError,
   ERROR_TYPE_TO_I18N_SECTION,
   type HomeworkError,
   type HomeworkErrorType,
 } from '@/errors/homework-errors';
-
-const COLORS = {
-  light: {
-    bg: '#F8F9FA',
-    textPrimary: '#1A1A1A',
-    textSecondary: '#374151',
-    textInverse: '#FFFFFF',
-    primary: '#2563EB',
-    disabled: '#6B7280',
-  },
-  dark: {
-    bg: '#111827',
-    textPrimary: '#F3F4F6',
-    textSecondary: '#D1D5DB',
-    textInverse: '#FFFFFF',
-    primary: '#60A5FA',
-    disabled: '#9CA3AF',
-  },
-};
-
-const MIN_BODY_SIZE = 16;
-const MIN_TOUCH_TARGET = 44;
 
 interface ErrorScreenProps {
   error: HomeworkError;
@@ -44,11 +28,11 @@ interface ErrorScreenProps {
 }
 
 const ERROR_ICONS: Record<HomeworkErrorType, string> = {
-  llm_timeout: '⏳',
-  camera_permission_denied: '📷',
-  ocr_failure: '🔍',
-  model_not_downloaded: '📦',
-  unknown: '😅',
+  llm_timeout: '\u23F3',
+  camera_permission_denied: '\uD83D\uDCF7',
+  ocr_failure: '\uD83D\uDD0D',
+  model_not_downloaded: '\uD83D\uDCE6',
+  unknown: '\uD83D\uDE05',
 };
 
 function HomeworkErrorScreen({ error, onReset }: ErrorScreenProps) {
@@ -58,7 +42,7 @@ function HomeworkErrorScreen({ error, onReset }: ErrorScreenProps) {
   const isDark = useColorScheme() === 'dark';
   const errorKey = ERROR_TYPE_TO_I18N_SECTION[error.type];
   const icon = ERROR_ICONS[error.type];
-  const C = isDark ? COLORS.dark : COLORS.light;
+  const C = isDark ? darkC : lightC;
 
   const handleGoBack = () => {
     router.replace('/(kid)/home');
@@ -75,18 +59,21 @@ function HomeworkErrorScreen({ error, onReset }: ErrorScreenProps) {
     router.replace('/(parent)/dashboard');
   };
 
+  const touchTarget = scaledTouchTarget();
+  const bodySize = scaledFontSize('body');
+
   const primaryAction = (() => {
     switch (error.type) {
       case 'llm_timeout':
         return (
           <TouchableOpacity
-            style={[styles.primaryButton, { backgroundColor: C.primary }]}
+            style={[styles.primaryButton, { backgroundColor: C.primary, minHeight: touchTarget }]}
             onPress={onReset}
             accessibilityRole="button"
             accessibilityLabel={t(`homeworkError.${errorKey}.retry`)}
             activeOpacity={0.8}
           >
-            <Text style={styles.primaryButtonText}>
+            <Text style={[styles.primaryButtonText, { fontSize: bodySize }]}>
               {t(`homeworkError.${errorKey}.retry`)}
             </Text>
           </TouchableOpacity>
@@ -94,13 +81,13 @@ function HomeworkErrorScreen({ error, onReset }: ErrorScreenProps) {
       case 'camera_permission_denied':
         return (
           <TouchableOpacity
-            style={[styles.primaryButton, { backgroundColor: C.primary }]}
+            style={[styles.primaryButton, { backgroundColor: C.primary, minHeight: touchTarget }]}
             onPress={handleManualInput}
             accessibilityRole="button"
             accessibilityLabel={t(`homeworkError.${errorKey}.typeItOut`)}
             activeOpacity={0.8}
           >
-            <Text style={styles.primaryButtonText}>
+            <Text style={[styles.primaryButtonText, { fontSize: bodySize }]}>
               {t(`homeworkError.${errorKey}.typeItOut`)}
             </Text>
           </TouchableOpacity>
@@ -109,24 +96,24 @@ function HomeworkErrorScreen({ error, onReset }: ErrorScreenProps) {
         return (
           <>
             <TouchableOpacity
-              style={[styles.primaryButton, { backgroundColor: C.primary }]}
+              style={[styles.primaryButton, { backgroundColor: C.primary, minHeight: touchTarget }]}
               onPress={onReset}
               accessibilityRole="button"
               accessibilityLabel={t(`homeworkError.${errorKey}.retake`)}
               activeOpacity={0.8}
             >
-              <Text style={styles.primaryButtonText}>
+              <Text style={[styles.primaryButtonText, { fontSize: bodySize }]}>
                 {t(`homeworkError.${errorKey}.retake`)}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.secondaryButton, { borderColor: C.primary }]}
+              style={[styles.secondaryButton, { borderColor: C.primary, minHeight: touchTarget }]}
               onPress={handleManualInput}
               accessibilityRole="button"
               accessibilityLabel={t(`homeworkError.${errorKey}.manualInput`)}
               activeOpacity={0.7}
             >
-              <Text style={[styles.secondaryButtonText, { color: C.primary }]}>
+              <Text style={[styles.secondaryButtonText, { color: C.primary, fontSize: bodySize }]}>
                 {t(`homeworkError.${errorKey}.manualInput`)}
               </Text>
             </TouchableOpacity>
@@ -135,13 +122,13 @@ function HomeworkErrorScreen({ error, onReset }: ErrorScreenProps) {
       case 'model_not_downloaded':
         return (
           <TouchableOpacity
-            style={[styles.primaryButton, { backgroundColor: C.primary }]}
+            style={[styles.primaryButton, { backgroundColor: C.primary, minHeight: touchTarget }]}
             onPress={handleParentArea}
             accessibilityRole="button"
             accessibilityLabel={t(`homeworkError.${errorKey}.parentArea`)}
             activeOpacity={0.8}
           >
-            <Text style={styles.primaryButtonText}>
+            <Text style={[styles.primaryButtonText, { fontSize: bodySize }]}>
               {t(`homeworkError.${errorKey}.parentArea`)}
             </Text>
           </TouchableOpacity>
@@ -149,13 +136,13 @@ function HomeworkErrorScreen({ error, onReset }: ErrorScreenProps) {
       default:
         return (
           <TouchableOpacity
-            style={[styles.primaryButton, { backgroundColor: C.primary }]}
+            style={[styles.primaryButton, { backgroundColor: C.primary, minHeight: touchTarget }]}
             onPress={onReset}
             accessibilityRole="button"
             accessibilityLabel={t(`homeworkError.${errorKey}.retry`)}
             activeOpacity={0.8}
           >
-            <Text style={styles.primaryButtonText}>
+            <Text style={[styles.primaryButtonText, { fontSize: bodySize }]}>
               {t(`homeworkError.${errorKey}.retry`)}
             </Text>
           </TouchableOpacity>
@@ -169,7 +156,7 @@ function HomeworkErrorScreen({ error, onReset }: ErrorScreenProps) {
         styles.container,
         styles.centerContent,
         {
-          backgroundColor: C.bg,
+          backgroundColor: C.bgPrimary,
           paddingTop: insets.top,
         },
       ]}
@@ -184,7 +171,7 @@ function HomeworkErrorScreen({ error, onReset }: ErrorScreenProps) {
           {t(`homeworkError.${errorKey}.title`)}
         </Text>
 
-        <Text style={[styles.errorDesc, { color: C.textSecondary }]}>
+        <Text style={[styles.errorDesc, { color: C.textSecondary, fontSize: bodySize }]}>
           {t(`homeworkError.${errorKey}.description`)}
         </Text>
 
@@ -192,13 +179,13 @@ function HomeworkErrorScreen({ error, onReset }: ErrorScreenProps) {
           {primaryAction}
 
           <TouchableOpacity
-            style={styles.textLink}
+            style={[styles.textLink, { minHeight: touchTarget }]}
             onPress={handleGoBack}
             accessibilityRole="button"
             accessibilityLabel={t('homeworkError.unknown.goBack')}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
-            <Text style={[styles.textLinkLabel, { color: C.disabled }]}>
+            <Text style={[styles.textLinkLabel, { color: C.textTertiary, fontSize: bodySize }]}>
               {t('homeworkError.unknown.goBack')}
             </Text>
           </TouchableOpacity>
@@ -274,7 +261,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.3,
   },
   errorDesc: {
-    fontSize: MIN_BODY_SIZE,
     textAlign: 'center',
     lineHeight: 24,
     paddingHorizontal: 8,
@@ -287,7 +273,6 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     width: '100%',
-    minHeight: MIN_TOUCH_TARGET,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 14,
@@ -296,12 +281,10 @@ const styles = StyleSheet.create({
   },
   primaryButtonText: {
     color: '#FFFFFF',
-    fontSize: MIN_BODY_SIZE,
     fontWeight: '700',
   },
   secondaryButton: {
     width: '100%',
-    minHeight: MIN_TOUCH_TARGET,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 14,
@@ -311,17 +294,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   secondaryButtonText: {
-    fontSize: MIN_BODY_SIZE,
     fontWeight: '600',
   },
   textLink: {
-    minHeight: MIN_TOUCH_TARGET,
     paddingVertical: 10,
     paddingHorizontal: 16,
     justifyContent: 'center',
   },
   textLinkLabel: {
-    fontSize: MIN_BODY_SIZE,
     fontWeight: '500',
     textDecorationLine: 'underline',
   },
