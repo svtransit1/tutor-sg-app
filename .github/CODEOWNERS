@@ -1,13 +1,68 @@
 # CODEOWNERS — tutor-sg
 # Per ADD §11: Tortoise reviews every PR; Foxy approves merges to main; Owl gates architecture-touching PRs.
 #
-# BLOCKED: @tortoise-tutor-sg is a placeholder. Update to the real Tortoise bot GitHub handle
-# once Boss provisions the bot account (approval 67b2d57e).
+# Agent-handle mapping (see docs/GOVERNANCE.md):
+#   🐢 Tortoise = @tortoise-tutor-sg (review bot, placeholder — not yet provisioned)
+#   🐺 Wolf     = @muatan (deploy key, primary mobile coder)
+#   🦉 Owl      = TBD (CTO, architecture)
+#   🦊 Foxy     = TBD (PM, merge approval)
+#   🐝 Bee      = TBD (cross-platform coder)
+#   🎨 Flutter  = TBD (UX)
+#   🌿 Sage     = TBD (content)
+#
+# All TBD handles currently fall through to @tortoise-tutor-sg.
+# Update to real handles once Boss provisions GitHub accounts (approval 67b2d57e).
 
 # Global default — Tortoise reviews everything
 * @tortoise-tutor-sg
 
-# Architecture-touching paths also need Owl review
+# --- Architecture (Owl) ---
+# Model routing, inference pipeline, device tier detection, architecture docs
+/packages/llm/ @tortoise-tutor-sg
+/packages/device-tier/ @tortoise-tutor-sg
 /docs/ARCHITECTURE.md @tortoise-tutor-sg
-/src/model/ @tortoise-tutor-sg
-/src/inference/ @tortoise-tutor-sg
+
+# --- Mobile app (Wolf + Bee + Flutter) ---
+# Main entry point and app-level config
+/mobile/app.config.ts @tortoise-tutor-sg
+/mobile/eas.json @tortoise-tutor-sg
+
+# UI layer (Flutter)
+/mobile/src/components/ @tortoise-tutor-sg
+/packages/theme/ @tortoise-tutor-sg
+/mobile/app/ @tortoise-tutor-sg
+
+# Camera, OCR, parent log, IAP (Bee)
+/mobile/src/types/ @tortoise-tutor-sg
+/packages/database/ @tortoise-tutor-sg
+
+# Feature flags (Wolf)
+/packages/features/ @tortoise-tutor-sg
+
+# i18n (Bee)
+/mobile/src/i18n/ @tortoise-tutor-sg
+/packages/i18n/ @tortoise-tutor-sg
+
+# --- Content (Sage) ---
+# Syllabus content, question bank, taxonomy, schemas
+/data/ @tortoise-tutor-sg
+/schema/ @tortoise-tutor-sg
+/syllabus-pdfs/ @tortoise-tutor-sg
+
+# --- Shared packages (Wolf) ---
+/packages/shared/ @tortoise-tutor-sg
+/packages/perf/ @tortoise-tutor-sg
+
+# --- Infrastructure (Wolf / Owl) ---
+# CI/CD, lint config, git hooks
+/.github/ @tortoise-tutor-sg
+/.husky/ @tortoise-tutor-sg
+/packages/eslint-config/ @tortoise-tutor-sg
+
+# --- Build & scripts (Wolf) ---
+/scripts/ @tortoise-tutor-sg
+
+# --- Root config ---
+/package.json @tortoise-tutor-sg
+/pnpm-workspace.yaml @tortoise-tutor-sg
+/tsconfig.base.json @tortoise-tutor-sg
