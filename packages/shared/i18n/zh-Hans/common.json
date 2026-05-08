@@ -1,0 +1,46 @@
+{
+  "welcome": {
+    "title": "欢迎"
+  },
+  "app": {
+    "name": "补习宝"
+  },
+  "common": {
+    "ok": "确定",
+    "cancel": "取消",
+    "back": "返回",
+    "next": "下一步",
+    "loading": "加载中…",
+    "error": "出了点问题",
+    "retry": "重试"
+  },
+  "camera": {
+    "photoReview": {
+      "retake": "重新拍照",
+      "usePhoto": "使用这张照片",
+      "usePhotos": "使用 {{count}} 张照片",
+      "usePhotos_plural": "使用 {{count}} 张照片",
+      "pageCount": "第 {{current}} 页，共 {{total}} 页",
+      "addPage": "加页",
+      "removePage": "移除",
+      "multiPageHint": "你可以添加多个页面",
+      "retakeButton": "重新拍照",
+      "confirmButton": "使用这张照片并继续",
+      "confirmButtonPlural": "使用全部 {{count}} 张照片并继续",
+      "pageThumbnail": "第 {{number}} 页缩略图",
+      "addPageButton": "再拍一页",
+      "removePageButton": "移除第 {{number}} 页"
+    }
+  },
+  "homework": {
+    "followUp": {
+      "placeholder": "提出问题…",
+      "placeholderRecording": "录音中… 点击麦克风停止",
+      "send": "发送",
+      "mic": "语音输入",
+      "micRecording": "正在录音 — 点击停止",
+      "micProcessing": "语音处理中…",
+      "micError": "语音输入出错 — 点击重试"
+    }
+  }
+}
