@@ -10,6 +10,25 @@ Singapore primary school AI tutor — on-device LLM, EN + Simplified Chinese, P1
 
 Do not commit secrets, child data, or model weights. See `.gitignore`.
 
+## Development setup
+
+### Git hooks
+
+This repo uses [husky](https://typicode.github.io/husky/) for pre-commit hooks.
+Hooks auto-install on `pnpm install` via the `prepare` script.
+
+**Pre-commit hook** (`.husky/pre-commit`):
+- Skipped entirely when `CI=true` (GitHub Actions, etc.)
+- Collects staged `.ts`/`.tsx` files; exits early if none
+- Runs `pnpm lint` then `pnpm typecheck` on each affected workspace package
+- Blocks the commit if either check fails
+- Non-code changes (docs, config, assets) bypass the hook
+
+To bypass hooks temporarily:
+```bash
+git commit --no-verify -m "message"
+```
+
 ---
 
 ## Model integrity hashes
