@@ -29,7 +29,7 @@ Agent ↔ GitHub account mapping and review rules. Per ADD §11 and [[decisions-
 |-----------------------------|--------------------------|
 | Require PR review           | 1 approval               |
 | Required approval reviewer  | svtransit1 (temporary — replace with Tortoise when provisioned) |
-| Require CI checks           | `test / ci` (from .github/workflows/ci.yml) |
+| Require CI checks           | `typecheck`, `lint`, `RN Bundle (ios)`, `RN Bundle (android)` (from .github/workflows/ci.yml) |
 | Require CODEOWNERS review   | Enabled                  |
 | Allow force-push            | Disabled                 |
 | Allow deletions             | Disabled                 |
@@ -44,7 +44,10 @@ Agent ↔ GitHub account mapping and review rules. Per ADD §11 and [[decisions-
 - `main` — shippable, protected
 - `feat/<short-name>` — feature branches
 - `fix/<short-name>` — bugfix branches
+- `review/<short-name>` — review branches
+- `tortoise/<short-name>` — Tortoise bot review branches
 - Agent-tagged commits: `[wolf]`, `[bee]`, `[owl]`, `[foxy]`, `[flutter]`, `[sage]`
+- CI must pass (typecheck, lint, RN Bundle) before merge
 
 ## Escalation path
 
