@@ -150,6 +150,24 @@ export interface PipelineResponse {
   timestamp: string // ISO 8601
 }
 
+// ── Full session (canonical view across pipeline) ────────────────────
+
+/** Canonical homework session: photos → OCR → classification → feedback → timestamps.
+ *  Aligns with the KidSession SQLite schema from M0-11 (mobile/src/storage/sessions.ts). */
+export interface HomeworkSession {
+  sessionId: number
+  subject: Subject
+  level: number // P1–P6
+  language: Locale
+  images: CameraImage[]
+  ocrResult?: OcrResult
+  classification?: SubjectClassification
+  segmentation?: QuestionSegmentationResult
+  feedback?: PipelineResponse
+  createdAt: string // ISO 8601
+  closedAt: string | null // ISO 8601 — null if still in progress
+}
+
 // ── Pipeline status tracking ─────────────────────────────────────────
 
 export type PipelineStage =
