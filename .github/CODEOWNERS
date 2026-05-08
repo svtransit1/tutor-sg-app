@@ -1,13 +1,90 @@
 # CODEOWNERS — tutor-sg
-# Per ADD §11: Tortoise reviews every PR; Foxy approves merges to main; Owl gates architecture-touching PRs.
 #
-# BLOCKED: @tortoise-tutor-sg is a placeholder. Update to the real Tortoise bot GitHub handle
-# once Boss provisions the bot account (approval 67b2d57e).
+# Per ADD §11 and docs/GOVERNANCE.md:
+#   Tortoise reviews every PR (global default)
+#   Owl gates architecture-touching changes
+#   Foxy approves merges to main (enforced via branch protection, not CODEOWNERS)
+#   Domain experts own their paths
+#
+# Handles are placeholders — update when bot accounts are provisioned.
+# Branch protection required reviewer is 'svtransit1' (temp — replace with Tortoise).
+#
+# Order: global default first, then most-specific-last wins (GitHub rule).
 
-# Global default — Tortoise reviews everything
+# ── Global default — Tortoise reviews everything ──────────────────────────
 * @tortoise-tutor-sg
 
-# Architecture-touching paths also need Owl review
-/docs/ARCHITECTURE.md @tortoise-tutor-sg
-/src/model/ @tortoise-tutor-sg
-/src/inference/ @tortoise-tutor-sg
+# ── Architecture & documentation (Owl gates) ─────────────────────────────
+/docs/                          @owl-tutor-sg @tortoise-tutor-sg
+/docs/ARCHITECTURE.md           @owl-tutor-sg @tortoise-tutor-sg
+/docs/GOVERNANCE.md             @owl-tutor-sg @tortoise-tutor-sg
+/packages/shared/src/schema/    @owl-tutor-sg @tortoise-tutor-sg
+/schema/                        @owl-tutor-sg @tortoise-tutor-sg
+
+# ── LLM / inference pipeline (Owl + Wolf) ─────────────────────────────────
+/packages/llm/                  @owl-tutor-sg @wolf-tutor-sg @tortoise-tutor-sg
+
+# ── Mobile app — kid-facing UI (Flutter + Wolf) ──────────────────────────
+/mobile/app/(kid)/              @flutter-tutor-sg @wolf-tutor-sg @tortoise-tutor-sg
+
+# ── Mobile app — parent-facing UI (Flutter + Bee) ────────────────────────
+/mobile/app/(parent)/           @flutter-tutor-sg @bee-tutor-sg @tortoise-tutor-sg
+
+# ── Mobile app — onboarding (Flutter) ────────────────────────────────────
+/mobile/app/(onboarding)/       @flutter-tutor-sg @tortoise-tutor-sg
+
+# ── Mobile app — reusable components & screens (Flutter + Wolf/Bee) ──────
+/mobile/src/components/         @flutter-tutor-sg @wolf-tutor-sg @tortoise-tutor-sg
+/mobile/src/screens/            @flutter-tutor-sg @tortoise-tutor-sg
+
+# ── Mobile app — core logic layer (Wolf + Bee) ───────────────────────────
+/mobile/src/hooks/              @wolf-tutor-sg @bee-tutor-sg @tortoise-tutor-sg
+/mobile/src/storage/            @wolf-tutor-sg @bee-tutor-sg @tortoise-tutor-sg
+/mobile/src/models/             @wolf-tutor-sg @bee-tutor-sg @tortoise-tutor-sg
+
+# ── Mobile app — i18n (Sage: bilingual content) ─────────────────────────
+/mobile/src/i18n/               @sage-tutor-sg @tortoise-tutor-sg
+
+# ── Mobile app — Expo Router root ────────────────────────────────────────
+/mobile/app/_layout.tsx         @wolf-tutor-sg @flutter-tutor-sg @tortoise-tutor-sg
+/mobile/app/index.tsx           @wolf-tutor-sg @flutter-tutor-sg @tortoise-tutor-sg
+
+# ── Mobile app — platform config (Wolf + Bee) ────────────────────────────
+/mobile/android/                @wolf-tutor-sg @bee-tutor-sg @tortoise-tutor-sg
+/mobile/ios/                    @wolf-tutor-sg @bee-tutor-sg @tortoise-tutor-sg
+/mobile/app.json                @wolf-tutor-sg @tortoise-tutor-sg
+/mobile/metro.config.js         @wolf-tutor-sg @tortoise-tutor-sg
+/mobile/babel.config.js         @wolf-tutor-sg @tortoise-tutor-sg
+/mobile/tsconfig.json           @wolf-tutor-sg @tortoise-tutor-sg
+
+# ── Packages — device-tier (Wolf + Bee) ──────────────────────────────────
+/packages/device-tier/          @wolf-tutor-sg @bee-tutor-sg @tortoise-tutor-sg
+
+# ── Packages — feature gates (Foxy: product decisions) ───────────────────
+/packages/features/             @foxy-tutor-sg @tortoise-tutor-sg
+
+# ── Packages — shared types / utilities (Wolf + Owl) ─────────────────────
+/packages/shared/src/models/    @wolf-tutor-sg @owl-tutor-sg @tortoise-tutor-sg
+/packages/shared/src/index.ts   @wolf-tutor-sg @owl-tutor-sg @tortoise-tutor-sg
+
+# ── Packages — database schema (Owl) ────────────────────────────────────
+/packages/database/             @owl-tutor-sg @tortoise-tutor-sg
+
+# ── Packages — i18n / theme / perf / eslint (Wolf + Sage / Flutter) ─────
+/packages/i18n/                 @sage-tutor-sg @tortoise-tutor-sg
+/packages/theme/                @flutter-tutor-sg @tortoise-tutor-sg
+/packages/perf/                 @wolf-tutor-sg @tortoise-tutor-sg
+/packages/eslint-config/        @wolf-tutor-sg @tortoise-tutor-sg
+
+# ── Content & data (Sage) ────────────────────────────────────────────────
+/data/                          @sage-tutor-sg @tortoise-tutor-sg
+/syllabus-pdfs/                 @sage-tutor-sg @tortoise-tutor-sg
+
+# ── Tooling & CI (Wolf + Bee) ────────────────────────────────────────────
+/scripts/                       @wolf-tutor-sg @bee-tutor-sg @tortoise-tutor-sg
+/.github/workflows/             @wolf-tutor-sg @bee-tutor-sg @tortoise-tutor-sg
+
+# ── Root config (Wolf) ───────────────────────────────────────────────────
+/.gitignore                     @wolf-tutor-sg @tortoise-tutor-sg
+/.husky/                        @wolf-tutor-sg @tortoise-tutor-sg
+/README.md                      @wolf-tutor-sg @tortoise-tutor-sg
