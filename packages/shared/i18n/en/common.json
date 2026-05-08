@@ -1,0 +1,46 @@
+{
+  "welcome": {
+    "title": "Welcome"
+  },
+  "app": {
+    "name": "tutor-sg"
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "retry": "Retry"
+  },
+  "camera": {
+    "photoReview": {
+      "retake": "Retake",
+      "usePhoto": "Use this photo",
+      "usePhotos": "Use {{count}} photo",
+      "usePhotos_plural": "Use {{count}} photos",
+      "pageCount": "Page {{current}} of {{total}}",
+      "addPage": "Add page",
+      "removePage": "Remove",
+      "multiPageHint": "You can add multiple pages",
+      "retakeButton": "Retake the photo",
+      "confirmButton": "Use this photo and continue",
+      "confirmButtonPlural": "Use all {{count}} photos and continue",
+      "pageThumbnail": "Page {{number}} thumbnail",
+      "addPageButton": "Capture another page",
+      "removePageButton": "Remove page {{number}}"
+    }
+  },
+  "homework": {
+    "followUp": {
+      "placeholder": "Ask a follow-up question…",
+      "placeholderRecording": "Recording… tap mic to stop",
+      "send": "Send",
+      "mic": "Voice input",
+      "micRecording": "Recording — tap to stop",
+      "micProcessing": "Processing speech…",
+      "micError": "Voice input error — tap to retry"
+    }
+  }
+}
