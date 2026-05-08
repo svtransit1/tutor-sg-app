@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+cd /Users/muatan/tutor-sg-app/mobile && npx lint-staged
