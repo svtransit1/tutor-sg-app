@@ -16,7 +16,7 @@
 //     → Auto-save session to Parent Log
 
 import type { Subject, DetectedLanguage, SubjectClassification } from '../classifier/SubjectClassifier'
-import type { DeviceTier } from '@tutor-sg/device-tier'
+import type { DeviceTier } from '../schema/registry'
 import type { Locale } from '../i18n/keys'
 
 // ── Camera ───────────────────────────────────────────────────────────
@@ -25,6 +25,8 @@ export interface CameraImage {
   uri: string
   width: number
   height: number
+  /** EXIF orientation 1–8. Needed upstream for camera preview rotation and de-skew. */
+  orientation?: number
   timestamp: string // ISO 8601
 }
 
@@ -153,12 +155,15 @@ export interface PipelineResponse {
 // ── Full session (canonical view across pipeline) ────────────────────
 
 /** Canonical homework session: photos → OCR → classification → feedback → timestamps.
- *  Aligns with the KidSession SQLite schema from M0-11 (mobile/src/storage/sessions.ts). */
+ *  Aligns with the M0-11 session_log schema (packages/database/src/schema.ts, commit 69ce1ddb6). */
 export interface HomeworkSession {
-  sessionId: number
+  sessionId: string // UUID v4 per M0-11 session_log.id
+  kidProfileId: string // NOT NULL FK → kid_profile.id per M0-11
+  deviceTier: DeviceTier // NOT NULL per M0-11 session_log.device_tier
   subject: Subject
   level: number // P1–P6
   language: Locale
+  topic?: string // nullable per M0-11 session_log.topic
   images: CameraImage[]
   ocrResult?: OcrResult
   classification?: SubjectClassification
@@ -205,7 +210,7 @@ export const DEFAULT_PIPELINE_CONFIG: PipelineConfig = {
   ocrConfidenceThreshold: OCR_THRESHOLDS.KEEP,
   retakeThreshold: OCR_THRESHOLDS.RETAKE,
   maxFollowUpQuestions: 5,
-  freeTierQuestionLimit: 3, // TBD by Owl + product testing (ADD §6)
+  freeTierQuestionLimit: 3, // TEMPORARY — TBD by Owl + product testing (ADD §6)
 }
 
 // ── Model routing ────────────────────────────────────────────────────
