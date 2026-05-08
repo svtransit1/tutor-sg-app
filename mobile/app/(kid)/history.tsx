@@ -44,7 +44,9 @@ function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): st
   if (diffMin < 1) return t('kidHome.recentSessions.timeAgo.justNow');
   if (diffMin < 60) return t('kidHome.recentSessions.timeAgo.minutesAgo', { minutes: diffMin });
   if (diffHr < 24) return t('kidHome.recentSessions.timeAgo.hoursAgo', { hours: diffHr });
-  return t('kidHome.recentSessions.timeAgo.yesterday');
+  const diffDays = Math.floor(diffHr / 24);
+  if (diffDays === 1) return t('kidHome.recentSessions.timeAgo.yesterday');
+  return t('kidHome.recentSessions.timeAgo.daysAgo', { days: diffDays });
 }
 
 export default function KidHistoryScreen() {
@@ -203,7 +205,7 @@ export default function KidHistoryScreen() {
                 &lt; {t('common.back')}
               </Text>
             </TouchableOpacity>
-            <Text style={[styles.headerTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
+            <Text style={[styles.headerTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]} accessibilityRole="header">
               {t('history.title')}
             </Text>
             <View style={styles.headerSpacer} />

@@ -154,11 +154,14 @@
     "recentSessions": {
       "title": "最近学习记录",
       "empty": "还没有学习记录。快来拍下第一份功课吧！",
+      "viewAll": "查看全部 >",
+      "viewAllA11y": "查看全部学习记录",
       "timeAgo": {
         "justNow": "刚刚",
         "minutesAgo": "{{minutes}}分钟前",
         "hoursAgo": "{{hours}}小时前",
-        "yesterday": "昨天"
+        "yesterday": "昨天",
+        "daysAgo": "{{days}}天前"
       },
       "questions": "{{count}} 道题",
       "questions_plural": "{{count}} 道题"
