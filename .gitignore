@@ -38,6 +38,8 @@ dist/
 # Only track JSON manifests, not actual model weights
 packages/shared/src/models/*
 !packages/shared/src/models/*.json
+# Exception: mobile source model types (not LLM weights)
+!mobile/src/models/
 
 # Test outputs
 coverage/
