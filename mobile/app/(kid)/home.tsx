@@ -117,6 +117,13 @@ export default function KidHomeScreen() {
     handleCameraPress();
   };
 
+  const handleSessionPress = useCallback(
+    (session: KidSession) => {
+      router.push(`/(kid)/camera-result?sessionId=${session.id}`);
+    },
+    [router],
+  );
+
   const handleViewAllHistory = () => {
     router.push('/(kid)/history');
   };
@@ -251,15 +258,17 @@ export default function KidHomeScreen() {
           ) : (
             <View style={styles.sessionList}>
               {sessions.map((session) => (
-                <View
+                <TouchableOpacity
                   key={session.id}
                   style={[styles.sessionCard, { backgroundColor: isDark ? '#1E1E1E' : '#FFFFFF' }]}
-                  accessibilityRole="summary"
+                  onPress={() => handleSessionPress(session)}
+                  accessibilityRole="button"
                   accessibilityLabel={t('kidHome.accessibility.recentSession', {
                     subject: t(`kidHome.subjects.${session.subject}`),
                     time: timeAgo(session.createdAt, t),
                     questions: session.questionCount,
                   })}
+                  activeOpacity={0.7}
                 >
                   <Text style={styles.sessionIcon}>
                     {SUBJECT_ICONS[session.subject] ?? '📚'}
@@ -274,7 +283,7 @@ export default function KidHomeScreen() {
                       {t('kidHome.recentSessions.questions', { count: session.questionCount })}
                     </Text>
                   </View>
-                </View>
+                </TouchableOpacity>
               ))}
             </View>
           )}
