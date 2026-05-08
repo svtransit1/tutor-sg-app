@@ -2,8 +2,14 @@
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion" },
-    "done": { "title": "All set!", "subtitle": "Let's start learning" }
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Your personal learning companion"
+    },
+    "done": {
+      "title": "All set!",
+      "subtitle": "Let's start learning"
+    }
   },
   "network.offline": "You're offline",
   "network.offline.description": "Camera homework still works. Downloads need Wi-Fi.",
@@ -43,7 +49,10 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
+    "dashboard": {
+      "title": "Parent Dashboard",
+      "placeholder": "Session log and progress coming soon"
+    },
     "settings": {
       "title": "Settings",
       "sectionQuality": "AI Quality",
@@ -97,6 +106,23 @@
       "hash_mismatch": "Download file corrupted. Re-downloading…",
       "download_stuck": "Download seems stuck. Retrying…",
       "unknown_error": "Something went wrong. Please try again."
+    }
+  },
+  "cameraErrors": {
+    "permission": {
+      "typeInstead": "Type my question instead"
+    },
+    "unavailable": {
+      "title": "Camera not available",
+      "description": "No camera detected on this device. You can type your question instead.",
+      "typeInput": "Type my question",
+      "tryAgain": "Try again"
+    },
+    "lowLight": {
+      "title": "Dark photo detected",
+      "description": "The photo looks dark. Try adding more light, or continue anyway.",
+      "retake": "Try again",
+      "continueAnyway": "Continue anyway"
     }
   }
 }

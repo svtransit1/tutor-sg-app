@@ -2,8 +2,14 @@
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴" },
-    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧" }
+    "welcome": {
+      "title": "欢迎！",
+      "subtitle": "你的个人学习伙伴"
+    },
+    "done": {
+      "title": "准备好了！",
+      "subtitle": "让我们开始学习吧"
+    }
   },
   "network.offline": "你已离线",
   "network.offline.description": "拍照做作业仍然可用。下载需要 Wi-Fi。",
@@ -43,7 +49,10 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
+    "dashboard": {
+      "title": "家长面板",
+      "placeholder": "学习记录和进度即将上线"
+    },
     "settings": {
       "title": "设置",
       "sectionQuality": "AI 质量",
@@ -97,6 +106,23 @@
       "hash_mismatch": "下载文件已损坏，正在重新下载...",
       "download_stuck": "下载似乎卡住了，正在重试...",
       "unknown_error": "出现错误，请重试。"
+    }
+  },
+  "cameraErrors": {
+    "permission": {
+      "typeInstead": "改用文字输入问题"
+    },
+    "unavailable": {
+      "title": "相机不可用",
+      "description": "未检测到相机。你可以改用文字输入问题。",
+      "typeInput": "输入问题",
+      "tryAgain": "重试"
+    },
+    "lowLight": {
+      "title": "检测到照片偏暗",
+      "description": "照片看起来偏暗。建议增加光线后重新拍照，或继续使用当前照片。",
+      "retake": "重新拍照",
+      "continueAnyway": "继续使用"
     }
   }
 }
