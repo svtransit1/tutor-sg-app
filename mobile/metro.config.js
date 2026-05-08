@@ -1,16 +1,29 @@
 const { getDefaultConfig } = require('expo/metro-config');
 const path = require('path');
+const fs = require('fs');
 
-const config = getDefaultConfig(__dirname);
+const projectRoot = __dirname;
+const workspaceRoot = path.resolve(projectRoot, '..');
+
+const config = getDefaultConfig(projectRoot);
+
+const packagesDir = path.resolve(workspaceRoot, 'packages');
+const packageDirs = fs.existsSync(packagesDir)
+  ? fs
+      .readdirSync(packagesDir, { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .map((d) => path.resolve(packagesDir, d.name))
+  : [];
 
 config.watchFolders = [
-  path.resolve(__dirname, '../packages'),
-  path.resolve(__dirname, '../node_modules'),
+  ...(config.watchFolders || []),
+  path.resolve(workspaceRoot, 'node_modules'),
+  ...packageDirs,
 ];
 
 config.resolver.nodeModulesPaths = [
-  path.resolve(__dirname, 'node_modules'),
-  path.resolve(__dirname, '../node_modules'),
+  path.resolve(projectRoot, 'node_modules'),
+  path.resolve(workspaceRoot, 'node_modules'),
 ];
 
 module.exports = config;

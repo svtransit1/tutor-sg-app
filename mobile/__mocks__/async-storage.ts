@@ -1,15 +1,7 @@
-const store: Record<string, string> = {};
-
+const store = new Map<string, string>();
 export default {
-  getItem: jest.fn(async (key: string) => store[key] ?? null),
-  setItem: jest.fn(async (key: string, value: string) => {
-    store[key] = value;
-  }),
-  removeItem: jest.fn(async (key: string) => {
-    delete store[key];
-  }),
-  clear: jest.fn(async () => {
-    Object.keys(store).forEach((k) => delete store[k]);
-  }),
-  getAllKeys: jest.fn(async () => Object.keys(store)),
+  getItem: jest.fn((key: string) => Promise.resolve(store.get(key) ?? null)),
+  setItem: jest.fn((key: string, value: string) => { store.set(key, value); return Promise.resolve(); }),
+  removeItem: jest.fn((key: string) => { store.delete(key); return Promise.resolve(); }),
+  clear: jest.fn(() => { store.clear(); return Promise.resolve(); }),
 };

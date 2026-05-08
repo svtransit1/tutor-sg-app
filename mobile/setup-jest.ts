@@ -1,4 +1,23 @@
-import { __registerMock } from 'expo-modules-core';
+const { __registerMock } = jest.requireMock('expo-modules-core') as {
+  __registerMock: (moduleName: string, mock: unknown) => void;
+};
+
+__registerMock('LLMRuntime', {
+  loadModel: jest
+    .fn()
+    .mockResolvedValue({
+      success: true,
+      modelId: 'gemma-e2b-test',
+      state: 'ready',
+      message: 'Model loaded successfully',
+    }),
+  generate: jest.fn().mockResolvedValue({
+    text: 'I can help you with this problem.',
+    tokenCount: 8,
+    latencyMs: 150,
+  }),
+  unloadModel: jest.fn().mockResolvedValue(undefined),
+});
 
 __registerMock('LitertLm', {
   getDeviceCapabilities: jest

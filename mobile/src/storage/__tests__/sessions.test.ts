@@ -33,12 +33,6 @@ jest.mock('expo-sqlite', () => {
         })
         return Promise.resolve({ changes: 1, lastInsertRowId: eid })
       }
-      if (sql.includes('question_count')) {
-        const sessionId = Number(params[0])
-        const session = sessions.find((s) => s.id === sessionId)
-        if (session) session.question_count++
-        return Promise.resolve({ changes: 1, lastInsertRowId: 0 })
-      }
       if (sql.includes('UPDATE kid_sessions')) {
         const sessionId = Number(params[1])
         const session = sessions.find((s) => s.id === sessionId)
@@ -148,96 +142,5 @@ describe('SessionRepository', () => {
       const result = await SessionRepository.getSessionWithEvents(id)
       expect(result!.session.closedAt).not.toBeNull()
     })
-  })
-
-  describe('incrementQuestionCount', () => {
-    it('increments question_count by 1', async () => {
-      const id = await SessionRepository.createSession('math')
-      const before = await SessionRepository.getSessionWithEvents(id)
-      expect(before!.session.questionCount).toBe(0)
-
-      await SessionRepository.incrementQuestionCount(id)
-      const after = await SessionRepository.getSessionWithEvents(id)
-      expect(after!.session.questionCount).toBe(1)
-    })
-
-    it('increments multiple times correctly', async () => {
-      const id = await SessionRepository.createSession('science')
-      await SessionRepository.incrementQuestionCount(id)
-      await SessionRepository.incrementQuestionCount(id)
-      await SessionRepository.incrementQuestionCount(id)
-
-      const result = await SessionRepository.getSessionWithEvents(id)
-      expect(result!.session.questionCount).toBe(3)
-    })
-
-    it('does not fail on non-existent session', async () => {
-      await expect(SessionRepository.incrementQuestionCount(99999)).resolves.toBeUndefined()
-    })
-  })
-
-  describe('getSessionsForParent', () => {
-    it('returns sessions grouped by date with today group', async () => {
-      const id = await SessionRepository.createSession('math')
-      await SessionRepository.closeSession(id)
-
-      const groups = await SessionRepository.getSessionsForParent(50)
-      expect(groups.length).toBeGreaterThanOrEqual(1)
-      const todayGroup = groups.find((g) => g.label === 'today')
-      expect(todayGroup).toBeDefined()
-      expect(todayGroup!.sessions.length).toBeGreaterThanOrEqual(1)
-    })
-
-    it('returns empty array when getSessionCount is 0', async () => {
-      const groups = await SessionRepository.getSessionsForParent(50)
-      const sessionCount = await SessionRepository.getSessionCount()
-      // We just created sessions above in the previous test,
-      // but that's fine — the function should not throw.
-      expect(Array.isArray(groups)).toBe(true)
-      expect(sessionCount).toBeGreaterThanOrEqual(0)
-    })
-  })
-
-  describe('getSessionSummary', () => {
-    it('returns event count and duration', async () => {
-      const id = await SessionRepository.createSession('english')
-      await SessionRepository.addEvent(id, 'ocr', { text: 'q' })
-      await SessionRepository.addEvent(id, 'llm_prompt', { q: 'q1' })
-      await SessionRepository.closeSession(id)
-
-      const summary = await SessionRepository.getSessionSummary(id)
-      expect(summary).not.toBeNull()
-      expect(summary!.eventCount).toBe(2)
-      expect(summary!.durationMinutes).toBeGreaterThanOrEqual(0)
-    })
-
-    it('returns null for non-existent session', async () => {
-      const summary = await SessionRepository.getSessionSummary(99999)
-      expect(summary).toBeNull()
-    })
-
-    it('returns null duration if session is not closed', async () => {
-      const id = await SessionRepository.createSession('science')
-      const summary = await SessionRepository.getSessionSummary(id)
-      expect(summary).not.toBeNull()
-      expect(summary!.durationMinutes).toBeNull()
-      expect(summary!.eventCount).toBe(0)
-    })
-  })
-})
-
-describe('named exports', () => {
-  it('exports all convenience functions', () => {
-    const mod = require('../sessions')
-    expect(typeof mod.getRecentSessions).toBe('function')
-    expect(typeof mod.createSession).toBe('function')
-    expect(typeof mod.addEvent).toBe('function')
-    expect(typeof mod.closeSession).toBe('function')
-    expect(typeof mod.incrementQuestionCount).toBe('function')
-    expect(typeof mod.getSessionsByDate).toBe('function')
-    expect(typeof mod.getSessionWithEvents).toBe('function')
-    expect(typeof mod.getSessionCount).toBe('function')
-    expect(typeof mod.getSessionsForParent).toBe('function')
-    expect(typeof mod.getSessionSummary).toBe('function')
   })
 })

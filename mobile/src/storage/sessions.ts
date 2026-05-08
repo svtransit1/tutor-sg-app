@@ -121,17 +121,6 @@ export class SessionRepository {
   }
 
   /**
-   * Increment question_count by 1 for a session.
-   */
-  static async incrementQuestionCount(sessionId: number): Promise<void> {
-    const db = await getDb()
-    await db.runAsync(
-      'UPDATE kid_sessions SET question_count = question_count + 1 WHERE id = ?',
-      sessionId,
-    )
-  }
-
-  /**
    * Close a session. After closing, no more events should be added.
    */
   static async closeSession(sessionId: number): Promise<void> {
@@ -141,79 +130,6 @@ export class SessionRepository {
       new Date().toISOString(),
       sessionId,
     )
-  }
-
-  /**
-   * Get all sessions grouped by date for the parent dashboard.
-   * Returns { dateLabel, sessions[] } groups: "Today", "Yesterday", "This Week", "Older".
-   */
-  static async getSessionsForParent(limit = 50): Promise<
-    { label: string; sessions: KidSession[] }[]
-  > {
-    const db = await getDb()
-    const rows = await db.getAllAsync<SessionRow>(
-      'SELECT * FROM kid_sessions ORDER BY created_at DESC LIMIT ?',
-      limit,
-    )
-
-    const sessions: KidSession[] = rows.map((r) => ({
-      id: r.id,
-      subject: r.subject as Subject,
-      questionCount: r.question_count,
-      createdAt: r.created_at,
-      closedAt: r.closed_at,
-    }))
-
-    const groups: { label: string; sessions: KidSession[] }[] = []
-    const today = new Date()
-    const todayStr = today.toISOString().split('T')[0]
-    const yesterdayStr = new Date(today.getTime() - 86400000).toISOString().split('T')[0]
-
-    const weekStart = new Date(today)
-    weekStart.setDate(weekStart.getDate() - weekStart.getDay())
-    const weekStartStr = weekStart.toISOString().split('T')[0]
-
-    const todaySessions: KidSession[] = []
-    const yesterdaySessions: KidSession[] = []
-    const weekSessions: KidSession[] = []
-    const olderSessions: KidSession[] = []
-
-    for (const s of sessions) {
-      const dateStr = s.createdAt.split('T')[0]
-      if (dateStr === todayStr) todaySessions.push(s)
-      else if (dateStr === yesterdayStr) yesterdaySessions.push(s)
-      else if (dateStr >= weekStartStr) weekSessions.push(s)
-      else olderSessions.push(s)
-    }
-
-    if (todaySessions.length) groups.push({ label: 'today', sessions: todaySessions })
-    if (yesterdaySessions.length) groups.push({ label: 'yesterday', sessions: yesterdaySessions })
-    if (weekSessions.length) groups.push({ label: 'thisWeek', sessions: weekSessions })
-    if (olderSessions.length) groups.push({ label: 'older', sessions: olderSessions })
-
-    return groups
-  }
-
-  /**
-   * Get summary stats for a session: total events, duration in minutes.
-   */
-  static async getSessionSummary(sessionId: number): Promise<{
-    eventCount: number
-    durationMinutes: number | null
-  } | null> {
-    const full = await this.getSessionWithEvents(sessionId)
-    if (!full) return null
-
-    const durationMinutes =
-      full.session.closedAt
-        ? Math.round(
-            (new Date(full.session.closedAt).getTime() -
-              new Date(full.session.createdAt).getTime()) /
-              60000,
-          )
-        : null
-
-    return { eventCount: full.events.length, durationMinutes }
   }
 
   /**
@@ -303,16 +219,3 @@ export class SessionRepository {
     return row?.count ?? 0
   }
 }
-
-// ---- Convenience named exports (delegate to SessionRepository) ----
-
-export const getRecentSessions = SessionRepository.getRecentSessions.bind(SessionRepository)
-export const createSession = SessionRepository.createSession.bind(SessionRepository)
-export const addEvent = SessionRepository.addEvent.bind(SessionRepository)
-export const closeSession = SessionRepository.closeSession.bind(SessionRepository)
-export const incrementQuestionCount = SessionRepository.incrementQuestionCount.bind(SessionRepository)
-export const getSessionsByDate = SessionRepository.getSessionsByDate.bind(SessionRepository)
-export const getSessionWithEvents = SessionRepository.getSessionWithEvents.bind(SessionRepository)
-export const getSessionCount = SessionRepository.getSessionCount.bind(SessionRepository)
-export const getSessionsForParent = SessionRepository.getSessionsForParent.bind(SessionRepository)
-export const getSessionSummary = SessionRepository.getSessionSummary.bind(SessionRepository)

@@ -14,6 +14,7 @@ export type I18nKey =
   | `modelDownload.${ModelDownloadKey}`
   | `homeworkFeedback.${HomeworkFeedbackKey}`
   | `cameraGuideFrame.${CameraGuideFrameKey}`
+  | `homeworkError.${HomeworkErrorKey}`
 
 export type ParentAuthKey =
   | 'title'
@@ -104,6 +105,17 @@ export type ModelDownloadErrorKey =
   | 'hash_mismatch'
   | 'download_stuck'
   | 'unknown_error'
+export type HomeworkErrorCodeKey =
+  | 'LLM_TIMEOUT'
+  | 'CAMERA_PERMISSION_DENIED'
+  | 'OCR_FAILURE'
+  | 'MODEL_NOT_DOWNLOADED'
+  | 'UNKNOWN'
+export type HomeworkErrorKey =
+  | 'retry'
+  | 'manualInput'
+  | `${HomeworkErrorCodeKey}.title`
+  | `${HomeworkErrorCodeKey}.body`
 
 export const I18N_KEYS = [
   'app.loading',
@@ -193,6 +205,18 @@ export const I18N_KEYS = [
   'modelDownload.errors.hash_mismatch',
   'modelDownload.errors.download_stuck',
   'modelDownload.errors.unknown_error',
+  'homeworkError.retry',
+  'homeworkError.manualInput',
+  'homeworkError.LLM_TIMEOUT.title',
+  'homeworkError.LLM_TIMEOUT.body',
+  'homeworkError.CAMERA_PERMISSION_DENIED.title',
+  'homeworkError.CAMERA_PERMISSION_DENIED.body',
+  'homeworkError.OCR_FAILURE.title',
+  'homeworkError.OCR_FAILURE.body',
+  'homeworkError.MODEL_NOT_DOWNLOADED.title',
+  'homeworkError.MODEL_NOT_DOWNLOADED.body',
+  'homeworkError.UNKNOWN.title',
+  'homeworkError.UNKNOWN.body',
 ] as const
 
 export type I18nKeyLiteral = (typeof I18N_KEYS)[number]
