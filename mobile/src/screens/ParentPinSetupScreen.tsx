@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import {
-  View, Text, Pressable, StyleSheet, type TextStyle,
+  View, Text, Pressable, StyleSheet,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { savePin, PIN_LENGTH } from '../storage/pin-storage';
@@ -156,4 +156,4 @@ const s = StyleSheet.create({
   backLinkText: { fontSize: 14, color: '#6B7280', fontWeight: '500' },
   skipLink: { paddingVertical: 10, paddingHorizontal: 20 },
   skipLinkText: { fontSize: 14, color: '#9CA3AF', fontWeight: '500', textDecorationLine: 'underline' },
-} as TextStyle);
+});

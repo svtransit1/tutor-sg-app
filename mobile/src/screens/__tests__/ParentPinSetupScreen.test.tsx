@@ -4,6 +4,10 @@ import ParentPinSetupScreen from '../ParentPinSetupScreen';
 import * as pinStorage from '../../storage/pin-storage';
 
 jest.mock('expo-secure-store');
+jest.mock('../../storage/pin-storage', () => ({
+  ...jest.requireActual('../../storage/pin-storage'),
+  savePin: jest.fn().mockResolvedValue(undefined),
+}));
 jest.mock('react-i18next', () => {
   const t = (k: string) => ({
     'onboarding.parentPinSetup.title': 'Set your parent PIN',
@@ -49,13 +53,15 @@ describe('ParentPinSetupScreen — setup mode', () => {
   });
 
   it('calls onComplete after matching confirmation', async () => {
+    jest.useFakeTimers();
     const oc = jest.fn();
     render(<ParentPinSetupScreen mode="setup" onComplete={oc} />);
     enter('123456');
     enter('123456');
-    await act(async () => {});
+    await act(async () => { jest.advanceTimersByTime(1000); });
     expect(pinStorage.savePin).toHaveBeenCalledWith('123456');
     expect(oc).toHaveBeenCalledTimes(1);
+    jest.useRealTimers();
   });
 
   it('shows mismatch and resets', () => {

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { View, Text, Pressable, StyleSheet, type TextStyle } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import {
   verifyPin, recordFailedAttempt, getRemainingAttempts,
@@ -122,4 +122,4 @@ const s = StyleSheet.create({
   keypadSpacer: { width: 64, height: 64 },
   cancelBtn: { marginTop: 24, paddingVertical: 10, paddingHorizontal: 20 },
   cancelBtnText: { fontSize: 15, color: '#9CA3AF', fontWeight: '500' },
-} as TextStyle);
+});

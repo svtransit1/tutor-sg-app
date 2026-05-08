@@ -33,7 +33,5 @@ const mockT = (key: string, fallback?: string) => {
   return m[key] ?? fallback ?? key;
 };
 
-module.exports = {
-  useTranslation: () => ({ t: mockT, i18n: { language: 'en', changeLanguage: jest.fn() } }),
-  initReactI18next: { type: '3rdParty', init: jest.fn() },
-};
+export const useTranslation = () => ({ t: mockT, i18n: { language: 'en', changeLanguage: jest.fn() } });
+export const initReactI18next = { type: '3rdParty', init: jest.fn() };
