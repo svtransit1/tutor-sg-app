@@ -2,8 +2,17 @@
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
-    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Your personal learning companion",
+      "tagline": "Smart learning, made fun!",
+      "cta": "Get Started"
+    },
+    "langPick": {
+      "title": "Choose your language",
+      "subtitle": "Your app will use this language.",
+      "continue": "Continue"
+    },
     "privacyPromise": {
       "title": "Your privacy is our promise",
       "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
@@ -52,7 +61,15 @@
         "subjectOff": "not selected"
       }
     },
-    "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "done": {
+      "title": "All set!",
+      "subtitle": "Let's start learning",
+      "greeting": "Hi {{name}}! Ready to learn?",
+      "cameraCta": "Snap your homework",
+      "cameraSubtitle": "Take a photo to get help",
+      "practicePrompt": "Or try a practice question",
+      "parentArea": "Parent area"
+    },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
@@ -111,7 +128,10 @@
       "questions": "{{count}} question",
       "questions_plural": "{{count}} questions"
     },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "settings": {
+      "title": "Settings",
+      "placeholder": "Language, quality, model, privacy"
+    }
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
@@ -278,6 +298,23 @@
       "skip": "Skip this item",
       "typeInput": "Type answer for item {{number}}",
       "drawCanvas": "Drawing area for item {{number}}"
+    }
+  },
+  "cameraErrors": {
+    "permission": {
+      "typeInstead": "Type my question instead"
+    },
+    "unavailable": {
+      "title": "Camera not available",
+      "description": "No camera detected on this device. You can type your question instead.",
+      "typeInput": "Type my question",
+      "tryAgain": "Try again"
+    },
+    "lowLight": {
+      "title": "Dark photo detected",
+      "description": "The photo looks dark. Try adding more light, or continue anyway.",
+      "retake": "Try again",
+      "continueAnyway": "Continue anyway"
     }
   }
 }
