@@ -1,37 +1,13 @@
-import { useEffect, useState } from 'react';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import '../src/i18n';
-import i18n from '../src/i18n';
-import { getLocale } from '../src/storage';
-import { OnboardingProvider } from '../src/onboarding';
-
-SplashScreen.preventAutoHideAsync();
-
-function RootContent() {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const saved = await getLocale();
-      if (saved) await i18n.changeLanguage(saved);
-      await SplashScreen.hideAsync();
-      setReady(true);
-    })();
-  }, []);
-
-  if (!ready) return null;
-
-  return (
-    <OnboardingProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(onboarding)" />
-        <Stack.Screen name="(app)" />
-      </Stack>
-    </OnboardingProvider>
-  );
-}
+import { Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import { useColorScheme } from 'react-native'
 
 export default function RootLayout() {
-  return <RootContent />;
+  const isDark = useColorScheme() === 'dark'
+  return (
+    <>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: isDark ? '#121212' : '#F8F9FA' } }} />
+    </>
+  )
 }

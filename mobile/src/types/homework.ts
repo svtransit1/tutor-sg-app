@@ -8,7 +8,7 @@ export interface OcrBlock {
 export interface OcrResult {
   blocks: OcrBlock[];
   lowConfidenceBlocks: OcrBlock[];
-  imageUri: string;
+  imageUris: string[];
   pageCount: number;
   timestamp: number;
 }
