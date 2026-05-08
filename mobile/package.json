@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "lint": "eslint .",
+    "postinstall": "cd ../packages/perf/node_modules && ln -sf ../../../mobile/node_modules/react react && ln -sf ../../../mobile/node_modules/react-native react-native && ln -sf ../../../mobile/node_modules/@types @types",
     "e2e:smoke": "maestro test .maestro/flows/smoke.yaml",
     "e2e": "maestro test .maestro/flows",
     "e2e:full": "maestro test .maestro/flows/onboarding-to-feedback.yaml",
