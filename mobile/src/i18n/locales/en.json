@@ -2,34 +2,28 @@
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": {
-      "title": "Welcome!",
-      "subtitle": "Your personal learning companion",
-      "tagline": "Smart learning, made fun!",
-      "cta": "Get Started"
-    },
-    "langPick": {
-      "title": "Choose your language",
-      "subtitle": "Your app will use this language."
-    },
-    "parentGate": {
-      "title": "Parent setup",
-      "body": "This app needs a parent or guardian to set things up first. Please pass the phone to a grown-up.",
-      "continue": "I'm a parent / guardian",
-      "goBack": "I'm not — go back"
-    },
-    "parentPinSetup": {
-      "title": "Set your parent PIN",
-      "body": "Set a 4-digit PIN. You'll use this to see your child's learning log.",
-      "enterPin": "Enter a 4-digit PIN",
-      "confirmPin": "Confirm your PIN",
-      "mismatch": "PINs don't match. Try again.",
-      "skip": "Skip — set up later",
-      "accessibility": {
-        "digitInput": "Digit {{position}}",
-        "confirmDigitInput": "Confirm digit {{position}}",
-        "skipButton": "Skip PIN setup"
-      }
+    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
+    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "privacyPromise": {
+      "title": "Your privacy is our promise",
+      "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
+      "badgeText": "Your child's data never leaves this device",
+      "bullet1": "Photos and homework scans stay private — they never leave this device",
+      "bullet2": "Answers, chat, and voice recordings stay on-device — no one else can see them",
+      "bullet3": "Only you (the parent) can view the learning log and progress summary",
+      "learnMore": "Learn more",
+      "learnLess": "Show less",
+      "learnMoreShow": "Expand to learn more about privacy",
+      "learnMoreHide": "Collapse privacy details",
+      "learnMoreBody": "All AI processing happens right on your device using a small but powerful AI model. No cloud servers, no uploads, no data collection. Your child's photos, typed answers, voice recordings, and chat history stay on this device at all times. Even anonymized usage stats are only sent after you explicitly opt in.",
+      "headline": "Before we start — a quick promise about privacy",
+      "continue": "I understand — continue",
+      "reassurance": "You can review your privacy settings anytime in the Parent area.",
+      "consentLabel": "I understand and agree that my child's data stays on this device",
+      "consentRequired": "Please check the box to continue",
+      "accessibility": "Privacy promise: your child's data never leaves this device.",
+      "accessibilityConsentChecked": "Consent checked",
+      "accessibilityConsentUnchecked": "Consent not checked"
     },
     "siblingPrompt": {
       "title": "Got another child who could use this too?",
@@ -62,15 +56,7 @@
         "subjectOff": "not selected"
       }
     },
-    "done": {
-      "title": "All set!",
-      "subtitle": "Let's start learning",
-      "greeting": "Hi {{name}}! Ready to learn?",
-      "cameraCta": "Snap your homework",
-      "cameraSubtitle": "Take a photo to get help",
-      "practicePrompt": "Or try a practice question",
-      "parentArea": "Parent area"
-    },
+    "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
@@ -89,8 +75,12 @@
     "attemptsRemaining": "{{count}} attempt remaining",
     "attemptsRemaining_plural": "{{count}} attempts remaining",
     "pinsDontMatch": "PINs don't match. Try again.",
+    "delete": "Delete",
+    "forgotPin": "Forgot PIN? Reset",
+    "backToEnter": "Go back to enter PIN",
     "setup": {
       "title": "Set Up Parent PIN",
+      "body": "Choose a 4-digit PIN to protect the Parent area. You'll need this to view your child's learning log.",
       "enterPin": "Enter a 4-digit PIN",
       "confirmPin": "Confirm your PIN"
     },
@@ -115,11 +105,29 @@
   "parent": {
     "dashboard": {
       "title": "Parent Dashboard",
-      "placeholder": "Session log and progress coming soon"
+      "groupToday": "Today",
+      "groupYesterday": "Yesterday",
+      "groupThisWeek": "This Week",
+      "groupOlder": "Older",
+      "statusCompleted": "Completed",
+      "statusInProgress": "In progress",
+      "totalSessions": "Total sessions",
+      "completedSessions": "Completed",
+      "emptyTitle": "No sessions yet",
+      "emptySubtitle": "Sessions appear here after your child completes homework",
+      "loading": "Loading...",
+      "questions": "{{count}} question",
+      "questions_plural": "{{count}} questions"
     },
     "settings": {
       "title": "Settings",
-      "placeholder": "Language, quality, model, privacy"
+      "sectionLanguage": "App Language",
+      "languageDescription": "Choose your preferred language for the app interface.",
+      "languageEn": "English",
+      "languageZh": "中文",
+      "sectionPrivacy": "Privacy Promise",
+      "privacyDescription": "How we protect your child's data",
+      "privacyBody": "All AI processing happens on this device. Photos, answers, and chat history never leave. No cloud servers, no uploads, no data collection. Anonymized usage stats are only sent after you explicitly opt in."
     }
   },
   "deviceTierResult": {
@@ -161,11 +169,32 @@
     "camera": {
       "title": "Snap Homework",
       "subtitle": "Take a photo to get help",
-      "accessibility": "Snap your homework with the camera"
+      "accessibility": "Snap your homework with the camera",
+      "photoReview": {
+        "retake": "Retake",
+        "usePhoto": "Use this photo",
+        "usePhotos": "Use {{count}} photo",
+        "usePhotos_plural": "Use {{count}} photos",
+        "pageCount": "Page {{current}} of {{total}}",
+        "addPage": "Add page",
+        "removePage": "Remove",
+        "multiPageHint": "You can add multiple pages",
+        "retakeButton": "Retake the photo",
+        "confirmButton": "Use this photo and continue",
+        "confirmButtonPlural": "Use all {{count}} photos and continue",
+        "pageThumbnail": "Page {{number}} thumbnail",
+        "addPageButton": "Capture another page",
+        "removePageButton": "Remove page {{number}}",
+        "crop": "Crop",
+        "cropButton": "Adjust crop area",
+        "cancelCrop": "Cancel",
+        "confirmCrop": "Confirm crop"
+      }
     },
     "recentSessions": {
       "title": "Recent Sessions",
       "empty": "No sessions yet. Snap your first homework!",
+      "viewAll": "View all >",
       "timeAgo": {
         "justNow": "Just now",
         "minutesAgo": "{{minutes}}m ago",
@@ -177,93 +206,20 @@
     },
     "accessibility": {
       "subjectTile": "{{subject}} subject",
-      "recentSession": "Session {{subject}}, {{time}} ago, {{questions}} questions"
+      "recentSession": "Session {{subject}}, {{time}} ago, {{questions}} questions",
+      "viewAll": "View all recent sessions"
     },
     "firstSession": {
       "welcomeTitle": "Welcome to tutor-sg!",
       "welcomeBody": "Snap a photo of your homework and get instant help — like having a quiet tutor right next to you.",
       "ctaCamera": "Take your first homework photo",
       "ctaPractice": "Try a practice question",
+      "subjectsHint": "Pick a subject after your first session",
       "dismiss": "Not now, show me around",
       "accessibility": {
         "welcomeBanner": "Welcome banner. Start your first homework session.",
         "practiceTile": "Try a {{subject}} practice question"
       }
-    }
-  },
-  "common": {
-    "cancel": "Cancel",
-    "back": "Back",
-    "goBack": "Go back",
-    "loading": "Loading…",
-    "retry": "Retry"
-  },
-  "cameraScreen": {
-    "snapPrompt": "Line up the page",
-    "pages": "{{count}} page captured",
-    "pages_plural": "{{count}} pages captured",
-    "addAnother": "Add another page",
-    "done": "Done — get help",
-    "hint": {
-      "singlePage": "Line up your homework in the frame, then tap the button below",
-      "morePages": "Great! Add more pages or tap Done"
-    },
-    "status": {
-      "capturing": "Taking photo…",
-      "ocr": "Reading your homework…",
-      "inferring": "Thinking about your questions…",
-      "ocrSubtext": "This should only take a moment",
-      "inferenceSubtext": "The tutor is working through each question"
-    },
-    "permission": {
-      "title": "Camera access needed",
-      "description": "We need camera access so you can take photos of your homework. Your photos never leave this device.",
-      "cta": "Enable camera access"
-    },
-    "manualInput": {
-      "title": "Can't read all of it",
-      "description": "Some parts were unclear. Please type what you see below.",
-      "placeholder": "Type the text here…",
-      "submit": "Continue",
-      "accessibility": "Item {{item}} manual input"
-    },
-    "error": {
-      "title": "Something went wrong",
-      "captureFailed": "Couldn't take the photo. Please try again.",
-      "processingFailed": "Couldn't read the homework. Please try again with better lighting.",
-      "inferenceFailed": "The tutor couldn't process this right now. Please try again.",
-      "retake": "Try again"
-    },
-    "accessibility": {
-      "cancel": "Go back to home screen",
-      "capture": "Take a photo of your homework"
-    }
-  },
-  "cameraResult": {
-    "title": "Homework Help",
-    "retake": "Retake",
-    "question": "Question {{number}}",
-    "questions": "{{count}} question",
-    "questions_plural": "{{count}} questions",
-    "hint": "Hint",
-    "showSteps": "Show me the steps",
-    "steps": "Step-by-step guide",
-    "showSolution": "Show me the full answer",
-    "fullSolution": "Full solution",
-    "tryThis": "Try this next",
-    "backToHome": "Back to Home",
-    "encouragement": {
-      "title": "Great work! 💪",
-      "body": "Try the hint first. If you're still stuck, tap 'Show me the steps' for a guided walkthrough."
-    },
-    "followUp": {
-      "placeholder": "Ask a follow-up question…",
-      "send": "Send",
-      "accessibility": "Type a follow-up question",
-      "mockResponse": "Great question! Let me help you with that. Think about what we just learned — try applying the same method here. What do you think the first step should be?"
-    },
-    "error": {
-      "notFound": "This result is no longer available. Please take a new photo."
     }
   },
   "modelDownload": {
@@ -274,8 +230,21 @@
     "paused": "Download paused",
     "resuming": "Resuming download…",
     "completed": "Download complete",
+    "verifying": "Verifying download integrity…",
+    "checkingSpace": "Checking available space…",
+    "fileProgress": "File {{current}} of {{total}} (total: {{totalSize}})",
     "retry": "Retry",
     "wifiRequired": "Wi-Fi connection required",
+    "etaTime": "~{{eta}} remaining",
+    "speed": "{{speed}}",
+    "pause": "Pause",
+    "resume": "Resume",
+    "cancel": "Cancel",
+    "cellularWarning": "This download uses {{size}} of data over cellular. Switch to Wi-Fi to save data?",
+    "cellularProceed": "Download anyway",
+    "cellularCancel": "Wait for Wi-Fi",
+    "privacyNote": "This is a one-time download. The AI tutor works fully offline and never sends your child's data off this device.",
+    "whyNeeded": "Why is this needed?",
     "errors": {
       "connectivity_lost": "Wi-Fi connection lost. Download will resume when reconnected.",
       "disk_insufficient": "Not enough storage space. Need about {{needed}}GB free.",
@@ -285,29 +254,81 @@
       "unknown_error": "Something went wrong. Please try again."
     }
   },
-  "permissionPrimer": {
-    "step": "Step 8 of 10",
-    "camera": {
-      "title": "Camera access",
-      "body": "We need the camera so your child can snap a photo of their homework. The photo never leaves the device.",
-      "allow": "Enable camera access",
-      "notNow": "Not now",
-      "permanentlyDenied": "Camera access is turned off in system settings.",
-      "openSettings": "Open Settings"
+  "homeworkFeedback": {
+    "title": "Homework Feedback",
+    "questionLabel": "Question {{number}}",
+    "tabHint": "Hint",
+    "tabSteps": "Steps",
+    "tabSolution": "Solution",
+    "followUpTitle": "Ask a follow-up question",
+    "textPlaceholder": "Type your question…",
+    "send": "Send",
+    "voiceButton": "Tap to speak",
+    "voiceRecording": "Listening…",
+    "voiceProcessing": "Processing…",
+    "voiceError": "Could not hear that. Try again?",
+    "voiceRetry": "Tap to try again",
+    "voicePermissionDenied": "Microphone access is needed for voice questions.",
+    "backToHome": "Back to home",
+    "voiceInputHint": "Or tap the mic to ask with your voice",
+    "speakContent": "Read aloud",
+    "stopSpeaking": "Stop",
+    "accessibility": {
+      "voiceButton": "Tap to ask a question using your voice",
+      "voiceRecording": "Recording your question",
+      "voiceProcessing": "Processing your voice input",
+      "voiceError": "Voice input failed. Tap to retry.",
+      "voicePermissionDenied": "Microphone permission denied. Enable in Settings.",
+      "textInput": "Type your follow-up question",
+      "sendButton": "Send your question",
+      "speakContent": "Read the explanation aloud",
+      "stopSpeaking": "Stop reading"
+    }
+  },
+  "kidHistory": {
+    "title": "Session History",
+    "empty": "No sessions yet",
+    "yesterday": "Yesterday",
+    "questions": "{{count}} question",
+    "questions_plural": "{{count}} questions",
+    "status": {
+      "completed": "Completed",
+      "inProgress": "In progress",
+      "opened": "Opened"
     },
-    "notifications": {
-      "title": "Weekly progress summary",
-      "body": "We'll send a gentle weekly summary to you (the parent), so you can see how your child is doing. No spam.",
-      "allow": "Allow notifications",
-      "notNow": "Not now",
-      "permanentlyDenied": "Notifications are turned off in system settings.",
-      "openSettings": "Open Settings"
+    "accessibility": {
+      "sessionCard": "{{subject}}, {{questions}} questions"
+    }
+  },
+  "common": {
+    "back": "Back",
+    "goBack": "Go back",
+    "continue": "Continue"
+  },
+  "manualInputFallback": {
+    "title": "Can't read all items",
+    "description": "Some parts are unclear. Type the answer or write with finger or stylus.",
+    "subjectPrompt": "What subject is this?",
+    "typeTab": "Type",
+    "drawTab": "Draw",
+    "itemLabel": "Item {{number}}",
+    "typePlaceholder": "Type the answer here…",
+    "drawPlaceholder": "Write your answer here",
+    "submit": "Continue",
+    "skip": "Skip this item",
+    "clear": "Clear",
+    "remaining": "{{count}} item remaining",
+    "remaining_plural": "{{count}} items remaining",
+    "error": {
+      "parseFailed": "Couldn't read the homework. Please try again.",
+      "noInputs": "Please provide at least one answer"
     },
-    "done": {
-      "title": "All set!",
-      "bodyAll": "You can always change permissions later in Settings.",
-      "bodySome": "You can enable permissions later in Settings.",
-      "continue": "Continue"
+    "accessibility": {
+      "back": "Go back",
+      "submit": "Submit all typed and drawn answers",
+      "skip": "Skip this item",
+      "typeInput": "Type answer for item {{number}}",
+      "drawCanvas": "Drawing area for item {{number}}"
     }
   }
 }

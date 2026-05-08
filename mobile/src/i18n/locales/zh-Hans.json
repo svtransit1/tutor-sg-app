@@ -2,34 +2,28 @@
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": {
-      "title": "欢迎！",
-      "subtitle": "你的个人学习伙伴",
-      "tagline": "聪明学习，快乐成长！",
-      "cta": "开始使用"
-    },
-    "langPick": {
-      "title": "选择语言",
-      "subtitle": "应用将使用此语言。"
-    },
-    "parentGate": {
-      "title": "家长设置",
-      "body": "这个应用需要爸爸妈妈或监护人先完成设置。请把手机交给大人。",
-      "continue": "我是家长 / 监护人",
-      "goBack": "我不是 — 返回"
-    },
-    "parentPinSetup": {
-      "title": "设置家长密码",
-      "body": "设置一个 4 位数密码。以后您可以用它查看孩子的学习记录。",
-      "enterPin": "输入 4 位数字密码",
-      "confirmPin": "确认您的密码",
-      "mismatch": "密码不匹配，请重新输入。",
-      "skip": "跳过 — 稍后设置",
-      "accessibility": {
-        "digitInput": "第 {{position}} 位数字",
-        "confirmDigitInput": "确认第 {{position}} 位数字",
-        "skipButton": "跳过密码设置"
-      }
+    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
+    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。", "continue": "继续" },
+    "privacyPromise": {
+      "title": "我们承诺保护您的隐私",
+      "body": "孩子的作业永远不会离开这台设备。照片、答案和聊天内容都在设备上保密。只有您（家长）可以查看学习记录。",
+      "badgeText": "孩子的数据不会离开此设备",
+      "bullet1": "照片和作业扫描件都保存在本设备上——不会上传到任何地方",
+      "bullet2": "答案、聊天和语音记录都在本地处理——其他人无法查看",
+      "bullet3": "只有您（家长）可以查看学习记录和进度总结",
+      "learnMore": "了解更多",
+      "learnLess": "收起",
+      "learnMoreShow": "展开了解隐私保护详情",
+      "learnMoreHide": "收起隐私详情",
+      "learnMoreBody": "所有 AI 处理都在您的设备本地完成，使用一个小巧而强大的 AI 模型。无需云端服务器，无需上传，无需收集数据。孩子的照片、输入答案、语音记录和聊天历史始终保存在这台设备上。即使是匿名的使用统计，也需要您明确同意后才会发送。",
+      "headline": "开始之前——关于隐私的一份简单承诺",
+      "continue": "我明白了——继续",
+      "reassurance": "您随时可以在家长专区查看隐私设置。",
+      "consentLabel": "我理解并同意孩子的数据保留在这台设备上",
+      "consentRequired": "请勾选此框以继续",
+      "accessibility": "隐私承诺：孩子的数据不会离开这台设备。",
+      "accessibilityConsentChecked": "已同意",
+      "accessibilityConsentUnchecked": "未同意"
     },
     "siblingPrompt": {
       "title": "家里还有其他孩子要用吗？",
@@ -62,15 +56,7 @@
         "subjectOff": "未选"
       }
     },
-    "done": {
-      "title": "准备好了！",
-      "subtitle": "让我们开始学习吧",
-      "greeting": "{{name}}，你好！准备好了吗？",
-      "cameraCta": "拍一下作业",
-      "cameraSubtitle": "拍张照片，立即获取帮助",
-      "practicePrompt": "或试试练习题",
-      "parentArea": "家长专区"
-    },
+    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
@@ -89,8 +75,12 @@
     "attemptsRemaining": "还剩 {{count}} 次机会",
     "attemptsRemaining_plural": "还剩 {{count}} 次机会",
     "pinsDontMatch": "PIN 码不匹配，请重试。",
+    "delete": "删除",
+    "forgotPin": "忘记 PIN 码？重置",
+    "backToEnter": "返回输入 PIN 码",
     "setup": {
       "title": "设置家长 PIN 码",
+      "body": "设置一个 4 位数字 PIN 码来保护家长专区。查看孩子的学习记录时需输入此 PIN 码。",
       "enterPin": "输入 4 位数字 PIN 码",
       "confirmPin": "确认您的 PIN 码"
     },
@@ -115,11 +105,29 @@
   "parent": {
     "dashboard": {
       "title": "家长面板",
-      "placeholder": "学习记录和进度即将上线"
+      "groupToday": "今天",
+      "groupYesterday": "昨天",
+      "groupThisWeek": "本周",
+      "groupOlder": "更早",
+      "statusCompleted": "已完成",
+      "statusInProgress": "进行中",
+      "totalSessions": "总学习次数",
+      "completedSessions": "已完成",
+      "emptyTitle": "还没有学习记录",
+      "emptySubtitle": "孩子完成作业后，学习记录会显示在这里",
+      "loading": "加载中...",
+      "questions": "{{count}} 道题",
+      "questions_plural": "{{count}} 道题"
     },
     "settings": {
       "title": "设置",
-      "placeholder": "语言、质量、模型、隐私"
+      "sectionLanguage": "应用语言",
+      "languageDescription": "选择应用界面的首选语言。",
+      "languageEn": "English",
+      "languageZh": "中文",
+      "sectionPrivacy": "隐私承诺",
+      "privacyDescription": "我们如何保护您孩子的数据",
+      "privacyBody": "所有 AI 处理都在本设备上完成。照片、答案和聊天记录永远不会离开本设备。没有云服务器，没有上传，没有数据收集。匿名使用统计仅在您明确同意后才会发送。"
     }
   },
   "deviceTierResult": {
@@ -161,11 +169,32 @@
     "camera": {
       "title": "拍照问功课",
       "subtitle": "拍张照片，立即获取帮助",
-      "accessibility": "用相机拍下你的功课"
+      "accessibility": "用相机拍下你的功课",
+      "photoReview": {
+        "retake": "重新拍照",
+        "usePhoto": "使用这张照片",
+        "usePhotos": "使用 {{count}} 张照片",
+        "usePhotos_plural": "使用 {{count}} 张照片",
+        "pageCount": "第 {{current}} 页，共 {{total}} 页",
+        "addPage": "加页",
+        "removePage": "移除",
+        "multiPageHint": "你可以添加多个页面",
+        "retakeButton": "重新拍照",
+        "confirmButton": "使用这张照片并继续",
+        "confirmButtonPlural": "使用全部 {{count}} 张照片并继续",
+        "pageThumbnail": "第 {{number}} 页缩略图",
+        "addPageButton": "再拍一页",
+        "removePageButton": "移除第 {{number}} 页",
+        "crop": "裁剪",
+        "cropButton": "调整裁剪区域",
+        "cancelCrop": "取消",
+        "confirmCrop": "确认裁剪"
+      }
     },
     "recentSessions": {
       "title": "最近学习记录",
       "empty": "还没有学习记录。快来拍下第一份功课吧！",
+      "viewAll": "查看全部 >",
       "timeAgo": {
         "justNow": "刚刚",
         "minutesAgo": "{{minutes}}分钟前",
@@ -177,93 +206,20 @@
     },
     "accessibility": {
       "subjectTile": "{{subject}} 科目",
-      "recentSession": "{{subject}}，{{time}}前，{{questions}} 道题"
+      "recentSession": "{{subject}}，{{time}}前，{{questions}} 道题",
+      "viewAll": "查看全部学习记录"
     },
     "firstSession": {
       "welcomeTitle": "欢迎来到 tutor-sg！",
       "welcomeBody": "拍下你的作业照片，马上就能得到帮助——就像身边有一位安静的小老师。",
       "ctaCamera": "拍下第一份功课",
       "ctaPractice": "试试练习题",
+      "subjectsHint": "完成第一次作业后即可选择科目",
       "dismiss": "先看看，等会儿再拍",
       "accessibility": {
         "welcomeBanner": "欢迎横幅。开始你的第一次作业辅导。",
         "practiceTile": "试试{{subject}}练习题"
       }
-    }
-  },
-  "common": {
-    "cancel": "取消",
-    "back": "返回",
-    "goBack": "返回首页",
-    "loading": "加载中…",
-    "retry": "重试"
-  },
-  "cameraScreen": {
-    "snapPrompt": "把作业对齐框内",
-    "pages": "已拍摄 {{count}} 页",
-    "pages_plural": "已拍摄 {{count}} 页",
-    "addAnother": "再加一页",
-    "done": "完成 — 获取帮助",
-    "hint": {
-      "singlePage": "把作业放在取景框内，然后点击下方按钮",
-      "morePages": "很好！可以再加页，或点击完成"
-    },
-    "status": {
-      "capturing": "正在拍照…",
-      "ocr": "正在识别作业…",
-      "inferring": "正在思考题目…",
-      "ocrSubtext": "请稍候片刻",
-      "inferenceSubtext": "AI 老师正在解答每一道题"
-    },
-    "permission": {
-      "title": "需要相机权限",
-      "description": "我们需要相机权限来拍摄你的作业。照片不会离开这台设备。",
-      "cta": "开启相机权限"
-    },
-    "manualInput": {
-      "title": "有些内容看不清楚",
-      "description": "以下内容识别不清，请在下方输入你看到的文字。",
-      "placeholder": "在此输入文字…",
-      "submit": "继续",
-      "accessibility": "第 {{item}} 项手动输入"
-    },
-    "error": {
-      "title": "出了点问题",
-      "captureFailed": "拍照失败，请重试。",
-      "processingFailed": "无法识别作业，请调整光线后重试。",
-      "inferenceFailed": "AI 老师暂时无法处理，请重试。",
-      "retake": "重新拍照"
-    },
-    "accessibility": {
-      "cancel": "返回首页",
-      "capture": "拍下作业照片"
-    }
-  },
-  "cameraResult": {
-    "title": "作业辅导",
-    "retake": "重新拍照",
-    "question": "第 {{number}} 题",
-    "questions": "{{count}} 题",
-    "questions_plural": "{{count}} 道题",
-    "hint": "提示",
-    "showSteps": "显示解题步骤",
-    "steps": "分步指导",
-    "showSolution": "显示完整答案",
-    "fullSolution": "完整解答",
-    "tryThis": "试试这个",
-    "backToHome": "返回首页",
-    "encouragement": {
-      "title": "做得很好！💪",
-      "body": "先试试提示。如果还是卡住了，点击「显示解题步骤」获取分步指导。"
-    },
-    "followUp": {
-      "placeholder": "输入追问…",
-      "send": "发送",
-      "accessibility": "输入追问内容",
-      "mockResponse": "好问题！我来帮你。想想我们刚学的方法——试试用同样的思路来解决。你觉得第一步应该做什么？"
-    },
-    "error": {
-      "notFound": "这个结果已失效，请重新拍照。"
     }
   },
   "modelDownload": {
@@ -274,8 +230,21 @@
     "paused": "下载已暂停",
     "resuming": "正在恢复下载...",
     "completed": "下载完成",
+    "verifying": "正在验证下载完整性...",
+    "checkingSpace": "正在检查可用空间...",
+    "fileProgress": "第 {{current}} / {{total}} 个文件（总计：{{totalSize}}）",
     "retry": "重试",
     "wifiRequired": "需要 Wi-Fi 连接",
+    "etaTime": "预计剩余 {{eta}}",
+    "speed": "{{speed}}",
+    "pause": "暂停",
+    "resume": "继续",
+    "cancel": "取消",
+    "cellularWarning": "这个下载将使用 {{size}} 的移动数据。切换到 Wi-Fi 以节省流量？",
+    "cellularProceed": "继续下载",
+    "cellularCancel": "等待 Wi-Fi",
+    "privacyNote": "这是一次性下载。AI 导师完全离线运行，绝不会将孩子的数据发送到设备之外。",
+    "whyNeeded": "为什么需要下载？",
     "errors": {
       "connectivity_lost": "Wi-Fi 连接中断。重新连接后将恢复下载。",
       "disk_insufficient": "存储空间不足。需要约 {{needed}}GB 可用空间。",
@@ -285,29 +254,81 @@
       "unknown_error": "出现错误，请重试。"
     }
   },
-  "permissionPrimer": {
-    "step": "第 8 步，共 10 步",
-    "camera": {
-      "title": "相机权限",
-      "body": "我们需要使用相机，让孩子可以拍下作业。照片不会离开这台设备。",
-      "allow": "开启相机权限",
-      "notNow": "稍后再说",
-      "permanentlyDenied": "相机权限已在系统设置中关闭。",
-      "openSettings": "打开设置"
+  "homeworkFeedback": {
+    "title": "作业反馈",
+    "questionLabel": "第 {{number}} 题",
+    "tabHint": "提示",
+    "tabSteps": "步骤",
+    "tabSolution": "解答",
+    "followUpTitle": "追问",
+    "textPlaceholder": "输入你的问题…",
+    "send": "发送",
+    "voiceButton": "点击说话",
+    "voiceRecording": "正在聆听…",
+    "voiceProcessing": "正在处理…",
+    "voiceError": "没听清楚，再试一次？",
+    "voiceRetry": "点击重试",
+    "voicePermissionDenied": "需要麦克风权限才能使用语音提问。",
+    "backToHome": "返回首页",
+    "voiceInputHint": "或点击麦克风用语音提问",
+    "speakContent": "朗读",
+    "stopSpeaking": "停止",
+    "accessibility": {
+      "voiceButton": "点击用语音提问",
+      "voiceRecording": "正在录制你的问题",
+      "voiceProcessing": "正在处理你的语音输入",
+      "voiceError": "语音输入失败，点击重试",
+      "voicePermissionDenied": "麦克风权限被拒绝，请在设置中开启",
+      "textInput": "输入你的追问",
+      "sendButton": "发送你的问题",
+      "speakContent": "朗读解答内容",
+      "stopSpeaking": "停止朗读"
+    }
+  },
+  "kidHistory": {
+    "title": "学习记录",
+    "empty": "还没有学习记录",
+    "yesterday": "昨天",
+    "questions": "{{count}} 道题",
+    "questions_plural": "{{count}} 道题",
+    "status": {
+      "completed": "已完成",
+      "inProgress": "进行中",
+      "opened": "已打开"
     },
-    "notifications": {
-      "title": "每周学习总结",
-      "body": "我们会每周给您（家长）发送一份学习总结，让您了解孩子的进度。不会打扰。",
-      "allow": "允许通知",
-      "notNow": "稍后再说",
-      "permanentlyDenied": "通知权限已在系统设置中关闭。",
-      "openSettings": "打开设置"
+    "accessibility": {
+      "sessionCard": "{{subject}}，{{questions}} 道题"
+    }
+  },
+  "common": {
+    "back": "返回",
+    "goBack": "返回首页",
+    "continue": "继续"
+  },
+  "manualInputFallback": {
+    "title": "有些内容看不清楚",
+    "description": "以下内容识别不清。你可以输入文字，或用手写笔/手指书写答案。",
+    "subjectPrompt": "这是哪个科目？",
+    "typeTab": "输入",
+    "drawTab": "手写",
+    "itemLabel": "第 {{number}} 项",
+    "typePlaceholder": "在此输入答案…",
+    "drawPlaceholder": "在此书写答案",
+    "submit": "继续",
+    "skip": "跳过此项",
+    "clear": "清除",
+    "remaining": "还剩 {{count}} 项",
+    "remaining_plural": "还剩 {{count}} 项",
+    "error": {
+      "parseFailed": "无法读取作业，请重新拍照。",
+      "noInputs": "请至少提供一项答案"
     },
-    "done": {
-      "title": "准备好了！",
-      "bodyAll": "您随时可以在设置中更改权限。",
-      "bodySome": "您之后可以在设置中开启权限。",
-      "continue": "继续"
+    "accessibility": {
+      "back": "返回首页",
+      "submit": "提交所有输入和手写的答案",
+      "skip": "跳过此项",
+      "typeInput": "为第 {{number}} 项输入答案",
+      "drawCanvas": "第 {{number}} 项的手写区域"
     }
   }
 }

@@ -1,3 +1,4 @@
-const mockT = (key: string) => key;
-const mockI18n = { language: 'en', changeLanguage: jest.fn() };
-export const useTranslation = () => ({ t: mockT, i18n: mockI18n });
+module.exports = {
+  useTranslation: () => ({ t: (k: string) => k, i18n: { language: 'en' } }),
+  initReactI18next: { type: '3rdParty', init: () => {} },
+};

@@ -110,8 +110,8 @@ Run once at first launch, persisted in SQLite.
 | Tier | RAM | NPU | Models |
 |---|---|---|---|
 | `high` | ≥ 6 GB | Modern NPU (A14+ / SD8Gen1+ / Dimensity 9000+) | E4B / Qwen 4B |
-| `mid` | 4–5 GB | Any | E2B / Qwen 2B |
-| `unsupported` | < 4 GB | — | None (blocked) |
+| `mid` | 3–5 GB | Any | E2B / Qwen 2B |
+| `unsupported` | < 3 GB | — | None (blocked) |
 
 **iOS:** `NSProcessInfo.processInfo.physicalMemory` via native module.
 **Android:** `/proc/meminfo` + `ActivityManager.MemoryInfo` via native module.
@@ -190,6 +190,7 @@ const FEATURE_GATES: FeatureGate[] = [
 All core features work fully offline. Only these require connectivity:
 - Model download (first launch only)
 - IAP purchase
+- Parent report sync (queued locally, synced when online)
 - Entitlement check fallback (uses cached entitlement when offline)
 
 ---
@@ -203,7 +204,7 @@ All core features work fully offline. Only these require connectivity:
 | Access | Always available | PIN-protected |
 | Content | Homework camera, chat, worksheets | Session logs, progress summaries, flagging |
 | Data source | Live LLM interactions | SQLite sessions table (read-only) |
-| Network | None required | Local-only (no sync in v1) |
+| Network | None required | Sync queued locally; POST to Supabase when online |
 
 ### 5.2 PIN gate
 

@@ -1,8 +1,6 @@
-const i18n = {
-  use: () => i18n,
-  init: () => Promise.resolve(),
-  changeLanguage: () => Promise.resolve(),
-  t: (key: string) => key,
+module.exports = {
+  t: (k: string) => k,
   language: 'en',
+  changeLanguage: () => Promise.resolve(),
+  use: () => ({ init: () => {} }),
 };
-export default i18n;
