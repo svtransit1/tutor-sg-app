@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
   },
   pageBadgeText: {
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
   },
   removePageButton: {
@@ -425,11 +425,11 @@ const styles = StyleSheet.create({
   },
   removePageIcon: {
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '700',
   },
   multiPageHint: {
-    fontSize: 13,
+    fontSize: 16,
     color: 'rgba(255,255,255,0.6)',
     textAlign: 'center',
     paddingHorizontal: 16,
@@ -468,15 +468,15 @@ const styles = StyleSheet.create({
     bottom: 2,
     right: 2,
     backgroundColor: 'rgba(0,0,0,0.6)',
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
   thumbnailIndexText: {
     color: '#FFFFFF',
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: '700',
   },
   addPageThumbnail: {
@@ -497,7 +497,7 @@ const styles = StyleSheet.create({
     color: '#4A90D9',
   },
   addPageLabel: {
-    fontSize: 9,
+    fontSize: 12,
     fontWeight: '600',
     color: '#4A90D9',
   },
