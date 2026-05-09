@@ -6,6 +6,7 @@
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
     "prepare": "husky",
+    "lint": "eslint .",
     "typecheck": "pnpm --recursive typecheck",
     "test": "pnpm --recursive test",
     "mobile:start": "pnpm --filter tutor-sg-mobile start",
@@ -15,10 +16,7 @@
     "eas:build:android:internal-aab": "cd mobile && pnpm eas:build:android:internal-aab"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "bash -c 'pnpm --recursive typecheck'"
-    ]
+    "*.{ts,tsx}": "eslint --fix"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
