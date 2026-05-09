@@ -1,6 +1,10 @@
 {
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
+  "splash": {
+    "tagline": "Smart learning, made fun!",
+    "loading": "Loading"
+  },
   "onboarding": {
     "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
     "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
@@ -211,6 +215,12 @@
       "hash_mismatch": "Download file corrupted. Re-downloading…",
       "download_stuck": "Download seems stuck. Retrying…",
       "unknown_error": "Something went wrong. Please try again."
+    }
+  },
+  "devTools": {
+    "fps": {
+      "label": "{{fps}} FPS",
+      "lowWarning": "Low frame rate"
     }
   },
   "common": {

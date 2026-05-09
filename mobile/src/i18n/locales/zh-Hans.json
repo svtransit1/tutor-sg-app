@@ -1,6 +1,10 @@
 {
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
+  "splash": {
+    "tagline": "聪明学习，快乐成长！",
+    "loading": "加载中"
+  },
   "onboarding": {
     "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
     "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。", "continue": "继续" },
@@ -211,6 +215,12 @@
       "hash_mismatch": "下载文件已损坏，正在重新下载...",
       "download_stuck": "下载似乎卡住了，正在重试...",
       "unknown_error": "出现错误，请重试。"
+    }
+  },
+  "devTools": {
+    "fps": {
+      "label": "{{fps}} 帧/秒",
+      "lowWarning": "低帧率"
     }
   },
   "common": {

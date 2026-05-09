@@ -1,6 +1,8 @@
 import { openDatabaseAsync, SQLiteDatabase } from 'expo-sqlite'
 
-export type ParentSubject = 'math' | 'english' | 'chinese' | 'science' | 'humanities' | 'arts' | 'music' | 'other'
+export type ParentSubject = 'math' | 'english' | 'chinese' | 'science'
+
+export type SessionScreen = 'camera' | 'homework_feedback'
 
 interface ParentSessionRow {
   id: string
@@ -30,6 +32,13 @@ export interface ParentSession {
   parentFlagged: boolean
 }
 
+export interface SessionSnapshot {
+  sessionId: string
+  screen: SessionScreen
+  snapshotData: string
+  updatedAt: string
+}
+
 const DB_NAME = 'tutorSG.db'
 
 let _db: SQLiteDatabase | null = null
@@ -37,8 +46,11 @@ let _db: SQLiteDatabase | null = null
 async function getDb(): Promise<SQLiteDatabase> {
   if (!_db) {
     const db = await openDatabaseAsync(DB_NAME)
-    await db.execAsync("CREATE TABLE IF NOT EXISTS parent_sessions (id TEXT PRIMARY KEY, kid_profile_id TEXT NOT NULL, subject TEXT NOT NULL, topic TEXT NOT NULL DEFAULT '', started_at TEXT NOT NULL DEFAULT (datetime('now')), ended_at TEXT, questions_attempted INTEGER NOT NULL DEFAULT 0, questions_correct INTEGER NOT NULL DEFAULT 0, struggle_indicators TEXT NOT NULL DEFAULT '[]', ai_summary TEXT, parent_flagged INTEGER NOT NULL DEFAULT 0);"
-    + "CREATE TABLE IF NOT EXISTS question_attempts (id INTEGER PRIMARY KEY AUTOINCREMENT, session_id TEXT NOT NULL, question_id TEXT NOT NULL, correct INTEGER NOT NULL, hints_used INTEGER NOT NULL DEFAULT 0, time_seconds INTEGER NOT NULL DEFAULT 0, struggle_detected INTEGER NOT NULL DEFAULT 0, logged_at TEXT NOT NULL DEFAULT (datetime('now')), FOREIGN KEY (session_id) REFERENCES parent_sessions(id));")
+    await db.execAsync(
+      "CREATE TABLE IF NOT EXISTS parent_sessions (id TEXT PRIMARY KEY, kid_profile_id TEXT NOT NULL, subject TEXT NOT NULL, topic TEXT NOT NULL DEFAULT '', started_at TEXT NOT NULL DEFAULT (datetime('now')), ended_at TEXT, questions_attempted INTEGER NOT NULL DEFAULT 0, questions_correct INTEGER NOT NULL DEFAULT 0, struggle_indicators TEXT NOT NULL DEFAULT '[]', ai_summary TEXT, parent_flagged INTEGER NOT NULL DEFAULT 0);"
+      + "CREATE TABLE IF NOT EXISTS question_attempts (id INTEGER PRIMARY KEY AUTOINCREMENT, session_id TEXT NOT NULL, question_id TEXT NOT NULL, correct INTEGER NOT NULL, hints_used INTEGER NOT NULL DEFAULT 0, time_seconds INTEGER NOT NULL DEFAULT 0, struggle_detected INTEGER NOT NULL DEFAULT 0, logged_at TEXT NOT NULL DEFAULT (datetime('now')), FOREIGN KEY (session_id) REFERENCES parent_sessions(id));"
+      + "CREATE TABLE IF NOT EXISTS session_snapshots (session_id TEXT PRIMARY KEY, screen TEXT NOT NULL, snapshot_data TEXT NOT NULL DEFAULT '{}', updated_at TEXT NOT NULL DEFAULT (datetime('now')), FOREIGN KEY (session_id) REFERENCES parent_sessions(id));",
+    )
     _db = db
   }
   return _db
@@ -65,27 +77,64 @@ export class ParentSessionRepository {
     await db.runAsync("INSERT INTO parent_sessions (id, kid_profile_id, subject, topic, started_at) VALUES (?, ?, ?, ?, datetime('now'))", id, kidProfileId, subject, topic)
     return id
   }
+
   static async logQuestionAttempt(sessionId: string, questionId: string, correct: boolean, hintsUsed: number, timeSeconds: number, struggleDetected: boolean): Promise<void> {
     const db = await getDb()
     await db.runAsync("INSERT INTO question_attempts (session_id, question_id, correct, hints_used, time_seconds, struggle_detected) VALUES (?, ?, ?, ?, ?, ?)", sessionId, questionId, correct ? 1 : 0, hintsUsed, timeSeconds, struggleDetected ? 1 : 0)
     await db.runAsync("UPDATE parent_sessions SET questions_attempted = questions_attempted + 1, questions_correct = questions_correct + ?, struggle_indicators = struggle_indicators || ? WHERE id = ?", correct ? 1 : 0, struggleDetected ? '1' : '0', sessionId)
   }
+
   static async endSession(sessionId: string, aiSummary: string, parentFlagged: boolean): Promise<void> {
     const db = await getDb()
     await db.runAsync("UPDATE parent_sessions SET ended_at = datetime('now'), ai_summary = ?, parent_flagged = ? WHERE id = ?", aiSummary, parentFlagged ? 1 : 0, sessionId)
   }
+
   static async getSession(id: string): Promise<ParentSession | null> {
     const db = await getDb()
     const row = await db.getFirstAsync<ParentSessionRow>('SELECT * FROM parent_sessions WHERE id = ?', id)
     return row ? rowToSession(row) : null
   }
+
   static async getSessionsForKid(kidProfileId: string): Promise<ParentSession[]> {
     const db = await getDb()
     const rows = await db.getAllAsync<ParentSessionRow>('SELECT * FROM parent_sessions WHERE kid_profile_id = ? ORDER BY started_at ASC', kidProfileId)
     return rows.map(rowToSession)
   }
+
   static async setParentFlagged(sessionId: string, flagged: boolean): Promise<void> {
     const db = await getDb()
     await db.runAsync('UPDATE parent_sessions SET parent_flagged = ? WHERE id = ?', flagged ? 1 : 0, sessionId)
+  }
+
+  static async saveSessionSnapshot(sessionId: string, screen: SessionScreen, snapshotData = '{}'): Promise<void> {
+    const db = await getDb()
+    await db.runAsync(
+      "INSERT OR REPLACE INTO session_snapshots (session_id, screen, snapshot_data, updated_at) VALUES (?, ?, ?, datetime('now'))",
+      sessionId, screen, snapshotData,
+    )
+  }
+
+  static async getActiveSnapshot(): Promise<SessionSnapshot | null> {
+    const db = await getDb()
+    const row = await db.getFirstAsync<{ session_id: string; screen: string; snapshot_data: string; updated_at: string }>(
+      `SELECT s.session_id, s.screen, s.snapshot_data, s.updated_at
+       FROM session_snapshots s
+       JOIN parent_sessions p ON p.id = s.session_id
+       WHERE p.ended_at IS NULL
+       ORDER BY s.updated_at DESC
+       LIMIT 1`,
+    )
+    if (!row) return null
+    return {
+      sessionId: row.session_id,
+      screen: row.screen as SessionScreen,
+      snapshotData: row.snapshot_data,
+      updatedAt: row.updated_at,
+    }
+  }
+
+  static async clearSessionSnapshot(sessionId: string): Promise<void> {
+    const db = await getDb()
+    await db.runAsync('DELETE FROM session_snapshots WHERE session_id = ?', sessionId)
   }
 }
