@@ -146,6 +146,7 @@ Add `--wait` to block until the build completes and download the artifact.
 ## Current Status (AAAS-161)
 
 > **Last verified:** 2026-05-09 by Wolf on Mac Studio M1 Max (macOS 26, Xcode 26.4)
+> **Latest commit:** `89d8c0f` — RN 0.81.0, react 19.1.0, Expo SDK 55 aligned
 
 ### Infrastructure Availability
 
@@ -158,26 +159,43 @@ Add `--wait` to block until the build completes and download the artifact.
 | EAS CLI | ✅ v18.11.0 | Installed globally |
 | Expo account | ❌ Not logged in | **Boss blocker** — credentials needed |
 | EAS project init | ❌ Not initialized | Requires `eas init` after login |
+| `npx expo prebuild` | ✅ Succeeds | iOS + Android native dirs generated |
+| `npx expo prebuild --clean` | ✅ Succeeds | Both platforms cleanly |
+| `pnpm install` | ✅ Succeeds | All deps resolved (RN 0.81, react 19.1, Expo 55) |
 
 ### Build Status
 
 | Platform | Build Type | Status | Blocker |
 |----------|-----------|--------|---------|
 | iOS | EAS cloud | 🚫 Blocked | Boss: Expo account credentials |
-| iOS | Local (`expo run:ios`) | 🚫 Blocked | RN 0.76.7 lacks ReactNativeDependencies xcframework (Expo SDK 55 expects RN ≥ 0.81) |
+| iOS | Local (`expo run:ios`) | 🚫 Blocked | CocoaPods post-install script: `ReactNativeDependencies.xcframework` copy fails (`cp: File exists`) — RN 0.81 + Expo 55 Podfile template bug |
 | Android | EAS cloud | 🚫 Blocked | Boss: Expo account credentials |
-| Android | Local (`expo run:android`) | 🚫 Blocked | `hermes-compiler` not found — RN 0.76.7 doesn't ship it, but Expo SDK 55 gradle template requires it |
+| Android | Local (`expo run:android`) | 🚫 Blocked | Gradle config: ghost `:expo-document-camera` project not in autolinking but in dependency tree; `hermes-compiler` template bug (worked around, but document-scanner Maven dep unresolvable) |
 
-### Root Cause: Version Mismatch (Owl review needed)
+### Version alignment (FIXED — RN 0.81.0)
 
-`mobile/package.json` specifies `react-native@0.76.7` but Expo SDK 55 recommends `react-native@~0.81.0` and generates native templates targeting RN 0.81+. This causes:
-- **iOS:** Podfile expects `ReactNativeDependencies.xcframework` (not in RN 0.76)
-- **Android:** `app/build.gradle:14` resolves `hermes-compiler` (not in RN 0.76)
+- `react-native` 0.76.7 → **0.81.0**
+- `react` 18.3.1 → **19.1.0**
+- `@react-native/codegen` added as direct dep (pnpm strict mode)
+- `@react-native-async-storage/async-storage` pinned to 2.2.0 (v3.x needs unpublished Maven dep)
+- `app.config.ts` plugins trimmed to installed modules only
 
-**Resolution paths:** (1) Bump RN to 0.81.0, or (2) Downgrade Expo to ~54.0.0. Owl gate required per ADD §11 — any framework config change needs Owl approval.
+### Remaining blocks (Owl architecture review needed)
+
+Both native build failures stem from Expo SDK 55 prebuild templates generating code that doesn't match the actual installed package structure on pnpm:
+
+1. **Android `expo-document-camera` ghost:** Gradle includes `project :expo-document-camera` in the dependency tree but the module is NOT in `autolinking.json`, NOT installed in `node_modules`, and NOT referenced in any `package.json`. Source of the reference unknown — possible Gradle cache corruption or RN config resolution bug.
+
+2. **iOS `ReactNativeDependencies` copy:** Podfile `post_install` script copies framework files that already exist, causing `cp: File exists` error. Likely a race condition in the RN 0.81 CocoaPods integration.
+
+3. **`hermes-compiler` resolution:** `app/build.gradle:14` tries `require.resolve('hermes-compiler')` which doesn't exist as a separate npm package in RN 0.81. Workaround applied (points to `react-native/sdks/hermesc/`) but the generated template should use this path by default.
+
+### Recommendation
+
+EAS cloud builds would likely succeed since EAS manages the build environment and handles these template compatibility issues. Local builds need Owl to resolve the template generation bugs or approve using EAS cloud as the primary build path with local `expo start` for dev iteration.
 
 ### Next Actions
 
 1. **Boss:** Provide Expo account credentials or `EXPO_TOKEN`
-2. **Owl:** Decide RN version alignment per framework config review
+2. **Owl:** Review RN 0.81 + Expo 55 template issues; decide EAS-only vs fix local builds
 3. **Wolf:** After (1)+(2), run `eas build --profile development --platform all --wait` for EAS verification + screenshots
