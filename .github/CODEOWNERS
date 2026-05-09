@@ -1,13 +1,67 @@
 # CODEOWNERS — tutor-sg
-# Per ADD §11: Tortoise reviews every PR; Foxy approves merges to main; Owl gates architecture-touching PRs.
 #
-# BLOCKED: @tortoise-tutor-sg is a placeholder. Update to the real Tortoise bot GitHub handle
-# once Boss provisions the bot account (approval 67b2d57e).
+# Per ADD §11: Tortoise reviews every PR; Foxy approves merges to main;
+# Owl gates architecture-touching PRs.
+#
+# Per Fleet Review Protocol §10, each agent domain owns specific paths.
+# Tortoise is listed on every rule to ensure automated quality-gate review
+# on all changes (last matching pattern wins — a specialist-only rule would
+# exclude Tortoise for that path).
+#
+# NOTE: @tortoise-tutor-sg is a placeholder. Update to the real Tortoise bot
+# GitHub handle once Boss provisions the bot account (approval 67b2d57e).
+# Other placeholder handles (@owl-tutor-sg, @bee-tutor-sg, @wolf-tutor-sg,
+# @foxy-tutor-sg, @flutter-tutor-sg, @sage-tutor-sg) are the planned fleet
+# account names — update when provisioned.
 
-# Global default — Tortoise reviews everything
+# ── Global defaults ────────────────────────────────────────────
+# Tortoise reviews every PR (automated quality-gate enforcement)
 * @tortoise-tutor-sg
 
-# Architecture-touching paths also need Owl review
-/docs/ARCHITECTURE.md @tortoise-tutor-sg
-/src/model/ @tortoise-tutor-sg
-/src/inference/ @tortoise-tutor-sg
+# ── Architecture (Owl) ─────────────────────────────────────────
+# Model routing, inference pipeline, framework config, platform code
+/docs/ARCHITECTURE.md @owl-tutor-sg @tortoise-tutor-sg
+/packages/llm/           @owl-tutor-sg @tortoise-tutor-sg
+/packages/device-tier/   @owl-tutor-sg @tortoise-tutor-sg
+/mobile/src/services/    @owl-tutor-sg @tortoise-tutor-sg
+/mobile/app.json         @owl-tutor-sg @tortoise-tutor-sg
+/mobile/eas.json         @owl-tutor-sg @tortoise-tutor-sg
+/mobile/tsconfig.json    @owl-tutor-sg @tortoise-tutor-sg
+/mobile/babel.config.js  @owl-tutor-sg @tortoise-tutor-sg
+/mobile/metro.config.js  @owl-tutor-sg @tortoise-tutor-sg
+
+# ── Camera, OCR, parent log, IAP, shared infra (Bee) ───────────
+/packages/database/ @bee-tutor-sg @tortoise-tutor-sg
+/packages/shared/   @bee-tutor-sg @tortoise-tutor-sg
+/mobile/src/storage/ @bee-tutor-sg @tortoise-tutor-sg
+/mobile/src/models/  @bee-tutor-sg @tortoise-tutor-sg
+
+# ── Mobile feature code (Wolf) ─────────────────────────────────
+/mobile/src/screens/   @wolf-tutor-sg @tortoise-tutor-sg
+/mobile/src/components/ @wolf-tutor-sg @tortoise-tutor-sg
+/mobile/src/hooks/     @wolf-tutor-sg @tortoise-tutor-sg
+/mobile/src/contexts/  @wolf-tutor-sg @tortoise-tutor-sg
+/mobile/app/           @wolf-tutor-sg @tortoise-tutor-sg
+/packages/features/    @wolf-tutor-sg @tortoise-tutor-sg
+/packages/perf/        @wolf-tutor-sg @tortoise-tutor-sg
+
+# ── Tests (Wolf) ───────────────────────────────────────────────
+/mobile/src/**/__tests__/ @wolf-tutor-sg @tortoise-tutor-sg
+/packages/**/__tests__/   @wolf-tutor-sg @tortoise-tutor-sg
+
+# ── UI/UX & design system (Flutter) ────────────────────────────
+/packages/theme/ @flutter-tutor-sg @tortoise-tutor-sg
+
+# ── Content, bilingual, Chinese MT (Sage) ──────────────────────
+/packages/i18n/     @sage-tutor-sg @tortoise-tutor-sg
+/mobile/src/i18n/   @sage-tutor-sg @tortoise-tutor-sg
+/data/              @sage-tutor-sg @tortoise-tutor-sg
+/syllabus-pdfs/     @sage-tutor-sg @tortoise-tutor-sg
+/schema/            @sage-tutor-sg @tortoise-tutor-sg
+
+# ── Product docs & CI config (Foxy) ────────────────────────────
+# NOTE: /docs/ must appear before /docs/ARCHITECTURE.md so the more
+# specific architecture rule takes precedence (last matching pattern wins).
+/docs/              @foxy-tutor-sg @tortoise-tutor-sg
+/README.md          @foxy-tutor-sg @tortoise-tutor-sg
+/.github/workflows/ @foxy-tutor-sg @tortoise-tutor-sg
