@@ -1,1 +1,1 @@
-// @tutor-sg/device-tier
+export {};
