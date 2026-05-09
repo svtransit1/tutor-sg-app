@@ -12,6 +12,64 @@ Do not commit secrets, child data, or model weights. See `.gitignore`.
 
 ---
 
+## Build
+
+### Prerequisites
+
+- [Expo Account](https://expo.dev) with EAS CLI configured
+- `pnpm install` at repo root
+
+### Android internal build (APK — sideload)
+
+Builds an APK for direct installation on Android devices via `adb`.
+
+```bash
+pnpm eas:build:android:internal
+```
+
+This runs `eas build --platform android --profile internal-android --non-interactive` inside `mobile/`.
+
+Once the build completes, EAS prints a download URL. Download the `.apk` and install:
+
+```bash
+adb install path/to/tutor-sg-internal.apk
+```
+
+### Android internal build (AAB — Play Console internal track)
+
+Builds an Android App Bundle for uploading to the Play Console internal testing track.
+
+```bash
+pnpm eas:build:android:internal-aab
+```
+
+Upload the resulting `.aab` via [Google Play Console](https://play.google.com/console) → Internal testing → Create new release.
+
+### iOS internal build
+
+```bash
+cd mobile && eas build --platform ios --profile internal --non-interactive
+```
+
+### Build profiles
+
+See `mobile/eas.json` for available profiles:
+
+| Profile | Platform | Artifact | Use case |
+|---|---|---|---|
+| `internal-android` | Android | APK | Direct sideload via `adb` |
+| `internal-android-aab` | Android | AAB | Play Console internal track |
+
+### Keystore
+
+During the first EAS build for Android, EAS prompts you to either:
+- Let EAS manage a keystore automatically (recommended for most cases), or
+- Upload your own keystore.
+
+A local **debug keystore** lives at `mobile/android/app/debug.keystore` for development builds run outside of EAS. Production releases require a signed keystore managed through EAS.
+
+If Play Console sign-up has not been completed yet, file a `boss-needed` issue requesting Play Console account setup.
+
 ## Model integrity hashes
 
 The app verifies downloaded model artifacts against SHA-256 checksums in `packages/shared/src/models/integrity.json`.

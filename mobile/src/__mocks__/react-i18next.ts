@@ -1,0 +1,37 @@
+const mockT = (key: string, fallback?: string) => {
+  const m: Record<string, string> = {
+    'app.loading': 'tutor-sg — loading...',
+    'onboarding.parentPinSetup.title': 'Set your parent PIN',
+    'onboarding.parentPinSetup.body': "Set a 6-digit PIN. You'll use this to see your child's learning log.",
+    'onboarding.parentPinSetup.enterPin': 'Enter a 6-digit PIN',
+    'onboarding.parentPinSetup.confirmPin': 'Confirm your PIN',
+    'onboarding.parentPinSetup.mismatch': "PINs don't match. Try again.",
+    'onboarding.parentPinSetup.skip': 'Skip — set up later',
+    'onboarding.parentPinSetup.accessibility.skipButton': 'Skip PIN setup',
+    'parentAuth.title': 'Parent Access',
+    'parentAuth.enterPin': 'Enter your PIN',
+    'parentAuth.wrongPin': 'Wrong PIN. {{attempts}} attempt(s) remaining.',
+    'parentAuth.cooldown': 'Too many attempts. Please wait {{seconds}}s',
+    'parentAuth.attemptsRemaining': '{{count}} attempt remaining',
+    'parentAuth.attemptsRemaining_plural': '{{count}} attempts remaining',
+    'parentAuth.changePin.title': 'Change Parent PIN',
+    'parentAuth.changePin.enterOld': 'Enter your current PIN',
+    'parentAuth.changePin.enterNew': 'Enter a new 6-digit PIN',
+    'parentAuth.changePin.confirmNew': 'Confirm new PIN',
+    'parentAuth.changePin.success': 'PIN changed successfully',
+    'parentAuth.changePin.wrongOld': 'Current PIN is incorrect',
+    'parentAuth.cancel': 'Cancel',
+    'parent.dashboard.title': 'Parent Dashboard',
+    'parent.dashboard.placeholder': 'Session log and progress coming soon',
+    'parent.changePin': 'Change PIN',
+    'parent.backToKid': 'Back to Kid Area',
+    'common.cancel': 'Cancel',
+    'common.back': 'Back',
+    'kidHome.firstSession.ctaCamera': 'Snap your homework',
+    'onboarding.done.parentArea': 'Parent area',
+  };
+  return m[key] ?? fallback ?? key;
+};
+
+export const useTranslation = () => ({ t: mockT, i18n: { language: 'en', changeLanguage: jest.fn() } });
+export const initReactI18next = { type: '3rdParty', init: jest.fn() };

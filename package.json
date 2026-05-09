@@ -1,0 +1,35 @@
+{
+  "name": "tutor-sg",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "bootstrap": "./scripts/bootstrap.sh",
+    "prepare": "husky",
+    "typecheck": "pnpm --recursive typecheck",
+    "test": "pnpm --recursive test",
+    "mobile:start": "pnpm --filter tutor-sg-mobile start",
+    "mobile:ios": "pnpm --filter tutor-sg-mobile ios",
+    "mobile:android": "pnpm --filter tutor-sg-mobile android",
+    "eas:build:dev": "cd mobile && pnpm eas:build:dev",
+    "eas:build:dev:ios": "cd mobile && pnpm eas:build:dev:ios",
+    "eas:build:dev:android": "cd mobile && pnpm eas:build:dev:android",
+    "eas:build:preview": "cd mobile && pnpm eas:build:preview",
+    "eas:build:preview:aab": "cd mobile && pnpm eas:build:preview:aab",
+    "eas:build:production": "cd mobile && pnpm eas:build:production",
+    "eas:submit:production": "cd mobile && pnpm eas:submit:production"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "bash -c 'pnpm --recursive typecheck'"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.3",
+    "typescript-eslint": "^8.59.2"
+  }
+}
