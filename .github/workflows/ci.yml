@@ -7,51 +7,45 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Cancel in-progress runs for the same branch (not on main though)
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 env:
   NODE_VERSION: '20'
-  PNPM_VERSION: '9'
+  PNPM_VERSION: '10'
 
 jobs:
-  typecheck:
-    name: Typecheck
+  ci:
+    name: Lint + Typecheck + Test
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm typecheck
 
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
+
       - run: pnpm install --frozen-lockfile
-      - run: pnpm lint
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
 
   bundle:
     name: RN Bundle
-    needs: [typecheck, lint]
+    needs: [ci]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
@@ -59,14 +53,18 @@ jobs:
         platform: [ios, android]
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
+
       - run: pnpm install --frozen-lockfile
+
       - name: Expo export ${{ matrix.platform }}
         run: npx expo export --platform ${{ matrix.platform }} --output-dir dist-${{ matrix.platform }}
         env:

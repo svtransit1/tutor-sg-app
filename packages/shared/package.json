@@ -1,0 +1,12 @@
+{
+  "name": "@tutor-sg/shared",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests yet\"",
+    "lint": "npx eslint .",
+    "format": "prettier --write ."
+  }
+}
