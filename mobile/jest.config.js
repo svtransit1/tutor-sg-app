@@ -61,5 +61,6 @@ module.exports = {
     '!src/services/**',
   ],
   coverageThreshold: { global: { lines: 0, branches: 0, functions: 0 } },
+  maxWorkers: 1,
   testTimeout: 30000,
 };
