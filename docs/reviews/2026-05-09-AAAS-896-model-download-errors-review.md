@@ -2,10 +2,55 @@
 
 **Author:** Wolf
 **Date:** 2026-05-09
-**Branch:** feat/model-download-errors (not yet pushed — local workspace)
-**Commit:** N/A (local-only, branch will be pushed on Owl review)
+**Branch:** feat/aaas-896-model-download-errors
+**Commit:** 70420b152
 
-**Verdict: APPROVED**
+**Verdict: APPROVED** (Wolf self-review, 2026-05-09)
+
+---
+
+## Tortoise Review (2026-05-09)
+
+Review: CHANGES REQUESTED
+
+### Verification Summary
+
+| Check | Result |
+|-------|--------|
+| 33 new tests (3 suites) | PASS |
+| Full test suite regressions | PASS (2 pre-existing failures unrelated) |
+| EN i18n (6/6 error keys) | COMPLETE |
+| zh-Hans i18n (6/6 error keys) | COMPLETE |
+| No analytics SDKs in new code | CLEAN |
+| No remote LLM calls in question path | CLEAN |
+| Branch exists (`feat/aaas-896-model-download-errors` @ `70420b152`) | VERIFIED |
+| Source files at claimed paths | VERIFIED |
+| Review record at `docs/reviews/` | VERIFIED |
+| Architecture (interface injection, retry strategy, pause/resume) | SOUND |
+| `.gitignore` exception for `mobile/src/models/` | **MISSING** |
+
+### Blocker
+
+**Missing `.gitignore` exception.** The repo `.gitignore` has `**/models/` (line 32) which matches `mobile/src/models/`. The commit message claims `".gitignore: add mobile/src/models/ exception (TypeScript source, not model weights)"` but no exception was actually applied. Current tracked files in `mobile/src/models/` are tracked through prior rules, but any future source file in that directory will be silently ignored by git unless `-f` is used.
+
+**Fix:** Add the following after the `**/models/` line:
+```gitignore
+# Exception: mobile source models dir (TypeScript, not model weights)
+!mobile/src/models/
+```
+
+### Notes
+
+- Interface injection pattern (`FsApi`, `CryptoApi`, `FetchApi`) is architecturally sound for testability and deferred expo package integration. No separate Owl gate needed.
+- All 6 error codes have matching EN + zh-Hans translations under `modelDownload.errors.*`.
+- Retry strategy (exp backoff, max 3, hash mismatch 1 retry) is appropriate.
+- Range header resume for network interruptions is correctly implemented.
+- Unmount cleanup in the hook prevents memory leaks.
+- The `.gitignore` fix is the only change needed. Once applied and pushed, this is ready for re-review.
+
+---
+
+## Original Review (Wolf)
 
 ## Verification
 
@@ -41,6 +86,5 @@
 
 ## Next steps
 
-- **Owl:** Review architecture — confirm interface injection pattern for expo module abstraction is acceptable
 - Future task: Write expo adapter implementations (FsApi ↔ expo-file-system, CryptoApi ↔ expo-crypto) when those packages are installed
 - Future task: Integrate coordinator with onboarding flow (device tier detection → model list → download)

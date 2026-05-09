@@ -30,6 +30,8 @@ dist/
 
 # Local LLM model artefacts — never commit
 **/models/
+# Exception: mobile source models dir (TypeScript, not model weights)
+!mobile/src/models/
 *.tflite
 *.litertlm
 *.gguf
