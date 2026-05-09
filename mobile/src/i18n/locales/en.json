@@ -107,7 +107,14 @@
       "errorSendFailed": "Failed to send magic link. Please try again.",
       "errorSignInFailed": "Sign-in failed. Please try again.",
       "errorAuthSession": "Authentication session was cancelled or failed.",
-      "signedIn": "Signed in successfully"
+      "errorInvalidPassword": "Password must be at least 6 characters",
+      "signedIn": "Signed in successfully",
+      "magicLinkTab": "Magic Link",
+      "passwordTab": "Sign In",
+      "signUpTab": "Sign Up",
+      "passwordPlaceholder": "Enter your password",
+      "signIn": "Sign in",
+      "signUp": "Create account"
     }
   },
   "parent": {

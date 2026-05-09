@@ -5,6 +5,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import i18n from '../src/i18n';
 
+import { AuthProvider } from '../src/components/auth/AuthProvider';
+
 function LoadingScreen() {
   return (
     <View style={styles.loading}>
@@ -25,15 +27,18 @@ export default function RootLayout() {
   if (!i18nReady) return <LoadingScreen />;
 
   return (
-    <SafeAreaProvider>
-      <StatusBar style="auto" />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="(onboarding)" />
-        <Stack.Screen name="(kid)" />
-        <Stack.Screen name="(parent)" />
-      </Stack>
-    </SafeAreaProvider>
+    <AuthProvider>
+      <SafeAreaProvider>
+        <StatusBar style="auto" />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="auth" options={{ headerShown: false }} />
+          <Stack.Screen name="(onboarding)" />
+          <Stack.Screen name="(kid)" />
+          <Stack.Screen name="(parent)" />
+        </Stack>
+      </SafeAreaProvider>
+    </AuthProvider>
   );
 }
 

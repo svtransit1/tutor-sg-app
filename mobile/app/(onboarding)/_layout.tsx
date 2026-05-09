@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 export default function OnboardingLayout() {
   return (
     <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
+      <Stack.Screen name="parent-sign-in" />
       <Stack.Screen name="parent-pin-setup" />
     </Stack>
   );

@@ -107,7 +107,14 @@
       "errorSendFailed": "发送登录链接失败，请重试。",
       "errorSignInFailed": "登录失败，请重试。",
       "errorAuthSession": "登录会话已取消或失败。",
-      "signedIn": "登录成功"
+      "errorInvalidPassword": "密码至少需要 6 个字符",
+      "signedIn": "登录成功",
+      "magicLinkTab": "邮箱链接",
+      "passwordTab": "登录",
+      "signUpTab": "注册",
+      "passwordPlaceholder": "请输入密码",
+      "signIn": "登录",
+      "signUp": "创建账户"
     }
   },
   "parent": {
