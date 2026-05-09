@@ -13,7 +13,7 @@
 | Commits ahead of main | ✅ 1 commit |
 | Typecheck (auth files only) | ✅ 0 errors |
 | Typecheck (pre-existing errors) | ⚠️ 4 in HomeworkFeedbackCard.tsx |
-| Tests | ⚠️ Blocked by `__fbBatchedBridgeConfig` issue |
+| Tests | ✅ 16/16 pass (resolved: deps needed install) |
 | Dependencies installed | ✅ `@supabase/supabase-js`, `expo-auth-session`, `expo-web-browser`, `expo-linking` |
 | Bilingual (EN + zh-Hans) | ✅ 7 new keys added |
 | No secrets committed | ✅ Config from env vars/.env.local |
