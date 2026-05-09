@@ -7,7 +7,7 @@
  * - i18n initialization
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -15,6 +15,7 @@ import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 
 import { OnboardingProvider } from '../src/onboarding';
 import i18n from '../src/i18n';
+import { COLD_START_MS } from './index';
 
 function LoadingScreen() {
   return (
@@ -27,6 +28,7 @@ function LoadingScreen() {
 
 export default function RootLayout() {
   const [i18nReady, setI18nReady] = useState(false);
+  const firstFrameMarked = useRef(false);
 
   useEffect(() => {
     // Ensure i18n is initialized
@@ -36,6 +38,19 @@ export default function RootLayout() {
       i18n.on('initialized', () => setI18nReady(true));
     }
   }, []);
+
+  // Perf: record cold-start duration when first frame renders
+  useEffect(() => {
+    if (i18nReady && !firstFrameMarked.current) {
+      firstFrameMarked.current = true;
+      const coldStartMs = Date.now() - COLD_START_MS;
+      if (__DEV__) {
+        console.log(
+          `[perf] cold_start\tfirst_interactive_frame\t${coldStartMs}ms\t(source: JS module eval → RootLayout render)`,
+        );
+      }
+    }
+  }, [i18nReady]);
 
   if (!i18nReady) {
     return <LoadingScreen />;

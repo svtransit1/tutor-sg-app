@@ -1,3 +1,6 @@
+// Perf: cold-start mark — recorded at module load time as early as possible
+export const COLD_START_MS = Date.now();
+
 /**
  * App entry — redirects to onboarding or kid home based on state.
  */

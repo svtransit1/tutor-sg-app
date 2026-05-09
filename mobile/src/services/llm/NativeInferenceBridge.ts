@@ -6,7 +6,8 @@ import type {
   SubjectId,
 } from '@tutor-sg/llm';
 import { buildPrompt, parseInferenceResponse, resolveModel } from '@tutor-sg/llm';
-import { LLMRuntime, getState } from './LLMRuntime';
+import { LLMRuntime, getState, onToken } from './LLMRuntime';
+import { mark } from '@tutor-sg/perf';
 
 const TIER_MAP: Record<ModelTier, 'high' | 'mid'> = {
   E4B: 'high',
@@ -46,22 +47,17 @@ export class NativeInferenceBridge implements InferenceBridge {
     return this._loaded && getState() === 'ready';
   }
 
-  async infer(request: InferenceRequest): Promise<InferenceResponse> {
+  async infer(request: InferenceRequest, onFirstToken?: () => void): Promise<InferenceResponse> {
     if (!this._loaded) {
       const loaded = await this.loadModel(
-        request.deviceTier === 'high'
-          ? ('E4B' as ModelTier)
-          : ('E2B' as ModelTier),
+        request.deviceTier === 'high' ? ('E4B' as ModelTier) : ('E2B' as ModelTier),
       );
       if (!loaded) {
         return {
           sessionId: `err-${Date.now()}`,
           createdAt: new Date().toISOString(),
           questions: [],
-          subject:
-            request.subject === 'auto'
-              ? ('math' as SubjectId)
-              : request.subject,
+          subject: request.subject === 'auto' ? ('math' as SubjectId) : request.subject,
           confidence: 0,
           error: {
             code: 'inference_failed',
@@ -74,12 +70,8 @@ export class NativeInferenceBridge implements InferenceBridge {
 
     try {
       const prompt = buildPrompt(request);
-      const subject =
-        request.subject === 'auto'
-          ? ('math' as SubjectId)
-          : request.subject;
-      const deviceTier: 'high' | 'mid' =
-        request.deviceTier === 'high' ? 'high' : 'mid';
+      const subject = request.subject === 'auto' ? ('math' as SubjectId) : request.subject;
+      const deviceTier: 'high' | 'mid' = request.deviceTier === 'high' ? 'high' : 'mid';
       const targetModelId = resolveModel(subject, deviceTier);
       const targetPath = this._buildModelPath(targetModelId);
 
@@ -97,14 +89,22 @@ export class NativeInferenceBridge implements InferenceBridge {
         this._loaded = true;
       }
 
-      const fullPrompt = prompt.system
-        ? `${prompt.system}\n\n${prompt.user}`
-        : prompt.user;
-      const response = await LLMRuntime.generate({
-        prompt: fullPrompt,
-        maxTokens: 1024,
-        temperature: 0.7,
-      });
+      const fullPrompt = prompt.system ? `${prompt.system}\n\n${prompt.user}` : prompt.user;
+      let firstTokenFired = false;
+      const response = await LLMRuntime.generate(
+        {
+          prompt: fullPrompt,
+          maxTokens: 1024,
+          temperature: 0.7,
+        },
+        (chunk) => {
+          if (!firstTokenFired && chunk.index === 0) {
+            firstTokenFired = true;
+            mark('first_llm_token');
+            onFirstToken?.();
+          }
+        },
+      );
       const questionCount = request.questions?.length ?? 1;
       const parsed = parseInferenceResponse(response.text, questionCount);
       return {
@@ -117,10 +117,7 @@ export class NativeInferenceBridge implements InferenceBridge {
         sessionId: `err-${Date.now()}`,
         createdAt: new Date().toISOString(),
         questions: [],
-        subject:
-          request.subject === 'auto'
-            ? ('math' as SubjectId)
-            : request.subject,
+        subject: request.subject === 'auto' ? ('math' as SubjectId) : request.subject,
         confidence: 0,
         error: {
           code: 'inference_failed',

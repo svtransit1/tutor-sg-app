@@ -46,6 +46,7 @@ module.exports = {
     '^@supabase/supabase-js$': '<rootDir>/__mocks__/@supabase/supabase-js.ts',
     '^@tutor-sg/device-tier$': '<rootDir>/__mocks__/@tutor-sg/device-tier.tsx',
     '^@tutor-sg/llm$': '<rootDir>/__mocks__/@tutor-sg/llm.ts',
+    '^@tutor-sg/perf$': '<rootDir>/__mocks__/@tutor-sg/perf.ts',
     '^expo-(.*)$': '<rootDir>/__mocks__/expo-module-proxy.ts',
   },
   setupFiles: [path.join(rnDir, 'jest', 'setup.js')],

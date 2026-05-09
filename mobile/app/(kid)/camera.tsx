@@ -38,6 +38,7 @@ import { MockInferenceBridge, type InferenceRequest } from '@tutor-sg/llm';
 import { MockOcrService, type OcrService } from '@/services/ocr';
 import { loadGrade, type Grade } from '@/storage/onboarding-state';
 import { insertFullSession } from '@/storage/sessions';
+import { startSession, mark, getMarks, reset } from '@tutor-sg/perf';
 
 // ── Services (singletons, swap to real implementations later) ─────
 
@@ -47,13 +48,13 @@ const inferenceBridge = new MockInferenceBridge();
 // ── Types ──────────────────────────────────────────────────────────
 
 type ProcessingStage =
-  | 'idle'           // Camera preview, waiting for capture
-  | 'capturing'      // Photo just taken
-  | 'ocr'            // Running OCR
-  | 'manual_input'   // Waiting for user to type unclear items
-  | 'inferring'      // Running LLM inference
-  | 'done'           // Complete, navigating to result
-  | 'error';         // Something went wrong
+  | 'idle' // Camera preview, waiting for capture
+  | 'capturing' // Photo just taken
+  | 'ocr' // Running OCR
+  | 'manual_input' // Waiting for user to type unclear items
+  | 'inferring' // Running LLM inference
+  | 'done' // Complete, navigating to result
+  | 'error'; // Something went wrong
 
 interface CapturedPage {
   uri: string;
@@ -83,8 +84,10 @@ export default function CameraScreen() {
   // Track mounted state for cleanup
   const mountedRef = useRef(true);
   useEffect(() => {
+    startSession();
     return () => {
       mountedRef.current = false;
+      reset();
     };
   }, []);
 
@@ -110,6 +113,7 @@ export default function CameraScreen() {
     try {
       setProcessingStage('capturing');
       setStatusText(t('cameraScreen.status.capturing'));
+      mark('capture_start');
 
       const photo = await cameraRef.current.takePictureAsync({
         quality: 0.8,
@@ -120,15 +124,13 @@ export default function CameraScreen() {
         throw new Error('Failed to capture photo');
       }
 
+      mark('capture_end');
       setCapturedPages((prev) => [...prev, { uri: photo.uri }]);
       setProcessingStage('idle');
       setStatusText('');
     } catch (error) {
       console.error('Camera capture failed:', error);
-      Alert.alert(
-        t('cameraScreen.error.title'),
-        t('cameraScreen.error.captureFailed'),
-      );
+      Alert.alert(t('cameraScreen.error.title'), t('cameraScreen.error.captureFailed'));
       setProcessingStage('idle');
     }
   }, [t]);
@@ -149,9 +151,12 @@ export default function CameraScreen() {
       // Stage 1: OCR
       setProcessingStage('ocr');
       setStatusText(t('cameraScreen.status.ocr'));
+      mark('ocr_start');
 
       const uris = capturedPages.map((p) => p.uri);
       const ocrResult = await ocrService.recognizeImages(uris);
+
+      mark('ocr_end');
 
       // Check if any blocks need manual input
       if (ocrResult.needsManualInput) {
@@ -175,10 +180,7 @@ export default function CameraScreen() {
       console.error('Processing failed:', error);
       if (mountedRef.current) {
         setProcessingStage('error');
-        Alert.alert(
-          t('cameraScreen.error.title'),
-          t('cameraScreen.error.processingFailed'),
-        );
+        Alert.alert(t('cameraScreen.error.title'), t('cameraScreen.error.processingFailed'));
       }
     }
   }, [capturedPages, t]);
@@ -208,76 +210,81 @@ export default function CameraScreen() {
       }
 
       // Rebuild fullText with manual corrections
-      ocrResult.fullText = ocrResult.pages
-        .flatMap((p) => p.blocks.map((b) => b.text))
-        .join('\n');
+      ocrResult.fullText = ocrResult.pages.flatMap((p) => p.blocks.map((b) => b.text)).join('\n');
 
       await runInference(ocrResult);
     } catch (error) {
       console.error('Inference after manual input failed:', error);
       if (mountedRef.current) {
         setProcessingStage('error');
-        Alert.alert(
-          t('cameraScreen.error.title'),
-          t('cameraScreen.error.inferenceFailed'),
-        );
+        Alert.alert(t('cameraScreen.error.title'), t('cameraScreen.error.inferenceFailed'));
       }
     }
   }, [capturedPages, manualInputs, t]);
 
   // ── Run Inference ───────────────────────────────────────────────
 
-  const runInference = useCallback(async (ocrResult: InferenceRequest['ocr']) => {
-    setProcessingStage('inferring');
-    setStatusText(t('cameraScreen.status.inferring'));
+  const runInference = useCallback(
+    async (ocrResult: InferenceRequest['ocr']) => {
+      setProcessingStage('inferring');
+      setStatusText(t('cameraScreen.status.inferring'));
+      mark('inference_start');
 
-    // Load kid profile for context
-    const grade = (loadGrade() ?? 'P3') as Grade;
+      // Load kid profile for context
+      const grade = (loadGrade() ?? 'P3') as Grade;
 
-    // Map subject: for now, let LLM auto-detect
-    const request: InferenceRequest = {
-      ocr: ocrResult,
-      subject: 'auto',
-      grade: grade,
-      deviceTier: 'high',
-      language: 'en',
-    };
+      // Map subject: for now, let LLM auto-detect
+      const request: InferenceRequest = {
+        ocr: ocrResult,
+        subject: 'auto',
+        grade: grade,
+        deviceTier: 'high',
+        language: 'en',
+      };
 
-    const result = await inferenceBridge.infer(request);
+      const result = await inferenceBridge.infer(request);
 
-    if (!mountedRef.current) return;
+      // Mock bridge doesn't stream tokens — mark first-token at completion
+      mark('first_llm_token');
 
-    if (result.error) {
-      setProcessingStage('error');
-      Alert.alert(
-        t('cameraScreen.error.title'),
-        result.error.message,
-      );
-      return;
-    }
+      if (!mountedRef.current) return;
 
-    // Save session to local DB
-    try {
-      await insertFullSession({
-        sessionId: result.sessionId,
-        subject: result.subject,
-        grade,
-        questionCount: result.questions.length,
-        inferenceResult: JSON.stringify(result),
+      if (result.error) {
+        setProcessingStage('error');
+        Alert.alert(t('cameraScreen.error.title'), result.error.message);
+        return;
+      }
+
+      // Save session to local DB
+      try {
+        await insertFullSession({
+          sessionId: result.sessionId,
+          subject: result.subject,
+          grade,
+          questionCount: result.questions.length,
+          inferenceResult: JSON.stringify(result),
+        });
+      } catch (err) {
+        console.warn('Failed to save session:', err);
+        // Non-fatal — continue to result screen
+      }
+
+      setProcessingStage('done');
+
+      // Log performance marks in dev mode
+      if (__DEV__) {
+        const marks = getMarks();
+        console.log(`[perf] photo_to_first_token\tmarks\t${JSON.stringify(marks)}`);
+      }
+
+      // Navigate to result screen
+      router.push({
+        pathname: '/(kid)/camera-result',
+        params: { sessionId: result.sessionId },
       });
-    } catch (err) {
-      console.warn('Failed to save session:', err);
-      // Non-fatal — continue to result screen
-    }
-
-    setProcessingStage('done');
-
-    // Navigate to result screen
-    router.push({
-      pathname: '/(kid)/camera-result',
-      params: { sessionId: result.sessionId },
-    });
-  }, [t, router]);
+    },
+    [t, router],
+  );
 
   // ── Cancel / Retake ─────────────────────────────────────────────
 
@@ -303,12 +310,14 @@ export default function CameraScreen() {
 
     // Build an OcrResult from manually entered text
     const textOcr = {
-      pages: [{
-        pageIndex: 0,
-        blocks: [{ text, confidence: 1.0 }],
-        overallConfidence: 1.0,
-        hasManualInput: false,
-      }],
+      pages: [
+        {
+          pageIndex: 0,
+          blocks: [{ text, confidence: 1.0 }],
+          overallConfidence: 1.0,
+          hasManualInput: false,
+        },
+      ],
       fullText: text,
       lowConfidenceBlocks: 0,
       needsManualInput: false,
@@ -320,31 +329,29 @@ export default function CameraScreen() {
       console.error('Text inference failed:', error);
       if (mountedRef.current) {
         setTextInferring(false);
-        Alert.alert(
-          t('cameraScreen.error.title'),
-          t('cameraScreen.error.inferenceFailed'),
-        );
+        Alert.alert(t('cameraScreen.error.title'), t('cameraScreen.error.inferenceFailed'));
       }
     }
   }, [typedHomework, t, runInference]);
 
   // ── Loading overlay ─────────────────────────────────────────────
 
-  const ProcessingOverlay = processingStage === 'ocr' || processingStage === 'inferring' ? (
-    <View style={[styles.overlay, { backgroundColor: 'rgba(0,0,0,0.6)' }]}>
-      <View style={[styles.processingCard, { backgroundColor: isDark ? '#1E1E1E' : '#FFFFFF' }]}>
-        <ActivityIndicator size="large" color={isDark ? '#90CAF9' : '#4A90D9'} />
-        <Text style={[styles.processingText, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
-          {statusText}
-        </Text>
-        <Text style={[styles.processingSubtext, { color: isDark ? '#888888' : '#9CA3AF' }]}>
-          {processingStage === 'inferring'
-            ? t('cameraScreen.status.inferenceSubtext')
-            : t('cameraScreen.status.ocrSubtext')}
-        </Text>
+  const ProcessingOverlay =
+    processingStage === 'ocr' || processingStage === 'inferring' ? (
+      <View style={[styles.overlay, { backgroundColor: 'rgba(0,0,0,0.6)' }]}>
+        <View style={[styles.processingCard, { backgroundColor: isDark ? '#1E1E1E' : '#FFFFFF' }]}>
+          <ActivityIndicator size="large" color={isDark ? '#90CAF9' : '#4A90D9'} />
+          <Text style={[styles.processingText, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
+            {statusText}
+          </Text>
+          <Text style={[styles.processingSubtext, { color: isDark ? '#888888' : '#9CA3AF' }]}>
+            {processingStage === 'inferring'
+              ? t('cameraScreen.status.inferenceSubtext')
+              : t('cameraScreen.status.ocrSubtext')}
+          </Text>
+        </View>
       </View>
-    </View>
-  ) : null;
+    ) : null;
 
   // ── Main Render ─────────────────────────────────────────────────
 
@@ -355,7 +362,13 @@ export default function CameraScreen() {
     // Permission permanently denied (iOS "Don't Allow" or Android "Deny & don't ask again")
     if (isDenied && !canAsk) {
       return (
-        <View style={[styles.container, styles.centerContent, { backgroundColor: isDark ? '#121212' : '#F8F9FA' }]}>
+        <View
+          style={[
+            styles.container,
+            styles.centerContent,
+            { backgroundColor: isDark ? '#121212' : '#F8F9FA' },
+          ]}
+        >
           <Text style={styles.fallbackIcon}>📷</Text>
           <Text style={[styles.fallbackTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
             {t('cameraScreen.permissionDenied.title')}
@@ -429,7 +442,13 @@ export default function CameraScreen() {
 
     // Permission not yet determined — show soft-ask screen
     return (
-      <View style={[styles.container, styles.centerContent, { backgroundColor: isDark ? '#121212' : '#F8F9FA' }]}>
+      <View
+        style={[
+          styles.container,
+          styles.centerContent,
+          { backgroundColor: isDark ? '#121212' : '#F8F9FA' },
+        ]}
+      >
         <Text style={[styles.permissionText, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
           {t('cameraScreen.permission.title')}
         </Text>
@@ -500,21 +519,21 @@ export default function CameraScreen() {
                 accessibilityRole="button"
                 accessibilityLabel={t('cameraScreen.addAnother')}
               >
-                <Text style={styles.secondaryButtonText}>
-                  {t('cameraScreen.addAnother')}
-                </Text>
+                <Text style={styles.secondaryButtonText}>{t('cameraScreen.addAnother')}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={[styles.controlButton, styles.primaryButton, { opacity: processingStage !== 'idle' ? 0.5 : 1 }]}
+                style={[
+                  styles.controlButton,
+                  styles.primaryButton,
+                  { opacity: processingStage !== 'idle' ? 0.5 : 1 },
+                ]}
                 onPress={handleDone}
                 disabled={processingStage !== 'idle'}
                 accessibilityRole="button"
                 accessibilityLabel={t('cameraScreen.done')}
               >
-                <Text style={styles.primaryButtonText}>
-                  {t('cameraScreen.done')}
-                </Text>
+                <Text style={styles.primaryButtonText}>{t('cameraScreen.done')}</Text>
               </TouchableOpacity>
             </View>
           ) : (
@@ -538,7 +557,10 @@ export default function CameraScreen() {
               contentContainerStyle={styles.thumbnailRowContent}
             >
               {capturedPages.map((page, index) => (
-                <View key={index} style={[styles.thumbnail, { borderColor: isDark ? '#555' : '#ccc' }]}>
+                <View
+                  key={index}
+                  style={[styles.thumbnail, { borderColor: isDark ? '#555' : '#ccc' }]}
+                >
                   <Text style={styles.thumbnailText}>📄 {index + 1}</Text>
                 </View>
               ))}
@@ -569,7 +591,9 @@ export default function CameraScreen() {
             <ScrollView style={styles.manualInputList}>
               {manualItems.map((item, index) => (
                 <View key={index} style={styles.manualInputRow}>
-                  <Text style={[styles.manualInputLabel, { color: isDark ? '#CCCCCC' : '#4A5568' }]}>
+                  <Text
+                    style={[styles.manualInputLabel, { color: isDark ? '#CCCCCC' : '#4A5568' }]}
+                  >
                     {item}
                   </Text>
                   <TextInput
@@ -604,9 +628,7 @@ export default function CameraScreen() {
               accessibilityRole="button"
               accessibilityLabel={t('cameraScreen.manualInput.submit')}
             >
-              <Text style={styles.modalButtonText}>
-                {t('cameraScreen.manualInput.submit')}
-              </Text>
+              <Text style={styles.modalButtonText}>{t('cameraScreen.manualInput.submit')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -762,7 +784,13 @@ const styles = StyleSheet.create({
   // ── Permission Denied Fallback ──
   fallbackIcon: { fontSize: 52, marginBottom: 16 },
   fallbackTitle: { fontSize: 18, fontWeight: '700', marginBottom: 10, textAlign: 'center' },
-  fallbackBody: { fontSize: 14, textAlign: 'center', lineHeight: 20, marginBottom: 28, paddingHorizontal: 16 },
+  fallbackBody: {
+    fontSize: 14,
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 28,
+    paddingHorizontal: 16,
+  },
   fallbackPrimary: {
     width: '100%',
     maxWidth: 320,
