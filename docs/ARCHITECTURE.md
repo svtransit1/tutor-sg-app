@@ -246,17 +246,17 @@ All core features work fully offline. Only these require connectivity:
 - App verifies integrity hash before loading any model into the inference engine
 - Failed verification → delete file, retry download once, then error
 
-### 6.3 Purchase security
+### 7.3 Purchase security
 
 - All purchases require parent gate (birth-year challenge, age ≥ 18)
 - Entitlement cross-checked against Supabase on every app foreground
 - Device-side purchase alone is not trusted
 
-### 6.4 Analytics constraint
+### 7.4 Analytics constraint
 
 **No third-party analytics SDKs in child-facing code paths.** Parent dashboard analytics are isolated to the web companion. This is a hard architectural boundary — any code in a child-facing React Native screen must not import or transitively depend on an analytics library.
 
-### 6.5 Auth model
+### 7.5 Auth model
 
 - Parent: email + magic link or Google/Apple sign-in (Supabase Auth)
 - Kid profile: local only, no login, no auth token
@@ -264,7 +264,7 @@ All core features work fully offline. Only these require connectivity:
 
 ---
 
-## 7. Implementation order
+## 8. Implementation order
 
 | Phase | What | Parallel track |
 |---|---|---|
@@ -279,7 +279,7 @@ All core features work fully offline. Only these require connectivity:
 
 ---
 
-## 8. Cross-references
+## 9. Cross-references
 
 - **Product spec:** [wiki ADD](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fapp-design-document.md)
 - **Locked decisions:** [wiki decisions-locked](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fdecisions-locked.md)
