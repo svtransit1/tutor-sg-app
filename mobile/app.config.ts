@@ -34,7 +34,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   plugins: [
     'expo-router',
-    'expo-localization',
     'expo-sqlite',
     [
       'expo-camera',
@@ -45,16 +44,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           'Allow tutor-sg to access the microphone.',
       },
     ],
-    [
-      'expo-image-picker',
-      {
-        photosPermission:
-          'Allow tutor-sg to access your photos.',
-      },
-    ],
-    'expo-secure-store',
-    'expo-speech',
-    'expo-font',
   ],
   experiments: {
     typedRoutes: true,
