@@ -1,9 +1,16 @@
 {
-  "app.loading": "tutor-sg — 加载中...",
-  "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
-    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。", "continue": "继续" },
+    "welcome": {
+      "title": "欢迎！",
+      "subtitle": "你的个人学习伙伴",
+      "tagline": "聪明学习，快乐成长！",
+      "cta": "开始使用"
+    },
+    "langPick": {
+      "title": "选择语言",
+      "subtitle": "应用将使用此语言。",
+      "continue": "继续"
+    },
     "privacyPromise": {
       "title": "我们承诺保护您的隐私",
       "body": "孩子的作业永远不会离开这台设备。照片、答案和聊天内容都在设备上保密。只有您（家长）可以查看学习记录。",
@@ -68,16 +75,31 @@
         "subjectOff": "未选"
       }
     },
-    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
+    "done": {
+      "title": "准备好了！",
+      "subtitle": "让我们开始学习吧",
+      "greeting": "{{name}}，你好！准备好了吗？",
+      "cameraCta": "拍一下作业",
+      "cameraSubtitle": "拍张照片，立即获取帮助",
+      "practicePrompt": "或试试练习题",
+      "parentArea": "家长专区"
+    },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
+    },
+    "parentPinSetup": {
+      "title": "设置家长 PIN 码",
+      "body": "创建一个 4 位数字 PIN 码。",
+      "enterPin": "输入 4 位数字 PIN 码",
+      "confirmPin": "确认 PIN 码",
+      "skip": "跳过",
+      "mismatch": "PIN 码不匹配，请重试。",
+      "accessibility": {
+        "skipButton": "跳过 PIN 码设置"
+      }
     }
   },
-  "network.offline": "你已离线",
-  "network.offline.description": "拍照做作业仍然可用。下载需要 Wi-Fi。",
-  "network.cellular": "正在使用移动数据",
-  "network.cellular.description": "已暂停大文件下载以节省流量。",
   "parentAuth": {
     "title": "家长访问权限",
     "enterPin": "请输入您的 PIN 码",
@@ -108,11 +130,27 @@
       "errorSignInFailed": "登录失败，请重试。",
       "errorAuthSession": "登录会话已取消或失败。",
       "signedIn": "登录成功"
+    },
+    "cancel": "取消",
+    "changePin": {
+      "title": "修改家长 PIN 码",
+      "enterOld": "输入当前 PIN 码",
+      "enterNew": "输入新的 4 位数字 PIN 码",
+      "success": "PIN 码已修改！",
+      "wrongOld": "当前 PIN 码不正确，请重试。"
     }
   },
   "parent": {
-    "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
-    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+    "dashboard": {
+      "title": "家长面板",
+      "placeholder": "学习记录和进度即将上线"
+    },
+    "settings": {
+      "title": "设置",
+      "placeholder": "语言、质量、模型、隐私"
+    },
+    "changePin": "修改 PIN 码",
+    "backToKid": "返回孩子界面"
   },
   "deviceTierResult": {
     "title": "你的设备已就绪！",
@@ -131,6 +169,18 @@
     "cellularCancel": "等待 Wi-Fi",
     "loading": "正在检测你的设备…",
     "error": "无法检测设备性能，请重试。"
+  },
+  "deviceTooOld": {
+    "title": "设备不支持",
+    "body": "不满足最低要求。",
+    "requirementsTitle": "最低要求",
+    "requirementIos": "iOS 16+（iPhone 12+）",
+    "requirementAndroid": "Android 11+，4GB+",
+    "requirementRam": "至少 4GB",
+    "exit": "我知道了",
+    "accessibility": {
+      "exitButton": "退出"
+    }
   },
   "kidHome": {
     "header": {
@@ -308,6 +358,20 @@
       "skip": "跳过此项",
       "typeInput": "为第 {{number}} 项输入答案",
       "drawCanvas": "第 {{number}} 项的手写区域"
+    }
+  },
+  "app": {
+    "loading": "tutor-sg — 加载中...",
+    "name": "tutor-sg"
+  },
+  "network": {
+    "offline": {
+      "label": "你已离线",
+      "description": "拍照做作业仍然可用。下载需要 Wi-Fi。"
+    },
+    "cellular": {
+      "label": "正在使用移动数据",
+      "description": "已暂停大文件下载以节省流量。"
     }
   }
 }
