@@ -159,12 +159,15 @@
       "title": "最近学习记录",
       "empty": "还没有学习记录。快来拍下第一份功课吧！",
       "viewAll": "查看全部 >",
+      "viewAllA11y": "查看全部学习记录",
       "timeAgo": {
         "justNow": "刚刚",
         "minutesAgo": "{{minutes}}分钟前",
         "hoursAgo": "{{hours}}小时前",
-        "yesterday": "昨天"
+        "yesterday": "昨天",
+        "daysAgo": "{{days}}天前"
       },
+      "timeSpent": "{{minutes}}分钟{{seconds}}秒",
       "questions": "{{count}} 道题",
       "questions_plural": "{{count}} 道题"
     },
@@ -192,6 +195,15 @@
         "welcomeBanner": "欢迎横幅。开始你的第一次作业辅导。",
         "practiceTile": "试试{{subject}}练习题"
       }
+    }
+  },
+  "history": {
+    "title": "我的学习记录",
+    "empty": "还没有学习记录。",
+    "noMore": "已显示全部记录",
+    "accessibility": {
+      "sessionItem": "{{subject}}，{{time}}前，{{questions}}",
+      "loadMoreButton": "显示更多学习记录"
     }
   },
   "modelDownload": {

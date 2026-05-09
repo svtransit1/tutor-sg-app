@@ -159,12 +159,15 @@
       "title": "Recent Sessions",
       "empty": "No sessions yet. Snap your first homework!",
       "viewAll": "View all >",
+      "viewAllA11y": "View all recent sessions",
       "timeAgo": {
         "justNow": "Just now",
         "minutesAgo": "{{minutes}}m ago",
         "hoursAgo": "{{hours}}h ago",
-        "yesterday": "Yesterday"
+        "yesterday": "Yesterday",
+        "daysAgo": "{{days}}d ago"
       },
+      "timeSpent": "{{minutes}}m {{seconds}}s",
       "questions": "{{count}} question",
       "questions_plural": "{{count}} questions"
     },
@@ -192,6 +195,15 @@
         "welcomeBanner": "Welcome banner. Start your first homework session.",
         "practiceTile": "Try a {{subject}} practice question"
       }
+    }
+  },
+  "history": {
+    "title": "My Sessions",
+    "empty": "No sessions yet.",
+    "noMore": "That's all your sessions",
+    "accessibility": {
+      "sessionItem": "{{subject}}, {{time}} ago, {{questions}} questions",
+      "loadMoreButton": "Show more past sessions"
     }
   },
   "modelDownload": {
