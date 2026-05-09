@@ -6,11 +6,18 @@
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
     "typecheck": "pnpm --recursive typecheck",
+    "build": "pnpm --recursive build",
+    "lint": "pnpm --recursive lint",
     "test": "pnpm --recursive test",
     "mobile:start": "pnpm --filter tutor-sg-mobile start",
     "mobile:ios": "pnpm --filter tutor-sg-mobile ios",
     "mobile:android": "pnpm --filter tutor-sg-mobile android",
     "eas:build:android:internal": "cd mobile && pnpm eas:build:android:internal",
     "eas:build:android:internal-aab": "cd mobile && pnpm eas:build:android:internal-aab"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.3.0",
+    "typescript-eslint": "^8.59.2"
   }
 }

@@ -1,0 +1,24 @@
+{
+  "name": "@tutor-sg/shared",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm exec jest --passWithNoTests --maxWorkers=2"
+  },
+  "dependencies": {
+    "@tutor-sg/device-tier": "workspace:*",
+    "@tutor-sg/features": "workspace:*",
+    "@tutor-sg/llm": "workspace:*",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.9",
+    "typescript": "^5.8.0"
+  }
+}
