@@ -145,9 +145,39 @@ Add `--wait` to block until the build completes and download the artifact.
 
 ## Current Status (AAAS-161)
 
-| Platform | Build Type | Status | Blockers |
-|----------|-----------|--------|----------|
-| iOS | EAS cloud | Blocked | No Expo account credentials; no iOS 18 simulator runtime installed |
-| iOS | Local (`expo run:ios`) | Blocked | No iOS 18+ simulator runtime installed |
-| Android | EAS cloud | Blocked | No Expo account credentials |
-| Android | Local (`expo run:android`) | Blocked | Android SDK + emulator not installed |
+> **Last verified:** 2026-05-09 by Wolf on Mac Studio M1 Max (macOS 26, Xcode 26.4)
+
+### Infrastructure Availability
+
+| Item | Status | Detail |
+|------|--------|--------|
+| Xcode | ✅ 26.4 (17E192) | Installed |
+| iOS simulator runtime | ✅ iOS 26.4 | iPhone 17 / 17 Pro available |
+| Android SDK | ✅ API 35 | `~/Library/Android/sdk` |
+| Android emulator | ✅ AVD exists | `tutor-sg-api35`, boots in ~20s, device online |
+| EAS CLI | ✅ v18.11.0 | Installed globally |
+| Expo account | ❌ Not logged in | **Boss blocker** — credentials needed |
+| EAS project init | ❌ Not initialized | Requires `eas init` after login |
+
+### Build Status
+
+| Platform | Build Type | Status | Blocker |
+|----------|-----------|--------|---------|
+| iOS | EAS cloud | 🚫 Blocked | Boss: Expo account credentials |
+| iOS | Local (`expo run:ios`) | 🚫 Blocked | RN 0.76.7 lacks ReactNativeDependencies xcframework (Expo SDK 55 expects RN ≥ 0.81) |
+| Android | EAS cloud | 🚫 Blocked | Boss: Expo account credentials |
+| Android | Local (`expo run:android`) | 🚫 Blocked | `hermes-compiler` not found — RN 0.76.7 doesn't ship it, but Expo SDK 55 gradle template requires it |
+
+### Root Cause: Version Mismatch (Owl review needed)
+
+`mobile/package.json` specifies `react-native@0.76.7` but Expo SDK 55 recommends `react-native@~0.81.0` and generates native templates targeting RN 0.81+. This causes:
+- **iOS:** Podfile expects `ReactNativeDependencies.xcframework` (not in RN 0.76)
+- **Android:** `app/build.gradle:14` resolves `hermes-compiler` (not in RN 0.76)
+
+**Resolution paths:** (1) Bump RN to 0.81.0, or (2) Downgrade Expo to ~54.0.0. Owl gate required per ADD §11 — any framework config change needs Owl approval.
+
+### Next Actions
+
+1. **Boss:** Provide Expo account credentials or `EXPO_TOKEN`
+2. **Owl:** Decide RN version alignment per framework config review
+3. **Wolf:** After (1)+(2), run `eas build --profile development --platform all --wait` for EAS verification + screenshots
