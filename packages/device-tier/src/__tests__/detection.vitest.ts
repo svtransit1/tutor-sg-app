@@ -13,7 +13,7 @@ describe('buildCapabilities', () => {
 });
 describe('constants', () => {
   it('chipsets', () => { expect(HIGH_TIER_CHIPSETS).toContain('A14'); });
-  it('bilingual', () => { expect(BELOW_FLOOR_MESSAGES).toHaveProperty('en'); expect(BELOW_FLOOR_MESSAGES).toHaveProperty('zh'); });
+  it('bilingual', () => { expect(BELOW_FLOOR_MESSAGES).toHaveProperty('en'); expect(BELOW_FLOOR_MESSAGES).toHaveProperty('zh'); expect(BELOW_FLOOR_MESSAGES).toHaveProperty('titleEn'); expect(BELOW_FLOOR_MESSAGES).toHaveProperty('titleZh'); });
   it('key', () => { expect(SETTINGS_KEY).toBe('device_tier'); });
   it('map', () => { expect(MODEL_MAP).toHaveProperty('high'); });
 });
