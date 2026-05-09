@@ -164,7 +164,8 @@
         "daysAgo": "{{days}}天前"
       },
       "questions": "{{count}} 道题",
-      "questions_plural": "{{count}} 道题"
+      "questions_plural": "{{count}} 道题",
+      "timeSpent": "{{minutes}}分钟{{seconds}}秒"
     },
     "accessibility": {
       "subjectTile": "{{subject}} 科目",
@@ -284,6 +285,19 @@
       "hash_mismatch": "下载文件已损坏，正在重新下载...",
       "download_stuck": "下载似乎卡住了，正在重试...",
       "unknown_error": "出现错误，请重试。"
+    }
+  },
+  "photoReview": {
+    "title": "预览照片",
+    "empty": {
+      "title": "没有找到题目",
+      "body": "我们无法在这个照片中找到题目。试试在光线更好的地方重新拍照。"
+    },
+    "actions": {
+      "goHome": "返回首页"
+    },
+    "accessibility": {
+      "questionList": "检测到的题目列表"
     }
   },
   "permissionPrimer": {

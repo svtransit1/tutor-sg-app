@@ -118,7 +118,8 @@
         "daysAgo": "{{days}}d ago"
       },
       "questions": "{{count}} question",
-      "questions_plural": "{{count}} questions"
+      "questions_plural": "{{count}} questions",
+      "timeSpent": "{{minutes}}m {{seconds}}s"
     },
     "accessibility": {
       "subjectTile": "{{subject}} subject",

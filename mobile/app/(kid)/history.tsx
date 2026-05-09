@@ -49,6 +49,14 @@ function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): st
   return t('kidHome.recentSessions.timeAgo.daysAgo', { days: diffDays });
 }
 
+function formatTimeSpent(seconds: number, t: (key: string, opts?: object) => string): string {
+  const min = Math.floor(seconds / 60);
+  const sec = seconds % 60;
+  if (seconds < 60) return t('kidHome.recentSessions.timeSpent', { minutes: 0, seconds: sec });
+  if (sec === 0) return t('kidHome.recentSessions.timeSpent', { minutes: min, seconds: 0 });
+  return t('kidHome.recentSessions.timeSpent', { minutes: min, seconds: sec });
+}
+
 export default function KidHistoryScreen() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -127,13 +135,19 @@ export default function KidHistoryScreen() {
           >
             {t(`kidHome.subjects.${item.subject}`)}
           </Text>
-          <Text style={styles.sessionMeta}>
+          <Text style={[styles.sessionMeta, { color: isDark ? '#AAAAAA' : '#6B7280' }]}>
             {timeAgo(item.createdAt, t)}
             {' · '}
             {t('kidHome.recentSessions.questions', { count: item.questionCount })}
+            {item.timeSpent > 0 && (
+              <>
+                {' · '}
+                {formatTimeSpent(item.timeSpent, t)}
+              </>
+            )}
           </Text>
         </View>
-        <Text style={styles.chevron}>›</Text>
+        <Text style={[styles.chevron, { color: isDark ? '#AAAAAA' : '#6B7280' }]}>›</Text>
       </TouchableOpacity>
     ),
     [isDark, handleSessionPress, t],
@@ -283,11 +297,9 @@ const styles = StyleSheet.create({
   },
   sessionMeta: {
     fontSize: 16,
-    color: '#6B7280',
   },
   chevron: {
     fontSize: 22,
-    color: '#6B7280',
     fontWeight: '300',
   },
 

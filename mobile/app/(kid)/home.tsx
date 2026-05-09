@@ -69,6 +69,14 @@ function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): st
   return t('kidHome.recentSessions.timeAgo.daysAgo', { days: diffDays });
 }
 
+function formatTimeSpent(seconds: number, t: (key: string, opts?: object) => string): string {
+  const min = Math.floor(seconds / 60);
+  const sec = seconds % 60;
+  if (seconds < 60) return t('kidHome.recentSessions.timeSpent', { minutes: 0, seconds: sec });
+  if (sec === 0) return t('kidHome.recentSessions.timeSpent', { minutes: min, seconds: 0 });
+  return t('kidHome.recentSessions.timeSpent', { minutes: min, seconds: sec });
+}
+
 // --- Screen -------------------------------------------------------------
 
 export default function KidHomeScreen() {
@@ -277,10 +285,16 @@ export default function KidHomeScreen() {
                     <Text style={[styles.sessionSubject, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
                       {t(`kidHome.subjects.${session.subject}`)}
                     </Text>
-                    <Text style={styles.sessionMeta}>
+                    <Text style={[styles.sessionMeta, { color: isDark ? '#AAAAAA' : '#6B7280' }]}>
                       {timeAgo(session.createdAt, t)}
                       {' · '}
                       {t('kidHome.recentSessions.questions', { count: session.questionCount })}
+                      {session.timeSpent > 0 && (
+                        <>
+                          {' · '}
+                          {formatTimeSpent(session.timeSpent, t)}
+                        </>
+                      )}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -389,5 +403,5 @@ const styles = StyleSheet.create({
   sessionIcon: { fontSize: 28, width: 40, textAlign: 'center' },
   sessionInfo: { flex: 1 },
   sessionSubject: { fontSize: 16, fontWeight: '600', marginBottom: 2 },
-  sessionMeta: { fontSize: 16, color: '#6B7280' },
+  sessionMeta: { fontSize: 16 },
 });
