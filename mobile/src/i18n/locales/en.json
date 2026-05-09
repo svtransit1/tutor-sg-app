@@ -330,5 +330,16 @@
       "typeInput": "Type answer for item {{number}}",
       "drawCanvas": "Drawing area for item {{number}}"
     }
+  },
+  "cameraPermission": {
+    "denied": {
+      "title": "Camera access needed",
+      "body": "We need the camera to read your homework and give you help.",
+      "privacyBadge": "Photos never leave this device",
+      "grantPermission": "Grant Permission",
+      "openSettings": "Open Settings",
+      "manualInput": "Type it out instead",
+      "cancel": "Cancel"
+    }
   }
 }

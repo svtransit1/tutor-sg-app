@@ -330,5 +330,16 @@
       "typeInput": "为第 {{number}} 项输入答案",
       "drawCanvas": "第 {{number}} 项的手写区域"
     }
+  },
+  "cameraPermission": {
+    "denied": {
+      "title": "需要相机权限",
+      "body": "我们需要使用相机来识别你的作业并为你提供帮助。",
+      "privacyBadge": "照片不会离开这台设备",
+      "grantPermission": "允许使用相机",
+      "openSettings": "打开设置",
+      "manualInput": "改为手动输入",
+      "cancel": "取消"
+    }
   }
 }
