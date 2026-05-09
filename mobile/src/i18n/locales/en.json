@@ -213,6 +213,19 @@
       "unknown_error": "Something went wrong. Please try again."
     }
   },
+  "cameraPermission": {
+    "title": "Can I use your camera?",
+    "bodyLine1": "Take a photo of your homework \u2014 I\u2019ll help you solve it!",
+    "bodyLine2": "Point the camera at your worksheet or textbook.",
+    "bodyLine3": "The AI tutor will read it and guide you step by step.",
+    "reassurance": "Your photos stay on this device. They never leave your phone.",
+    "allowButton": "Allow Camera Access",
+    "deniedTitle": "Camera access is turned off",
+    "deniedBody": "To get homework help, please enable the camera in your device Settings.",
+    "openSettings": "Open Settings",
+    "goBack": "Not now, go back",
+    "loading": "Requesting camera access\u2026"
+  },
   "common": {
     "back": "Back",
     "goBack": "Go back",

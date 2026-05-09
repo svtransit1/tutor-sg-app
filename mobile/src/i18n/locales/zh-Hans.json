@@ -213,6 +213,19 @@
       "unknown_error": "出现错误，请重试。"
     }
   },
+  "cameraPermission": {
+    "title": "可以用你的相机吗？",
+    "bodyLine1": "拍下你的作业照片\u2014\u2014我来帮你解答！",
+    "bodyLine2": "把相机对准你的练习册或课本。",
+    "bodyLine3": "AI 导师会读取内容，一步步引导你学习。",
+    "reassurance": "你的照片只保存在这台设备上，不会离开你的手机。",
+    "allowButton": "允许使用相机",
+    "deniedTitle": "相机权限已关闭",
+    "deniedBody": "要获得作业帮助，请在设备设置中开启相机权限。",
+    "openSettings": "打开设置",
+    "goBack": "暂时不用，返回",
+    "loading": "正在请求相机权限\u2026"
+  },
   "common": {
     "back": "返回",
     "goBack": "返回首页",
