@@ -1,0 +1,31 @@
+{
+  "math_p3_en": {
+    "hint": "Look at the numbers: 48 and 12. What operation could help you find how many groups of 12 fit into 48?",
+    "guidedSteps": [
+      "Step 1: Identify what we know — we have 48 sweets and each bag holds 12 sweets.",
+      "Step 2: We need to find how many bags. This means dividing 48 by 12.",
+      "Step 3: 48 divided by 12 equals? Think about your times tables.",
+      "Step 4: Check your answer: 4 × 12 should equal 48."
+    ],
+    "workedSolution": "We have 48 sweets and each bag can hold 12 sweets. To find the number of bags, we divide: 48÷12=4. Checking: 4×12=48. So the answer is 4 bags."
+  },
+  "english_p5_en": {
+    "hint": "Read the sentence carefully. What tense is the first part in? The second part should match.",
+    "guidedSteps": [
+      "Step 1: Identify the tense in 'She was walking to school'. This is past continuous.",
+      "Step 2: The phrase 'when she...' needs an action that happened during the walking.",
+      "Step 3: 'Saw' is the correct past tense form to show a completed action during the continuous one.",
+      "Step 4: Complete the sentence with 'saw her friend' and read it aloud to check."
+    ],
+    "workedSolution": "She was walking to school when she saw her friend. 'Was walking' (past continuous) is interrupted by 'saw' (past simple)."
+  },
+  "chinese_mt_p4_zh": {
+    "hint": "看看这个句子的结构。'虽然……但是……'表示什么关系？",
+    "guidedSteps": [
+      "步骤1：'虽然'后面跟着的是一个情况。",
+      "步骤2：'但是'后面是相反或不同的情况。",
+      "步骤3：把两部分的句子组合起来，确保意思通顺。"
+    ],
+    "workedSolution": "虽然下雨了，但是他还是去上学了。'虽然'和'但是'用来表示转折关系。"
+  }
+}
