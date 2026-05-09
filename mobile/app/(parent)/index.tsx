@@ -26,5 +26,5 @@ const styles = StyleSheet.create({
   button: { marginTop: 16, paddingVertical: 14, paddingHorizontal: 32, backgroundColor: '#2563EB', borderRadius: 12 },
   buttonText: { fontSize: 16, fontWeight: '600', color: '#FFFFFF' },
   closeButton: { marginTop: 24, paddingVertical: 10, paddingHorizontal: 20 },
-  closeButtonText: { fontSize: 14, color: '#6B7280', fontWeight: '500' },
+  closeButtonText: { fontSize: 16, color: '#6B7280', fontWeight: '500' },
 });
