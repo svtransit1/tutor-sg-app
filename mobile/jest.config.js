@@ -7,6 +7,8 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^react-native/Libraries/BatchedBridge/NativeModules$':
+      '<rootDir>/node_modules/react-native/jest/mocks/NativeModules.js',
   },
   setupFiles: ['<rootDir>/setup-jest.ts'],
   moduleDirectories: ['node_modules', path.resolve(__dirname, '..', 'node_modules')],
