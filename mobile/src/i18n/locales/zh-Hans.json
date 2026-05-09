@@ -154,7 +154,8 @@
         "yesterday": "昨天"
       },
       "questions": "{{count}} 道题",
-      "questions_plural": "{{count}} 道题"
+      "questions_plural": "{{count}} 道题",
+      "viewAll": "查看全部 >"
     },
     "accessibility": {
       "subjectTile": "{{subject}} 科目",
@@ -200,6 +201,14 @@
       "title": "需要相机权限",
       "description": "我们需要相机权限来拍摄你的作业。照片不会离开这台设备。",
       "cta": "开启相机权限"
+    },
+    "permissionDenied": {
+      "title": "相机无法使用",
+      "description": "相机权限已被关闭。你仍然可以获得帮助——在下方输入你的作业题目，或者前往设置开启相机。",
+      "textPlaceholder": "在这里输入你的作业题目…",
+      "textSubmit": "获取帮助",
+      "textAccessibility": "输入作业题目",
+      "openSettings": "打开设置"
     },
     "manualInput": {
       "title": "有些内容看不清楚",

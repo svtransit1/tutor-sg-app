@@ -154,7 +154,8 @@
         "yesterday": "Yesterday"
       },
       "questions": "{{count}} question",
-      "questions_plural": "{{count}} questions"
+      "questions_plural": "{{count}} questions",
+      "viewAll": "View all >"
     },
     "accessibility": {
       "subjectTile": "{{subject}} subject",
@@ -200,6 +201,14 @@
       "title": "Camera access needed",
       "description": "We need camera access so you can take photos of your homework. Your photos never leave this device.",
       "cta": "Enable camera access"
+    },
+    "permissionDenied": {
+      "title": "Camera not available",
+      "description": "Camera access was turned off. You can still get help — type your homework below, or enable the camera in Settings.",
+      "textPlaceholder": "Type your homework question here…",
+      "textSubmit": "Get help",
+      "textAccessibility": "Type your homework question",
+      "openSettings": "Open Settings"
     },
     "manualInput": {
       "title": "Can't read all of it",

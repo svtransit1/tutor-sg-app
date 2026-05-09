@@ -30,6 +30,7 @@ import {
   TextInput,
   ScrollView,
   Modal,
+  Linking,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CameraView, useCameraPermissions } from 'expo-camera';
@@ -95,6 +96,11 @@ export default function CameraScreen() {
       requestPermission();
     }
   }, [permission, permissionRequested, requestPermission]);
+
+  // ── Text-only fallback state (used when camera is perma-denied) ──
+
+  const [typedHomework, setTypedHomework] = useState('');
+  const [textInferring, setTextInferring] = useState(false);
 
   // ── Capture Handler ─────────────────────────────────────────────
 
@@ -287,6 +293,41 @@ export default function CameraScreen() {
     setManualInputs([]);
   }, []);
 
+  // ── Text-only submit (when camera is perma-denied) ─────────────
+
+  const handleTextSubmit = useCallback(async () => {
+    const text = typedHomework.trim();
+    if (!text) return;
+
+    setTextInferring(true);
+
+    // Build an OcrResult from manually entered text
+    const textOcr = {
+      pages: [{
+        pageIndex: 0,
+        blocks: [{ text, confidence: 1.0 }],
+        overallConfidence: 1.0,
+        hasManualInput: false,
+      }],
+      fullText: text,
+      lowConfidenceBlocks: 0,
+      needsManualInput: false,
+    };
+
+    try {
+      await runInference(textOcr);
+    } catch (error) {
+      console.error('Text inference failed:', error);
+      if (mountedRef.current) {
+        setTextInferring(false);
+        Alert.alert(
+          t('cameraScreen.error.title'),
+          t('cameraScreen.error.inferenceFailed'),
+        );
+      }
+    }
+  }, [typedHomework, t, runInference]);
+
   // ── Loading overlay ─────────────────────────────────────────────
 
   const ProcessingOverlay = processingStage === 'ocr' || processingStage === 'inferring' ? (
@@ -308,6 +349,85 @@ export default function CameraScreen() {
   // ── Main Render ─────────────────────────────────────────────────
 
   if (!permission?.granted) {
+    const isDenied = permission?.status === 'denied';
+    const canAsk = permission?.canAskAgain ?? true;
+
+    // Permission permanently denied (iOS "Don't Allow" or Android "Deny & don't ask again")
+    if (isDenied && !canAsk) {
+      return (
+        <View style={[styles.container, styles.centerContent, { backgroundColor: isDark ? '#121212' : '#F8F9FA' }]}>
+          <Text style={styles.fallbackIcon}>📷</Text>
+          <Text style={[styles.fallbackTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
+            {t('cameraScreen.permissionDenied.title')}
+          </Text>
+          <Text style={[styles.fallbackBody, { color: isDark ? '#A0A0A0' : '#6B7280' }]}>
+            {t('cameraScreen.permissionDenied.description')}
+          </Text>
+
+          {/* Manual text entry — never block the kid */}
+          <TextInput
+            style={[
+              styles.fallbackTextInput,
+              {
+                backgroundColor: isDark ? '#2A2A2A' : '#F3F4F6',
+                color: isDark ? '#FFFFFF' : '#1A1A1A',
+                borderColor: isDark ? '#444' : '#D1D5DB',
+              },
+            ]}
+            placeholder={t('cameraScreen.permissionDenied.textPlaceholder')}
+            placeholderTextColor={isDark ? '#666' : '#9CA3AF'}
+            value={typedHomework}
+            onChangeText={setTypedHomework}
+            multiline
+            textAlignVertical="top"
+            editable={!textInferring}
+            accessibilityLabel={t('cameraScreen.permissionDenied.textAccessibility')}
+          />
+          <TouchableOpacity
+            style={[
+              styles.fallbackPrimary,
+              { backgroundColor: isDark ? '#2563EB' : '#4A90D9' },
+              textInferring && { opacity: 0.5 },
+            ]}
+            onPress={handleTextSubmit}
+            disabled={textInferring || !typedHomework.trim()}
+            accessibilityRole="button"
+            accessibilityLabel={t('cameraScreen.permissionDenied.textSubmit')}
+          >
+            {textInferring ? (
+              <ActivityIndicator size="small" color="#FFFFFF" />
+            ) : (
+              <Text style={styles.fallbackPrimaryText}>
+                {t('cameraScreen.permissionDenied.textSubmit')}
+              </Text>
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.fallbackSecondary, { borderColor: isDark ? '#444' : '#D1D5DB' }]}
+            onPress={() => Linking.openSettings()}
+            accessibilityRole="button"
+            accessibilityLabel={t('cameraScreen.permissionDenied.openSettings')}
+          >
+            <Text style={[styles.fallbackSecondaryText, { color: isDark ? '#90CAF9' : '#6B7280' }]}>
+              {t('cameraScreen.permissionDenied.openSettings')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.fallbackCancel}
+            onPress={() => router.back()}
+            accessibilityRole="button"
+            accessibilityLabel={t('common.cancel')}
+          >
+            <Text style={[styles.fallbackCancelText, { color: isDark ? '#888888' : '#9CA3AF' }]}>
+              {t('common.cancel')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    // Permission not yet determined — show soft-ask screen
     return (
       <View style={[styles.container, styles.centerContent, { backgroundColor: isDark ? '#121212' : '#F8F9FA' }]}>
         <Text style={[styles.permissionText, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
@@ -638,6 +758,44 @@ const styles = StyleSheet.create({
   permissionSubtext: { fontSize: 14, textAlign: 'center', lineHeight: 20, marginBottom: 24 },
   permissionButton: { paddingVertical: 14, paddingHorizontal: 32, borderRadius: 12 },
   permissionButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '700' },
+
+  // ── Permission Denied Fallback ──
+  fallbackIcon: { fontSize: 52, marginBottom: 16 },
+  fallbackTitle: { fontSize: 18, fontWeight: '700', marginBottom: 10, textAlign: 'center' },
+  fallbackBody: { fontSize: 14, textAlign: 'center', lineHeight: 20, marginBottom: 28, paddingHorizontal: 16 },
+  fallbackPrimary: {
+    width: '100%',
+    maxWidth: 320,
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginBottom: 14,
+  },
+  fallbackPrimaryText: { color: '#FFFFFF', fontSize: 16, fontWeight: '700' },
+  fallbackSecondary: {
+    width: '100%',
+    maxWidth: 320,
+    paddingVertical: 12,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    alignItems: 'center',
+  },
+  fallbackSecondaryText: { fontSize: 15, fontWeight: '600' },
+  fallbackTextInput: {
+    width: '100%',
+    maxWidth: 320,
+    minHeight: 100,
+    maxHeight: 180,
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: 15,
+    lineHeight: 20,
+    marginBottom: 14,
+  },
+  fallbackCancel: { paddingVertical: 10 },
+  fallbackCancelText: { fontSize: 14, fontWeight: '500' },
 
   // ── Manual Input Modal ──
   modalOverlay: {
