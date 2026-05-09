@@ -229,6 +229,21 @@
     "cameraDenied": {
       "title": "相机无法使用",
       "description": "我们需要相机来识别你的作业。请在设置中允许相机访问权限。",
+      "openSettings": "打开设置",
+      "grantPermission": "允许使用相机",
+      "typeItOut": "手动输入",
+      "goBack": "返回首页"
+    },
+    "darkEnvironment": {
+      "title": "环境太暗",
+      "description": "相机无法清晰识别你的作业。请打开更多灯光或使用闪光灯。",
+      "retry": "重新拍照",
+      "typeItOut": "手动输入",
+      "goBack": "返回首页"
+    },
+    "noCamera": {
+      "title": "未找到相机",
+      "description": "此设备没有相机。你可以直接输入答案。",
       "typeItOut": "手动输入",
       "goBack": "返回首页"
     },

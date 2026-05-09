@@ -229,6 +229,21 @@
     "cameraDenied": {
       "title": "Camera not available",
       "description": "We need the camera to read your homework. Please allow camera access in Settings.",
+      "openSettings": "Open Settings",
+      "grantPermission": "Allow Camera",
+      "typeItOut": "Type it out instead",
+      "goBack": "Go back home"
+    },
+    "darkEnvironment": {
+      "title": "Too dark to read",
+      "description": "The camera can't see your homework clearly. Try turning on more lights or use flash.",
+      "retry": "Try again",
+      "typeItOut": "Type it out instead",
+      "goBack": "Go back home"
+    },
+    "noCamera": {
+      "title": "Camera not found",
+      "description": "This device doesn't have a camera. You can type your answers instead.",
       "typeItOut": "Type it out instead",
       "goBack": "Go back home"
     },
