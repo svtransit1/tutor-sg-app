@@ -254,20 +254,21 @@ export default function HomeworkFeedbackCard({
   }
 
   if (!help) return null;
+  const h = help;
 
   function renderLevelBody() {
     switch (currentLevel) {
       case 'hint':
         return (
           <InlineMath
-            text={help.hint || t('homeworkFeedback.hint.body')}
+            text={h.hint || t('homeworkFeedback.hint.body')}
             style={{ color: textColor }}
           />
         );
       case 'steps':
         return (
           <View style={cardStyles.stepsList} accessibilityRole="list">
-            {help.guidedSteps.map((step, i) => (
+            {h.guidedSteps.map((step, i) => (
               <View key={i} style={cardStyles.stepRow}>
                 <View
                   style={[
@@ -288,7 +289,7 @@ export default function HomeworkFeedbackCard({
       case 'solution':
         return (
           <InlineMath
-            text={help.workedSolution || t('homeworkFeedback.solution.body')}
+            text={h.workedSolution || t('homeworkFeedback.solution.body')}
             style={{ color: textColor }}
           />
         );
