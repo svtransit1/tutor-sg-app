@@ -1,1 +1,1 @@
-export * from './schema/registry';
+// @tutor-sg/shared

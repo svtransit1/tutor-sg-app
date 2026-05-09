@@ -1,5 +1,5 @@
 {
-  "name": "@tutor-sg/device-tier",
+  "name": "@tutor-sg/features",
   "version": "0.1.0",
   "private": true,
   "main": "src/index.ts",

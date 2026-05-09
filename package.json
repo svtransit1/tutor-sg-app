@@ -3,9 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  },
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
     "prepare": "husky",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "typecheck": "pnpm --recursive typecheck",
     "test": "pnpm --recursive test",
     "mobile:start": "pnpm --filter tutor-sg-mobile start",
@@ -25,6 +32,7 @@
     "eslint": "^10.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.3",
+    "prettier": "^3.8.3",
     "typescript-eslint": "^8.59.2"
   }
 }
