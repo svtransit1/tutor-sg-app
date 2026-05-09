@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "lint": "echo 'lint ok'",
+    "lint": "eslint .",
     "test": "RNTL_SKIP_DEPS_CHECK=true pnpm exec jest --passWithNoTests --maxWorkers=2",
     "eas:build:android:internal": "eas build --platform android --profile internal-android --non-interactive",
     "eas:build:android:internal-aab": "eas build --platform android --profile internal-android-aab --non-interactive"
