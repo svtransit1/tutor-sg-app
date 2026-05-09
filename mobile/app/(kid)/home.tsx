@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
+import { FirstUseWalkthrough } from '@/components/FirstUseWalkthrough';
+import { isTutorialShown, markTutorialShown } from '@/storage/tutorial-storage';
 
 export default function KidHomeScreen() {
   const { t } = useTranslation();
+  const [showWalkthrough, setShowWalkthrough] = useState(false);
+
+  useEffect(() => {
+    isTutorialShown().then((shown) => {
+      if (!shown) setShowWalkthrough(true);
+    });
+  }, []);
+
+  const handleWalkthroughComplete = () => {
+    setShowWalkthrough(false);
+    markTutorialShown();
+  };
+
+  const handleWalkthroughSkip = () => {
+    setShowWalkthrough(false);
+    markTutorialShown();
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>tutor-sg</Text>
@@ -12,6 +32,12 @@ export default function KidHomeScreen() {
       <Pressable style={styles.parentButton} onPress={() => router.push('/(parent)')} accessibilityRole="button">
         <Text style={styles.parentButtonText}>{t('onboarding.done.parentArea')}</Text>
       </Pressable>
+
+      <FirstUseWalkthrough
+        visible={showWalkthrough}
+        onComplete={handleWalkthroughComplete}
+        onSkip={handleWalkthroughSkip}
+      />
     </View>
   );
 }
