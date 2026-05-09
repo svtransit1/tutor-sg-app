@@ -143,5 +143,32 @@
       "download_stuck": "Download seems stuck. Retrying…",
       "unknown_error": "Something went wrong. Please try again."
     }
+  },
+  "cameraResult": {
+    "title": "Homework Help",
+    "retake": "Retake photo",
+    "question": "Question {{number}}",
+    "questions": "{{count}} question",
+    "questions_plural": "{{count}} questions",
+    "hint": "Hint",
+    "showSteps": "Show steps",
+    "steps": "Guided Steps",
+    "showSolution": "Show answer",
+    "fullSolution": "Worked Solution",
+    "tryThis": "Try this",
+    "backToHome": "Back to home",
+    "encouragement": {
+      "title": "Great work! 💪",
+      "body": "Try the hint first. If you're still stuck, tap \"Show steps\" for guided help."
+    },
+    "followUp": {
+      "placeholder": "Ask a follow-up…",
+      "send": "Send",
+      "accessibility": "Type a follow-up question",
+      "mockResponse": "Great question! Let me help you. Think about the method we just learned — try using the same approach. What do you think the first step should be?"
+    },
+    "error": {
+      "notFound": "This result is no longer available. Please retake the photo."
+    }
   }
 }
