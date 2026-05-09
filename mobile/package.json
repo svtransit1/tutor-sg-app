@@ -8,6 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "typecheck": "tsc --noEmit",
+    "typecheck:watch": "tsc --noEmit --watch",
     "test": "RNTL_SKIP_DEPS_CHECK=true pnpm exec jest --passWithNoTests --maxWorkers=2",
     "lint": "eslint .",
     "e2e:smoke": "maestro test .maestro/flows/smoke.yaml",

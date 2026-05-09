@@ -7,7 +7,10 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run start --workspace=mobile",
+    "dev": "./scripts/dev.sh",
+    "dev:ios": "pnpm install && pnpm --filter tutor-sg-mobile ios",
+    "dev:android": "pnpm install && pnpm --filter tutor-sg-mobile android",
+    "bootstrap": "./scripts/bootstrap.sh",
     "mobile": "npm run --workspace=mobile",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -16,7 +19,13 @@
     "test": "pnpm -r --if-present test",
     "test:mobile": "cd mobile && pnpm exec jest --passWithNoTests --maxWorkers=2",
     "test:shared": "cd packages/shared && pnpm exec jest --passWithNoTests --maxWorkers=2",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "typecheck:watch": "pnpm --recursive typecheck:watch",
+    "mobile:start": "pnpm --filter tutor-sg-mobile start",
+    "mobile:ios": "pnpm --filter tutor-sg-mobile ios",
+    "mobile:android": "pnpm --filter tutor-sg-mobile android",
+    "eas:build:android:internal": "cd mobile && pnpm eas:build:android:internal",
+    "eas:build:android:internal-aab": "cd mobile && pnpm eas:build:android:internal-aab"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,mjs,cjs}": [
