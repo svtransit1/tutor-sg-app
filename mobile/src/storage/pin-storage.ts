@@ -5,13 +5,13 @@ const KEY_PIN_SET = 'parent.pin_set';
 const KEY_ATTEMPT_COUNT = 'parent.pin_attempt_count';
 const KEY_COOLDOWN_UNTIL = 'parent.pin_cooldown_until';
 
-const PIN_LENGTH = 6;
+const PIN_LENGTH = 4;
 const MAX_ATTEMPTS = 5;
 const COOLDOWN_SECONDS = 30;
 
 export async function savePin(pin: string): Promise<void> {
-  if (!/^\d{6}$/.test(pin)) {
-    throw new Error('PIN must be exactly 6 numeric digits');
+  if (!/^\d{4}$/.test(pin)) {
+    throw new Error('PIN must be exactly 4 numeric digits');
   }
   await SecureStore.setItemAsync(KEY_PIN, pin);
   await SecureStore.setItemAsync(KEY_PIN_SET, 'true');
@@ -24,7 +24,7 @@ export async function isPinSet(): Promise<boolean> {
 }
 
 export async function verifyPin(input: string): Promise<boolean> {
-  if (!/^\d{6}$/.test(input)) return false;
+  if (!/^\d{4}$/.test(input)) return false;
   const stored = await SecureStore.getItemAsync(KEY_PIN);
   if (!stored) return false;
   if (stored.length !== input.length) return false;

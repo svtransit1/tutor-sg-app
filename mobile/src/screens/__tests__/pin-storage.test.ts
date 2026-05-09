@@ -5,21 +5,20 @@ import {
 } from '../../storage/pin-storage';
 
 jest.mock('expo-secure-store');
+import * as SecureStore from 'expo-secure-store';
 
 describe('pin-storage', () => {
-  beforeEach(async () => {
-    const SS = require('expo-secure-store');
-    SS.__resetStore();
-  });
+  beforeEach(() => { SecureStore.__resetStore(); });
 
-  it('savePin rejects non-6-digit', async () => {
+  it('savePin rejects non-4-digit', async () => {
+    await expect(savePin('123')).rejects.toThrow();
     await expect(savePin('12345')).rejects.toThrow();
-    await expect(savePin('12345a')).rejects.toThrow();
+    await expect(savePin('12a4')).rejects.toThrow();
     await expect(savePin('')).rejects.toThrow();
   });
 
-  it('savePin accepts valid 6-digit', async () => {
-    await expect(savePin('123456')).resolves.toBeUndefined();
+  it('savePin accepts valid 4-digit', async () => {
+    await expect(savePin('1234')).resolves.toBeUndefined();
   });
 
   it('isPinSet returns false initially', async () => {
@@ -27,26 +26,26 @@ describe('pin-storage', () => {
   });
 
   it('isPinSet returns true after save', async () => {
-    await savePin('123456');
+    await savePin('1234');
     expect(await isPinSet()).toBe(true);
   });
 
   it('verifyPin matches correctly', async () => {
-    await savePin('123456');
-    expect(await verifyPin('123456')).toBe(true);
-    expect(await verifyPin('654321')).toBe(false);
-    expect(await verifyPin('12345')).toBe(false);
+    await savePin('1234');
+    expect(await verifyPin('1234')).toBe(true);
+    expect(await verifyPin('4321')).toBe(false);
+    expect(await verifyPin('123')).toBe(false);
   });
 
   it('verifyPin returns false when no pin stored', async () => {
-    expect(await verifyPin('123456')).toBe(false);
+    expect(await verifyPin('1234')).toBe(false);
   });
 
   it('clearPin removes pin', async () => {
-    await savePin('123456');
+    await savePin('1234');
     await clearPin();
     expect(await isPinSet()).toBe(false);
-    expect(await verifyPin('123456')).toBe(false);
+    expect(await verifyPin('1234')).toBe(false);
   });
 
   it('tracks failed attempts', async () => {
@@ -71,7 +70,7 @@ describe('pin-storage', () => {
   });
 
   it('constants are correct', () => {
-    expect(PIN_LENGTH).toBe(6);
+    expect(PIN_LENGTH).toBe(4);
     expect(MAX_ATTEMPTS).toBe(5);
     expect(COOLDOWN_SECONDS).toBe(30);
   });

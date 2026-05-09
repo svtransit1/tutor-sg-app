@@ -74,14 +74,14 @@
       "accessibility": "Step {{current}} of {{total}}"
     }
   },
-  "network.offline": "You're offline",
+  "network.offline": "No internet connection",
   "network.offline.description": "Camera homework still works. Downloads need Wi-Fi.",
   "network.cellular": "On cellular data",
   "network.cellular.description": "Large downloads are paused to save data.",
   "parentAuth": {
     "title": "Parent Access",
     "enterPin": "Enter your PIN",
-    "wrongPin": "Wrong PIN. Try again.",
+    "wrongPin": "Wrong PIN. {{attempts}} attempt(s) remaining.",
     "cooldown": "Too many attempts. Please wait.",
     "cooldownTimer": "Try again in {{seconds}}s",
     "attemptsRemaining": "{{count}} attempt remaining",
@@ -111,6 +111,8 @@
     }
   },
   "parent": {
+    "changePin": "Change PIN",
+    "backToKid": "Back to Kid Area",
     "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
     "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
   },
@@ -145,7 +147,7 @@
       "chinese": "Chinese"
     },
     "subjectsDescriptions": {
-      "math": "Numbers, shapes & problem solving",
+      "math": "Numbers, shapes & fun challenges",
       "english": "Grammar, reading & writing",
       "science": "Explore the world around us",
       "chinese": "华文听说读写"
@@ -187,7 +189,7 @@
       "ctaCamera": "Take your first homework photo",
       "ctaPractice": "Try a practice question",
       "subjectsHint": "Pick a subject after your first session",
-      "dismiss": "Not now, show me around",
+      "dismiss": "Not now, let me explore",
       "accessibility": {
         "welcomeBanner": "Welcome banner. Start your first homework session.",
         "practiceTile": "Try a {{subject}} practice question"
@@ -241,7 +243,7 @@
     },
     "modelNotDownloaded": {
       "title": "Tutor not ready yet",
-      "description": "The AI model is still being downloaded. Wait for the download to finish in the Parent area.",
+      "description": "Your AI tutor is still being set up. Wait for the download to finish in the Parent area.",
       "goBack": "Go back home",
       "parentArea": "Parent area"
     },

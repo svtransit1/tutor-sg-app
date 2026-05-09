@@ -74,14 +74,14 @@
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
     }
   },
-  "network.offline": "你已离线",
+  "network.offline": "没有网络连接",
   "network.offline.description": "拍照做作业仍然可用。下载需要 Wi-Fi。",
   "network.cellular": "正在使用移动数据",
   "network.cellular.description": "已暂停大文件下载以节省流量。",
   "parentAuth": {
     "title": "家长访问权限",
     "enterPin": "请输入您的 PIN 码",
-    "wrongPin": "PIN 码错误，请重试。",
+    "wrongPin": "PIN 码错误，还剩 {{attempts}} 次机会。",
     "cooldown": "尝试次数过多，请稍候。",
     "cooldownTimer": "请等待 {{seconds}} 秒后再试",
     "attemptsRemaining": "还剩 {{count}} 次机会",
@@ -111,6 +111,8 @@
     }
   },
   "parent": {
+    "changePin": "更改 PIN 码",
+    "backToKid": "返回孩子界面",
     "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
     "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
   },
@@ -145,7 +147,7 @@
       "chinese": "华文"
     },
     "subjectsDescriptions": {
-      "math": "数字、图形与解题",
+      "math": "数字、图形与趣味挑战",
       "english": "语法、阅读与写作",
       "science": "探索我们周围的世界",
       "chinese": "听、说、读、写"
@@ -187,7 +189,7 @@
       "ctaCamera": "拍下第一份功课",
       "ctaPractice": "试试练习题",
       "subjectsHint": "完成第一次作业后即可选择科目",
-      "dismiss": "先看看，等会儿再拍",
+      "dismiss": "先自己看看",
       "accessibility": {
         "welcomeBanner": "欢迎横幅。开始你的第一次作业辅导。",
         "practiceTile": "试试{{subject}}练习题"
@@ -241,7 +243,7 @@
     },
     "modelNotDownloaded": {
       "title": "导师还没准备好",
-      "description": "AI 模型还在下载中。请在家长专区等待下载完成。",
+      "description": "你的 AI 老师还在准备中。请在家长专区等待下载完成。",
       "goBack": "返回首页",
       "parentArea": "家长专区"
     },
