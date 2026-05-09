@@ -4,6 +4,12 @@
   "onboarding": {
     "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
     "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。", "continue": "继续" },
+    "ageGate": {
+      "title": "你好！这个应用需要爸爸妈妈或者监护人来帮忙设置。",
+      "body": "请把手机交给大人。",
+      "parentCta": "我是家长 / 监护人 \u2014 继续",
+      "childCta": "我不是 \u2014 返回"
+    },
     "privacyPromise": {
       "title": "我们承诺保护您的隐私",
       "body": "孩子的作业永远不会离开这台设备。照片、答案和聊天内容都在设备上保密。只有您（家长）可以查看学习记录。",
@@ -69,6 +75,31 @@
       }
     },
     "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
+    "permissionPrimer": {
+      "title": "开始之前先做几件事",
+      "camera": {
+        "title": "相机",
+        "body": "我们需要使用相机，让孩子可以拍下作业。照片不会离开这台设备。",
+        "allow": "允许使用相机",
+        "notNow": "稍后再说"
+      },
+      "notifications": {
+        "title": "通知",
+        "body": "我们会每周给您（家长）发送一份学习总结，让您了解孩子的进度。不会打扰。",
+        "allow": "允许通知",
+        "notNow": "稍后再说"
+      }
+    },
+    "deviceUnsupported": {
+      "title": "设备太小了",
+      "body": "这台设备的内存不太够，无法在本地运行 AI 老师。请使用更新的手机或平板。",
+      "accessibility": "您的设备不满足本地 AI 老师的最低要求。"
+    },
+    "modelDownloader": {
+      "body": "正在准备离线 AI 老师。只下载一次。完成之后，老师可以完全离线工作，孩子的资料不会离开这台设备。",
+      "whyLink": "为什么需要下载？",
+      "whyModal": "我们需要下载一个小型 AI 模型，这样老师可以完全离线工作，孩子的资料永远不会离开这台设备。"
+    },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
@@ -183,7 +214,7 @@
     },
     "firstSession": {
       "welcomeTitle": "欢迎来到 tutor-sg！",
-      "welcomeBody": "拍下你的作业照片，马上就能得到帮助——就像身边有一位安静的小老师。",
+      "welcomeBody": "拍下作业照片，马上得到帮助。就像身边有一位安静的小老师。",
       "ctaCamera": "拍下第一份功课",
       "ctaPractice": "试试练习题",
       "subjectsHint": "完成第一次作业后即可选择科目",
@@ -195,7 +226,7 @@
     }
   },
   "modelDownload": {
-    "title": "正在设置你的导师...",
+    "title": "正在设置你的 AI 老师...",
     "progress": "正在下载 {{fileName}}...",
     "progressPercent": "{{percent}}%",
     "retrying": "正在重试下载 ({{attempt}}/{{max}})...",
@@ -247,7 +278,7 @@
     },
     "unknown": {
       "title": "出了点问题",
-      "description": "发生了意外错误。请重试。",
+      "description": "出了点意外。请再试一次。",
       "retry": "重试",
       "goBack": "返回首页"
     }

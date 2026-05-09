@@ -4,6 +4,12 @@
   "onboarding": {
     "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
     "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "ageGate": {
+      "title": "Hi! This app needs a parent or guardian to set things up first.",
+      "body": "Please pass the phone to a grown-up.",
+      "parentCta": "I'm a parent / guardian \u2014 continue",
+      "childCta": "I'm not \u2014 go back"
+    },
     "privacyPromise": {
       "title": "Your privacy is our promise",
       "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
@@ -69,6 +75,31 @@
       }
     },
     "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "permissionPrimer": {
+      "title": "A few things before we start",
+      "camera": {
+        "title": "Camera",
+        "body": "We need the camera so your child can snap a photo of their homework. The photo never leaves the device.",
+        "allow": "Allow Camera",
+        "notNow": "Not now"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "body": "We'll send a gentle weekly summary to you (the parent), so you can see how your child is doing. No spam.",
+        "allow": "Allow Notifications",
+        "notNow": "Not now"
+      }
+    },
+    "deviceUnsupported": {
+      "title": "Device too small",
+      "body": "This device is a little too small to run the on-device tutor. Please try on a newer phone or tablet.",
+      "accessibility": "Your device does not meet the minimum requirements for the on-device tutor."
+    },
+    "modelDownloader": {
+      "body": "Setting up your offline AI tutor. This is a one-time download. Once done, the tutor works fully offline and keeps your child's data on this device.",
+      "whyLink": "Why is this needed?",
+      "whyModal": "We download a small AI model so the tutor works fully offline and your child's data never leaves the device."
+    },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
@@ -183,7 +214,7 @@
     },
     "firstSession": {
       "welcomeTitle": "Welcome to tutor-sg!",
-      "welcomeBody": "Snap a photo of your homework and get instant help — like having a quiet tutor right next to you.",
+      "welcomeBody": "Snap a photo of your homework. Get help right away, like a quiet tutor beside you.",
       "ctaCamera": "Take your first homework photo",
       "ctaPractice": "Try a practice question",
       "subjectsHint": "Pick a subject after your first session",
@@ -247,7 +278,7 @@
     },
     "unknown": {
       "title": "Something went wrong",
-      "description": "An unexpected error happened. Please try again.",
+      "description": "Something unexpected happened. Please try again.",
       "retry": "Retry",
       "goBack": "Go back home"
     }
