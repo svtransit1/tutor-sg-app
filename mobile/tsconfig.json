@@ -3,8 +3,13 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
-    "paths": { "@/*": ["src/*"] }
+    "paths": {
+      "@/*": ["src/*"],
+      "@app/*": ["src/*"],
+      "@shared/*": ["../packages/shared/src/*"],
+      "@mobile/*": ["./*"]
+    }
   },
-  "include": ["**/*.ts", "**/*.tsx", "src/**/*.ts", "src/**/*.tsx", "app/**/*.ts", "app/**/*.tsx"],
-  "exclude": ["node_modules", "__mocks__", "**/__tests__/**"]
+  "include": ["**/*.ts", "**/*.tsx", "src/**/*.ts", "src/**/*.tsx", "app/**/*.ts", "app/**/*.tsx", "src/**/__tests__/**/*.ts", "src/**/__tests__/**/*.tsx"],
+  "exclude": ["node_modules", "__mocks__"]
 }
