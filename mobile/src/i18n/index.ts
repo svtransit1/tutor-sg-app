@@ -20,7 +20,7 @@ i18n.use(initReactI18next).init({
   resources,
   lng: getDeviceLocale(),
   fallbackLng: 'en',
-  keySeparator: false,
+  keySeparator: ".",
   interpolation: { escapeValue: false },
 });
 

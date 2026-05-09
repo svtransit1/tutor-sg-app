@@ -1,9 +1,16 @@
 {
-  "app.loading": "tutor-sg — loading...",
-  "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
-    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Your personal learning companion",
+      "tagline": "Smart learning, made fun!",
+      "cta": "Get Started"
+    },
+    "langPick": {
+      "title": "Choose your language",
+      "subtitle": "Your app will use this language.",
+      "continue": "Continue"
+    },
     "privacyPromise": {
       "title": "Your privacy is our promise",
       "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
@@ -68,16 +75,31 @@
         "subjectOff": "not selected"
       }
     },
-    "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "done": {
+      "title": "All set!",
+      "subtitle": "Let's start learning",
+      "greeting": "Hi {{name}}! Ready to learn?",
+      "cameraCta": "Snap your homework",
+      "cameraSubtitle": "Take a photo to get help",
+      "practicePrompt": "Or try a practice question",
+      "parentArea": "Parent area"
+    },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
+    },
+    "parentPinSetup": {
+      "title": "Set Up Parent PIN",
+      "body": "Create a 4-digit PIN to protect access.",
+      "enterPin": "Enter 4-digit PIN",
+      "confirmPin": "Confirm PIN",
+      "skip": "Skip for now",
+      "mismatch": "PINs don't match. Try again.",
+      "accessibility": {
+        "skipButton": "Skip PIN setup"
+      }
     }
   },
-  "network.offline": "You're offline",
-  "network.offline.description": "Camera homework still works. Downloads need Wi-Fi.",
-  "network.cellular": "On cellular data",
-  "network.cellular.description": "Large downloads are paused to save data.",
   "parentAuth": {
     "title": "Parent Access",
     "enterPin": "Enter your PIN",
@@ -108,11 +130,27 @@
       "errorSignInFailed": "Sign-in failed. Please try again.",
       "errorAuthSession": "Authentication session was cancelled or failed.",
       "signedIn": "Signed in successfully"
+    },
+    "cancel": "Cancel",
+    "changePin": {
+      "title": "Change Parent PIN",
+      "enterOld": "Enter current PIN",
+      "enterNew": "Enter new 4-digit PIN",
+      "success": "PIN changed!",
+      "wrongOld": "Current PIN is incorrect. Try again."
     }
   },
   "parent": {
-    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "dashboard": {
+      "title": "Parent Dashboard",
+      "placeholder": "Session log and progress coming soon"
+    },
+    "settings": {
+      "title": "Settings",
+      "placeholder": "Language, quality, model, privacy"
+    },
+    "changePin": "Change PIN",
+    "backToKid": "Back to kid"
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
@@ -131,6 +169,18 @@
     "cellularCancel": "Wait for Wi-Fi",
     "loading": "Checking your device…",
     "error": "Could not detect device capabilities. Please try again."
+  },
+  "deviceTooOld": {
+    "title": "Device not supported",
+    "body": "Doesn't meet minimum requirements.",
+    "requirementsTitle": "Minimum requirements",
+    "requirementIos": "iOS 16+ (iPhone 12+)",
+    "requirementAndroid": "Android 11+ 4GB RAM",
+    "requirementRam": "At least 4GB RAM",
+    "exit": "I understand — exit",
+    "accessibility": {
+      "exitButton": "Exit"
+    }
   },
   "kidHome": {
     "header": {
@@ -308,6 +358,20 @@
       "skip": "Skip this item",
       "typeInput": "Type answer for item {{number}}",
       "drawCanvas": "Drawing area for item {{number}}"
+    }
+  },
+  "app": {
+    "loading": "tutor-sg — loading...",
+    "name": "tutor-sg"
+  },
+  "network": {
+    "offline": {
+      "label": "You're offline",
+      "description": "Camera homework still works. Downloads need Wi-Fi."
+    },
+    "cellular": {
+      "label": "On cellular data",
+      "description": "Large downloads are paused to save data."
     }
   }
 }

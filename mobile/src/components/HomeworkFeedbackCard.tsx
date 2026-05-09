@@ -245,7 +245,7 @@ export default function HomeworkFeedbackCard({
         ]}
       >
         <ErrorState
-          message={errorMessage ?? t('homeworkError.UNKNOWN.body')}
+          message={errorMessage ?? t('homeworkError.unknown.body')}
           onRetry={onRetry}
           isDark={isDark}
         />
