@@ -5,6 +5,8 @@
 *.pem
 *.p12
 *.keystore
+*.jks
+*.p8
 
 # OS
 .DS_Store
@@ -27,6 +29,20 @@ dist/
 *.apk
 *.aab
 *.app
+
+# Expo / Metro
+.expo/
+web-build/
+
+# TypeScript/mobile build artifacts (emitted alongside .ts/.tsx by tsc without outDir)
+*.tsbuildinfo
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
+
+# pnpm debug logs
+.pnpm-debug.log*
 
 # Local LLM model artefacts — never commit
 **/models/
