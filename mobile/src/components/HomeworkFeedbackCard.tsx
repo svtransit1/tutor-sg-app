@@ -256,7 +256,6 @@ export default function HomeworkFeedbackCard({
   if (!help) return null;
 
   function renderLevelBody() {
-    if (!help) return null;
     switch (currentLevel) {
       case 'hint':
         return (
