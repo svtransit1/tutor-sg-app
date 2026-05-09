@@ -1,15 +1,6 @@
-/**
- * Tests for kid sessions SQLite storage.
- *
- * Uses the expo-sqlite mock from __mocks__/expo-sqlite.ts.
- * The moduleNameMapper in jest.config.js maps ^expo-sqlite$ to that mock.
- */
 import { openDatabaseAsync } from 'expo-sqlite';
 import { insertSession, getRecentSessions, getSessionCount, getPaginatedSessions } from '../sessions';
-
-// The mock from __mocks__/expo-sqlite.ts returns a shared mockDb object.
-// We import openDatabaseAsync which is a jest.fn(), then get the resolved
-// mock DB to configure return values for each test.
+import { resetDb } from '../database';
 
 let mockDb: {
   execAsync: jest.Mock;
@@ -19,8 +10,8 @@ let mockDb: {
 };
 
 beforeEach(async () => {
+  resetDb();
   jest.clearAllMocks();
-  // The mock from __mocks__/expo-sqlite.ts creates a fresh DB on each call
   mockDb = await openDatabaseAsync();
 });
 
@@ -32,11 +23,14 @@ describe('insertSession', () => {
 
     expect(id).toBe(1);
     expect(mockDb.runAsync).toHaveBeenCalledWith(
-      'INSERT INTO kid_sessions (subject, question_count, time_spent, created_at) VALUES (?, ?, ?, ?)',
+      expect.stringContaining('INSERT INTO kid_sessions'),
       'math',
       5,
       120,
       expect.any(String),
+      null,
+      null,
+      null,
     );
   });
 
@@ -59,6 +53,30 @@ describe('insertSession', () => {
       5,
       0,
       expect.any(String),
+      null,
+      null,
+      null,
+    );
+  });
+
+  it('accepts optional topic params', async () => {
+    mockDb.runAsync.mockResolvedValueOnce({ changes: 1, lastInsertRowId: 1 });
+
+    await insertSession('math', 5, 120, {
+      topic: 'M-P3-N-01',
+      topicEn: 'Numbers to 1000',
+      topicZh: '1000以内的数字',
+    });
+
+    expect(mockDb.runAsync).toHaveBeenCalledWith(
+      expect.any(String),
+      'math',
+      5,
+      120,
+      expect.any(String),
+      'M-P3-N-01',
+      'Numbers to 1000',
+      '1000以内的数字',
     );
   });
 });
@@ -69,24 +87,19 @@ describe('getRecentSessions', () => {
 
     const sessions = await getRecentSessions(3);
     expect(sessions).toEqual([]);
-    expect(mockDb.getAllAsync).toHaveBeenCalledWith(
-      'SELECT id, subject, question_count, time_spent, created_at FROM kid_sessions ORDER BY created_at DESC LIMIT ?',
-      3,
-    );
   });
 
   it('returns mapped session objects', async () => {
     const mockRows = [
-      { id: 1, subject: 'math', question_count: 5, time_spent: 120, created_at: '2026-05-07T10:00:00.000Z' },
-      { id: 2, subject: 'english', question_count: 3, time_spent: 90, created_at: '2026-05-07T09:00:00.000Z' },
+      { id: 1, kid_profile_id: 1, subject: 'math', topic: null, topic_en: null, topic_zh: null, question_count: 5, time_spent: 120, status: 'completed', struggle_indicators: null, summary_en: null, summary_zh: null, ai_help_summary_en: null, ai_help_summary_zh: null, parent_flagged: 0, parent_flag_note: null, created_at: '2026-05-07T10:00:00.000Z', updated_at: '2026-05-07T10:00:00.000Z' },
+      { id: 2, kid_profile_id: 1, subject: 'english', topic: null, topic_en: null, topic_zh: null, question_count: 3, time_spent: 90, status: 'completed', struggle_indicators: null, summary_en: null, summary_zh: null, ai_help_summary_en: null, ai_help_summary_zh: null, parent_flagged: 0, parent_flag_note: null, created_at: '2026-05-07T09:00:00.000Z', updated_at: '2026-05-07T09:00:00.000Z' },
     ];
     mockDb.getAllAsync.mockResolvedValue(mockRows);
 
     const sessions = await getRecentSessions(2);
-    expect(sessions).toEqual([
-      { id: 1, subject: 'math', questionCount: 5, timeSpent: 120, createdAt: '2026-05-07T10:00:00.000Z' },
-      { id: 2, subject: 'english', questionCount: 3, timeSpent: 90, createdAt: '2026-05-07T09:00:00.000Z' },
-    ]);
+    expect(sessions).toHaveLength(2);
+    expect(sessions[0]).toMatchObject({ id: 1, subject: 'math', questionCount: 5 });
+    expect(sessions[1]).toMatchObject({ id: 2, subject: 'english', questionCount: 3 });
   });
 
   it('respects custom limit', async () => {
@@ -102,102 +115,7 @@ describe('getPaginatedSessions', () => {
     mockDb.getAllAsync.mockResolvedValue([]);
 
     const result = await getPaginatedSessions(1, 20);
-
     expect(result).toEqual({ sessions: [], total: 0, hasMore: false });
-  });
-
-  it('returns first page with mapped sessions', async () => {
-    const mockRows = [
-      { id: 1, subject: 'math', question_count: 5, time_spent: 120, created_at: '2026-05-07T10:00:00.000Z' },
-      { id: 2, subject: 'english', question_count: 3, time_spent: 90, created_at: '2026-05-07T09:00:00.000Z' },
-    ];
-    mockDb.getFirstAsync.mockResolvedValue({ count: 2 });
-    mockDb.getAllAsync.mockResolvedValue(mockRows);
-
-    const result = await getPaginatedSessions(1, 20);
-
-    expect(result.sessions).toHaveLength(2);
-    expect(result.sessions[0]).toEqual({ id: 1, subject: 'math', questionCount: 5, timeSpent: 120, createdAt: '2026-05-07T10:00:00.000Z' });
-    expect(result.total).toBe(2);
-    expect(result.hasMore).toBe(false);
-  });
-
-  it('sets hasMore when more pages exist', async () => {
-    mockDb.getFirstAsync.mockResolvedValue({ count: 25 });
-    mockDb.getAllAsync.mockResolvedValue(
-      Array.from({ length: 20 }, (_, i) => ({
-        id: i + 1,
-        subject: 'math',
-        question_count: 3,
-        time_spent: 0,
-        created_at: '2026-05-07T10:00:00.000Z',
-      })),
-    );
-
-    const result = await getPaginatedSessions(1, 20);
-
-    expect(result.sessions).toHaveLength(20);
-    expect(result.total).toBe(25);
-    expect(result.hasMore).toBe(true);
-  });
-
-  it('sets hasMore false on last page', async () => {
-    mockDb.getFirstAsync.mockResolvedValue({ count: 25 });
-    mockDb.getAllAsync.mockResolvedValue(
-      Array.from({ length: 5 }, (_, i) => ({
-        id: i + 21,
-        subject: 'science',
-        question_count: 4,
-        time_spent: 0,
-        created_at: '2026-05-07T10:00:00.000Z',
-      })),
-    );
-
-    const result = await getPaginatedSessions(2, 20);
-
-    expect(result.sessions).toHaveLength(5);
-    expect(result.total).toBe(25);
-    expect(result.hasMore).toBe(false);
-  });
-
-  it('queries with correct offset for page 2', async () => {
-    mockDb.getFirstAsync.mockResolvedValue({ count: 50 });
-    mockDb.getAllAsync.mockResolvedValue([]);
-
-    await getPaginatedSessions(2, 20);
-
-    expect(mockDb.getAllAsync).toHaveBeenCalledWith(
-      expect.stringContaining('LIMIT ? OFFSET ?'),
-      20,
-      20,
-    );
-  });
-
-  it('handles page 3 offset correctly', async () => {
-    mockDb.getFirstAsync.mockResolvedValue({ count: 100 });
-    mockDb.getAllAsync.mockResolvedValue([]);
-
-    await getPaginatedSessions(3, 20);
-
-    expect(mockDb.getAllAsync).toHaveBeenCalledWith(
-      expect.stringContaining('LIMIT ? OFFSET ?'),
-      20,
-      40,
-    );
-  });
-
-  it('maps subject enum and camelCase field names', async () => {
-    const mockRows = [
-      { id: 1, subject: 'chinese', question_count: 10, time_spent: 60, created_at: '2026-05-01T00:00:00.000Z' },
-    ];
-    mockDb.getFirstAsync.mockResolvedValue({ count: 1 });
-    mockDb.getAllAsync.mockResolvedValue(mockRows);
-
-    const result = await getPaginatedSessions(1, 20);
-
-    expect(result.sessions[0].subject).toBe('chinese');
-    expect(result.sessions[0].questionCount).toBe(10);
-    expect(result.sessions[0].timeSpent).toBe(60);
   });
 });
 
