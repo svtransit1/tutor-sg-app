@@ -129,10 +129,7 @@ Model files are never bundled in the app package (app stays under 50 MB). On-dev
 
 ### 3.6 Model version upgrades
 
-When CDN `index.json` version increments:
-1. New models download in the background (non-blocking)
-2. After verification, old model is swapped atomically on next cold launch
-3. Old files deleted after successful swap
+See §5 for the full model versioning and CDN delivery strategy. In brief: when the CDN `index.json` declares a newer version than what is on-device, the app downloads the update in the background, verifies integrity, and swaps atomically on next cold launch.
 
 ---
 
@@ -195,9 +192,214 @@ All core features work fully offline. Only these require connectivity:
 
 ---
 
-## 5. Parent dashboard boundary
+## 5. Model versioning + CDN delivery strategy
 
-### 5.1 Separation
+All model files are hosted on Cloudflare R2 and delivered to devices via signed URLs with integrity verification. This section defines the versioning scheme, manifest format, delivery flows, delta update strategy, atomic swap protocol, and error recovery.
+
+### 5.1 CDN architecture
+
+```
+Cloudflare R2 (origin)
+  → Cloudflare Cache (edge, global)
+    → Signed URL (expires 24h, public-read)
+      → Mobile app (download + verify)
+```
+
+| Property | Value |
+|---|---|
+| Provider | Cloudflare R2 |
+| Bucket | `tutorsg-models-prod` |
+| Region | APAC (Singapore origin) |
+| Edge caching | Cloudflare CDN (global, automatic) |
+| Access control | Signed URLs (HMAC-SHA256, 24h expiry) |
+| URL scheme | `https://models.tutorsg.com/{model}/{version}/{platform}.mdl` |
+| Fallback CDN | R2 direct (no signed URL cache, used when CDN edge miss) |
+
+Models are public-read from the CDN — the signed URLs prevent hotlinking but do not require app-side authentication. No user credentials are sent to the CDN; the app fetches a one-time signed URL from a Supabase Edge Function or the CDN worker on each download session.
+
+### 5.2 Model versioning scheme
+
+**Semantic versioning for model packages: `MAJOR.MINOR.PATCH`**
+
+| Component | Bump trigger | Upgrade behavior |
+|---|---|---|
+| **MAJOR** | Breaking format change (new tokenizer, new architecture, incompatible config) | Full download required; old model deleted after swap |
+| **MINOR** | Quality improvement (fine-tuned weights, same format) | Delta preferred; full download fallback |
+| **PATCH** | Minor fix (quantization tweak, metadata correction) | Delta only; small download |
+
+**Version pinning in the app:**
+
+The app declares a minimum supported model version range in its build-time config (`app.config.ts`). At runtime, before loading a model, the inference engine checks that the on-device model version satisfies `>= minRequiredVersion` for this app version. If the on-device model is too old and no newer version can be downloaded, the app shows "Update the app to continue" / "请更新应用以继续" and blocks inference.
+
+```ts
+// Build-time config (app.config.ts)
+const MODEL_VERSION_CONTRACT: Record<ModelId, { min: string; max: string }> = {
+  "gemma-e4b": { min: "1.0.0", max: "2.0.0" },
+  "gemma-e2b": { min: "1.0.0", max: "2.0.0" },
+  "qwen-4b":   { min: "1.0.0", max: "2.0.0" },
+  "qwen-2b":   { min: "1.0.0", max: "2.0.0" },
+};
+```
+
+Platform-specific model files follow the naming convention `{model}-v{version}-{platform}.mdl` (e.g., `gemma-e4b-v1.2.0-android.mdl`). Each platform variant may have a different file size and hash because of differing quantization formats (ExecuTorch vs. TFLite).
+
+### 5.3 Manifest format (`index.json`)
+
+The CDN root hosts `index.json` — the single source of truth for available model versions. The app fetches this manifest on first launch and on every cold launch (with `If-None-Match` for conditional caching).
+
+```jsonc
+{
+  "manifestVersion": 2,
+  "generatedAt": "2026-05-09T12:00:00Z",
+  "models": {
+    "gemma-e4b": {
+      "description": "Gemma 4 E4B — English / Math / Science (high tier)",
+      "latest": "1.2.0",
+      "variants": {
+        "1.2.0": {
+          "released": "2026-05-01",
+          "minAppVersion": "1.0.0",
+          "platforms": {
+            "ios": {
+              "url": "https://models.tutorsg.com/gemma-e4b/1.2.0/ios.mdl",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "format": "executorch-pte",
+              "sizeBytes": 2684354560
+            },
+            "android": {
+              "url": "https://models.tutorsg.com/gemma-e4b/1.2.0/android.mdl",
+              "sha256": "6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090",
+              "format": "litert-lm-tflite",
+              "sizeBytes": 2684354560
+            }
+          },
+          "deltaFrom": {
+            "1.1.0": {
+              "ios": {
+                "url": "https://models.tutorsg.com/gemma-e4b/delta/1.1.0-1.2.0/ios.patch",
+                "sha256": "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a",
+                "algorithm": "xdelta3",
+                "sizeBytes": 524288000
+              }
+            }
+          }
+        }
+      }
+    },
+    "qwen-4b": {
+      "description": "Qwen 3.5 4B — Chinese Mother Tongue (high tier)",
+      "latest": "1.1.0",
+      "variants": { /* same structure */ }
+    }
+    // gemma-e2b, qwen-2b follow same pattern
+  }
+}
+```
+
+The manifest is versioned (`manifestVersion`) so the app can detect breaking schema changes and fall back gracefully.
+
+### 5.4 Delivery flow
+
+#### 5.4.1 First-launch download
+
+See §3.5 for the full first-launch flow. From the CDN perspective:
+
+1. App fetches `index.json` (ETag-conditional, cached 1h locally)
+2. Resolves required model set from device tier + `MODEL_VERSION_CONTRACT`
+3. For each model: download with HTTP Range support → verify SHA-256 → move to permanent storage
+4. Progress aggregated across all files, shown as a single progress bar
+5. All models verified → load into inference engine → transition to main UI
+6. Any irrecoverable failure → error screen with "Check your internet and try again" / "请检查网络连接并重试"
+
+#### 5.4.2 Background update
+
+On cold launch, the app fetches `index.json` (ETag-conditional). If any on-device model version is behind the CDN `latest`:
+
+1. Download new model to temp storage (non-blocking, app is already usable with current model)
+2. Store as "pending" with a `pending_version` flag in SQLite
+3. On next cold launch: verify pending model integrity → atomic swap → delete old
+4. If the device is offline when the swap is due, defer to next cold launch
+5. User sees a subtle badge: "Update ready — restart to get latest improvements" / "更新就绪 — 重启应用以获取最新改进"
+
+#### 5.4.3 Download resilience
+
+- **HTTP Range support:** Every CDN URL supports `Range` headers. Lost connections resume from the last byte received, avoiding re-downloading gigabytes on flaky Wi-Fi.
+- **Concurrent downloads:** Up to 2 models download in parallel (configurable by device tier — mid-tier devices limit to 1).
+- **Wi-Fi gating:** Downloads over 100 MB require Wi-Fi by default. The user can override in Settings: "Allow model downloads over mobile data" / "允许使用移动数据下载模型" (default: OFF).
+- **Background fetch:** On iOS, `BGTaskScheduler` requests a ~5-minute window for model updates. On Android, `WorkManager` with `NetworkType.CONNECTED` constraint handles this.
+
+### 5.5 Delta update strategy
+
+When `index.json` includes a `deltaFrom` entry from the installed version to the target version, the app can download a binary patch instead of the full model file.
+
+| Aspect | Decision |
+|---|---|
+| Algorithm | **xdelta3** (first choice) — fast, open-source, proven for large binaries. Fallback: **bsdiff** if xdelta3 patch generation fails. |
+| When to use delta | MINOR and PATCH upgrades (full download for MAJOR). Delta only available when `installedVersion` appears in target variant's `deltaFrom` map. |
+| When to skip delta | If delta is >70% of full model size, download full instead (no point applying a near-full-size patch). |
+| Patch application | Apply delta to a **copy** of the active model file in temp storage. Verify SHA-256 of the result. On success, the patched file becomes the pending model. On failure, fall back to full download. |
+| Delta generation | Run offline during the CI/CD model release pipeline. Input: old `.mdl` + new `.mdl` → Output: `.patch` file. Patch file uploaded to CDN alongside full variants. |
+
+### 5.6 Atomic model swap
+
+The model swap sequence is designed for crash-safety — a power loss or app kill mid-swap leaves the device in a recoverable state.
+
+```
+State: Active model at /models/gemma-e4b-v1.1.0-android.mdl
+Target: Upgrade to 1.2.0
+
+1. Download 1.2.0 → /models/.pending/gemma-e4b-v1.2.0-android.mdl
+2. Verify SHA-256 of pending file
+3. Write intent: SQLite row { model: "gemma-e4b", pending: "1.2.0" }
+4. On next cold launch, before inference engine init:
+   a. Read pending intent from SQLite
+   b. Verify pending file SHA-256 again
+   c. Atomic rename: /models/.pending/X → /models/X
+      (On APFS/ext4, rename is atomic; app cannot see partial state)
+   d. Delete old /models/gemma-e4b-v1.1.0-android.mdl
+   e. Clear pending intent from SQLite
+5. If step 4 fails at any point:
+   a. Delete pending file
+   b. Clear pending intent
+   c. Continue with old model (no-op, retry on next update cycle)
+```
+
+### 5.7 Integrity verification and recovery
+
+Every model file and delta patch is verified against its SHA-256 hash from `index.json` before being loaded into the inference engine.
+
+| Scenario | Action |
+|---|---|
+| Hash matches | Proceed to load |
+| Hash mismatch on download | Delete temp file, retry download once (different CDN edge if possible). Second failure → error screen. |
+| Hash mismatch on pending file at cold launch | Delete pending file, clear intent, retry download. |
+| `index.json` fetch fails | Use cached manifest (stored in SQLite, valid up to 7 days). If no cache → error: "Cannot check for updates" / "无法检查更新". |
+| CDN returns 4xx/5xx | Exponential backoff: 1s, 5s, 15s, then error. |
+
+### 5.8 Storage management
+
+Total on-device model footprint:
+
+| Tier | Models | Approx size |
+|---|---|---|
+| High (≥6 GB RAM) | Gemma E4B + Qwen 4B | ~4.9 GB |
+| Mid (3–5 GB RAM) | Gemma E2B + Qwen 2B | ~2.5 GB |
+
+**Pre-download checks:**
+1. `NSFileManager.availableFreeSpace` (iOS) / `StatFs.getAvailableBlocks` (Android) before starting any download
+2. Required: free space ≥ model size × 1.5 (headroom for temp files, app data, OS)
+3. If insufficient: "Not enough space — free up {N} MB and try again" / "存储空间不足 — 请释放 {N} MB 后重试"
+
+**Cleanup rules:**
+- Old model versions deleted immediately after successful atomic swap
+- Temp and `.pending` files cleaned on cold launch (stale downloads from killed app sessions)
+- User-visible storage breakdown in Settings: "Models: X.X GB" with per-model listing
+
+---
+
+## 6. Parent dashboard boundary
+
+### 6.1 Separation
 
 | | Child UI | Parent Dashboard |
 |---|---|---|
@@ -206,29 +408,29 @@ All core features work fully offline. Only these require connectivity:
 | Data source | Live LLM interactions | SQLite sessions table (read-only) |
 | Network | None required | Sync queued locally; POST to Supabase when online |
 
-### 5.2 PIN gate
+### 6.2 PIN gate
 
 - 4-digit PIN set by parent during onboarding
 - Required to enter the Parent area
 - PIN hash stored locally in SQLite (never leaves device)
 - 5 failed attempts → 60-second cooldown
 
-### 5.3 What parents see
+### 6.3 What parents see
 
 - Daily/weekly view of every kid session
 - Per session: subject, topic, time spent, questions attempted, struggle indicators, AI help summary
 - All summaries generated on-device from session events
 - Parent can flag a session ("this looks wrong") → feeds the question-bank improvement loop
 
-### 5.4 Privacy boundary
+### 6.4 Privacy boundary
 
 **Hard rule:** Photos and OCR text never leave the device, even to our servers. Only anonymized usage telemetry leaves — and only after parent opts in via the Parent Dashboard settings toggle (default: OFF).
 
 ---
 
-## 6. Security boundaries
+## 7. Security boundaries
 
-### 6.1 Child data isolation
+### 7.1 Child data isolation
 
 | Data | Storage | Leaves device? |
 |---|---|---|
@@ -240,23 +442,24 @@ All core features work fully offline. Only these require connectivity:
 | Kid profile (name, level) | SQLite | Never |
 | Parent email / auth token | Secure store (Keychain / Keystore) | Supabase auth only |
 
-### 6.2 Model integrity
+### 7.2 Model integrity
 
+See §5 for the full CDN delivery and integrity strategy. In brief:
 - All model files hosted on Cloudflare R2 with SHA-256 manifests
 - App verifies integrity hash before loading any model into the inference engine
 - Failed verification → delete file, retry download once, then error
 
-### 6.3 Purchase security
+### 7.3 Purchase security
 
 - All purchases require parent gate (birth-year challenge, age ≥ 18)
 - Entitlement cross-checked against Supabase on every app foreground
 - Device-side purchase alone is not trusted
 
-### 6.4 Analytics constraint
+### 7.4 Analytics constraint
 
 **No third-party analytics SDKs in child-facing code paths.** Parent dashboard analytics are isolated to the web companion. This is a hard architectural boundary — any code in a child-facing React Native screen must not import or transitively depend on an analytics library.
 
-### 6.5 Auth model
+### 7.5 Auth model
 
 - Parent: email + magic link or Google/Apple sign-in (Supabase Auth)
 - Kid profile: local only, no login, no auth token
@@ -264,7 +467,7 @@ All core features work fully offline. Only these require connectivity:
 
 ---
 
-## 7. Implementation order
+## 8. Implementation order
 
 | Phase | What | Parallel track |
 |---|---|---|
@@ -279,7 +482,7 @@ All core features work fully offline. Only these require connectivity:
 
 ---
 
-## 8. Cross-references
+## 9. Cross-references
 
 - **Product spec:** [wiki ADD](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fapp-design-document.md)
 - **Locked decisions:** [wiki decisions-locked](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fdecisions-locked.md)
