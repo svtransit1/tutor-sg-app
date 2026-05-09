@@ -249,10 +249,10 @@ export default function ParentSignInScreen({
               style={[styles.primaryButton, { backgroundColor: colors.primaryDark }]}
               onPress={onSignedIn}
               accessibilityRole="button"
-              accessibilityLabel="Continue"
+              accessibilityLabel={t('common.continue')}
             >
               <Text style={styles.primaryButtonText}>
-                {t('common.continue', 'Continue')}
+                {t('common.continue')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -308,7 +308,7 @@ export default function ParentSignInScreen({
                 autoComplete="email"
                 editable={screenState !== 'loading_magic_link' && screenState !== 'loading_oauth'}
                 accessibilityLabel={t('parentAuth.signIn.emailPlaceholder')}
-                accessibilityRole="none"
+                accessibilityRole="text"
               />
 
               <TouchableOpacity

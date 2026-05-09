@@ -216,6 +216,7 @@
   "common": {
     "back": "Back",
     "goBack": "Go back",
+    "continue": "Continue",
     "retry": "Retry"
   },
   "homeworkError": {

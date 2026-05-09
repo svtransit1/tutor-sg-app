@@ -216,6 +216,7 @@
   "common": {
     "back": "返回",
     "goBack": "返回首页",
+    "continue": "继续",
     "retry": "重试"
   },
   "homeworkError": {

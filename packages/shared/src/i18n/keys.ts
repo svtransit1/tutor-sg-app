@@ -22,6 +22,11 @@ export type I18nKey =
   | 'network.offline.description'
   | 'network.cellular'
   | 'network.cellular.description'
+  // ── Common ────────────────────────────────────────────
+  | 'common.back'
+  | 'common.goBack'
+  | 'common.continue'
+  | 'common.retry'
   // ── Parent auth ──────────────────────────────────────────
   | `parentAuth.${ParentAuthKey}`
   // ── Parent dashboard ─────────────────────────────────────
@@ -40,9 +45,27 @@ export type ParentAuthKey =
   | 'attemptsRemaining'
   | 'attemptsRemaining_plural'
   | 'pinsDontMatch'
-  | `setup.${ParentAuthSetupKey}`;
+  | `setup.${ParentAuthSetupKey}`
+  | `signIn.${ParentAuthSignInKey}`;
 
 export type ParentAuthSetupKey = 'title' | 'enterPin' | 'confirmPin';
+
+export type ParentAuthSignInKey =
+  | 'title'
+  | 'subtitle'
+  | 'emailPlaceholder'
+  | 'sendMagicLink'
+  | 'magicLinkSent'
+  | 'checkEmail'
+  | 'orDivider'
+  | 'continueWithGoogle'
+  | 'continueWithApple'
+  | 'skip'
+  | 'errorInvalidEmail'
+  | 'errorSendFailed'
+  | 'errorSignInFailed'
+  | 'errorAuthSession'
+  | 'signedIn';
 
 export type ParentAreaKey =
   | `dashboard.${ParentDashboardKey}`
@@ -89,6 +112,10 @@ export const I18N_KEYS = [
   'network.offline.description',
   'network.cellular',
   'network.cellular.description',
+  'common.back',
+  'common.goBack',
+  'common.continue',
+  'common.retry',
   'parentAuth.title',
   'parentAuth.enterPin',
   'parentAuth.wrongPin',
@@ -100,6 +127,21 @@ export const I18N_KEYS = [
   'parentAuth.setup.title',
   'parentAuth.setup.enterPin',
   'parentAuth.setup.confirmPin',
+  'parentAuth.signIn.title',
+  'parentAuth.signIn.subtitle',
+  'parentAuth.signIn.emailPlaceholder',
+  'parentAuth.signIn.sendMagicLink',
+  'parentAuth.signIn.magicLinkSent',
+  'parentAuth.signIn.checkEmail',
+  'parentAuth.signIn.orDivider',
+  'parentAuth.signIn.continueWithGoogle',
+  'parentAuth.signIn.continueWithApple',
+  'parentAuth.signIn.skip',
+  'parentAuth.signIn.errorInvalidEmail',
+  'parentAuth.signIn.errorSendFailed',
+  'parentAuth.signIn.errorSignInFailed',
+  'parentAuth.signIn.errorAuthSession',
+  'parentAuth.signIn.signedIn',
   'parent.dashboard.title',
   'parent.dashboard.placeholder',
   'parent.settings.title',
