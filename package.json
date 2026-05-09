@@ -5,9 +5,10 @@
   "packageManager": "pnpm@10.33.0",
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
+    "build": "pnpm --recursive typecheck",
     "prepare": "husky",
     "typecheck": "pnpm --recursive typecheck",
-    "test": "pnpm --recursive test",
+    "test": "pnpm --recursive --if-present test",
     "mobile:start": "pnpm --filter tutor-sg-mobile start",
     "mobile:ios": "pnpm --filter tutor-sg-mobile ios",
     "mobile:android": "pnpm --filter tutor-sg-mobile android",

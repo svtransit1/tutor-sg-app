@@ -1,30 +1,70 @@
 {
-  "$comment": "First-cut placeholder integrity hashes. Replace with real values from scripts/compute-model-hashes.ts once models are hosted on CDN. See README.md for refresh instructions.",
-  "version": 1,
+  "$comment": "Model integrity manifest v2. Replace sha256 placeholders with real hashes from scripts/compute-model-hashes.ts once models are hosted on CDN. See docs/MODEL_DOWNLOAD.md for refresh instructions.",
+  "version": 2,
   "entries": [
     {
-      "modelFamily": "gemma-2",
+      "modelId": "gemma-e2b",
+      "modelFamily": "gemma-4",
       "paramCount": 2,
       "quant": "q4_0",
       "format": "gguf",
-      "sizeBytes": 1610612736,
+      "sizeBytes": 1395864371,
       "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-      "cdnUrls": ["https://cdn.example.com/models/gemma-2-2b-q4_0.gguf"],
-      "minDeviceTier": "low",
-      "iosOnly": false,
-      "recommended": true
+      "cdnUrls": [
+        "https://cdn.example.com/models/gemma-e2b.gguf",
+        "https://cdn2.example.com/models/gemma-e2b.gguf"
+      ],
+      "minDeviceTier": "mid",
+      "recommended": true,
+      "notes": "Gemma 4 E2B — mid-tier model for English, Math, Science. ~1.3 GB."
     },
     {
-      "modelFamily": "gemma-3",
+      "modelId": "gemma-e4b",
+      "modelFamily": "gemma-4",
       "paramCount": 4,
       "quant": "q4_k_m",
       "format": "gguf",
-      "sizeBytes": 3221225472,
+      "sizeBytes": 2684354560,
       "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-      "cdnUrls": ["https://cdn.example.com/models/gemma-3-4b-q4_k_m.gguf"],
+      "cdnUrls": [
+        "https://cdn.example.com/models/gemma-e4b.gguf",
+        "https://cdn2.example.com/models/gemma-e4b.gguf"
+      ],
+      "minDeviceTier": "high",
+      "recommended": true,
+      "notes": "Gemma 4 E4B — high-tier model for English, Math, Science. ~2.5 GB."
+    },
+    {
+      "modelId": "qwen-2b",
+      "modelFamily": "qwen-3.5",
+      "paramCount": 2,
+      "quant": "q4_0",
+      "format": "gguf",
+      "sizeBytes": 1288490188,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "cdnUrls": [
+        "https://cdn.example.com/models/qwen-2b.gguf",
+        "https://cdn2.example.com/models/qwen-2b.gguf"
+      ],
       "minDeviceTier": "mid",
-      "iosOnly": false,
-      "recommended": true
+      "recommended": true,
+      "notes": "Qwen 3.5 2B — mid-tier model for Chinese Mother Tongue. ~1.2 GB."
+    },
+    {
+      "modelId": "qwen-4b",
+      "modelFamily": "qwen-3.5",
+      "paramCount": 4,
+      "quant": "q4_k_m",
+      "format": "gguf",
+      "sizeBytes": 2576980378,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "cdnUrls": [
+        "https://cdn.example.com/models/qwen-4b.gguf",
+        "https://cdn2.example.com/models/qwen-4b.gguf"
+      ],
+      "minDeviceTier": "high",
+      "recommended": true,
+      "notes": "Qwen 3.5 4B — high-tier model for Chinese Mother Tongue. ~2.4 GB."
     }
   ]
 }
