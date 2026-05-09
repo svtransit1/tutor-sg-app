@@ -2,8 +2,17 @@
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
-    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。", "continue": "继续" },
+    "welcome": {
+      "title": "欢迎！",
+      "subtitle": "你的个人学习伙伴",
+      "tagline": "聪明学习，快乐成长！",
+      "cta": "开始使用"
+    },
+    "langPick": {
+      "title": "选择语言",
+      "subtitle": "应用将使用此语言。",
+      "continue": "继续"
+    },
     "privacyPromise": {
       "title": "我们承诺保护您的隐私",
       "body": "孩子的作业永远不会离开这台设备。照片、答案和聊天内容都在设备上保密。只有您（家长）可以查看学习记录。",
@@ -56,7 +65,58 @@
         "subjectOff": "未选"
       }
     },
-    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
+    "parentGate": {
+      "title": "家长验证",
+      "body": "此部分为家长和监护人专用。请把手机交给大人。",
+      "continue": "我是家长或监护人 — 继续",
+      "goBack": "我是孩子 — 返回"
+    },
+    "deviceUnsupported": {
+      "title": "设备太小了",
+      "body": "这台设备无法运行 AI 老师。请使用更新的手机或平板。",
+      "accessibility": "设备不满足 AI 老师的最低要求。"
+    },
+    "parentPinSetup": {
+      "title": "设置家长密码",
+      "body": "设置一个密码，防止孩子进入家长专区。",
+      "enterPin": "输入密码",
+      "confirmPin": "确认密码",
+      "mismatch": "密码不匹配。请重试。",
+      "skip": "跳过 — 稍后设置",
+      "accessibility": {
+        "skipButton": "跳过密码设置"
+      }
+    },
+    "legalConsent": {
+      "title": "开始之前",
+      "subtitle": "请阅读并同意以下条款。",
+      "eula": "最终用户许可协议",
+      "eulaSummary": "本应用按「现状」提供，用于教育目的。孩子的数据保留在设备上。",
+      "eulaBody": "最终用户许可协议\n\n这是您与 Agent as a Service Pte. Ltd. 之间关于使用 tutor-sg 的法律协议。\n\n1. 许可授予：我们授予您非独占、不可转让的许可，供您个人、非商业教育目的使用本应用。\n\n2. 数据隐私：所有儿童数据（照片、答案、语音记录）在设备本地处理，未经您明确同意不会发送到我们的服务器。\n\n3. 无担保：本应用按「现状」提供，不提供任何形式的担保。\n\n4. 责任限制：我们对因使用本应用而产生的任何损失不承担责任。\n\n5. 更新：我们可能会不时更新本条款。",
+      "privacyPolicy": "隐私政策",
+      "privacyPolicySummary": "我们收集最少的数据。孩子的功课数据不会离开设备。",
+      "privacyPolicyBody": "隐私政策\n\n生效日期：2026-05-06\n\n1. 我们收集的内容：邮箱地址（仅家长，用于创建账户）、匿名使用统计（仅限选择同意后）。\n\n2. 我们绝不收集的内容：功课照片、OCR 文字、孩子输入或说出的答案、孩子的姓名或个人资料、语音记录。\n\n3. 本地处理：所有 AI 处理均在设备本地使用下载的模型完成。\n\n4. 第三方：我们使用 Supabase 进行家长身份验证和收据验证。不会共享任何儿童数据。\n\n5. 数据保留：我们仅保留家长邮箱和匿名统计数据。儿童数据绝不会存储在我们的服务器上。\n\n6. 联系方式：privacy@tutor-sg.app",
+      "acceptEula": "我接受最终用户许可协议",
+      "acceptPrivacyPolicy": "我接受隐私政策",
+      "showFullEula": "阅读完整 EULA",
+      "showFullPolicy": "阅读完整隐私政策",
+      "hideFull": "收起",
+      "continue": "继续",
+      "accessibility": {
+        "eulaCheckbox": "接受最终用户许可协议",
+        "privacyCheckbox": "接受隐私政策",
+        "continueDisabled": "请接受两项协议以继续"
+      }
+    },
+    "done": {
+      "title": "准备好了！",
+      "subtitle": "让我们开始学习吧",
+      "greeting": "{{name}}，你好！准备好了吗？",
+      "cameraCta": "拍一下作业",
+      "cameraSubtitle": "拍张照片，立即获取帮助",
+      "practicePrompt": "或试试练习题",
+      "parentArea": "家长专区"
+    },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
@@ -195,12 +255,15 @@
       "title": "最近学习记录",
       "empty": "还没有学习记录。快来拍下第一份功课吧！",
       "viewAll": "查看全部 >",
+      "viewAllA11y": "查看全部记录",
       "timeAgo": {
         "justNow": "刚刚",
         "minutesAgo": "{{minutes}}分钟前",
         "hoursAgo": "{{hours}}小时前",
-        "yesterday": "昨天"
+        "yesterday": "昨天",
+        "daysAgo": "{{days}}天前"
       },
+      "timeSpent": "{{minutes}}分{{seconds}}秒",
       "questions": "{{count}} 道题",
       "questions_plural": "{{count}} 道题"
     },
@@ -251,7 +314,7 @@
       "cdn_unreachable": "无法连接服务器。请检查网络连接后重试。",
       "hash_mismatch": "下载文件已损坏，正在重新下载...",
       "download_stuck": "下载似乎卡住了，正在重试...",
-      "unknown_error": "出现错误，请重试。"
+      "unknown_error": "出了点意外，请再试一次。"
     }
   },
   "homeworkFeedback": {
@@ -277,7 +340,7 @@
       "voiceButton": "点击用语音提问",
       "voiceRecording": "正在录制你的问题",
       "voiceProcessing": "正在处理你的语音输入",
-      "voiceError": "语音输入失败，点击重试",
+      "voiceError": "语音没识别到，点击重试",
       "voicePermissionDenied": "麦克风权限被拒绝，请在设置中开启",
       "textInput": "输入你的追问",
       "sendButton": "发送你的问题",
@@ -303,7 +366,12 @@
   "common": {
     "back": "返回",
     "goBack": "返回首页",
-    "continue": "继续"
+    "continue": "继续",
+    "cancel": "取消",
+    "loading": "加载中…",
+    "retry": "重试",
+    "deferred": "稍后再说",
+    "enabled": "已开启"
   },
   "manualInputFallback": {
     "title": "有些内容看不清楚",
@@ -329,6 +397,122 @@
       "skip": "跳过此项",
       "typeInput": "为第 {{number}} 项输入答案",
       "drawCanvas": "第 {{number}} 项的手写区域"
+    }
+  },
+  "cameraResult": {
+    "title": "功课辅导",
+    "retake": "重新拍照",
+    "question": "第 {{number}} 题",
+    "questions": "{{count}} 道题",
+    "questions_plural": "{{count}} 道题",
+    "hint": "提示",
+    "showSteps": "看步骤",
+    "steps": "引导步骤",
+    "showSolution": "看答案",
+    "fullSolution": "完整解答",
+    "tryThis": "试试这样",
+    "backToHome": "返回主页",
+    "encouragement": {
+      "title": "做得不错！💪",
+      "body": "先试试提示。如果还想不出来，点「看步骤」。"
+    },
+    "followUp": {
+      "placeholder": "继续提问…",
+      "send": "发送",
+      "accessibility": "输入追问",
+      "mockResponse": "好问题！我来帮你。想想我们学过的方法——题目要你求什么？"
+    },
+    "error": {
+      "notFound": "这个结果找不到了。请重新拍照。"
+    }
+  },
+  "cameraScreen": {
+    "snapPrompt": "把功课对准框内",
+    "pages": "第 {{current}} 页，共 {{total}} 页",
+    "addAnother": "添加下一页",
+    "done": "完成",
+    "hint": {
+      "singlePage": "确保整页都在画面中",
+      "morePages": "可以拍多页"
+    },
+    "permission": {
+      "title": "需要相机权限",
+      "description": "我们需要相机来扫描你的功课并提供帮助。",
+      "cta": "允许使用相机"
+    },
+    "status": {
+      "capturing": "正在拍照…",
+      "inferring": "正在分析你的功课…",
+      "inferenceSubtext": "可能需要几秒钟",
+      "ocr": "正在读取你的字迹…",
+      "ocrSubtext": "可能需要几秒钟"
+    },
+    "error": {
+      "title": "相机问题",
+      "captureFailed": "拍不到照片。请重试。",
+      "inferenceFailed": "无法分析功课。请重试。",
+      "processingFailed": "无法处理这一页。请重试。",
+      "retake": "重新拍照"
+    },
+    "accessibility": {
+      "cancel": "返回",
+      "capture": "拍下功课照片"
+    },
+    "manualInput": {
+      "title": "输入答案",
+      "description": "在下方输入这道题的答案。",
+      "placeholder": "在此输入答案…",
+      "submit": "提交",
+      "accessibility": "手动输入答案"
+    }
+  },
+  "homeworkError": {
+    "title": "哎呀！",
+    "llmTimeout": {
+      "title": "处理时间有点长",
+      "description": "AI 比平时慢了一点点。点击「重试」再试一次。",
+      "retry": "重试",
+      "goBack": "返回主页"
+    },
+    "cameraDenied": {
+      "title": "相机无法使用",
+      "description": "我们需要相机来查看你的功课。请在设置中允许相机权限。",
+      "typeItOut": "改为输入",
+      "goBack": "返回主页"
+    },
+    "ocrFailure": {
+      "title": "无法识别这份功课",
+      "description": "我们没能看清楚这一页。请重新拍照或输入答案。",
+      "retake": "重新拍照",
+      "manualInput": "输入答案",
+      "goBack": "返回主页"
+    },
+    "modelNotDownloaded": {
+      "title": "AI 老师还没准备好",
+      "description": "AI 模型还在下载中。请在家长专区等待下载完成。",
+      "goBack": "返回主页",
+      "parentArea": "家长专区"
+    },
+    "unknown": {
+      "title": "出了点问题",
+      "description": "出了点意外。请再试一次。",
+      "retry": "重试",
+      "goBack": "返回主页"
+    }
+  },
+  "permissionPrimer": {
+    "step": "第 {{current}} 步，共 {{total}} 步",
+    "camera": {
+      "title": "相机"
+    },
+    "notifications": {
+      "title": "通知"
+    },
+    "done": {
+      "title": "全都准备好了！",
+      "bodyAll": "所有权限已开启。开始学习吧！",
+      "bodySome": "你可以在设备设置中随时更改权限。",
+      "continue": "继续"
     }
   },
   "cameraPermission": {

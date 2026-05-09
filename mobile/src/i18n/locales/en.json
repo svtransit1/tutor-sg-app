@@ -56,6 +56,49 @@
         "subjectOff": "not selected"
       }
     },
+    "parentGate": {
+      "title": "Parent or guardian check",
+      "body": "This section is for parents and guardians. Please pass the phone to a grown-up.",
+      "continue": "I'm a parent or guardian — continue",
+      "goBack": "I'm a child — go back"
+    },
+    "deviceUnsupported": {
+      "title": "Device too small",
+      "body": "This device is a little too small to run the on-device tutor. Please try on a newer phone or tablet.",
+      "accessibility": "Your device does not meet the minimum requirements for the on-device tutor."
+    },
+    "parentPinSetup": {
+      "title": "Set Parent PIN",
+      "body": "Set a PIN to keep the parent area private from your child.",
+      "enterPin": "Enter a PIN",
+      "confirmPin": "Confirm your PIN",
+      "mismatch": "PINs don't match. Try again.",
+      "skip": "Skip — set up later",
+      "accessibility": {
+        "skipButton": "Skip PIN setup"
+      }
+    },
+    "legalConsent": {
+      "title": "Before we start",
+      "subtitle": "Please review and accept the following to continue.",
+      "eula": "End User Licence Agreement",
+      "eulaSummary": "This app is provided 'as is' for educational purposes. Your child's data stays on this device.",
+      "eulaBody": "END USER LICENCE AGREEMENT\n\nThis is a legal agreement between you and Agent as a Service Pte. Ltd. for the use of tutor-sg.\n\n1. Licence Grant: We grant you a non-exclusive, non-transferable licence to use the app for personal, non-commercial educational purposes.\n\n2. Data Privacy: All child data (photos, answers, voice recordings) is processed on-device and never sent to our servers without your explicit consent.\n\n3. No Warranty: The app is provided 'as is' without warranty of any kind.\n\n4. Limitation of Liability: We shall not be liable for any damages arising from the use of this app.\n\n5. Updates: We may update these terms from time to time.",
+      "privacyPolicy": "Privacy Policy",
+      "privacyPolicySummary": "We collect minimal data. Your child's homework data never leaves the device.",
+      "privacyPolicyBody": "PRIVACY POLICY\n\nEffective Date: 2026-05-06\n\n1. What we collect: Email address (parent only, for account creation), Anonymised usage statistics (opt-in only).\n\n2. What we NEVER collect: Photos of homework, OCR text, child's typed or spoken answers, child's name or profile data, voice recordings.\n\n3. On-Device Processing: All AI processing happens locally on your device using downloaded models.\n\n4. Third Parties: We use Supabase for parent authentication and receipt validation. No child data is shared.\n\n5. Data Retention: We retain parent email and anonymised stats only. Child data is never stored on our servers.\n\n6. Contact: privacy@tutor-sg.app",
+      "acceptEula": "I accept the End User Licence Agreement",
+      "acceptPrivacyPolicy": "I accept the Privacy Policy",
+      "showFullEula": "Read full EULA",
+      "showFullPolicy": "Read full Privacy Policy",
+      "hideFull": "Show less",
+      "continue": "Continue",
+      "accessibility": {
+        "eulaCheckbox": "Accept End User Licence Agreement",
+        "privacyCheckbox": "Accept Privacy Policy",
+        "continueDisabled": "Accept both agreements to continue"
+      }
+    },
     "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
     "progress": {
       "step": "Step {{current}} of {{total}}",
@@ -195,12 +238,15 @@
       "title": "Recent Sessions",
       "empty": "No sessions yet. Snap your first homework!",
       "viewAll": "View all >",
+      "viewAllA11y": "View all sessions",
       "timeAgo": {
         "justNow": "Just now",
         "minutesAgo": "{{minutes}}m ago",
         "hoursAgo": "{{hours}}h ago",
-        "yesterday": "Yesterday"
+        "yesterday": "Yesterday",
+        "daysAgo": "{{days}}d ago"
       },
+      "timeSpent": "{{minutes}}m {{seconds}}s",
       "questions": "{{count}} question",
       "questions_plural": "{{count}} questions"
     },
@@ -251,7 +297,7 @@
       "cdn_unreachable": "Cannot reach server. Please check your internet connection and try again.",
       "hash_mismatch": "Download file corrupted. Re-downloading…",
       "download_stuck": "Download seems stuck. Retrying…",
-      "unknown_error": "Something went wrong. Please try again."
+      "unknown_error": "Something unexpected happened. Please try again."
     }
   },
   "homeworkFeedback": {
@@ -277,7 +323,7 @@
       "voiceButton": "Tap to ask a question using your voice",
       "voiceRecording": "Recording your question",
       "voiceProcessing": "Processing your voice input",
-      "voiceError": "Voice input failed. Tap to retry.",
+      "voiceError": "Voice didn't work. Tap to retry.",
       "voicePermissionDenied": "Microphone permission denied. Enable in Settings.",
       "textInput": "Type your follow-up question",
       "sendButton": "Send your question",
@@ -303,7 +349,12 @@
   "common": {
     "back": "Back",
     "goBack": "Go back",
-    "continue": "Continue"
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "loading": "Loading…",
+    "retry": "Retry",
+    "deferred": "Deferred",
+    "enabled": "Enabled"
   },
   "manualInputFallback": {
     "title": "Can't read all items",
@@ -329,6 +380,122 @@
       "skip": "Skip this item",
       "typeInput": "Type answer for item {{number}}",
       "drawCanvas": "Drawing area for item {{number}}"
+    }
+  },
+  "cameraResult": {
+    "title": "Homework Help",
+    "retake": "Retake photo",
+    "question": "Question {{number}}",
+    "questions": "{{count}} question",
+    "questions_plural": "{{count}} questions",
+    "hint": "Hint",
+    "showSteps": "Show steps",
+    "steps": "Guided Steps",
+    "showSolution": "Show answer",
+    "fullSolution": "Worked Solution",
+    "tryThis": "Try this",
+    "backToHome": "Back to home",
+    "encouragement": {
+      "title": "Great work! 💪",
+      "body": "Try the hint first. If you're still stuck, tap \"Show steps\" for guided help."
+    },
+    "followUp": {
+      "placeholder": "Ask a follow-up…",
+      "send": "Send",
+      "accessibility": "Type a follow-up question",
+      "mockResponse": "Great question! Let me help you. Think about the method we just learned — try using the same approach. What do you think the first step should be?"
+    },
+    "error": {
+      "notFound": "This result is no longer available. Please retake the photo."
+    }
+  },
+  "cameraScreen": {
+    "snapPrompt": "Align your homework in the frame",
+    "pages": "Page {{current}} of {{total}}",
+    "addAnother": "Add another page",
+    "done": "Done",
+    "hint": {
+      "singlePage": "Make sure the entire page is visible",
+      "morePages": "Snap multiple pages if needed"
+    },
+    "permission": {
+      "title": "Camera access needed",
+      "description": "We need the camera to scan your homework and provide help.",
+      "cta": "Allow Camera"
+    },
+    "status": {
+      "capturing": "Taking photo…",
+      "inferring": "Analysing your homework…",
+      "inferenceSubtext": "This might take a few seconds",
+      "ocr": "Reading your handwriting…",
+      "ocrSubtext": "This might take a moment"
+    },
+    "error": {
+      "title": "Camera issue",
+      "captureFailed": "Could not take the photo. Please try again.",
+      "inferenceFailed": "Could not analyse the homework. Please try again.",
+      "processingFailed": "Could not process this page. Try again.",
+      "retake": "Retake photo"
+    },
+    "accessibility": {
+      "cancel": "Go back",
+      "capture": "Take homework photo"
+    },
+    "manualInput": {
+      "title": "Type your answer",
+      "description": "Enter your answer for this question below.",
+      "placeholder": "Type your answer here…",
+      "submit": "Submit",
+      "accessibility": "Type your answer manually"
+    }
+  },
+  "homeworkError": {
+    "title": "Oops!",
+    "llmTimeout": {
+      "title": "Taking too long",
+      "description": "The AI is taking a bit longer than usual. Tap Retry to try again.",
+      "retry": "Retry",
+      "goBack": "Go back home"
+    },
+    "cameraDenied": {
+      "title": "Camera not available",
+      "description": "We need the camera to read your homework. Please allow camera access in Settings.",
+      "typeItOut": "Type it out instead",
+      "goBack": "Go back home"
+    },
+    "ocrFailure": {
+      "title": "Can't read this homework",
+      "description": "We couldn't read this page clearly. Try retaking the photo or type the answers.",
+      "retake": "Try again",
+      "manualInput": "Type the answers",
+      "goBack": "Go back home"
+    },
+    "modelNotDownloaded": {
+      "title": "Tutor not ready yet",
+      "description": "The AI model is still being downloaded. Wait for the download to finish in the Parent area.",
+      "goBack": "Go back home",
+      "parentArea": "Parent area"
+    },
+    "unknown": {
+      "title": "Something went wrong",
+      "description": "Something unexpected happened. Please try again.",
+      "retry": "Retry",
+      "goBack": "Go back home"
+    }
+  },
+  "permissionPrimer": {
+    "step": "Step {{current}} of {{total}}",
+    "camera": {
+      "title": "Camera"
+    },
+    "notifications": {
+      "title": "Notifications"
+    },
+    "done": {
+      "title": "You're all set!",
+      "bodyAll": "All permissions granted. Let's start learning!",
+      "bodySome": "You can change permissions anytime in your device Settings.",
+      "continue": "Continue"
     }
   },
   "cameraPermission": {
