@@ -9,4 +9,5 @@
   - `mobile/package.json` — added `engines.node >=25.9.0` and `engines.pnpm >=10.33.0`
   - `mobile/package.json` — added `packageManager: pnpm@10.33.0`
 - **Rationale:** Current dev environment runs Node 25.9.0. Pin matches reality. pnpm 10.33.0 installed, lockfile v9.
+- **CI alignment:** `.github/workflows/ci.yml` env vars updated to `NODE_VERSION: '25.9.0'` / `PNPM_VERSION: '10.33.0'` (commit `6b5b7cdfd`)
 - **Status:** Implemented on `feat/aaas-839-nvmrc-node-version`
