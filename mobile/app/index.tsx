@@ -7,9 +7,9 @@ export default function RootIndexScreen() {
   const { t } = useTranslation();
   useEffect(() => { const t = setTimeout(() => router.replace('/(onboarding)/parent-pin-setup'), 100); return () => clearTimeout(t); }, []);
   return (
-    <View style={styles.container}>
-      <ActivityIndicator size="large" color="#2563EB" />
-      <Text style={styles.text}>{t('app.loading')}</Text>
+    <View style={styles.container} accessibilityLabel={t('app.loading')} accessibilityLiveRegion="polite">
+      <ActivityIndicator size="large" color="#2563EB" accessibilityLabel={t('app.loading')} />
+      <Text style={styles.text} accessibilityRole="text">{t('app.loading')}</Text>
     </View>
   );
 }

@@ -69,6 +69,27 @@
       }
     },
     "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "parentPinSetup": {
+      "title": "Set Up Parent PIN",
+      "body": "Create a 4-digit PIN to protect parent settings. Your child won't see this.",
+      "enterPin": "Enter a 4-digit PIN",
+      "confirmPin": "Confirm your PIN",
+      "mismatch": "PINs don't match. Please try again.",
+      "skip": "Skip for now",
+      "accessibility": {
+        "title": "Set up parent PIN screen",
+        "skipButton": "Skip PIN setup, continue to kid area",
+        "keypad": "PIN keypad, digit {{digit}}",
+        "backButton": "Go back to previous step",
+        "pinDigit": "PIN digit {{index}}",
+        "pinDigitFilled": "PIN digit {{index}}, entered",
+        "pinEntry": "PIN entry field, {{count}} digits entered",
+        "pinEntry_plural": "PIN entry field, {{count}} digits entered",
+        "successIcon": "PIN saved successfully",
+        "successTitle": "PIN set up successfully",
+        "icon": "Lock icon, parent security"
+      }
+    },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
@@ -87,6 +108,18 @@
     "attemptsRemaining": "{{count}} attempt remaining",
     "attemptsRemaining_plural": "{{count}} attempts remaining",
     "pinsDontMatch": "PINs don't match. Try again.",
+    "cancel": "Cancel",
+    "changePin": {
+      "title": "Change PIN",
+      "enterOld": "Enter your current PIN",
+      "enterNew": "Enter a new PIN",
+      "wrongOld": "Wrong PIN. Please try again.",
+      "success": "PIN changed successfully",
+      "accessibility": {
+        "cancelButton": "Cancel changing PIN",
+        "dismissButton": "Dismiss parent PIN gate"
+      }
+    },
     "setup": {
       "title": "Set Up Parent PIN",
       "enterPin": "Enter a 4-digit PIN",
@@ -112,7 +145,15 @@
   },
   "parent": {
     "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" },
+    "changePin": "Change PIN",
+    "backToKid": "Back to kid area",
+    "accessibility": {
+      "dashboardTitle": "Parent dashboard",
+      "settingsTitle": "Parent settings",
+      "changePinButton": "Change parent PIN",
+      "backToKidButton": "Return to kid area"
+    }
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
@@ -282,6 +323,25 @@
     "accessibility": {
       "card": "Homework feedback card",
       "levelIndicator": "Currently on {{level}} level. {{total}} levels available."
+    }
+  },
+  "cameraScreen": {
+    "status": {
+      "preprocessing": "Fixing photo orientation…",
+      "preprocessingSubtext": "Straightening the page for better reading"
+    },
+    "snapPrompt": "Snap a photo",
+    "pages": "{{count}} page",
+    "pages_plural": "{{count}} pages",
+    "hint": {
+      "singlePage": "Take a photo of your worksheet",
+      "morePages": "Tap Done when finished, or add another page"
+    },
+    "addAnother": "Add another page",
+    "done": "Done",
+    "accessibility": {
+      "cancel": "Cancel and go back",
+      "capture": "Take a photo of your homework"
     }
   },
   "manualInputFallback": {

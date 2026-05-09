@@ -6,10 +6,16 @@ import { router } from 'expo-router';
 export default function KidHomeScreen() {
   const { t } = useTranslation();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>tutor-sg</Text>
-      <Text style={styles.subtitle}>{t('kidHome.firstSession.ctaCamera')}</Text>
-      <Pressable style={styles.parentButton} onPress={() => router.push('/(parent)')} accessibilityRole="button">
+    <View style={styles.container} accessibilityLabel={t('kidHome.firstSession.accessibility.welcomeBanner')}>
+      <Text style={styles.title} accessibilityRole="header">tutor-sg</Text>
+      <Text style={styles.subtitle} accessibilityRole="text">{t('kidHome.firstSession.ctaCamera')}</Text>
+      <Pressable
+        style={styles.parentButton}
+        onPress={() => router.push('/(parent)')}
+        accessibilityRole="button"
+        accessibilityLabel={t('onboarding.done.parentArea')}
+        accessibilityHint={t('parent.accessibility.backToKidButton')}
+      >
         <Text style={styles.parentButtonText}>{t('onboarding.done.parentArea')}</Text>
       </Pressable>
     </View>

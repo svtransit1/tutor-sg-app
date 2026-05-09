@@ -6,13 +6,23 @@ import { router } from 'expo-router';
 export default function ParentDashboardScreen() {
   const { t } = useTranslation();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('parent.dashboard.title')}</Text>
-      <Text style={styles.subtitle}>{t('parent.dashboard.placeholder')}</Text>
-      <Pressable style={styles.button} onPress={() => router.push('/(parent)/change-pin')} accessibilityRole="button">
+    <View style={styles.container} accessibilityLabel={t('parent.accessibility.dashboardTitle')}>
+      <Text style={styles.title} accessibilityRole="header">{t('parent.dashboard.title')}</Text>
+      <Text style={styles.subtitle} accessibilityRole="text">{t('parent.dashboard.placeholder')}</Text>
+      <Pressable
+        style={styles.button}
+        onPress={() => router.push('/(parent)/change-pin')}
+        accessibilityRole="button"
+        accessibilityLabel={t('parent.accessibility.changePinButton')}
+      >
         <Text style={styles.buttonText}>{t('parent.changePin')}</Text>
       </Pressable>
-      <Pressable style={styles.closeButton} onPress={() => router.back()} accessibilityRole="button">
+      <Pressable
+        style={styles.closeButton}
+        onPress={() => router.back()}
+        accessibilityRole="button"
+        accessibilityLabel={t('parent.accessibility.backToKidButton')}
+      >
         <Text style={styles.closeButtonText}>{t('parent.backToKid')}</Text>
       </Pressable>
     </View>

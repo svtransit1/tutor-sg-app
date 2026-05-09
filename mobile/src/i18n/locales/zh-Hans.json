@@ -69,6 +69,27 @@
       }
     },
     "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
+    "parentPinSetup": {
+      "title": "设置家长 PIN 码",
+      "body": "创建一个 4 位 PIN 码来保护家长设置。您的孩子无法查看。",
+      "enterPin": "输入 4 位数字 PIN 码",
+      "confirmPin": "确认您的 PIN 码",
+      "mismatch": "PIN 码不匹配，请重试。",
+      "skip": "跳过，稍后再说",
+      "accessibility": {
+        "title": "设置家长 PIN 码页面",
+        "skipButton": "跳过 PIN 码设置，进入孩子区域",
+        "keypad": "PIN 码键盘，数字 {{digit}}",
+        "backButton": "返回上一步",
+        "pinDigit": "PIN 码第 {{index}} 位",
+        "pinDigitFilled": "PIN 码第 {{index}} 位，已输入",
+        "pinEntry": "PIN 码输入区，已输入 {{count}} 位",
+        "pinEntry_plural": "PIN 码输入区，已输入 {{count}} 位",
+        "successIcon": "PIN 码保存成功",
+        "successTitle": "PIN 码设置成功",
+        "icon": "锁图标，家长安全"
+      }
+    },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
@@ -87,6 +108,18 @@
     "attemptsRemaining": "还剩 {{count}} 次机会",
     "attemptsRemaining_plural": "还剩 {{count}} 次机会",
     "pinsDontMatch": "PIN 码不匹配，请重试。",
+    "cancel": "取消",
+    "changePin": {
+      "title": "修改 PIN 码",
+      "enterOld": "输入当前 PIN 码",
+      "enterNew": "输入新的 PIN 码",
+      "wrongOld": "旧 PIN 码错误，请重试。",
+      "success": "PIN 码已修改成功",
+      "accessibility": {
+        "cancelButton": "取消修改 PIN 码",
+        "dismissButton": "关闭家长 PIN 码验证"
+      }
+    },
     "setup": {
       "title": "设置家长 PIN 码",
       "enterPin": "输入 4 位数字 PIN 码",
@@ -112,7 +145,15 @@
   },
   "parent": {
     "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
-    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" },
+    "changePin": "修改 PIN 码",
+    "backToKid": "返回孩子区域",
+    "accessibility": {
+      "dashboardTitle": "家长控制面板",
+      "settingsTitle": "家长设置",
+      "changePinButton": "修改家长 PIN 码",
+      "backToKidButton": "返回孩子区域"
+    }
   },
   "deviceTierResult": {
     "title": "你的设备已就绪！",
@@ -282,6 +323,25 @@
     "accessibility": {
       "card": "作业反馈卡片",
       "levelIndicator": "当前在{{level}}层级，共{{total}}个层级。"
+    }
+  },
+  "cameraScreen": {
+    "status": {
+      "preprocessing": "正在校正照片方向…",
+      "preprocessingSubtext": "正在摆正页面，让识别更准确"
+    },
+    "snapPrompt": "拍一张照片",
+    "pages": "{{count}} 页",
+    "pages_plural": "{{count}} 页",
+    "hint": {
+      "singlePage": "拍下你的作业",
+      "morePages": "完成后点击「完成」，或继续添加页面"
+    },
+    "addAnother": "添加下一页",
+    "done": "完成",
+    "accessibility": {
+      "cancel": "取消并返回",
+      "capture": "拍下你的作业照片"
     }
   },
   "manualInputFallback": {
