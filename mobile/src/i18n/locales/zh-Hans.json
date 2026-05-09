@@ -153,7 +153,27 @@
     "camera": {
       "title": "拍照问功课",
       "subtitle": "拍张照片，立即获取帮助",
-      "accessibility": "用相机拍下你的功课"
+      "accessibility": "用相机拍下你的功课",
+      "photoReview": {
+        "retake": "重新拍照",
+        "usePhoto": "使用这张照片",
+        "usePhotos": "使用 {{count}} 张照片",
+        "usePhotos_plural": "使用 {{count}} 张照片",
+        "pageCount": "第 {{current}} 页，共 {{total}} 页",
+        "addPage": "加页",
+        "removePage": "移除",
+        "multiPageHint": "你可以添加多个页面",
+        "retakeButton": "重新拍照",
+        "confirmButton": "使用这张照片并继续",
+        "confirmButtonPlural": "使用全部 {{count}} 张照片并继续",
+        "pageThumbnail": "第 {{number}} 页缩略图",
+        "addPageButton": "再拍一页",
+        "removePageButton": "移除第 {{number}} 页",
+        "crop": "裁剪",
+        "cropButton": "调整裁剪区域",
+        "cancelCrop": "取消",
+        "confirmCrop": "确认裁剪"
+      }
     },
     "recentSessions": {
       "title": "最近学习记录",

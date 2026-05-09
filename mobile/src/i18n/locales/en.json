@@ -153,7 +153,27 @@
     "camera": {
       "title": "Snap Homework",
       "subtitle": "Take a photo to get help",
-      "accessibility": "Snap your homework with the camera"
+      "accessibility": "Snap your homework with the camera",
+      "photoReview": {
+        "retake": "Retake",
+        "usePhoto": "Use this photo",
+        "usePhotos": "Use {{count}} photo",
+        "usePhotos_plural": "Use {{count}} photos",
+        "pageCount": "Page {{current}} of {{total}}",
+        "addPage": "Add page",
+        "removePage": "Remove",
+        "multiPageHint": "You can add multiple pages",
+        "retakeButton": "Retake the photo",
+        "confirmButton": "Use this photo and continue",
+        "confirmButtonPlural": "Use all {{count}} photos and continue",
+        "pageThumbnail": "Page {{number}} thumbnail",
+        "addPageButton": "Capture another page",
+        "removePageButton": "Remove page {{number}}",
+        "crop": "Crop",
+        "cropButton": "Adjust crop area",
+        "cancelCrop": "Cancel",
+        "confirmCrop": "Confirm crop"
+      }
     },
     "recentSessions": {
       "title": "Recent Sessions",
