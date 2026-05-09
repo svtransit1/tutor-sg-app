@@ -1,0 +1,14 @@
+{
+  "name": "@tutor-sg/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@tutor-sg/eslint-config": "workspace:*",
+    "eslint": "^9.0.0"
+  }
+}
