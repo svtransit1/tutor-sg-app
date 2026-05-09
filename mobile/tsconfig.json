@@ -1,10 +1,35 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "outDir": "dist",
+    "strict": true,
     "baseUrl": ".",
-    "paths": { "@/*": ["./src/*"] }
+    "paths": {
+      "@/*": ["src/*"],
+      "@tutor-sg/database": ["../packages/database/src"],
+      "@tutor-sg/database/*": ["../packages/database/src/*"],
+      "@tutor-sg/device-tier": ["../packages/device-tier/src"],
+      "@tutor-sg/device-tier/*": ["../packages/device-tier/src/*"],
+      "@tutor-sg/features": ["../packages/features/src"],
+      "@tutor-sg/features/*": ["../packages/features/src/*"],
+      "@tutor-sg/i18n": ["../packages/i18n/src"],
+      "@tutor-sg/i18n/*": ["../packages/i18n/src/*"],
+      "@tutor-sg/llm": ["../packages/llm/src"],
+      "@tutor-sg/llm/*": ["../packages/llm/src/*"],
+      "@tutor-sg/perf": ["../packages/perf/src"],
+      "@tutor-sg/perf/*": ["../packages/perf/src/*"],
+      "@tutor-sg/shared": ["../packages/shared/src"],
+      "@tutor-sg/shared/*": ["../packages/shared/src/*"],
+      "@tutor-sg/ui": ["../packages/ui/src"],
+      "@tutor-sg/ui/*": ["../packages/ui/src/*"]
+    }
   },
-  "include": ["app/**/*.ts", "app/**/*.tsx", "src/**/*.ts", "src/**/*.tsx", "*.config.js"],
-  "exclude": ["node_modules", "dist", "dist-android", "dist-ios"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "app/**/*.ts",
+    "app/**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
 }
