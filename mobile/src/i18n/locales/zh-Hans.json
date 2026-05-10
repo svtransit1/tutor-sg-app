@@ -121,6 +121,33 @@
     "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
     "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
   },
+  "flagged": {
+    "title": "已标记复核",
+    "empty": "暂无标记记录",
+    "flagReasonLabel": "为什么要标记这次学习？",
+    "flagReasonPlaceholder": "描述你发现的问题（可选）",
+    "flagReasonSaved": "原因：{{reason}}",
+    "flaggedAt": "标记于 {{date}}",
+    "flagSession": "标记复核",
+    "unflagSession": "取消标记",
+    "flagSuccess": "已标记复核",
+    "unflagSuccess": "已取消标记",
+    "analysis": {
+      "title": "题库改进建议",
+      "topicHeader": "知识点",
+      "flagCount": "{{count}} 次标记",
+      "flagCount_plural": "{{count}} 次标记",
+      "suggestionLabel": "建议",
+      "lastAnalyzed": "上次分析：{{date}}",
+      "noAnalysis": "运行分析以查看改进建议。",
+      "analyzeNow": "运行分析",
+      "analyzing": "分析中\u2026",
+      "analysisComplete": "分析完成",
+      "flaggedSubjects": "按科目标记情况",
+      "totalFlagged": "标记了 {{count}} 次学习记录",
+      "totalFlagged_plural": "标记了 {{count}} 次学习记录"
+    }
+  },
   "deviceTierResult": {
     "title": "你的设备已就绪！",
     "tierLabel": "检测到的性能等级",

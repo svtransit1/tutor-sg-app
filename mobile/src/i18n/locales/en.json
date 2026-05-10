@@ -121,6 +121,33 @@
     "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
     "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
   },
+  "flagged": {
+    "title": "Flagged for Review",
+    "empty": "No flagged sessions",
+    "flagReasonLabel": "Why are you flagging this?",
+    "flagReasonPlaceholder": "Describe what seemed wrong (optional)",
+    "flagReasonSaved": "Reason: {{reason}}",
+    "flaggedAt": "Flagged {{date}}",
+    "flagSession": "Flag for review",
+    "unflagSession": "Remove flag",
+    "flagSuccess": "Session flagged for review",
+    "unflagSuccess": "Flag removed",
+    "analysis": {
+      "title": "Question Bank Insights",
+      "topicHeader": "Topic",
+      "flagCount": "{{count}} flag",
+      "flagCount_plural": "{{count}} flags",
+      "suggestionLabel": "Suggestion",
+      "lastAnalyzed": "Last analyzed: {{date}}",
+      "noAnalysis": "Run analysis to see improvement suggestions.",
+      "analyzeNow": "Run Analysis",
+      "analyzing": "Analyzing\u2026",
+      "analysisComplete": "Analysis complete",
+      "flaggedSubjects": "Flagged by subject",
+      "totalFlagged": "{{count}} session flagged",
+      "totalFlagged_plural": "{{count}} sessions flagged"
+    }
+  },
   "deviceTierResult": {
     "title": "Your device is ready!",
     "tierLabel": "Detected performance level",
