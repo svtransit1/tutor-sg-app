@@ -21,16 +21,15 @@ export default function ReadyLandingRoute() {
   const { t, i18n } = useTranslation();
   const { complete, state } = useOnboarding();
 
+  const name = state.name || t('onboarding.done.greetingNameFallback');
   const grade = state.grade ?? 'P1';
   const subjects = state.subjects;
 
   const handleCameraCTA = useCallback(() => {
-    // Mark onboarding as complete — this will navigate to (kid) group
     complete();
   }, [complete]);
 
   const handlePracticeQuestion = useCallback((subject: string) => {
-    // First call complete, then the (kid) home can route to practice
     complete();
   }, [complete]);
 
@@ -42,7 +41,7 @@ export default function ReadyLandingRoute() {
         {/* Greeting */}
         <View style={styles.greetingSection}>
           <Text style={styles.greeting}>
-            {locale === 'zh-Hans' ? '你好！准备好了吗？' : "Hi! Ready to start?"}
+            {t('onboarding.done.greeting', { name })}
           </Text>
           <Text style={styles.greetingSub}>
             {locale === 'zh-Hans'

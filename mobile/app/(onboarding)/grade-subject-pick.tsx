@@ -1,36 +1,47 @@
-/**
- * Grade + Subject Pick route — Onboarding step 5/10.
- * Route: /onboarding/grade-subject-pick
- *
- * Per Article 12 §3.5: Single screen with grade segmented control
- * and subject toggle chips. Persists grade and subjects to state machine.
- */
-
 import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
+  TextInput,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  type TextStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useOnboarding } from '../../src/onboarding';
-import { persistGrade } from '../../src/storage/onboarding-state';
+import { persistGrade, persistKidName } from '../../src/storage/onboarding-state';
 
 type Grade = 'P1' | 'P2' | 'P3' | 'P4' | 'P5' | 'P6';
 type SubjectId = 'math' | 'english' | 'chinese' | 'science';
 
 const GRADES: Grade[] = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
 const ALL_SUBJECTS: SubjectId[] = ['math', 'english', 'chinese', 'science'];
+const MAX_NAME_LENGTH = 30;
 
 export default function GradeSubjectPickRoute() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { goNext, updateState } = useOnboarding();
 
+  const [kidName, setKidName] = useState('');
+  const [nameError, setNameError] = useState('');
   const [selectedGrade, setSelectedGrade] = useState<Grade | null>(null);
   const [selectedSubjects, setSelectedSubjects] = useState<SubjectId[]>(ALL_SUBJECTS);
+
+  const handleNameChange = useCallback((text: string) => {
+    setKidName(text);
+    if (nameError && text.trim().length > 0 && text.trim().length <= MAX_NAME_LENGTH) {
+      setNameError('');
+    }
+  }, [nameError]);
+
+  const handleNameBlur = useCallback(() => {
+    const trimmed = kidName.trim();
+    if (trimmed.length === 0 || trimmed.length > MAX_NAME_LENGTH) {
+      setNameError(t('onboarding.kidProfile.nameError'));
+    } else {
+      setNameError('');
+    }
+  }, [kidName, t]);
 
   const handleGradeSelect = useCallback((grade: Grade) => {
     setSelectedGrade(grade);
@@ -39,7 +50,6 @@ export default function GradeSubjectPickRoute() {
   const handleSubjectToggle = useCallback((subject: SubjectId) => {
     setSelectedSubjects((prev) => {
       if (prev.includes(subject)) {
-        // Don't allow all subjects to be deselected
         if (prev.length <= 1) return prev;
         return prev.filter((s) => s !== subject);
       }
@@ -48,21 +58,26 @@ export default function GradeSubjectPickRoute() {
   }, []);
 
   const handleContinue = useCallback(() => {
+    const trimmed = kidName.trim();
     if (!selectedGrade) return;
+    if (trimmed.length === 0 || trimmed.length > MAX_NAME_LENGTH) {
+      setNameError(t('onboarding.kidProfile.nameError'));
+      return;
+    }
 
-    // Persist through standard API
     persistGrade(selectedGrade);
+    persistKidName(trimmed);
 
-    // Update state machine
     updateState({
+      name: trimmed,
       grade: selectedGrade,
       subjects: selectedSubjects,
     });
 
     goNext();
-  }, [selectedGrade, selectedSubjects, goNext, updateState]);
+  }, [selectedGrade, selectedSubjects, kidName, goNext, updateState, t]);
 
-  const isZh = i18n.language === 'zh-Hans';
+  const canContinue = selectedGrade !== null && kidName.trim().length > 0 && kidName.trim().length <= MAX_NAME_LENGTH;
 
   return (
     <ScrollView
@@ -70,7 +85,33 @@ export default function GradeSubjectPickRoute() {
       contentContainerStyle={styles.content}
       keyboardShouldPersistTaps="handled"
     >
-      {/* Grade pick */}
+      <Text style={styles.sectionTitle}>
+        {t('onboarding.kidProfile.title')}
+      </Text>
+      <Text style={styles.sectionHint}>
+        {t('onboarding.kidProfile.subtitle')}
+      </Text>
+
+      <Text style={styles.inputLabel}>
+        {t('onboarding.kidProfile.nameLabel')}
+      </Text>
+      <TextInput
+        style={[styles.textInput, nameError ? styles.textInputError : null]}
+        value={kidName}
+        onChangeText={handleNameChange}
+        onBlur={handleNameBlur}
+        placeholder={t('onboarding.kidProfile.namePlaceholder')}
+        placeholderTextColor="#9CA3AF"
+        maxLength={MAX_NAME_LENGTH}
+        autoComplete="name"
+        autoCorrect={false}
+        accessibilityLabel={t('onboarding.kidProfile.nameLabel')}
+        accessibilityState={{ invalid: nameError.length > 0 }}
+      />
+      {nameError ? (
+        <Text style={styles.errorText}>{nameError}</Text>
+      ) : null}
+
       <Text style={styles.sectionTitle}>
         {t('onboarding.gradePick.title')}
       </Text>
@@ -107,7 +148,6 @@ export default function GradeSubjectPickRoute() {
         })}
       </View>
 
-      {/* Subject pick */}
       <Text style={styles.sectionTitle}>
         {t('onboarding.gradePick.subjectTitle')}
       </Text>
@@ -153,14 +193,13 @@ export default function GradeSubjectPickRoute() {
         })}
       </View>
 
-      {/* Continue button */}
       <TouchableOpacity
         style={[
           styles.continueBtn,
-          !selectedGrade && styles.continueBtnDisabled,
+          !canContinue && styles.continueBtnDisabled,
         ]}
         onPress={handleContinue}
-        disabled={!selectedGrade}
+        disabled={!canContinue}
         accessibilityRole="button"
         accessibilityLabel={t('onboarding.gradePick.continue')}
         activeOpacity={0.8}
@@ -168,7 +207,7 @@ export default function GradeSubjectPickRoute() {
         <Text
           style={[
             styles.continueBtnText,
-            !selectedGrade && styles.continueBtnTextDisabled,
+            !canContinue && styles.continueBtnTextDisabled,
           ]}
         >
           {t('onboarding.gradePick.continue')}
@@ -193,16 +232,44 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     color: '#1A1A1A',
-    marginBottom: 16,
+    marginBottom: 8,
   },
   sectionHint: {
     fontSize: 14,
     color: '#6B7280',
-    marginBottom: 16,
+    marginBottom: 24,
     lineHeight: 20,
   },
 
-  // Grade chips
+  inputLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#374151',
+    marginBottom: 8,
+  },
+  textInput: {
+    width: '100%',
+    height: 52,
+    borderWidth: 2,
+    borderColor: '#E5E7EB',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    fontSize: 17,
+    color: '#1A1A1A',
+    backgroundColor: '#F9FAFB',
+    marginBottom: 4,
+  },
+  textInputError: {
+    borderColor: '#EF4444',
+    backgroundColor: '#FEF2F2',
+  },
+  errorText: {
+    fontSize: 14,
+    color: '#EF4444',
+    marginBottom: 32,
+    marginTop: 4,
+  },
+
   gradeRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -231,7 +298,6 @@ const styles = StyleSheet.create({
     color: '#2563EB',
   },
 
-  // Subject chips
   subjectRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -266,7 +332,6 @@ const styles = StyleSheet.create({
     color: '#16A34A',
   },
 
-  // Continue
   continueBtn: {
     width: '100%',
     maxWidth: 400,
@@ -288,4 +353,4 @@ const styles = StyleSheet.create({
   continueBtnTextDisabled: {
     color: '#9CA3AF',
   },
-} as TextStyle);
+});

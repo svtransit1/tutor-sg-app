@@ -44,6 +44,7 @@ import { useRouter, useSegments } from 'expo-router';
 import {
   loadLocale,
   persistLocale,
+  loadKidName,
   loadGrade,
   persistGrade,
   loadSubjects,
@@ -223,6 +224,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
           currentStep: (loadSimpleValue(CURRENT_STEP_KEY) as OnboardingStep) || undefined,
           steps: stepsRaw as Record<OnboardingStep, 'not_started' | 'in_progress' | 'completed'>,
           locale: loadLocale(),
+          name: loadKidName(),
           grade: loadGrade(),
           subjects: loadSubjects() ?? undefined,
           deviceTier: loadSimpleValue(DEVICE_TIER_KEY) as 'high' | 'mid' | 'unsupported' | null,
@@ -266,6 +268,9 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     persistSimpleValue(CURRENT_STEP_KEY, state.currentStep);
     if (state.deviceTier) {
       persistSimpleValue(DEVICE_TIER_KEY, state.deviceTier);
+    }
+    if (state.name) {
+      persistSimpleValue('onboarding.name', state.name);
     }
     if (state.pinSet) {
       persistSimpleValue('onboarding.pin_set', 'true');
@@ -435,6 +440,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
 
         // Persist locale/grade/subjects through the storage API too
         if (result.locale !== prev.locale) persistLocale(result.locale);
+        if (result.name !== prev.name && result.name) persistSimpleValue('onboarding.name', result.name);
         if (result.grade !== prev.grade && result.grade) persistGrade(result.grade);
         if (result.subjects !== prev.subjects && result.subjects.length > 0) {
           persistSubjectsFromState(result.subjects);

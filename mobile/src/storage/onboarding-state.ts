@@ -33,6 +33,7 @@ export interface OnboardingState {
 
 const STORAGE_ID = 'onboarding';
 const KEY_LOCALE = 'onboarding.locale';
+const KEY_NAME = 'onboarding.name';
 const KEY_GRADE = 'onboarding.grade';
 const KEY_SUBJECTS = 'onboarding.subjects';
 const KEY_COMPLETED = 'onboarding.completed';
@@ -57,6 +58,16 @@ export function loadLocale(): 'en' | 'zh-Hans' {
   const raw = store().getString(KEY_LOCALE);
   if (raw === 'zh-Hans') return 'zh-Hans';
   return 'en'; // default
+}
+
+// ── Name ──────────────────────────────────────────────────────────
+
+export function persistKidName(name: string): void {
+  store().set(KEY_NAME, name);
+}
+
+export function loadKidName(): string {
+  return store().getString(KEY_NAME) ?? '';
 }
 
 // ── Grade ──────────────────────────────────────────────────────────
@@ -145,6 +156,7 @@ export function markFirstHomeVisitComplete(): void {
 
 export function resetOnboarding(): void {
   store().delete(KEY_LOCALE);
+  store().delete(KEY_NAME);
   store().delete(KEY_GRADE);
   store().delete(KEY_SUBJECTS);
   store().delete(KEY_COMPLETED);
