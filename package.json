@@ -12,7 +12,8 @@
     "mobile:ios": "pnpm --filter tutor-sg-mobile ios",
     "mobile:android": "pnpm --filter tutor-sg-mobile android",
     "eas:build:android:internal": "cd mobile && pnpm eas:build:android:internal",
-    "eas:build:android:internal-aab": "cd mobile && pnpm eas:build:android:internal-aab"
+    "eas:build:android:internal-aab": "cd mobile && pnpm eas:build:android:internal-aab",
+    "benchmark": "pnpm --filter @tutor-sg/perf bench"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
