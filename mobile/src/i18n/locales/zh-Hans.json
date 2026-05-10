@@ -120,7 +120,14 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
+    "dashboard": {
+      "title": "家长面板",
+      "empty": {
+        "title": "还没有学习记录",
+        "description": "孩子开始使用应用后，作业辅导记录将显示在这里。",
+        "cta": "前往孩子专区"
+      }
+    },
     "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" },
     "changePin": "修改 PIN 码",
     "backToKid": "返回孩子主页"

@@ -68,9 +68,9 @@ export default function PinGateScreen({ onSuccess, onDismiss }: Props) {
 
   return (
     <View style={s.overlay}><View style={s.container}>
-      <Pressable style={s.dismissArea} onPress={dismiss} />
+      <Pressable style={s.dismissArea} onPress={dismiss} accessibilityRole="button" accessibilityLabel={t('common.goBack')} />
       <View style={s.content}>
-        <View style={s.iconWrap}><Text style={s.icon}>{'\uD83D\uDD12'}</Text></View>
+        <View style={s.iconWrap}><Text style={s.icon} accessibilityLabel={t('parentAuth.title')}>{'\uD83D\uDD12'}</Text></View>
         <Text style={s.title}>{t('parentAuth.title')}</Text>
         <Text style={s.body}>{t('parentAuth.enterPin')}</Text>
         <Text style={s.attemptsLabel}>{attemptsLeft > 0 && attemptsLeft <= 3 ? t('parentAuth.attemptsRemaining', { count: attemptsLeft }) : ''}</Text>
@@ -88,7 +88,7 @@ export default function PinGateScreen({ onSuccess, onDismiss }: Props) {
             </View>
           </>
         )}
-        <Pressable style={s.cancelBtn} onPress={dismiss} accessibilityRole="button"><Text style={s.cancelBtnText}>{t('parentAuth.cancel')}</Text></Pressable>
+        <Pressable style={s.cancelBtn} onPress={dismiss} accessibilityRole="button" accessibilityLabel={t('parentAuth.cancel')}><Text style={s.cancelBtnText}>{t('parentAuth.cancel')}</Text></Pressable>
       </View>
     </View></View>
   );

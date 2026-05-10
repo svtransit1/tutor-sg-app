@@ -120,7 +120,14 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
+    "dashboard": {
+      "title": "Parent Dashboard",
+      "empty": {
+        "title": "No learning sessions yet",
+        "description": "Your child's homework help sessions will appear here once they start using the app.",
+        "cta": "Go to Kid's App"
+      }
+    },
     "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" },
     "changePin": "Change PIN",
     "backToKid": "Back to kid's home"

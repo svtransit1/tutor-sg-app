@@ -102,7 +102,7 @@ export default function ParentPinSetupScreen({ mode, onComplete, onSkip, onCance
 
   return (
     <View style={s.container}><View style={s.content}>
-      <View style={s.iconWrap}><Text style={s.icon}>{'\uD83D\uDD10'}</Text></View>
+      <View style={s.iconWrap}><Text style={s.icon} accessibilityLabel={t('parentAuth.title')}>{'\uD83D\uDD10'}</Text></View>
       <Text style={s.title}>{title}</Text>
       {mode !== 'change' && <Text style={s.body}>{body}</Text>}
       <Text style={s.stepLabel}>{stepLabel}</Text>
@@ -117,7 +117,7 @@ export default function ParentPinSetupScreen({ mode, onComplete, onSkip, onCance
         <KeyBtn v={'\u232B'} onPress={kp} disabled={saving || cur.length === 0} />
       </View>
       {(phase === 'confirm' || (phase === 'enter' && mode === 'change')) && (
-        <Pressable style={s.backLink} onPress={goBack} accessibilityRole="button"><Text style={s.backLinkText}>{'\u2190'} {t('common.back')}</Text></Pressable>
+        <Pressable style={s.backLink} onPress={goBack} accessibilityRole="button" accessibilityLabel={t('common.back')}><Text style={s.backLinkText}>{'\u2190'} {t('common.back')}</Text></Pressable>
       )}
       {mode === 'setup' && onSkip && (
         <Pressable style={s.skipLink} onPress={onSkip} accessibilityRole="button" accessibilityLabel={t('onboarding.parentPinSetup.accessibility.skipButton')}>
@@ -125,7 +125,7 @@ export default function ParentPinSetupScreen({ mode, onComplete, onSkip, onCance
         </Pressable>
       )}
       {mode === 'change' && onCancel && (
-        <Pressable style={s.skipLink} onPress={onCancel} accessibilityRole="button"><Text style={s.skipLinkText}>{t('parentAuth.cancel')}</Text></Pressable>
+        <Pressable style={s.skipLink} onPress={onCancel} accessibilityRole="button" accessibilityLabel={t('parentAuth.cancel')}><Text style={s.skipLinkText}>{t('parentAuth.cancel')}</Text></Pressable>
       )}
     </View></View>
   );

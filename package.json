@@ -6,6 +6,7 @@
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
     "prepare": "husky",
+    "lint": "eslint .",
     "typecheck": "pnpm --recursive typecheck",
     "test": "pnpm --recursive test",
     "mobile:start": "pnpm --filter tutor-sg-mobile start",

@@ -1,4 +1,4 @@
-import React from 'react'; import { View, Text, StyleSheet, Modal, SafeAreaView } from 'react-native'; import { BELOW_FLOOR_MESSAGES } from '../types';
+import React from 'react'; import { View, Text, Modal, SafeAreaView } from 'react-native'; import { BELOW_FLOOR_MESSAGES } from '../types';
 interface Props { visible: boolean; language?: 'en' | 'zh-Hans'; }
 export function BelowFloorModal({ visible, language = 'en' }: Props) {
   const isZh = language === 'zh-Hans';

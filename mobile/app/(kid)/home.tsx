@@ -9,7 +9,7 @@ export default function KidHomeScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>tutor-sg</Text>
       <Text style={styles.subtitle}>{t('kidHome.firstSession.ctaCamera')}</Text>
-      <Pressable style={styles.parentButton} onPress={() => router.push('/(parent)')} accessibilityRole="button">
+      <Pressable style={styles.parentButton} onPress={() => router.push('/(parent)')} accessibilityRole="button" accessibilityLabel={t('onboarding.done.parentArea')}>
         <Text style={styles.parentButtonText}>{t('onboarding.done.parentArea')}</Text>
       </Pressable>
     </View>
