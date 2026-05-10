@@ -5,3 +5,7 @@ if (!g.__fbBatchedBridgeConfig) {
     localModulesConfig: [],
   };
 }
+
+if (typeof window === 'undefined') {
+  (g as any).window = { dispatchEvent: () => {} };
+}

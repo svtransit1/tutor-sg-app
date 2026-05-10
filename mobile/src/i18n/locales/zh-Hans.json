@@ -4,6 +4,23 @@
   "onboarding": {
     "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
     "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。", "continue": "继续" },
+    "parentGate": {
+      "title": "你好！这个应用需要家长或监护人",
+      "body": "请把手机交给大人来帮忙设置。",
+      "continue": "我是家长 / 监护人 — 继续",
+      "goBack": "我不是 — 返回"
+    },
+    "parentPinSetup": {
+      "title": "设置一个 4 位数密码",
+      "body": "以后您可以用它查看孩子的学习记录。",
+      "enterPin": "输入 4 位数密码",
+      "confirmPin": "确认您的密码",
+      "skip": "跳过 — 稍后设置",
+      "mismatch": "密码不匹配，请重试。",
+      "accessibility": {
+        "skipButton": "跳过密码设置"
+      }
+    },
     "privacyPromise": {
       "title": "我们承诺保护您的隐私",
       "body": "孩子的作业永远不会离开这台设备。照片、答案和聊天内容都在设备上保密。只有您（家长）可以查看学习记录。",
@@ -112,7 +129,17 @@
   },
   "parent": {
     "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
-    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" },
+    "changePin": "修改密码",
+    "backToKid": "返回孩子界面",
+    "profileSwitcher": {
+      "label": "切换孩子",
+      "switchTo": "切换到 {{name}}",
+      "current": "{{name}} - {{level}} - 当前",
+      "loading": "正在加载孩子信息...",
+      "empty": "还没有添加孩子",
+      "error": "加载失败"
+    }
   },
   "deviceTierResult": {
     "title": "你的设备已就绪！",
@@ -228,6 +255,8 @@
   "common": {
     "back": "返回",
     "cancel": "取消",
+    "continue": "继续",
+    "done": "准备好了！",
     "goBack": "返回首页",
     "loading": "加载中…",
     "retry": "重试"

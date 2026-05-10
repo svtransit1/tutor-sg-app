@@ -1,4 +1,4 @@
-const mockT = (key: string, fallback?: string) => {
+const mockT = (key: string, fallback?: string | Record<string, unknown>) => {
   const m: Record<string, string> = {
     'app.loading': 'tutor-sg — loading...',
     'onboarding.parentPinSetup.title': 'Set your parent PIN',
@@ -30,7 +30,9 @@ const mockT = (key: string, fallback?: string) => {
     'kidHome.firstSession.ctaCamera': 'Snap your homework',
     'onboarding.done.parentArea': 'Parent area',
   };
-  return m[key] ?? fallback ?? key;
+  const translated = m[key];
+  if (translated) return translated;
+  return key;
 };
 
 export const useTranslation = () => ({ t: mockT, i18n: { language: 'en', changeLanguage: jest.fn() } });

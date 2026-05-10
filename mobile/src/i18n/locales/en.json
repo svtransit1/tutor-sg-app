@@ -4,6 +4,23 @@
   "onboarding": {
     "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
     "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "parentGate": {
+      "title": "Hi! This app needs a parent or guardian",
+      "body": "Please pass the phone to a grown-up to set things up.",
+      "continue": "I'm a parent / guardian — continue",
+      "goBack": "I'm not — go back"
+    },
+    "parentPinSetup": {
+      "title": "Set a 4-digit PIN",
+      "body": "You'll use this to see your child's learning log.",
+      "enterPin": "Enter a 4-digit PIN",
+      "confirmPin": "Confirm your PIN",
+      "skip": "Skip — set up later",
+      "mismatch": "PINs don't match. Try again.",
+      "accessibility": {
+        "skipButton": "Skip PIN setup"
+      }
+    },
     "privacyPromise": {
       "title": "Your privacy is our promise",
       "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
@@ -112,7 +129,17 @@
   },
   "parent": {
     "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" },
+    "profileSwitcher": {
+      "label": "Child profile",
+      "switchTo": "Switch to {{name}}",
+      "current": "{{name}} - {{level}} - Active",
+      "loading": "Loading profiles...",
+      "empty": "No child profiles found",
+      "error": "Failed to load profiles"
+    },
+    "changePin": "Change PIN",
+    "backToKid": "Back to Kid"
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
@@ -228,6 +255,8 @@
   "common": {
     "back": "Back",
     "cancel": "Cancel",
+    "continue": "Continue",
+    "done": "All set!",
     "goBack": "Go back",
     "loading": "Loading…",
     "retry": "Retry"
