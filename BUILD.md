@@ -32,22 +32,11 @@
 ## Development build steps
 
 ```bash
-# Install dependencies
 pnpm install
-
-# Android
 cd mobile
-npx expo run:android
-
-# iOS
-cd mobile
-npx expo run:ios
+npx expo run:android   # Android
+npx expo run:ios       # iOS
 ```
-
-## Environment variables
-
-Copy `.env.example` to `.env` and fill in required values.
-See `.env.example` for the full list.
 
 ## Google Services (Firebase)
 
@@ -55,25 +44,20 @@ For Android: place `google-services.json` in `mobile/`.
 For iOS: place `GoogleService-Info.plist` in `mobile/`.
 
 These files are **not required** for local development builds. The build
-config skips them when absent. They are required for push notifications and
+config skips them when absent. Required for push notifications and
 Firebase Analytics (production only).
-
-`google-services*.json` and `GoogleService-Info*.plist` are in `.gitignore`
-and must never be committed.
 
 ## Known warnings (non-blocking)
 
 - `react-native@0.81.0` vs recommended `0.81.5` — Expo SDK 54 resolves to
-  0.81.0 at prebuild time. This does not affect build output.
-- Gradle deprecation warnings for Gradle 9.0 compatibility. These originate
-  from Expo/React Native tooling, not application code.
-- Kotlin `ReactNativeHost` deprecation warnings. From `expo` package,
-  not application code.
+  0.81.0 at prebuild time. Does not affect build output.
+- Gradle deprecation warnings for Gradle 9.0 from Expo/RN tooling.
+- Kotlin `ReactNativeHost` deprecation from `expo` package.
 
 ## Troubleshooting
 
 | Problem | Fix |
 |---------|-----|
-| `google-services.json` not found during EAS build | Add the file via EAS secrets or remove the Firebase plugin if unused |
-| `assets/adaptive-icon.png` missing | Regenerate placeholder assets via `scripts/` or Python snippet |
-| Metro bundler resolution errors | Run `npx expo start --clear` to reset Metro cache |
+| `google-services.json` not found | Add via EAS secrets or skip if unused |
+| `assets/adaptive-icon.png` missing | Regenerate via Python snippet |
+| Metro bundler resolution errors | `npx expo start --clear` |

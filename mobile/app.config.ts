@@ -1,52 +1,57 @@
-import { type ExpoConfig } from '@expo/config-types';
+import { existsSync } from "node:fs";
 
-function getEnv(key: string, fallback?: string): string | undefined {
-  const val = process.env[key] ?? process.env['EXPO_PUBLIC_' + key];
-  return val ?? fallback;
+import { ExpoConfig, ConfigContext } from "expo/config";
+
+const VARIANTS = ["development", "preview", "production"] as const;
+type Variant = (typeof VARIANTS)[number];
+
+function getVariant(): Variant {
+  const v = process.env.APP_VARIANT;
+  if (VARIANTS.includes(v as Variant)) return v as Variant;
+  return "production";
 }
 
-const config: ExpoConfig = {
-  name: 'tutor-sg',
-  slug: 'tutor-sg',
-  version: '0.1.0',
-  orientation: 'portrait',
-  userInterfaceStyle: 'light',
-  scheme: 'tutor-sg',
-  icon: './assets/icon.png',
-  splash: {
-    image: './assets/splash.png',
-    resizeMode: 'contain',
-    backgroundColor: '#4A90D9',
-  },
-  ios: {
-    supportsTablet: true,
-    bundleIdentifier: 'com.aaas.tutorsg',
-    infoPlist: {
-      NSCameraUsageDescription: 'Take photos of homework for AI tutoring',
-    },
-  },
-  android: {
-    package: 'com.aaas.tutorsg',
-    adaptiveIcon: {
-      foregroundImage: './assets/adaptive-icon.png',
-      backgroundColor: '#4A90D9',
-    },
-    permissions: ['android.permission.CAMERA'],
-  },
-  plugins: ['expo-router', 'expo-localization'],
-  extra: {
-    APP_ENV: getEnv('APP_ENV', 'development'),
-    CDN_BASE_URL: getEnv('CDN_BASE_URL', 'https://cdn.example.com/models/'),
-    MODEL_INDEX_PATH: getEnv('MODEL_INDEX_PATH', 'index.json'),
-    SUPABASE_URL: getEnv('SUPABASE_URL', 'https://placeholder.supabase.co'),
-    SUPABASE_ANON_KEY: getEnv('SUPABASE_ANON_KEY', 'placeholder-anon-key'),
-    HITPAY_API_KEY: getEnv('HITPAY_API_KEY', 'placeholder-hitpay-public-key'),
-    ENABLE_DEV_TOOLS: getEnv('ENABLE_DEV_TOOLS', 'false') === 'true',
-    LOG_LEVEL: getEnv('LOG_LEVEL', 'info'),
-  },
-  experiments: {
-    typedRoutes: true,
-  },
-};
+function getGoogleServicesFile(platform: "ios" | "android"): string | undefined {
+  const variant = getVariant();
+  const suffix = variant !== "production" ? `-${variant}` : "";
+  const fileName =
+    platform === "ios"
+      ? `GoogleService-Info${suffix}.plist`
+      : `google-services${suffix}.json`;
+  return existsSync(fileName) ? `./${fileName}` : undefined;
+}
 
-export default config;
+export default ({ config }: ConfigContext): ExpoConfig => {
+  const variant = getVariant();
+  const suffix = variant !== "production" ? `.${variant}` : "";
+  const displayName =
+    variant === "production" ? "tutor-sg" : `tutor-sg (${variant})`;
+
+  return {
+    ...config,
+    name: displayName,
+    slug: config.slug ?? "tutor-sg",
+    ios: {
+      ...config.ios,
+      bundleIdentifier: `com.aaas.tutorsg${suffix}`,
+      googleServicesFile: getGoogleServicesFile("ios"),
+    },
+    android: {
+      ...config.android,
+      package: `com.aaas.tutorsg${suffix}`,
+      googleServicesFile: getGoogleServicesFile("android"),
+    },
+    updates: {
+      ...config.updates,
+      url: `https://u.expo.dev/${config.extra?.eas?.projectId ?? ""}`,
+    },
+    plugins: [
+      "expo-secure-store",
+      "expo-router",
+    ],
+    extra: {
+      ...config.extra,
+      appVariant: variant,
+    },
+  };
+};

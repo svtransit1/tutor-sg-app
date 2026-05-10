@@ -5,6 +5,10 @@
 *.pem
 *.p12
 *.keystore
+google-services.json
+google-services-*.json
+GoogleService-Info.plist
+GoogleService-Info-*.plist
 
 # OS
 .DS_Store
@@ -42,6 +46,9 @@ packages/shared/src/models/*
 # Test outputs
 coverage/
 .nyc_output/
+
+# Expo machine-specific state
+.expo/
 
 # Child-safe rule: NEVER commit anything from real users
 private/
