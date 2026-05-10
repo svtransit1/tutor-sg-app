@@ -8,6 +8,7 @@
     "bootstrap": "./scripts/bootstrap.sh",
     "prepare": "husky",
     "typecheck": "pnpm --recursive typecheck",
+    "lint": "eslint .",
     "test": "pnpm --recursive test",
     "mobile:start": "pnpm --filter tutor-sg-mobile start",
     "mobile:ios": "pnpm --filter tutor-sg-mobile ios",

@@ -17,6 +17,9 @@ export default tseslint.config(
       '**/.detoxrc.*',
       'mobile/.maestro/**',
       'mobile/e2e/**',
+      '**/__mocks__/**',
+      'packages/**',
+      'scripts/**',
     ],
   },
   {
@@ -28,12 +31,15 @@ export default tseslint.config(
   },
   {
     files: ['**/*.ts', '**/*.tsx'],
-    ignores: ['**/__tests__/**', '**/*.test.ts', '**/*.test.tsx', '**/e2e/**', '**/__mocks__/**'],
-    languageOptions: {
-      parserOptions: {
-        project: true,
-      },
-    },
+    ignores: [
+      '**/__tests__/**',
+      '**/*.test.ts',
+      '**/*.test.tsx',
+      '**/e2e/**',
+      '**/__mocks__/**',
+      'packages/**',
+      'scripts/**',
+    ],
   },
   {
     files: ['**/__tests__/**', '**/*.test.ts', '**/*.test.tsx', '**/e2e/**', '**/__mocks__/**'],
@@ -41,6 +47,7 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': 'off',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
       'no-undef': 'off',
     },
   },

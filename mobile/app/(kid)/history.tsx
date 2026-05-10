@@ -34,7 +34,7 @@ const SUBJECT_ICONS: Record<string, string> = {
 
 const PAGE_SIZE = 20;
 
-function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): string {
+function timeAgo(dateStr: string, t: (key: string, opts?: Record<string, string | number>) => string): string {
   const now = Date.now();
   const then = new Date(dateStr).getTime();
   const diffMs = now - then;
@@ -49,7 +49,7 @@ function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): st
   return t('kidHome.recentSessions.timeAgo.daysAgo', { days: diffDays });
 }
 
-function formatTimeSpent(seconds: number, t: (key: string, opts?: object) => string): string {
+function formatTimeSpent(seconds: number, t: (key: string, opts?: Record<string, string | number>) => string): string {
   const min = Math.floor(seconds / 60);
   const sec = seconds % 60;
   if (seconds < 60) return t('kidHome.recentSessions.timeSpent', { minutes: 0, seconds: sec });

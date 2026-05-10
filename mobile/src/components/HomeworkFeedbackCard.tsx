@@ -11,7 +11,7 @@ import {
   type TextStyle,
   type ViewStyle,
 } from 'react-native';
-import type { ScaffoldedHelp, ScaffoldedHelpTab } from '@/models/homework-feedback';
+import type { ScaffoldedHelp, ScaffoldedHelpTab, Subject } from '@/models/homework-feedback';
 import { Skeleton } from '@/components/Skeleton';
 
 export type HomeworkFeedbackCardVariant = 'loading' | 'error' | 'ready';
@@ -25,6 +25,8 @@ export interface HomeworkFeedbackCardProps {
   initialTab?: ScaffoldedHelpTab;
   onRetry?: () => void;
   errorMessage?: string;
+  contained?: boolean;
+  subject?: Subject;
   style?: ViewStyle;
 }
 
@@ -184,6 +186,7 @@ export default function HomeworkFeedbackCard({
   initialTab = 'hint',
   onRetry,
   errorMessage,
+  contained = false,
   style,
 }: HomeworkFeedbackCardProps) {
   const { t } = useTranslation();
@@ -223,8 +226,8 @@ export default function HomeworkFeedbackCard({
     return (
       <View
         style={[
-          cardStyles.container,
-          { backgroundColor: cardBg, borderColor },
+          contained ? cardStyles.contained : cardStyles.container,
+          { backgroundColor: contained ? 'transparent' : cardBg, borderColor: contained ? 'transparent' : borderColor },
           style,
         ]}
         accessibilityRole="summary"
@@ -239,8 +242,8 @@ export default function HomeworkFeedbackCard({
     return (
       <View
         style={[
-          cardStyles.container,
-          { backgroundColor: cardBg, borderColor },
+          contained ? cardStyles.contained : cardStyles.container,
+          { backgroundColor: contained ? 'transparent' : cardBg, borderColor: contained ? 'transparent' : borderColor },
           style,
         ]}
       >
@@ -260,10 +263,17 @@ export default function HomeworkFeedbackCard({
     switch (currentLevel) {
       case 'hint':
         return (
-          <InlineMath
-            text={h.hint || t('homeworkFeedback.hint.body')}
-            style={{ color: textColor }}
-          />
+          <View
+            style={[
+              cardStyles.hintContainer,
+              isDark ? cardStyles.hintContainerDark : cardStyles.hintContainerLight,
+            ]}
+          >
+            <InlineMath
+              text={h.hint || t('homeworkFeedback.hint.body')}
+              style={{ color: textColor }}
+            />
+          </View>
         );
       case 'steps':
         return (
@@ -301,8 +311,8 @@ export default function HomeworkFeedbackCard({
   return (
     <View
       style={[
-        cardStyles.container,
-        { backgroundColor: cardBg, borderColor },
+        contained ? cardStyles.contained : cardStyles.container,
+        { backgroundColor: contained ? 'transparent' : cardBg, borderColor: contained ? 'transparent' : borderColor },
         style,
       ]}
       accessibilityRole="summary"
@@ -441,6 +451,11 @@ const cardStyles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
   } satisfies ViewStyle,
+
+  contained: {
+    width: '100%',
+    borderWidth: 0,
+  },
 
   inner: {
     padding: 20,
@@ -642,4 +657,20 @@ const cardStyles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
   } satisfies TextStyle,
+
+  hintContainer: {
+    borderRadius: 12,
+    borderWidth: 1.5,
+    padding: 12,
+  } satisfies ViewStyle,
+
+  hintContainerLight: {
+    backgroundColor: '#FFFBEB',
+    borderColor: '#FCD34D',
+  } satisfies ViewStyle,
+
+  hintContainerDark: {
+    backgroundColor: '#2A2510',
+    borderColor: '#785B0A',
+  } satisfies ViewStyle,
 });

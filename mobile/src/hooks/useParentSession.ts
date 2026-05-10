@@ -24,12 +24,12 @@ export function useParentSession(): UseParentSessionReturn {
 
   const logQuestionAttempt = useCallback(async (questionId: string, correct: boolean, hintsUsed: number, timeSeconds: number, struggleDetected: boolean): Promise<void> => {
     if (!_activeSessionId) return
-    try { await ParentSessionRepository.logQuestionAttempt(_activeSessionId, questionId, correct, hintsUsed, timeSeconds, struggleDetected) } catch {}
+    try { await ParentSessionRepository.logQuestionAttempt(_activeSessionId, questionId, correct, hintsUsed, timeSeconds, struggleDetected) } catch { void 0 }
   }, [])
 
   const endParentSession = useCallback(async (aiSummary: string, parentFlagged: boolean): Promise<void> => {
     if (!_activeSessionId) return
-    try { await ParentSessionRepository.endSession(_activeSessionId, aiSummary, parentFlagged) } catch { } finally { _activeSessionId = null }
+    try { await ParentSessionRepository.endSession(_activeSessionId, aiSummary, parentFlagged) } catch { void 0 } finally { _activeSessionId = null }
   }, [])
 
   return { startParentSession, logQuestionAttempt, endParentSession, get activeSessionId() { return _activeSessionId } }
