@@ -44,9 +44,26 @@ jobs:
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm lint
 
+  expo-doctor:
+    name: Expo Doctor
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - run: pnpm install --no-frozen-lockfile
+      - name: Run expo-doctor
+        working-directory: mobile
+        run: pnpm run doctor
+
   bundle:
     name: RN Bundle
-    needs: [typecheck, lint]
+    needs: [typecheck, lint, expo-doctor]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
