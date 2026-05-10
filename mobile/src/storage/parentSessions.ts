@@ -10,7 +10,7 @@ interface ParentSessionRow {
   started_at: string
   ended_at: string | null
   questions_attempted: number
-  questions_correct: number
+  questions_correct: number | null
   struggle_indicators: string
   ai_summary: string | null
   parent_flagged: number
@@ -24,7 +24,7 @@ export interface ParentSession {
   startedAt: string
   endedAt: string | null
   questionsAttempted: number
-  questionsCorrect: number
+  questionsCorrect: number | null
   struggleIndicators: boolean[]
   aiSummary: string | null
   parentFlagged: boolean
@@ -37,7 +37,7 @@ let _db: SQLiteDatabase | null = null
 async function getDb(): Promise<SQLiteDatabase> {
   if (!_db) {
     const db = await openDatabaseAsync(DB_NAME)
-    await db.execAsync("CREATE TABLE IF NOT EXISTS parent_sessions (id TEXT PRIMARY KEY, kid_profile_id TEXT NOT NULL, subject TEXT NOT NULL, topic TEXT NOT NULL DEFAULT '', started_at TEXT NOT NULL DEFAULT (datetime('now')), ended_at TEXT, questions_attempted INTEGER NOT NULL DEFAULT 0, questions_correct INTEGER NOT NULL DEFAULT 0, struggle_indicators TEXT NOT NULL DEFAULT '[]', ai_summary TEXT, parent_flagged INTEGER NOT NULL DEFAULT 0);"
+    await db.execAsync("CREATE TABLE IF NOT EXISTS parent_sessions (id TEXT PRIMARY KEY, kid_profile_id TEXT NOT NULL, subject TEXT NOT NULL, topic TEXT NOT NULL DEFAULT '', started_at TEXT NOT NULL DEFAULT (datetime('now')), ended_at TEXT, questions_attempted INTEGER NOT NULL DEFAULT 0, questions_correct INTEGER DEFAULT NULL, struggle_indicators TEXT NOT NULL DEFAULT '[]', ai_summary TEXT, parent_flagged INTEGER NOT NULL DEFAULT 0);"
     + "CREATE TABLE IF NOT EXISTS question_attempts (id INTEGER PRIMARY KEY AUTOINCREMENT, session_id TEXT NOT NULL, question_id TEXT NOT NULL, correct INTEGER NOT NULL, hints_used INTEGER NOT NULL DEFAULT 0, time_seconds INTEGER NOT NULL DEFAULT 0, struggle_detected INTEGER NOT NULL DEFAULT 0, logged_at TEXT NOT NULL DEFAULT (datetime('now')), FOREIGN KEY (session_id) REFERENCES parent_sessions(id));")
     _db = db
   }
@@ -68,7 +68,7 @@ export class ParentSessionRepository {
   static async logQuestionAttempt(sessionId: string, questionId: string, correct: boolean, hintsUsed: number, timeSeconds: number, struggleDetected: boolean): Promise<void> {
     const db = await getDb()
     await db.runAsync("INSERT INTO question_attempts (session_id, question_id, correct, hints_used, time_seconds, struggle_detected) VALUES (?, ?, ?, ?, ?, ?)", sessionId, questionId, correct ? 1 : 0, hintsUsed, timeSeconds, struggleDetected ? 1 : 0)
-    await db.runAsync("UPDATE parent_sessions SET questions_attempted = questions_attempted + 1, questions_correct = questions_correct + ?, struggle_indicators = struggle_indicators || ? WHERE id = ?", correct ? 1 : 0, struggleDetected ? '1' : '0', sessionId)
+    await db.runAsync("UPDATE parent_sessions SET questions_attempted = questions_attempted + 1, questions_correct = COALESCE(questions_correct, 0) + ?, struggle_indicators = struggle_indicators || ? WHERE id = ?", correct ? 1 : 0, struggleDetected ? '1' : '0', sessionId)
   }
   static async endSession(sessionId: string, aiSummary: string, parentFlagged: boolean): Promise<void> {
     const db = await getDb()
