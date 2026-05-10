@@ -18,7 +18,8 @@
     "eas:build:preview": "cd mobile && pnpm eas:build:preview",
     "eas:build:preview:aab": "cd mobile && pnpm eas:build:preview:aab",
     "eas:build:production": "cd mobile && pnpm eas:build:production",
-    "eas:submit:production": "cd mobile && pnpm eas:submit:production"
+    "eas:submit:production": "cd mobile && pnpm eas:submit:production",
+    "mobile:doctor": "pnpm --filter tutor-sg-mobile run doctor"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
