@@ -30,6 +30,7 @@ export interface OnboardingState {
   currentStep: OnboardingStep;
   steps: Record<OnboardingStep, StepStatus>;
   locale: 'en' | 'zh-Hans';
+  name: string;
   grade: 'P1' | 'P2' | 'P3' | 'P4' | 'P5' | 'P6' | null;
   subjects: Array<'math' | 'english' | 'chinese' | 'science'>;
   deviceTier: 'high' | 'mid' | 'unsupported' | null;
@@ -77,6 +78,7 @@ export function initialOnboardingState(): OnboardingState {
       ONBOARDING_STEPS.map((s) => [s, 'not_started'] as const),
     ) as Record<OnboardingStep, StepStatus>,
     locale: 'en',
+    name: '',
     grade: null,
     subjects: ['math', 'english', 'chinese', 'science'],
     deviceTier: null,
