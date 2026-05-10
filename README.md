@@ -8,6 +8,7 @@ Singapore primary school AI tutor — on-device LLM, bilingual EN + Simplified C
 **Architecture:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 **Framework:** React Native + Expo + TypeScript (single codebase, iOS + Android)
 **Locked decisions:** [wiki decisions-locked](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fdecisions-locked.md)
+**Contributing:** [CONTRIBUTING.md](CONTRIBUTING.md)
 
 Do not commit secrets, child data, or model weights. See `.gitignore`.
 
