@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, SafeAreaView, type TextStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Linking from 'expo-linking';
-import { signInWithMagicLink, signInWithGoogle, signInWithApple, signUp, signIn, handleAuthCallback, getCurrentSession, AuthError } from '../../services/auth';
+import { signInWithMagicLink, signInWithGoogle, signInWithApple, signUp, signIn, handleAuthCallback, getCurrentSession, AuthError, type AuthErrorCode } from '../../services/auth';
 
 interface Props { onSignedIn?: () => void; onSkip?: () => void; }
 type AuthMode = 'magic_link' | 'password_sign_in' | 'password_sign_up';
@@ -13,6 +13,29 @@ const TABS: { mode: AuthMode; label: string }[] = [
   { mode: 'password_sign_in', label: 'parentAuth.signIn.passwordTab' },
   { mode: 'password_sign_up', label: 'parentAuth.signIn.signUpTab' },
 ];
+
+const ERROR_I18N_KEY: Record<AuthErrorCode, string> = {
+  invalid_email: 'parentAuth.signIn.errorInvalidEmail',
+  invalid_password: 'parentAuth.signIn.errorInvalidPassword',
+  send_failed: 'parentAuth.signIn.errorSendFailed',
+  sign_in_failed: 'parentAuth.signIn.errorSignInFailed',
+  sign_up_failed: 'parentAuth.signIn.errorSignInFailed',
+  session_cancelled: 'parentAuth.signIn.errorAuthSession',
+  network_error: 'parentAuth.signIn.errorNetwork',
+  link_expired: 'parentAuth.signIn.errorLinkExpired',
+  account_exists: 'parentAuth.signIn.errorAccountExists',
+  wrong_password: 'parentAuth.signIn.errorWrongPassword',
+  rate_limited: 'parentAuth.signIn.errorRateLimited',
+};
+
+function errorKey(code: AuthErrorCode): string {
+  return ERROR_I18N_KEY[code] ?? 'parentAuth.signIn.errorSignInFailed';
+}
+
+function getErrorMessage(err: unknown, t: (key: string) => string): string {
+  if (err instanceof AuthError) return t(errorKey(err.code));
+  return t('parentAuth.signIn.errorSignInFailed');
+}
 
 export default function ParentSignInScreen({ onSignedIn, onSkip }: Props) {
   const { t } = useTranslation();
@@ -26,7 +49,7 @@ export default function ParentSignInScreen({ onSignedIn, onSkip }: Props) {
     setErrorMessage(null); if (!email.trim()) { setErrorMessage(t('parentAuth.signIn.errorInvalidEmail')); return; }
     setScreenState('loading_magic_link');
     try { await signInWithMagicLink(email.trim()); setScreenState('magic_link_sent'); }
-    catch (err) { setErrorMessage(err instanceof AuthError && err.code === 'invalid_email' ? t('parentAuth.signIn.errorInvalidEmail') : t('parentAuth.signIn.errorSendFailed')); setScreenState('idle'); }
+    catch (err) { setErrorMessage(getErrorMessage(err, t)); setScreenState('idle'); }
   }, [email, t]);
 
   const handlePassword = useCallback(async () => {
@@ -38,7 +61,7 @@ export default function ParentSignInScreen({ onSignedIn, onSkip }: Props) {
       const s = await getCurrentSession();
       if (s?.user) { setScreenState('signed_in'); onSignedIn?.(); }
       else { setErrorMessage(t('parentAuth.signIn.errorSignInFailed')); setScreenState('idle'); }
-    } catch (err) { setErrorMessage(err instanceof AuthError ? err.message : t('parentAuth.signIn.errorSignInFailed')); setScreenState('idle'); }
+    } catch (err) { setErrorMessage(getErrorMessage(err, t)); setScreenState('idle'); }
   }, [email, password, authMode, onSignedIn, t]);
 
   const handleOAuth = useCallback(async (provider: 'google' | 'apple') => {
@@ -115,19 +138,19 @@ const st = StyleSheet.create({
   tabs:{flexDirection:'row' as const,width:'100%',backgroundColor:'#F3F4F6',borderRadius:10,padding:3,marginBottom:20},
   tab:{flex:1,paddingVertical:10,borderRadius:8,alignItems:'center' as const},
   tabActive:{backgroundColor:'#FFFFFF',shadowColor:'#000',shadowOffset:{width:0,height:1},shadowOpacity:.1,shadowRadius:2,elevation:2},
-  tabText:{fontSize:14,fontWeight:'500',color:'#9CA3AF'}, tabTextActive:{color:'#4A90D9',fontWeight:'600'},
+  tabText:{fontSize:16,fontWeight:'500',color:'#9CA3AF'}, tabTextActive:{color:'#4A90D9',fontWeight:'600'},
   input:{width:'100%',height:52,borderWidth:1.5,borderColor:'#D1D5DB',borderRadius:12,paddingHorizontal:16,fontSize:16,color:'#1A1A1A',backgroundColor:'#F9FAFB',marginBottom:12},
   inputErr:{borderColor:'#EF4444'},
   btn:{width:'100%',height:52,backgroundColor:'#4A90D9',borderRadius:12,alignItems:'center' as const,justifyContent:'center' as const}, btnDisabled:{opacity:.5},
   btnText:{color:'#FFFFFF',fontSize:17,fontWeight:'600'}as TextStyle,
   divider:{flexDirection:'row' as const,alignItems:'center' as const,width:'100%',marginBottom:24,marginTop:24},
-  divLine:{flex:1,height:1,backgroundColor:'#E5E7EB'}, divText:{marginHorizontal:16,fontSize:14,color:'#9CA3AF'},
+  divLine:{flex:1,height:1,backgroundColor:'#E5E7EB'}, divText:{marginHorizontal:16,fontSize:16,color:'#9CA3AF'},
   oAuthBtn:{width:'100%',height:52,flexDirection:'row' as const,alignItems:'center' as const,justifyContent:'center' as const,borderWidth:1.5,borderColor:'#D1D5DB',borderRadius:12,backgroundColor:'#FFFFFF',marginBottom:12,gap:10},
   oAuthApple:{backgroundColor:'#000',borderColor:'#000'},
   oAuthIcon:{fontSize:20,fontWeight:'700',color:'#333'}, oAuthIconWhite:{color:'#FFF'},
   oAuthLabel:{fontSize:16,fontWeight:'500',color:'#333'}, oAuthLabelWhite:{color:'#FFF'},
   errWrap:{width:'100%',backgroundColor:'#FEF2F2',borderRadius:8,padding:12,marginBottom:16},
-  errText:{fontSize:14,color:'#DC2626',textAlign:'center' as const},
+  errText:{fontSize:16,color:'#DC2626',textAlign:'center' as const},
   emailDisplay:{fontSize:16,fontWeight:'600',color:'#4A90D9',marginBottom:24},
-  skipBtn:{paddingVertical:12,paddingHorizontal:24}, skipText:{fontSize:15,color:'#9CA3AF',textDecorationLine:'underline' as const},
+  skipBtn:{paddingVertical:12,paddingHorizontal:24}, skipText:{fontSize:16,color:'#9CA3AF',textDecorationLine:'underline' as const},
 });

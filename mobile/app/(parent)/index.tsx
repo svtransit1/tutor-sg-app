@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   linkText: {
-    fontSize: 15,
+    fontSize: 16,
     color: '#2563EB',
     fontWeight: '500',
   },
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   secondaryBtnText: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#9CA3AF',
     fontWeight: '500',
   },

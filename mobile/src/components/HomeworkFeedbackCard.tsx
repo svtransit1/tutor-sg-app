@@ -460,19 +460,19 @@ const cardStyles = StyleSheet.create({
   } satisfies ViewStyle,
 
   questionBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
   } satisfies ViewStyle,
 
   questionBadgeText: {
     color: '#FFFFFF',
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: '700',
     textAlign: 'center',
-    lineHeight: 28,
+    lineHeight: 32,
   } satisfies TextStyle,
 
   title: {
@@ -483,13 +483,13 @@ const cardStyles = StyleSheet.create({
 
   questionBlock: {
     padding: 14,
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1,
   } satisfies ViewStyle,
 
   questionText: {
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 28,
   } satisfies TextStyle,
 
   levelIndicator: {
@@ -499,7 +499,7 @@ const cardStyles = StyleSheet.create({
   } satisfies ViewStyle,
 
   levelLabel: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
   } satisfies TextStyle,
 
@@ -540,8 +540,8 @@ const cardStyles = StyleSheet.create({
   } satisfies ViewStyle,
 
   bodyText: {
-    fontSize: 15,
-    lineHeight: 22,
+    fontSize: 16,
+    lineHeight: 28,
   } satisfies TextStyle,
 
   stepsList: {
@@ -555,9 +555,9 @@ const cardStyles = StyleSheet.create({
   } satisfies ViewStyle,
 
   stepNumber: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 1,
@@ -568,7 +568,7 @@ const cardStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     textAlign: 'center',
-    lineHeight: 28,
+    lineHeight: 32,
   } satisfies TextStyle,
 
   actions: {
@@ -578,7 +578,7 @@ const cardStyles = StyleSheet.create({
 
   actionBtn: {
     paddingVertical: 12,
-    borderRadius: 12,
+    borderRadius: 14,
     alignItems: 'center',
   } satisfies ViewStyle,
 
@@ -590,7 +590,7 @@ const cardStyles = StyleSheet.create({
 
   actionBtnSecondary: {
     paddingVertical: 12,
-    borderRadius: 12,
+    borderRadius: 14,
     alignItems: 'center',
     borderWidth: 1.5,
   } satisfies ViewStyle,
@@ -613,7 +613,7 @@ const cardStyles = StyleSheet.create({
 
   errorWrap: {
     padding: 24,
-    borderRadius: 14,
+    borderRadius: 16,
     borderWidth: 1,
     alignItems: 'center',
     gap: 12,
@@ -625,7 +625,7 @@ const cardStyles = StyleSheet.create({
 
   errorText: {
     fontSize: 16,
-    lineHeight: 24,
+    lineHeight: 28,
     textAlign: 'center',
   } satisfies TextStyle,
 

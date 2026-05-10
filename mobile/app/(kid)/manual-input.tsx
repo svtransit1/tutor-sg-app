@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingTop: 8, paddingBottom: 8 },
   backBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, minWidth: 60 },
   backArrow: { fontSize: 20, fontWeight: '600' },
-  backLabel: { fontSize: 15, fontWeight: '600' },
+  backLabel: { fontSize: 16, fontWeight: '600' },
   heading: { fontSize: 17, fontWeight: '700', textAlign: 'center', flex: 1 },
   spacer: { minWidth: 60 },
   scrollContent: { padding: 24, gap: 16, paddingBottom: 100 },
