@@ -2,8 +2,20 @@
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
-    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Your personal learning companion",
+      "tagline": "Smart learning, made fun!",
+      "cta": "Get Started"
+    },
+    "langPick": {
+      "title": "Choose your language",
+      "subtitle": "Your app will use this language.",
+      "continue": "Continue",
+      "accessibility": {
+        "hint": "Select this language for the app"
+      }
+    },
     "privacyPromise": {
       "title": "Your privacy is our promise",
       "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
@@ -68,10 +80,37 @@
         "subjectOff": "not selected"
       }
     },
-    "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "done": {
+      "title": "All set!",
+      "subtitle": "Let's start learning",
+      "greeting": "Hi {{name}}! Ready to learn?",
+      "cameraCta": "Snap your homework",
+      "cameraSubtitle": "Take a photo to get help",
+      "practicePrompt": "Or try a practice question",
+      "parentArea": "Parent area"
+    },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
+    },
+    "permissionPrimer": {
+      "headline": "A couple of quick permissions",
+      "camera": {
+        "title": "Camera",
+        "body": "We need the camera so your child can snap a photo of their homework. The photo never leaves the device.",
+        "allow": "Allow camera access",
+        "notNow": "Not now"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "body": "We'll send a gentle weekly summary to you (the parent), so you can see how your child is doing. No spam.",
+        "allow": "Allow notifications",
+        "notNow": "Not now"
+      },
+      "allowed": "Saved",
+      "deferred": "You can enable this later in Settings",
+      "done": "Continue",
+      "skipAll": "Skip all for now"
     }
   },
   "network.offline": "You're offline",
@@ -111,8 +150,14 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "dashboard": {
+      "title": "Parent Dashboard",
+      "placeholder": "Session log and progress coming soon"
+    },
+    "settings": {
+      "title": "Settings",
+      "placeholder": "Language, quality, model, privacy"
+    }
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
