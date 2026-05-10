@@ -164,7 +164,7 @@ export default function KidHomeScreen() {
 
         {sessionList}
 
-        <Pressable style={styles.parentButton} onPress={() => router.push('/(parent)')} accessibilityRole="button">
+        <Pressable style={styles.parentButton} onPress={() => router.push('/(parent)')} accessibilityRole="button" accessibilityLabel={t('kidHome.accessibility.parentAreaButton')}>
           <Text style={styles.parentButtonText}>{t('onboarding.done.parentArea')}</Text>
         </Pressable>
       </ScrollView>

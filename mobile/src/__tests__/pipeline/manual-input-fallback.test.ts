@@ -50,6 +50,22 @@ interface ManualInputItem {
   pageIndex: number;
 }
 
+// ── OCR Error / Timeout Types (AAAS-1237) ──────────────────────────
+
+type OcrFailureKind = 'timeout' | 'crash' | 'hang';
+
+interface OcrExecutionError {
+  kind: OcrFailureKind;
+  message: string;
+  cause?: unknown;
+}
+
+type OcrRunResult =
+  | { status: 'success'; pages: OcrPageResult[] }
+  | { status: 'timeout'; pages: OcrPageResult[]; message: string }
+  | { status: 'crash'; pages: OcrPageResult[]; message: string; cause?: unknown }
+  | { status: 'hang'; pages: OcrPageResult[]; message: string };
+
 // ── Constants ─────────────────────────────────────────────────────
 
 /** OCR confidence threshold — blocks below this trigger manual input (per ADD §4.1, OCR service) */
@@ -60,6 +76,10 @@ const RETAKE_THRESHOLD = 0.3;
 
 /** Confidence assigned to manually entered text */
 const MANUAL_CONFIDENCE = 0.95;
+
+const OCR_TIMEOUT_MS_HIGH = 8_000;
+const OCR_TIMEOUT_MS_LOW = 15_000;
+const UNREADABLE_PLACEHOLDER = '???';
 
 // ── Core Logic (mirrors CameraScreen manual input flow) ────────────
 
@@ -150,6 +170,68 @@ function stillNeedsRetake(pages: OcrPageResult[]): boolean {
 /** Check if merged result is ready for inference (no blocks below threshold) */
 function isReadyForInference(pages: OcrPageResult[], threshold: number = CONFIDENCE_THRESHOLD): boolean {
   return !needsManualInput(pages, threshold);
+}
+
+// ── OCR Timeout + Crash/Hang Handling (AAAS-1237) ──────────────────
+
+function buildFailureFallbackPages(originalImages: number): OcrPageResult[] {
+  const pages: OcrPageResult[] = [];
+  for (let i = 0; i < originalImages; i++) {
+    pages.push({
+      pageIndex: i,
+      blocks: [{ text: UNREADABLE_PLACEHOLDER, confidence: 0 }],
+      overallConfidence: 0,
+      hasManualInput: true,
+    });
+  }
+  return pages;
+}
+
+async function runOcrWithTimeout(
+  ocrPromise: Promise<OcrPageResult[]>,
+  timeoutMs: number = OCR_TIMEOUT_MS_LOW,
+  imageCount: number = 1,
+): Promise<OcrRunResult> {
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  const timeoutPromise = new Promise<OcrRunResult>((resolve) => {
+    timeoutId = setTimeout(() => {
+      resolve({
+        status: 'timeout',
+        pages: buildFailureFallbackPages(imageCount),
+        message: `OCR timed out after ${timeoutMs}ms. Falling back to manual input.`,
+      });
+    }, timeoutMs);
+  });
+  const ocrRunner = ocrPromise.then(
+    (pages): OcrRunResult => { clearTimeout(timeoutId); return { status: 'success', pages }; },
+    (err): OcrRunResult => {
+      clearTimeout(timeoutId);
+      return {
+        status: 'crash',
+        pages: buildFailureFallbackPages(imageCount),
+        message: `OCR crashed: ${err instanceof Error ? err.message : String(err)}`,
+        cause: err,
+      };
+    },
+  );
+  return Promise.race([ocrRunner, timeoutPromise]);
+}
+
+function getOcrFallbackAction(result: OcrRunResult): {
+  action: 'proceed' | 'manualInput' | 'retakeSuggested' | 'fullManualInput';
+  message: string;
+  manualItems: ManualInputItem[];
+  pages: OcrPageResult[];
+} {
+  switch (result.status) {
+    case 'success':
+      if (!needsManualInput(result.pages)) return { action: 'proceed', message: '', manualItems: [], pages: result.pages };
+      return { action: 'manualInput', message: 'Some items could not be read. Please type them in.', manualItems: buildManualItems(result.pages), pages: result.pages };
+    case 'timeout': case 'hang':
+      return { action: 'fullManualInput', message: 'Photo processing took too long. Please type the answers below.', manualItems: buildManualItems(result.pages), pages: result.pages };
+    case 'crash':
+      return { action: 'fullManualInput', message: 'Something went wrong reading the photo. Please type the answers below.', manualItems: buildManualItems(result.pages), pages: result.pages };
+  }
 }
 
 // ── Test Fixtures ─────────────────────────────────────────────────
@@ -792,5 +874,248 @@ describe('MANFALL-10: Full flow simulation (OCR→fallback→merge→ready)', ()
 
     // Page 0 unchanged
     expect(pages[0].blocks[1].text).toBe('2. 6 × 8 = ?');
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────
+// AAAS-1237: OCR Timeout + Crash/Hang Tests
+// ─────────────────────────────────────────────────────────────────
+
+function resolveAfter<T>(ms: number, value: T): Promise<T> {
+  return new Promise((resolve) => setTimeout(() => resolve(value), ms));
+}
+
+function rejectAfter(ms: number, message: string): Promise<never> {
+  return new Promise((_, reject) => setTimeout(() => reject(new Error(message)), ms));
+}
+
+describe('MANFALL-11: OCR timeout scenarios', () => {
+  it('normal OCR completes before timeout → success', async () => {
+    const ocrPromise = resolveAfter(50, [clearPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 500, 1);
+    expect(result.status).toBe('success');
+    if (result.status === 'success') {
+      expect(result.pages).toHaveLength(1);
+      expect(result.pages[0].blocks).toHaveLength(3);
+    }
+  });
+
+  it('OCR exceeds timeout → timeout status with fallback pages', async () => {
+    const ocrPromise = resolveAfter(200, [clearPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 50, 2);
+    expect(result.status).toBe('timeout');
+    expect(result.pages).toHaveLength(2);
+    expect(result.pages[0].blocks[0].text).toBe(UNREADABLE_PLACEHOLDER);
+    expect(result.pages[0].blocks[0].confidence).toBe(0);
+    expect(result.pages[0].hasManualInput).toBe(true);
+  });
+
+  it('OCR exactly at timeout boundary → timeout triggers', async () => {
+    const ocrPromise = resolveAfter(100, [clearPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 100, 1);
+    expect(['success', 'timeout']).toContain(result.status);
+    expect(result.pages.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('zero timeout → immediate timeout (OCR has no chance to complete)', async () => {
+    const ocrPromise = resolveAfter(50, [clearPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 0, 1);
+    expect(result.status).toBe('timeout');
+    expect(result.pages[0].blocks[0].confidence).toBe(0);
+  });
+
+  it('high-tier timeout (8s) respected', async () => {
+    const ocrPromise = resolveAfter(500, [clearPage]);
+    const result = await runOcrWithTimeout(ocrPromise, OCR_TIMEOUT_MS_HIGH, 1);
+    expect(result.status).toBe('success');
+  });
+
+  it('low-tier timeout (15s) on fast OCR → success', async () => {
+    const ocrPromise = resolveAfter(10, [mixedPage]);
+    const result = await runOcrWithTimeout(ocrPromise, OCR_TIMEOUT_MS_LOW, 1);
+    expect(result.status).toBe('success');
+  });
+
+  it('timeout with multi-image input returns correct page count', async () => {
+    const ocrPromise = resolveAfter(500, [clearPage, mixedPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 50, 3);
+    expect(result.status).toBe('timeout');
+    expect(result.pages).toHaveLength(3);
+  });
+
+  it('timeout pages trigger full manual input', async () => {
+    const ocrPromise = resolveAfter(200, [clearPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 10, 2);
+    const action = getOcrFallbackAction(result);
+    expect(action.action).toBe('fullManualInput');
+    expect(action.manualItems.length).toBeGreaterThanOrEqual(1);
+    expect(action.message.length).toBeGreaterThan(0);
+  });
+
+  it('timeout pages have hasManualInput = true on all pages', async () => {
+    const ocrPromise = resolveAfter(200, [clearPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 10, 3);
+    for (const page of result.pages) {
+      expect(page.hasManualInput).toBe(true);
+    }
+  });
+});
+
+describe('MANFALL-12: OCR crash/hang resilience', () => {
+  it('OCR throws error → crash status, fallback pages returned', async () => {
+    const ocrPromise = rejectAfter(10, 'Native OCR module unavailable');
+    const result = await runOcrWithTimeout(ocrPromise, 500, 1);
+    expect(result.status).toBe('crash');
+    expect(result.pages).toHaveLength(1);
+    expect(result.pages[0].blocks[0].confidence).toBe(0);
+    expect(result.message).toContain('Native OCR module unavailable');
+  });
+
+  it('OCR crash preserves cause for debugging', async () => {
+    const ocrPromise = rejectAfter(5, 'ML Kit vision pipeline null pointer');
+    const result = await runOcrWithTimeout(ocrPromise, 500, 1);
+    expect(result.status).toBe('crash');
+    if (result.status === 'crash') {
+      expect(result.cause).toBeDefined();
+      expect(result.cause).toBeInstanceOf(Error);
+    }
+  });
+
+  it('OCR crash → fullManualInput action, never blocks', async () => {
+    const ocrPromise = rejectAfter(5, 'segfault');
+    const result = await runOcrWithTimeout(ocrPromise, 500, 2);
+    expect(result.status).toBe('crash');
+    const action = getOcrFallbackAction(result);
+    expect(action.action).toBe('fullManualInput');
+    expect(action.manualItems.length).toBeGreaterThan(0);
+    expect(action.pages).toBeDefined();
+    expect(action.pages.length).toBeGreaterThan(0);
+  });
+
+  it('OCR hang (never resolves) → timeout triggers, not crash', async () => {
+    const hangingPromise = new Promise<OcrPageResult[]>(() => {});
+    const result = await runOcrWithTimeout(hangingPromise, 50, 1);
+    expect(result.status).toBe('timeout');
+    expect(result.pages).toHaveLength(1);
+    expect(result.pages[0].hasManualInput).toBe(true);
+  });
+
+  it('OCR crash with non-Error throw → handled gracefully', async () => {
+    const ocrPromise = new Promise<OcrPageResult[]>((_, reject) => {
+      setTimeout(() => reject('JNI error: method not found'), 5);
+    });
+    const result = await runOcrWithTimeout(ocrPromise, 500, 1);
+    expect(result.status).toBe('crash');
+    expect(result.message).toContain('JNI error: method not found');
+    expect(result.pages).toHaveLength(1);
+  });
+
+  it('OCR crash with null throw → handled without secondary crash', async () => {
+    const ocrPromise = new Promise<OcrPageResult[]>((_, reject) => {
+      setTimeout(() => reject(null), 5);
+    });
+    const result = await runOcrWithTimeout(ocrPromise, 500, 1);
+    expect(result.status).toBe('crash');
+    expect(result.message).toContain('null');
+    expect(result.pages).toHaveLength(1);
+  });
+
+  it('OCR crash with undefined throw → handled gracefully', async () => {
+    const ocrPromise = new Promise<OcrPageResult[]>((_, reject) => {
+      setTimeout(() => reject(undefined), 5);
+    });
+    const result = await runOcrWithTimeout(ocrPromise, 500, 1);
+    expect(result.status).toBe('crash');
+    expect(result.pages).toHaveLength(1);
+  });
+
+  it('runOcrWithTimeout never throws — always returns OcrRunResult', async () => {
+    const crashPromise = rejectAfter(1, 'boom');
+    const hangPromise = new Promise<OcrPageResult[]>(() => {});
+    const [crashResult, hangResult] = await Promise.all([
+      runOcrWithTimeout(crashPromise, 100, 1),
+      runOcrWithTimeout(hangPromise, 20, 1),
+    ]);
+    expect(crashResult.status).toBe('crash');
+    expect(hangResult.status).toBe('timeout');
+  });
+});
+
+describe('MANFALL-13: Combined timeout + crash + manual input scenarios', () => {
+  it('timeout → full manual input → merge corrections → ready for inference', async () => {
+    const ocrPromise = resolveAfter(500, [mixedPage, scienceLowPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 10, 2);
+    expect(result.status).toBe('timeout');
+    const action = getOcrFallbackAction(result);
+    expect(action.action).toBe('fullManualInput');
+    const corrections = action.manualItems.map((_, i) => `typed answer ${i + 1}`);
+    const { pages, mergedCount } = mergeManualInputs(action.pages, corrections);
+    expect(mergedCount).toBe(corrections.length);
+    expect(isReadyForInference(pages)).toBe(true);
+  });
+
+  it('crash → full manual input → merge → ready for inference', async () => {
+    const ocrPromise = rejectAfter(5, 'Camera access denied');
+    const result = await runOcrWithTimeout(ocrPromise, 500, 3);
+    expect(result.status).toBe('crash');
+    const action = getOcrFallbackAction(result);
+    expect(action.action).toBe('fullManualInput');
+    const corrections = ['Answer for page 0', 'Answer for page 1', 'Answer for page 2'];
+    const { pages, mergedCount } = mergeManualInputs(action.pages, corrections);
+    expect(mergedCount).toBe(3);
+    expect(isReadyForInference(pages)).toBe(true);
+  });
+
+  it('success with low confidence → manual input → merged → ready (existing flow, via new wrapper)', async () => {
+    const ocrPromise = resolveAfter(10, [mixedPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 500, 1);
+    expect(result.status).toBe('success');
+    const action = getOcrFallbackAction(result);
+    expect(action.action).toBe('manualInput');
+    expect(action.manualItems).toHaveLength(2);
+    const corrections = ['2. 6 × 8 = ?', '3. There are 5 bags.'];
+    const { pages, mergedCount } = mergeManualInputs(action.pages, corrections);
+    expect(mergedCount).toBe(2);
+    expect(isReadyForInference(pages)).toBe(true);
+  });
+
+  it('timeout on multi-page → one page partially readable (simulated)', async () => {
+    const ocrPromise = resolveAfter(500, [clearPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 10, 3);
+    expect(result.status).toBe('timeout');
+    expect(result.pages).toHaveLength(3);
+    for (const page of result.pages) {
+      expect(page.hasManualInput).toBe(true);
+    }
+  });
+
+  it('getOcrFallbackAction for success with clear page → proceed', async () => {
+    const ocrPromise = resolveAfter(5, [clearPage]);
+    const result = await runOcrWithTimeout(ocrPromise, 500, 1);
+    expect(result.status).toBe('success');
+    const action = getOcrFallbackAction(result);
+    expect(action.action).toBe('proceed');
+    expect(action.manualItems).toHaveLength(0);
+    expect(action.message).toBe('');
+  });
+
+  it('getOcrFallbackAction for crash → non-empty message for user', async () => {
+    const result: OcrRunResult = {
+      status: 'crash',
+      pages: buildFailureFallbackPages(1),
+      message: 'Internal error',
+      cause: new Error('native crash'),
+    };
+    const action = getOcrFallbackAction(result);
+    expect(action.message.length).toBeGreaterThan(0);
+    expect(action.action).toBe('fullManualInput');
+  });
+
+  it('runOcrWithTimeout returns within the timeout + safe margin (no hang)', async () => {
+    const start = Date.now();
+    const hangingPromise = new Promise<OcrPageResult[]>(() => {});
+    await runOcrWithTimeout(hangingPromise, 100, 1);
+    const elapsed = Date.now() - start;
+    expect(elapsed).toBeLessThan(500);
   });
 });

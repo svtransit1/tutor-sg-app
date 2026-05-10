@@ -59,7 +59,7 @@ export default function PhotoReviewScreen() {
           <Text style={st.bigIcon}>📝</Text>
           <Text style={[st.emptTitle, { color: textColor }]}>{t('photoReview.empty.title')}</Text>
           <Text style={[st.emptBody, { color: isDark ? '#B0B0B0' : '#6B7280' }]}>{t('photoReview.empty.body')}</Text>
-          <TouchableOpacity style={st.hBtn} onPress={goHome} accessibilityRole="button"><Text style={st.hBtnTxt}>{t('photoReview.actions.goHome')}</Text></TouchableOpacity>
+          <TouchableOpacity style={st.hBtn} onPress={goHome} accessibilityRole="button" accessibilityLabel={t('photoReview.accessibility.goHome')}><Text style={st.hBtnTxt}>{t('photoReview.actions.goHome')}</Text></TouchableOpacity>
         </View>
       )}
       {phase === 'ready' && result && (

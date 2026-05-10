@@ -2,8 +2,17 @@
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
-    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Your personal learning companion",
+      "tagline": "Smart learning, made fun!",
+      "cta": "Get Started"
+    },
+    "langPick": {
+      "title": "Choose your language",
+      "subtitle": "Your app will use this language.",
+      "continue": "Continue"
+    },
     "privacyPromise": {
       "title": "Your privacy is our promise",
       "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
@@ -68,10 +77,24 @@
         "subjectOff": "not selected"
       }
     },
-    "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "done": {
+      "title": "All set!",
+      "subtitle": "Let's start learning",
+      "greeting": "Hi {{name}}! Ready to learn?",
+      "cameraCta": "Snap your homework",
+      "cameraSubtitle": "Take a photo to get help",
+      "practicePrompt": "Or try a practice question",
+      "parentArea": "Parent area"
+    },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
+    },
+    "parentPinSetup": {
+      "accessibility": {
+        "backButton": "Go back to previous step",
+        "cancelButton": "Cancel PIN setup"
+      }
     }
   },
   "network.offline": "You're offline",
@@ -108,11 +131,25 @@
       "errorSignInFailed": "Sign-in failed. Please try again.",
       "errorAuthSession": "Authentication session was cancelled or failed.",
       "signedIn": "Signed in successfully"
+    },
+    "accessibility": {
+      "dismissOverlay": "Dismiss PIN screen",
+      "cancelButton": "Cancel PIN entry"
     }
   },
   "parent": {
-    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "dashboard": {
+      "title": "Parent Dashboard",
+      "placeholder": "Session log and progress coming soon"
+    },
+    "settings": {
+      "title": "Settings",
+      "placeholder": "Language, quality, model, privacy"
+    },
+    "accessibility": {
+      "changePinButton": "Change parent PIN",
+      "backToKidButton": "Back to kid's home"
+    }
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
@@ -182,7 +219,8 @@
       "dismissHint": "Hide this welcome message and explore the app",
       "viewAllHint": "See all your past homework sessions",
       "switchLanguageHint": "Switch between English and Chinese",
-      "sessionCardHint": "View details of this {{subject}} session"
+      "sessionCardHint": "View details of this {{subject}} session",
+      "parentAreaButton": "Open parent area"
     },
     "firstSession": {
       "welcomeTitle": "Welcome to tutor-sg!",
@@ -356,5 +394,10 @@
     "deniedTitle": "Camera access is turned off",
     "deniedBody": "We can't read your homework without camera access. Tap the button below to go to Settings and turn it on.",
     "openSettings": "Open Settings"
+  },
+  "photoReview": {
+    "accessibility": {
+      "goHome": "Go to home screen"
+    }
   }
 }
