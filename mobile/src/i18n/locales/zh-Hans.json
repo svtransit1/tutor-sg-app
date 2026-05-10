@@ -2,8 +2,17 @@
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
-    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。", "continue": "继续" },
+    "welcome": {
+      "title": "欢迎！",
+      "subtitle": "你的个人学习伙伴",
+      "tagline": "聪明学习，快乐成长！",
+      "cta": "开始使用"
+    },
+    "langPick": {
+      "title": "选择语言",
+      "subtitle": "应用将使用此语言。",
+      "continue": "继续"
+    },
     "privacyPromise": {
       "title": "我们承诺保护您的隐私",
       "body": "孩子的作业永远不会离开这台设备。照片、答案和聊天内容都在设备上保密。只有您（家长）可以查看学习记录。",
@@ -68,10 +77,37 @@
         "subjectOff": "未选"
       }
     },
-    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
+    "done": {
+      "title": "准备好了！",
+      "subtitle": "让我们开始学习吧",
+      "greeting": "{{name}}，你好！准备好了吗？",
+      "cameraCta": "拍一下作业",
+      "cameraSubtitle": "拍张照片，立即获取帮助",
+      "practicePrompt": "或试试练习题",
+      "parentArea": "家长专区"
+    },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
+    },
+    "parentGate": {
+      "title": "家长设置",
+      "body": "这个应用需要爸爸妈妈或监护人先完成设置。请把手机交给大人。",
+      "continue": "我是家长 / 监护人",
+      "goBack": "我不是 — 返回"
+    },
+    "parentPinSetup": {
+      "title": "设置家长密码",
+      "body": "设置一个 4 位数密码。以后您可以用它查看孩子的学习记录。",
+      "enterPin": "输入 4 位数字密码",
+      "confirmPin": "确认您的密码",
+      "mismatch": "密码不匹配，请重新输入。",
+      "skip": "跳过 — 稍后设置",
+      "accessibility": {
+        "digitInput": "第 {{position}} 位数字",
+        "confirmDigitInput": "确认第 {{position}} 位数字",
+        "skipButton": "跳过密码设置"
+      }
     }
   },
   "network.offline": "你已离线",
@@ -89,7 +125,7 @@
     "pinsDontMatch": "PIN 码不匹配，请重试。",
     "setup": {
       "title": "设置家长 PIN 码",
-      "enterPin": "输入 4 位数字 PIN 码",
+      "enterPin": "输入 6 位数字 PIN 码",
       "confirmPin": "确认您的 PIN 码"
     },
     "signIn": {
@@ -108,11 +144,71 @@
       "errorSignInFailed": "登录失败，请重试。",
       "errorAuthSession": "登录会话已取消或失败。",
       "signedIn": "登录成功"
+    },
+    "cancel": "取消",
+    "changePin": {
+      "title": "更改 PIN 码",
+      "enterOld": "输入当前 PIN 码",
+      "enterNew": "输入新的 4 位数字 PIN 码",
+      "success": "更改成功",
+      "wrongOld": "当前 PIN 码错误"
     }
   },
   "parent": {
-    "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
-    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+    "changePin": "更改 PIN 码",
+    "backToKid": "返回孩子专区",
+    "dashboard": {
+      "title": "家长面板",
+      "placeholder": "学习记录和进度即将上线",
+      "empty": "还没有学习记录",
+      "emptySubtitle": "当孩子开始学习时，学习记录会显示在这里。",
+      "loading": "加载中…",
+      "recentSessions": "学习记录",
+      "questionsLabel": "{{count}} 题",
+      "correctLabel": "正确 {{correct}}/{{total}}",
+      "duration": "{{time}}",
+      "aiSummaryLabel": "AI 总结",
+      "strengths": "优势",
+      "areasToImprove": "可提升之处",
+      "noSummary": "此学习记录暂无总结。",
+      "struggleLabel": "遇到困难",
+      "struggleDescription": "您的孩子在 {{count}} 道题上遇到困难。",
+      "struggleDescription_plural": "您的孩子在 {{count}} 道题上遇到困难。",
+      "flagged": "已标记复核",
+      "sessionA11y": "{{subject}} 学习记录，{{date}}",
+      "selectKidA11y": "查看 {{name}} 的学习记录"
+    },
+    "viewSessions": "查看所有记录",
+    "sessionList": {
+      "title": "学习记录",
+      "dailyTab": "每日",
+      "weeklyTab": "每周",
+      "today": "今天",
+      "yesterday": "昨天",
+      "thisWeek": "本周",
+      "empty": "此时间段暂无学习记录",
+      "questionsCard": "{{count}} 道题",
+      "questionsCard_plural": "{{count}} 道题",
+      "struggleCard": "{{count}} 处遇困难",
+      "struggleCard_plural": "{{count}} 处遇困难"
+    },
+    "sessionDetail": {
+      "title": "学习详情",
+      "startedAt": "开始时间",
+      "timeSpent": "所用时间",
+      "questionsSection": "题目",
+      "questionsAttempted": "做了 {{count}} 题",
+      "questionsCorrect": "答对 {{count}} 题",
+      "struggleSection": "难点",
+      "noStruggles": "未发现难点",
+      "flagSession": "标记复核",
+      "unflagSession": "取消标记",
+      "sessionNotFound": "找不到此学习记录"
+    },
+    "settings": {
+      "title": "设置",
+      "placeholder": "语言、质量、模型、隐私"
+    }
   },
   "deviceTierResult": {
     "title": "你的设备已就绪！",
@@ -227,9 +323,7 @@
   },
   "common": {
     "back": "返回",
-    "cancel": "取消",
     "goBack": "返回首页",
-    "loading": "加载中…",
     "retry": "重试"
   },
   "homeworkError": {
@@ -324,37 +418,42 @@
       "drawCanvas": "第 {{number}} 项的手写区域"
     }
   },
-  "tutorial": {
-    "camera": {
-      "title": "拍下作业照片",
-      "body": "拍下你的作业，应用会帮你一步步解答每一道题。"
+  "photoReview": {
+    "title": "预览照片",
+    "empty": {
+      "title": "没有找到题目",
+      "body": "我们无法在这个照片中找到题目。试试在光线更好的地方重新拍照。"
     },
-    "help": {
-      "title": "获取提示和指导",
-      "body": "卡在题目上了？轻触获取提示、引导步骤或完整解答——就像身边有一位安静的小老师。"
+    "actions": {
+      "goHome": "返回首页"
     },
-    "language": {
-      "title": "随时切换语言",
-      "body": "点击语言按钮可在英文和中文之间切换。你的老师两种语言都会说。"
-    },
-    "skip": "跳过",
-    "next": "下一步",
-    "gotIt": "知道了！",
-    "skipA11y": "跳过教程",
-    "skipHint": "跳过分步教程，直接开始使用应用",
-    "stepIndicator": "第 {{current}} 步，共 {{total}} 步"
+    "accessibility": {
+      "questionList": "检测到的题目列表"
+    }
   },
-  "cameraPermission": {
-    "title": "需要相机权限",
-    "bodyLine1": "拍下作业照片，立即获得帮助",
-    "bodyLine2": "照片在本地处理，不会上传到任何地方",
-    "bodyLine3": "离线也能用——无需网络",
-    "reassurance": "孩子的作业内容在本设备上保密保存",
-    "allowButton": "允许相机权限",
-    "loading": "正在请求权限…",
-    "goBack": "稍后再说",
-    "deniedTitle": "相机权限已关闭",
-    "deniedBody": "没有相机权限，我们无法读取你的作业。点击下方按钮前往设置，开启相机权限。",
-    "openSettings": "前往设置"
+  "permissionPrimer": {
+    "step": "第 8 步，共 10 步",
+    "camera": {
+      "title": "相机权限",
+      "body": "我们需要相机权限，这样你的孩子可以拍摄作业照片。照片不会离开这台设备。",
+      "allow": "开启相机权限",
+      "notNow": "暂时不",
+      "permanentlyDenied": "相机权限已在系统设置中被关闭。",
+      "openSettings": "前往设置"
+    },
+    "notifications": {
+      "title": "每周学习进度摘要",
+      "body": "我们会每周向您（家长）发送一份温和的学习摘要，让您了解孩子的学习情况。不会发送垃圾信息。",
+      "allow": "允许通知",
+      "notNow": "暂时不",
+      "permanentlyDenied": "通知权限已在系统设置中被关闭。",
+      "openSettings": "前往设置"
+    },
+    "done": {
+      "title": "准备好了！",
+      "bodyAll": "您可以随时在设置中更改权限。",
+      "bodySome": "您可以稍后在设置中开启权限。",
+      "continue": "继续"
+    }
   }
 }

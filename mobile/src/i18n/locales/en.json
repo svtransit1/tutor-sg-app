@@ -2,8 +2,17 @@
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
-    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Your personal learning companion",
+      "tagline": "Smart learning, made fun!",
+      "cta": "Get Started"
+    },
+    "langPick": {
+      "title": "Choose your language",
+      "subtitle": "Your app will use this language.",
+      "continue": "Continue"
+    },
     "privacyPromise": {
       "title": "Your privacy is our promise",
       "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
@@ -68,10 +77,37 @@
         "subjectOff": "not selected"
       }
     },
-    "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "done": {
+      "title": "All set!",
+      "subtitle": "Let's start learning",
+      "greeting": "Hi {{name}}! Ready to learn?",
+      "cameraCta": "Snap your homework",
+      "cameraSubtitle": "Take a photo to get help",
+      "practicePrompt": "Or try a practice question",
+      "parentArea": "Parent area"
+    },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
+    },
+    "parentGate": {
+      "title": "Parent Setup",
+      "body": "This app needs a parent or guardian to set it up. Please hand the phone to an adult.",
+      "continue": "I'm a parent / guardian",
+      "goBack": "I'm not — go back"
+    },
+    "parentPinSetup": {
+      "title": "Set Parent PIN",
+      "body": "Set a 4-digit PIN to keep your child's learning records private.",
+      "enterPin": "Enter a 4-digit PIN",
+      "confirmPin": "Confirm your PIN",
+      "mismatch": "PINs don't match. Try again.",
+      "skip": "Skip — set up later",
+      "accessibility": {
+        "digitInput": "Digit {{position}}",
+        "confirmDigitInput": "Confirm digit {{position}}",
+        "skipButton": "Skip PIN setup"
+      }
     }
   },
   "network.offline": "You're offline",
@@ -89,7 +125,7 @@
     "pinsDontMatch": "PINs don't match. Try again.",
     "setup": {
       "title": "Set Up Parent PIN",
-      "enterPin": "Enter a 4-digit PIN",
+      "enterPin": "Enter a 6-digit PIN",
       "confirmPin": "Confirm your PIN"
     },
     "signIn": {
@@ -108,11 +144,71 @@
       "errorSignInFailed": "Sign-in failed. Please try again.",
       "errorAuthSession": "Authentication session was cancelled or failed.",
       "signedIn": "Signed in successfully"
+    },
+    "cancel": "Cancel",
+    "changePin": {
+      "title": "Change PIN",
+      "enterOld": "Enter current PIN",
+      "enterNew": "Enter new 4-digit PIN",
+      "success": "PIN changed successfully",
+      "wrongOld": "Current PIN is wrong. Try again."
     }
   },
   "parent": {
-    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "changePin": "Change PIN",
+    "backToKid": "Back to Kid Area",
+    "dashboard": {
+      "title": "Parent Dashboard",
+      "placeholder": "Session log and progress coming soon",
+      "empty": "No sessions yet",
+      "emptySubtitle": "When your child starts learning, their sessions will appear here.",
+      "loading": "Loading…",
+      "recentSessions": "Sessions",
+      "questionsLabel": "{{count}} Q",
+      "correctLabel": "{{correct}}/{{total}} correct",
+      "duration": "{{time}}",
+      "aiSummaryLabel": "AI Summary",
+      "strengths": "Strengths",
+      "areasToImprove": "Areas to grow",
+      "noSummary": "No summary for this session yet.",
+      "struggleLabel": "Struggle detected",
+      "struggleDescription": "Your child found {{count}} question challenging.",
+      "struggleDescription_plural": "Your child found {{count}} questions challenging.",
+      "flagged": "Flagged for review",
+      "sessionA11y": "{{subject}} session on {{date}}",
+      "selectKidA11y": "Select {{name}}'s sessions"
+    },
+    "viewSessions": "View All Sessions",
+    "sessionList": {
+      "title": "Session History",
+      "dailyTab": "Daily",
+      "weeklyTab": "Weekly",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "thisWeek": "This Week",
+      "empty": "No sessions in this period",
+      "questionsCard": "{{count}} question",
+      "questionsCard_plural": "{{count}} questions",
+      "struggleCard": "{{count}} struggle detected",
+      "struggleCard_plural": "{{count}} struggles detected"
+    },
+    "sessionDetail": {
+      "title": "Session Details",
+      "startedAt": "Started",
+      "timeSpent": "Time spent",
+      "questionsSection": "Questions",
+      "questionsAttempted": "{{count}} attempted",
+      "questionsCorrect": "{{count}} correct",
+      "struggleSection": "Difficulties",
+      "noStruggles": "No difficulties detected",
+      "flagSession": "Flag for review",
+      "unflagSession": "Remove flag",
+      "sessionNotFound": "Session not found"
+    },
+    "settings": {
+      "title": "Settings",
+      "placeholder": "Language, quality, model, privacy"
+    }
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
@@ -227,9 +323,7 @@
   },
   "common": {
     "back": "Back",
-    "cancel": "Cancel",
     "goBack": "Go back",
-    "loading": "Loading…",
     "retry": "Retry"
   },
   "homeworkError": {
@@ -324,37 +418,42 @@
       "drawCanvas": "Drawing area for item {{number}}"
     }
   },
-  "tutorial": {
-    "camera": {
-      "title": "Snap a photo of your homework",
-      "body": "Take a picture of your worksheet and the app will help you work through each question, step by step."
+  "photoReview": {
+    "title": "Review Photo",
+    "empty": {
+      "title": "No questions found",
+      "body": "We couldn't find any questions in this photo. Try taking another photo with better lighting."
     },
-    "help": {
-      "title": "Get hints and guidance",
-      "body": "Stuck on a question? Tap to get hints, guided steps, or a full worked solution. It's like having a quiet tutor beside you."
+    "actions": {
+      "goHome": "Back to Home"
     },
-    "language": {
-      "title": "Switch languages anytime",
-      "body": "Tap the language button to switch between English and Chinese. Your tutor speaks both."
-    },
-    "skip": "Skip",
-    "next": "Next",
-    "gotIt": "Got it!",
-    "skipA11y": "Skip tutorial",
-    "skipHint": "Skip this step-by-step tutorial and start using the app",
-    "stepIndicator": "Step {{current}} of {{total}}"
+    "accessibility": {
+      "questionList": "List of detected questions"
+    }
   },
-  "cameraPermission": {
-    "title": "Camera access needed",
-    "bodyLine1": "Snap a photo of your homework to get instant help",
-    "bodyLine2": "Your photos are processed on-device and never leave",
-    "bodyLine3": "Works offline — no internet needed",
-    "reassurance": "Your child's homework stays private on this device",
-    "allowButton": "Allow camera access",
-    "loading": "Requesting access…",
-    "goBack": "Maybe later",
-    "deniedTitle": "Camera access is turned off",
-    "deniedBody": "We can't read your homework without camera access. Tap the button below to go to Settings and turn it on.",
-    "openSettings": "Open Settings"
+  "permissionPrimer": {
+    "step": "Step 8 of 10",
+    "camera": {
+      "title": "Camera Permission",
+      "body": "We need camera access so your child can take photos of homework. Photos never leave this device.",
+      "allow": "Enable Camera",
+      "notNow": "Not now",
+      "permanentlyDenied": "Camera access has been turned off in system settings.",
+      "openSettings": "Open Settings"
+    },
+    "notifications": {
+      "title": "Weekly Learning Summary",
+      "body": "We'll send you a gentle weekly summary so you know how your child is doing. No spam.",
+      "allow": "Allow Notifications",
+      "notNow": "Not now",
+      "permanentlyDenied": "Notifications have been turned off in system settings.",
+      "openSettings": "Open Settings"
+    },
+    "done": {
+      "title": "All set!",
+      "bodyAll": "You can change permissions anytime in Settings.",
+      "bodySome": "You can enable permissions later in Settings.",
+      "continue": "Continue"
+    }
   }
 }
