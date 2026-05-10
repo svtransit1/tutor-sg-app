@@ -5,6 +5,7 @@ import type {
   PipelineStage,
   StageLatencyReport,
   StageTiming,
+  DeviceSpec,
 } from './types';
 import { computeLatencyStats } from './stats';
 
@@ -12,6 +13,7 @@ export class LatencyHarness {
   private readonly config: {
     readonly iterations: number;
     readonly deviceTier?: 'high' | 'mid' | 'low';
+    readonly deviceSpec?: DeviceSpec;
     readonly warmupIterations: number;
     readonly interIterationDelayMs: number;
   };
@@ -20,6 +22,7 @@ export class LatencyHarness {
     this.config = {
       iterations: config.iterations,
       deviceTier: config.deviceTier,
+      deviceSpec: config.deviceSpec,
       warmupIterations: config.warmupIterations ?? 0,
       interIterationDelayMs: config.interIterationDelayMs ?? 0,
     };
@@ -78,6 +81,7 @@ export class LatencyHarness {
       measuredAt: new Date().toISOString(),
       iterations: this.config.iterations,
       deviceTier: this.config.deviceTier,
+      deviceSpec: this.config.deviceSpec,
       stages: stageReports,
       total: computeLatencyStats(totalRunDurations),
       rawRuns: allRuns,
@@ -120,11 +124,16 @@ function delay(ms: number): Promise<void> {
 }
 
 export function formatReport(report: LatencyReport): string {
+  const specLine = report.deviceSpec
+    ? `${report.deviceSpec.platform} / ${report.deviceSpec.modelName} / ${report.deviceSpec.ramGB}GB RAM / ${report.deviceSpec.npuName}`
+    : '';
+
   const lines: string[] = [
     '# Camera→LLM Latency Report',
     `Measured at: ${report.measuredAt}`,
     `Iterations:  ${report.iterations}`,
     report.deviceTier ? `Device tier: ${report.deviceTier}` : '',
+    specLine ? `Device spec: ${specLine}` : '',
     '',
     '## Total pipeline',
     `  P50:  ${report.total.p50Ms.toFixed(1)} ms  |  P95:  ${report.total.p95Ms.toFixed(1)} ms  |  P99:  ${report.total.p99Ms.toFixed(1)} ms`,
@@ -147,6 +156,7 @@ export function formatReport(report: LatencyReport): string {
   lines.push('');
 
   const highTarget = 8000;
+  const midTarget = 12000;
   const lowTarget = 15000;
 
   if (report.deviceTier === 'high') {
@@ -155,9 +165,9 @@ export function formatReport(report: LatencyReport): string {
       `**ADD §3.5 high-tier target:** P95 < ${highTarget} ms → **${pass ? 'PASS ✅' : 'FAIL ❌'}** (actual: ${report.total.p95Ms.toFixed(0)} ms)`,
     );
   } else if (report.deviceTier === 'mid') {
-    const pass = report.total.p95Ms < lowTarget;
+    const pass = report.total.p95Ms < midTarget;
     lines.push(
-      `**ADD §3.5 mid-tier target:** P95 < ${lowTarget} ms → **${pass ? 'PASS ✅' : 'FAIL ❌'}** (actual: ${report.total.p95Ms.toFixed(0)} ms)`,
+      `**ADD §3.5 mid-tier target:** P95 < ${midTarget} ms → **${pass ? 'PASS ✅' : 'FAIL ❌'}** (actual: ${report.total.p95Ms.toFixed(0)} ms)`,
     );
   } else if (report.deviceTier === 'low') {
     const pass = report.total.p95Ms < lowTarget;

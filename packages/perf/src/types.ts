@@ -1,8 +1,10 @@
 /**
  * Types for the camera→LLM P95 latency measurement harness.
  *
- * Per ADD §3.5:
- *   Photo-to-first-token P95 < 8 sec on high tier, < 15 sec on low tier
+ * ADD §3.5 targets:
+ *   Photo-to-first-token P95 < 8s (high tier), < 15s (low tier)
+ * ADD §9 Q6:
+ *   Cold start < 3s on mid-tier device
  */
 
 export type StageName =
@@ -48,10 +50,18 @@ export interface StageLatencyReport {
   readonly stats: LatencyStats;
 }
 
+export interface DeviceSpec {
+  readonly platform: 'ios' | 'android' | 'unknown';
+  readonly ramGB: number;
+  readonly npuName: string;
+  readonly modelName: string;
+}
+
 export interface LatencyReport {
   readonly measuredAt: string;
   readonly iterations: number;
   readonly deviceTier?: 'high' | 'mid' | 'low';
+  readonly deviceSpec?: DeviceSpec;
   readonly stages: StageLatencyReport[];
   readonly total: LatencyStats;
   readonly rawRuns: PipelineRunTiming[];
@@ -60,6 +70,7 @@ export interface LatencyReport {
 export interface HarnessConfig {
   readonly iterations: number;
   readonly deviceTier?: 'high' | 'mid' | 'low';
+  readonly deviceSpec?: DeviceSpec;
   readonly warmupIterations?: number;
   readonly interIterationDelayMs?: number;
 }
@@ -68,3 +79,23 @@ export interface FpsMetrics {
   currentFps: number;
   isLowFps: boolean;
 }
+
+export interface ColdStartResult {
+  readonly loadTimeMs: number;
+  readonly firstFrameMs: number;
+  readonly interactiveMs: number;
+}
+
+export interface BenchResult {
+  readonly generatedAt: string;
+  readonly deviceSpec: DeviceSpec;
+  readonly coldStart?: ColdStartResult;
+  readonly llmReport?: LatencyReport;
+  readonly cameraFps?: FpsMetrics;
+}
+
+export const ADD_TARGETS: Record<string, Record<string, number>> = {
+  'cold-start': { high: 3000, mid: 3000, low: 5000 },
+  'photo-to-first-token': { high: 8000, mid: 12000, low: 15000 },
+  'camera-fps': { high: 30, mid: 25, low: 20 },
+};
