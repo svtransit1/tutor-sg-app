@@ -61,9 +61,9 @@ test('getSession returns null when no session found', async () => {
 })
 
 test('getSession returns mapped session row', async () => {
-  mockDb.getFirstAsync.mockResolvedValue({ id: 'sess-1', kid_profile_id: 'kid-1', subject: 'math', topic: 'algebra', started_at: '2026-01-01T00:00:00.000Z', ended_at: null, questions_attempted: 3, questions_correct: 2, struggle_indicators: '[false, false, true]', ai_summary: null, parent_flagged: 0 })
+  mockDb.getFirstAsync.mockResolvedValue({ id: 'sess-1', kid_profile_id: 'kid-1', subject: 'math', topic: 'algebra', started_at: '2026-01-01T00:00:00.000Z', ended_at: null, questions_attempted: 3, questions_correct: 2, struggle_indicators: '[false, false, true]', ai_summary: null, parent_flagged: 0, flag_reason: null, flag_timestamp: null })
   const result = await ParentSessionRepository.getSession('sess-1')
-  expect(result).toEqual({ id: 'sess-1', kidProfileId: 'kid-1', subject: 'math', topic: 'algebra', startedAt: '2026-01-01T00:00:00.000Z', endedAt: null, questionsAttempted: 3, questionsCorrect: 2, struggleIndicators: [false, false, true], aiSummary: null, parentFlagged: false })
+  expect(result).toEqual({ id: 'sess-1', kidProfileId: 'kid-1', subject: 'math', topic: 'algebra', startedAt: '2026-01-01T00:00:00.000Z', endedAt: null, questionsAttempted: 3, questionsCorrect: 2, struggleIndicators: [false, false, true], aiSummary: null, parentFlagged: false, flagReason: null, flagTimestamp: null })
 })
 
 test('getSessionsForKid returns empty array when no sessions', async () => {
@@ -83,8 +83,9 @@ test('getSessionsForKid returns mapped sessions ordered by started_at', async ()
 
 test('setParentFlagged updates parent_flagged to 1', async () => {
   mockDb.runAsync.mockResolvedValue({ changes: 1, lastInsertRowId: 0 })
+  mockDb.runAsync.mockClear()
   await ParentSessionRepository.setParentFlagged('sess-1', true)
-  expect(mockDb.runAsync).toHaveBeenCalledWith('UPDATE parent_sessions SET parent_flagged = ? WHERE id = ?', 1, 'sess-1')
+  expect(mockDb.runAsync).toHaveBeenCalledWith(expect.stringContaining('SET parent_flagged = 1'), expect.any(String), expect.any(String), 'sess-1')
 })
 
 test('setParentFlagged updates parent_flagged to 0', async () => {

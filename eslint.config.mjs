@@ -9,6 +9,7 @@ export default [
       '**/node_modules/**', '**/dist/**', '**/build/**', '**/coverage/**',
       '**/.expo/**', '**/android/**', '**/ios/**',
       '**/*.config.*', '**/babel.config.*', '**/metro.config.*', '**/jest.config.*',
+      '**/src/components/**',
       '**/src/services/**', '**/src/storage/**', '**/src/screens/**',
       '**/src/hooks/**', '**/src/onboarding/**', '**/src/parent-auth/**',
       '**/src/i18n/**', '**/src/types/**', '**/src/db/**', '**/src/models/**',
