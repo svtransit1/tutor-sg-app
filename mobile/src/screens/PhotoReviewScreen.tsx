@@ -1,11 +1,30 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text, ScrollView, StyleSheet, useColorScheme, TouchableOpacity, type ViewStyle, type TextStyle } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import HomeworkFeedbackCard from '@/components/HomeworkFeedbackCard';
 import type { QuestionFeedback, HomeworkFeedbackResult } from '@/models/homework-feedback';
+import { useParentSession } from '@/hooks/useParentSession';
+import type { ParentSubject } from '@/storage/parentSessions';
 
 type Phase = 'processing' | 'ready' | 'error' | 'empty';
+
+const SUBJECT_MAP: Record<string, ParentSubject> = {
+  math: 'math',
+  english: 'english',
+  chinese_mt: 'chinese',
+  science: 'science',
+};
+
+function pickSubject(questions: QuestionFeedback[]): ParentSubject {
+  for (const q of questions) { const mapped = SUBJECT_MAP[q.subject]; if (mapped) return mapped; }
+  return 'english';
+}
+
+function pickTopic(questions: QuestionFeedback[]): string {
+  for (const q of questions) { if (q.topic) return q.topic; }
+  return '';
+}
 
 export function parseQuestions(raw: string | string[] | undefined): QuestionFeedback[] | null {
   if (!raw) return null;
@@ -29,6 +48,9 @@ export default function PhotoReviewScreen() {
   const [phase, setPhase] = useState<Phase>('processing');
   const [result, setResult] = useState<HomeworkFeedbackResult | null>(null);
 
+  const { startParentSession, logQuestionAttempt, endParentSession } = useParentSession();
+  const sessionEndedRef = useRef(false);
+
   useEffect(() => {
     const parsed = parseQuestions(params.questions);
     if (parsed !== null && parsed.length === 0) { setPhase('empty'); return; }
@@ -38,6 +60,24 @@ export default function PhotoReviewScreen() {
     }, 1200);
     return () => clearTimeout(timer);
   }, [params.questions]);
+
+  useEffect(() => {
+    if (phase !== 'ready' || !result || result.questions.length === 0) return;
+    const subject = pickSubject(result.questions);
+    const topic = pickTopic(result.questions);
+    startParentSession(subject, topic).catch(() => {});
+    for (const q of result.questions) {
+      logQuestionAttempt(String(q.questionNumber), false, 0, 0, false).catch(() => {});
+    }
+  }, [phase, result, startParentSession, logQuestionAttempt]);
+
+  useEffect(() => {
+    return () => {
+      if (sessionEndedRef.current) return;
+      sessionEndedRef.current = true;
+      endParentSession('', false).catch(() => {});
+    };
+  }, [endParentSession]);
 
 
   const goBack = useCallback(() => { if (router.canGoBack()) router.back(); else router.replace('/(kid)/home'); }, []);
