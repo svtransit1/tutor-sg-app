@@ -76,7 +76,7 @@ const st = StyleSheet.create({
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingTop: 8, paddingBottom: 8 },
   backBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, minWidth: 60 },
   backArrow: { fontSize: 20, fontWeight: '600' } as TextStyle,
-  backLabel: { fontSize: 15, fontWeight: '600' } as TextStyle,
+  backLabel: { fontSize: 16, fontWeight: "600", } as TextStyle,
   heading: { fontSize: 17, fontWeight: '700', textAlign: 'center', flex: 1 } as TextStyle,
   spacer: { minWidth: 60 },
   scroll: { flex: 1 },
@@ -85,7 +85,7 @@ const st = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 32, gap: 12 },
   bigIcon: { fontSize: 48, marginBottom: 8 } as TextStyle,
   emptTitle: { fontSize: 20, fontWeight: '700', textAlign: 'center' } as TextStyle,
-  emptBody: { fontSize: 15, lineHeight: 22, textAlign: 'center' } as TextStyle,
+  emptBody: { fontSize: 16, lineHeight: 24, textAlign: "center", } as TextStyle,
   hBtn: { paddingVertical: 12, paddingHorizontal: 24, borderWidth: 1.5, borderColor: '#D1D5DB', borderRadius: 12 },
-  hBtnTxt: { color: '#6B7280', fontSize: 15, fontWeight: '600' } as TextStyle,
+  hBtnTxt: { color: '#6B7280', fontSize: 16, fontWeight: "600", } as TextStyle,
 } as Record<string, ViewStyle | TextStyle>);
