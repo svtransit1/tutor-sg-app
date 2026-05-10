@@ -115,8 +115,8 @@ Both removed after confirming no references exist.
 |-----------|--------|
 | Circular dependencies | ✅ 0 found |
 | Version mismatches | ✅ None critical |
-| Workspace references | ⚠️ Should use explicit `workspace:*` in `@tutor-sg/shared` |
-| Stale packages | 🔴 `packages/database/`, `packages/perf/` need resolution |
+| Workspace references | ✅ All internal deps use `workspace:*` |
+| Stale packages | ✅ Removed (`packages/database/`, `packages/perf/`) |
 
 ---
 
@@ -127,5 +127,5 @@ Both removed after confirming no references exist.
 - [x] Workspace reference audit complete
 - [x] Findings documented in this file
 - [x] Stale packages removed (`packages/database/`, `packages/perf/`)
-- [ ] **TODO:** Add `pnpm-workspace.yaml` for explicit workspace declaration
-- [ ] **TODO:** Change `@tutor-sg/shared` to use `workspace:*` instead of `*` for internal deps
+- [x] Add `pnpm-workspace.yaml` for explicit workspace declaration
+- [x] Change `@tutor-sg/shared` to use `workspace:*` instead of `*` for internal deps
