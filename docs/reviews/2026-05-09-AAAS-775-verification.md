@@ -43,9 +43,20 @@
 - `mobile/src/i18n/locales/en.json` — password auth keys
 - `mobile/src/i18n/locales/zh-Hans.json` — password auth keys (bilingual)
 
+## Update — B1-B4 Resolved (2026-05-10)
+
+| Blocker | Fix | Commit |
+|---|---|---|
+| B1: Hardcoded "Continue" | i18n key `parentAuth.signIn.continue` in EN + zh-Hans | `5d8a23d42` |
+| B2: expo-web-browser mock | Manual mock in `src/__mocks__/expo-web-browser.ts` | `5d8a23d42` |
+| B3: Missing signUp/signIn tests | 4 new validation tests added | `5d8a23d42` |
+| B4: Missing SecureStore test | `loadSession` test via `getItemAsync` | `5d8a23d42` |
+
+Tests: 20/20 pass (was 16). Typecheck: 0 errors.
+
 ## Next action
 
-Submit for Tortoise quality gates review.
+Re-submit for Tortoise quality gates re-review.
 
 ## Cross-references
 
