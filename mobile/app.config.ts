@@ -39,6 +39,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       ...config.updates,
       url: `https://u.expo.dev/${config.extra?.eas?.projectId ?? ""}`,
     },
+    plugins: [
+      "expo-secure-store",
+      "expo-router",
+    ],
     extra: {
       ...config.extra,
       appVariant: variant,

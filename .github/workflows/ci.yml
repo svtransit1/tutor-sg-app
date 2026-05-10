@@ -16,6 +16,22 @@ env:
   NODE_VERSION: '20'
 
 jobs:
+  expo-doctor:
+    name: Expo Doctor
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+      - run: pnpm install --no-frozen-lockfile --ignore-workspace
+        working-directory: mobile
+      - run: npx expo-doctor
+        working-directory: mobile
+
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
@@ -46,7 +62,7 @@ jobs:
 
   bundle:
     name: RN Bundle
-    needs: [typecheck, lint]
+    needs: [typecheck, lint, expo-doctor]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
