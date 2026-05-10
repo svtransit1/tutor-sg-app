@@ -91,6 +91,6 @@ describe('FirstUseWalkthrough', () => {
     renderOverlay();
     expect(screen.getByLabelText('tutorial.skipA11y')).toBeTruthy();
     expect(screen.getByLabelText('tutorial.next')).toBeTruthy();
-    expect(screen.getByLabelText('tutorial.stepIndicator')).toBeTruthy();
+    expect(screen.getByLabelText('Step {current} of {total}')).toBeTruthy();
   });
 });

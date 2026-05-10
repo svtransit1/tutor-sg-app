@@ -188,7 +188,7 @@ describe('HomeworkFeedbackCard', () => {
           onRetry={onRetry}
         />,
       );
-      fireEvent.press(screen.getByText('common.retry'));
+      fireEvent.press(screen.getByLabelText('homeworkError.retry'));
       expect(onRetry).toHaveBeenCalledTimes(1);
     });
   });

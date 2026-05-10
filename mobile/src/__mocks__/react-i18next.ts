@@ -29,6 +29,8 @@ const mockT = (key: string, fallback?: string) => {
     'common.back': 'Back',
     'kidHome.firstSession.ctaCamera': 'Snap your homework',
     'onboarding.done.parentArea': 'Parent area',
+    'tutorial.stepIndicator': 'Step {current} of {total}',
+    'common.retry': 'Retry',
   };
   return m[key] ?? fallback ?? key;
 };

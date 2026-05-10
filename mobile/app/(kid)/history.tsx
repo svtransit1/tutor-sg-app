@@ -19,6 +19,7 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
+import type { TFunction } from "i18next";
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -34,7 +35,7 @@ const SUBJECT_ICONS: Record<string, string> = {
 
 const PAGE_SIZE = 20;
 
-function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): string {
+function timeAgo(dateStr: string, t: TFunction): string {
   const now = Date.now();
   const then = new Date(dateStr).getTime();
   const diffMs = now - then;
@@ -49,7 +50,7 @@ function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): st
   return t('kidHome.recentSessions.timeAgo.daysAgo', { days: diffDays });
 }
 
-function formatTimeSpent(seconds: number, t: (key: string, opts?: object) => string): string {
+function formatTimeSpent(seconds: number, t: TFunction): string {
   const min = Math.floor(seconds / 60);
   const sec = seconds % 60;
   if (seconds < 60) return t('kidHome.recentSessions.timeSpent', { minutes: 0, seconds: sec });

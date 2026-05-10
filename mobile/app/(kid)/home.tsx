@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, Pressable, ScrollView, StyleSheet, useColorScheme, RefreshControl } from 'react-native';
+import type { TFunction } from "i18next";
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { FirstUseWalkthrough } from '@/components/FirstUseWalkthrough';
@@ -14,7 +15,7 @@ const SUBJECT_ICONS: Record<string, string> = {
   chinese: '🀄',
 };
 
-function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): string {
+function timeAgo(dateStr: string, t: TFunction): string {
   const now = Date.now();
   const then = new Date(dateStr).getTime();
   const diffMs = now - then;
@@ -29,7 +30,7 @@ function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): st
   return t('kidHome.recentSessions.timeAgo.daysAgo', { days: diffDays });
 }
 
-function formatTimeSpent(seconds: number, t: (key: string, opts?: object) => string): string {
+function formatTimeSpent(seconds: number, t: TFunction): string {
   const min = Math.floor(seconds / 60);
   const sec = seconds % 60;
   if (seconds < 60) return t('kidHome.recentSessions.timeSpent', { minutes: 0, seconds: sec });
