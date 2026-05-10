@@ -2,8 +2,17 @@
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
-    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Your personal learning companion",
+      "tagline": "Smart learning, made fun!",
+      "cta": "Get Started"
+    },
+    "langPick": {
+      "title": "Choose your language",
+      "subtitle": "Your app will use this language.",
+      "continue": "Continue"
+    },
     "privacyPromise": {
       "title": "Your privacy is our promise",
       "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
@@ -68,7 +77,15 @@
         "subjectOff": "not selected"
       }
     },
-    "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "done": {
+      "title": "All set!",
+      "subtitle": "Let's start learning",
+      "greeting": "Hi {{name}}! Ready to learn?",
+      "cameraCta": "Snap your homework",
+      "cameraSubtitle": "Take a photo to get help",
+      "practicePrompt": "Or try a practice question",
+      "parentArea": "Parent area"
+    },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
@@ -111,8 +128,45 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "dashboard": {
+      "title": "Parent Dashboard",
+      "empty": {
+        "title": "No learning sessions yet",
+        "description": "Your child's homework help sessions will appear here once they start using the app.",
+        "cta": "Go to Kid's App"
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "placeholder": "Language, quality, model, privacy"
+    }
+  },
+  "flagged": {
+    "title": "Flagged for Review",
+    "empty": "No flagged sessions",
+    "flagReasonLabel": "Why are you flagging this?",
+    "flagReasonPlaceholder": "Describe what seemed wrong (optional)",
+    "flagReasonSaved": "Reason: {{reason}}",
+    "flaggedAt": "Flagged {{date}}",
+    "flagSession": "Flag for review",
+    "unflagSession": "Remove flag",
+    "flagSuccess": "Session flagged for review",
+    "unflagSuccess": "Flag removed",
+    "analysis": {
+      "title": "Question Bank Insights",
+      "topicHeader": "Topic",
+      "flagCount": "{{count}} flag",
+      "flagCount_plural": "{{count}} flags",
+      "suggestionLabel": "Suggestion",
+      "lastAnalyzed": "Last analyzed: {{date}}",
+      "noAnalysis": "Run analysis to see improvement suggestions.",
+      "analyzeNow": "Run Analysis",
+      "analyzing": "Analyzing\u2026",
+      "analysisComplete": "Analysis complete",
+      "flaggedSubjects": "Flagged by subject",
+      "totalFlagged": "{{count}} session flagged",
+      "totalFlagged_plural": "{{count}} sessions flagged"
+    }
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
