@@ -1,12 +1,12 @@
-import type { PerfMark } from './types';
+import type { PerfMark, PerfSession } from './types';
 
 /**
  * Cross-platform high-resolution timer.
  *
- * In React Native (Hermes), uses the built-in performance.now() API.
- * Falls back to Date.now() when performance API is unavailable (Node.js tests, older runtimes).
- *
- * Resolution: microsecond-level in RN/Hermes, millisecond-level with Date fallback.
+ * In React Native (Hermes), uses the built-in performance.now() API
+ * (microsecond resolution). In Node.js, uses process.hrtime.bigint()
+ * (nanosecond resolution). Falls back to Date.now() (millisecond resolution)
+ * when neither API is available.
  */
 
 let _marks: PerfMark[] = [];
@@ -15,6 +15,10 @@ let _startTime = 0;
 function now(): number {
   if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
     return performance.now();
+  }
+  if (typeof process !== 'undefined' && process.hrtime?.bigint) {
+    const NS_PER_MS = 1_000_000n;
+    return Number(process.hrtime.bigint() / NS_PER_MS);
   }
   return Date.now();
 }
@@ -65,3 +69,25 @@ export function timestamp(): number {
 }
 
 export { now };
+
+/**
+ * Build a PerfSession from the current timer state.
+ *
+ * Call after collecting marks to produce a serialisable session record
+ * suitable for the bench CLI or cross-run comparison.
+ */
+export function buildSession(
+  id: string,
+  scenario: 'cold-start' | 'photo-to-first-token',
+  platform: 'ios' | 'android' | 'unknown' = 'unknown',
+  deviceTier: 'high' | 'mid' | 'low' | 'unknown' = 'unknown',
+): PerfSession {
+  return {
+    id,
+    scenario,
+    platform,
+    deviceTier,
+    marks: [..._marks],
+    startedAt: new Date().toISOString(),
+  };
+}

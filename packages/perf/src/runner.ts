@@ -7,6 +7,11 @@ import { p50, p75, p95, p99, mean, stddev, min, max } from './statistics';
  *
  * Cold-start: mark "js_module_load" → "first_interactive_frame"
  * Photo-to-first-token: mark "capture_end" → "first_llm_token"
+ *
+ * All marks must share the same time origin (session start).
+ * For photo-to-first-token, "capture_end" is the timestamp when the
+ * camera finishes capturing; both marks are recorded via the timer
+ * module's `mark()` which records ms since `startSession()`.
  */
 function deriveMetric(session: PerfSession): number | null {
   if (session.scenario === 'cold-start') {

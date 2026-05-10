@@ -8,6 +8,7 @@ import {
   reset,
   timestamp,
   now,
+  buildSession,
 } from '../timer';
 
 describe('timer', () => {
@@ -71,5 +72,30 @@ describe('timer', () => {
     const t = timestamp();
     expect(t).toBeGreaterThan(0);
     expect(now()).toBeGreaterThan(0);
+  });
+
+  it('buildSession creates a valid PerfSession', () => {
+    startSession();
+    mark('js_module_load', { chipset: 'A15' });
+    mark('first_interactive_frame');
+    const session = buildSession('cs-1', 'cold-start', 'ios', 'high');
+    expect(session.id).toBe('cs-1');
+    expect(session.scenario).toBe('cold-start');
+    expect(session.platform).toBe('ios');
+    expect(session.deviceTier).toBe('high');
+    expect(session.marks).toHaveLength(2);
+    expect(session.marks[0].name).toBe('js_module_load');
+    expect(session.marks[0].metadata).toEqual({ chipset: 'A15' });
+    expect(session.startedAt).toBeTruthy();
+  });
+
+  it('buildSession snapshots current marks without side-effects', () => {
+    startSession();
+    mark('a');
+    const s1 = buildSession('s1', 'photo-to-first-token');
+    mark('b');
+    const s2 = buildSession('s2', 'photo-to-first-token');
+    expect(s1.marks).toHaveLength(1);
+    expect(s2.marks).toHaveLength(2);
   });
 });

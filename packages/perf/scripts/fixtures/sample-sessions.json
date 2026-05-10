@@ -1,0 +1,112 @@
+[
+  {
+    "id": "cold-start-run-1",
+    "scenario": "cold-start",
+    "platform": "ios",
+    "deviceTier": "high",
+    "marks": [
+      { "name": "js_module_load", "timestampMs": 0 },
+      { "name": "first_interactive_frame", "timestampMs": 1200 }
+    ],
+    "startedAt": "2026-05-10T00:00:00.000Z"
+  },
+  {
+    "id": "cold-start-run-2",
+    "scenario": "cold-start",
+    "platform": "ios",
+    "deviceTier": "high",
+    "marks": [
+      { "name": "js_module_load", "timestampMs": 0 },
+      { "name": "first_interactive_frame", "timestampMs": 900 }
+    ],
+    "startedAt": "2026-05-10T00:00:01.000Z"
+  },
+  {
+    "id": "cold-start-run-3",
+    "scenario": "cold-start",
+    "platform": "ios",
+    "deviceTier": "high",
+    "marks": [
+      { "name": "js_module_load", "timestampMs": 0 },
+      { "name": "first_interactive_frame", "timestampMs": 1100 }
+    ],
+    "startedAt": "2026-05-10T00:00:02.000Z"
+  },
+  {
+    "id": "photo-run-1",
+    "scenario": "photo-to-first-token",
+    "platform": "ios",
+    "deviceTier": "high",
+    "marks": [
+      { "name": "capture_end", "timestampMs": 100 },
+      { "name": "first_llm_token", "timestampMs": 5100 }
+    ],
+    "startedAt": "2026-05-10T00:01:00.000Z"
+  },
+  {
+    "id": "photo-run-2",
+    "scenario": "photo-to-first-token",
+    "platform": "ios",
+    "deviceTier": "high",
+    "marks": [
+      { "name": "capture_end", "timestampMs": 50 },
+      { "name": "first_llm_token", "timestampMs": 7050 }
+    ],
+    "startedAt": "2026-05-10T00:01:01.000Z"
+  },
+  {
+    "id": "photo-run-3",
+    "scenario": "photo-to-first-token",
+    "platform": "ios",
+    "deviceTier": "high",
+    "marks": [
+      { "name": "capture_end", "timestampMs": 200 },
+      { "name": "first_llm_token", "timestampMs": 6200 }
+    ],
+    "startedAt": "2026-05-10T00:01:02.000Z"
+  },
+  {
+    "id": "photo-run-4",
+    "scenario": "photo-to-first-token",
+    "platform": "ios",
+    "deviceTier": "high",
+    "marks": [
+      { "name": "capture_end", "timestampMs": 150 },
+      { "name": "first_llm_token", "timestampMs": 5550 }
+    ],
+    "startedAt": "2026-05-10T00:01:03.000Z"
+  },
+  {
+    "id": "photo-run-5",
+    "scenario": "photo-to-first-token",
+    "platform": "ios",
+    "deviceTier": "high",
+    "marks": [
+      { "name": "capture_end", "timestampMs": 180 },
+      { "name": "first_llm_token", "timestampMs": 6800 }
+    ],
+    "startedAt": "2026-05-10T00:01:04.000Z"
+  },
+  {
+    "id": "photo-run-6",
+    "scenario": "photo-to-first-token",
+    "platform": "ios",
+    "deviceTier": "high",
+    "marks": [
+      { "name": "capture_end", "timestampMs": 100 },
+      { "name": "first_llm_token", "timestampMs": 4800 }
+    ],
+    "startedAt": "2026-05-10T00:01:05.000Z"
+  },
+  {
+    "id": "photo-run-7",
+    "scenario": "photo-to-first-token",
+    "platform": "ios",
+    "deviceTier": "high",
+    "marks": [
+      { "name": "capture_end", "timestampMs": 120 },
+      { "name": "first_llm_token", "timestampMs": 5200 }
+    ],
+    "startedAt": "2026-05-10T00:01:06.000Z"
+  }
+]
