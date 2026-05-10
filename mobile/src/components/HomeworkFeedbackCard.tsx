@@ -555,9 +555,9 @@ const cardStyles = StyleSheet.create({
   } satisfies ViewStyle,
 
   stepNumber: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 1,
@@ -565,10 +565,10 @@ const cardStyles = StyleSheet.create({
 
   stepNumberText: {
     color: '#FFFFFF',
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: '700',
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 28,
   } satisfies TextStyle,
 
   actions: {
@@ -584,7 +584,7 @@ const cardStyles = StyleSheet.create({
 
   actionBtnText: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '600',
   } satisfies TextStyle,
 
@@ -596,7 +596,7 @@ const cardStyles = StyleSheet.create({
   } satisfies ViewStyle,
 
   actionBtnSecondaryText: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '600',
   } satisfies TextStyle,
 
@@ -624,8 +624,8 @@ const cardStyles = StyleSheet.create({
   } satisfies TextStyle,
 
   errorText: {
-    fontSize: 15,
-    lineHeight: 22,
+    fontSize: 16,
+    lineHeight: 24,
     textAlign: 'center',
   } satisfies TextStyle,
 
@@ -638,7 +638,7 @@ const cardStyles = StyleSheet.create({
 
   errorRetryText: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '600',
   } satisfies TextStyle,
 });

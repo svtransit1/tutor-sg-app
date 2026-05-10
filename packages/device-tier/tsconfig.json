@@ -1,1 +1,13 @@
-{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleResolution":"bundler","skipLibCheck":true,"noEmit":true,"jsx":"react-jsx","types":[]},"include":["src/**/*.ts","src/**/*.tsx"],"exclude":["node_modules","dist","src/__tests__"]}
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "dist", "src/__tests__"]
+}
