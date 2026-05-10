@@ -227,7 +227,9 @@
   },
   "common": {
     "back": "Back",
+    "cancel": "Cancel",
     "goBack": "Go back",
+    "loading": "Loading…",
     "retry": "Retry"
   },
   "homeworkError": {
@@ -321,5 +323,38 @@
       "typeInput": "Type answer for item {{number}}",
       "drawCanvas": "Drawing area for item {{number}}"
     }
+  },
+  "tutorial": {
+    "camera": {
+      "title": "Snap a photo of your homework",
+      "body": "Take a picture of your worksheet and the app will help you work through each question, step by step."
+    },
+    "help": {
+      "title": "Get hints and guidance",
+      "body": "Stuck on a question? Tap to get hints, guided steps, or a full worked solution. It's like having a quiet tutor beside you."
+    },
+    "language": {
+      "title": "Switch languages anytime",
+      "body": "Tap the language button to switch between English and Chinese. Your tutor speaks both."
+    },
+    "skip": "Skip",
+    "next": "Next",
+    "gotIt": "Got it!",
+    "skipA11y": "Skip tutorial",
+    "skipHint": "Skip this step-by-step tutorial and start using the app",
+    "stepIndicator": "Step {{current}} of {{total}}"
+  },
+  "cameraPermission": {
+    "title": "Camera access needed",
+    "bodyLine1": "Snap a photo of your homework to get instant help",
+    "bodyLine2": "Your photos are processed on-device and never leave",
+    "bodyLine3": "Works offline — no internet needed",
+    "reassurance": "Your child's homework stays private on this device",
+    "allowButton": "Allow camera access",
+    "loading": "Requesting access…",
+    "goBack": "Maybe later",
+    "deniedTitle": "Camera access is turned off",
+    "deniedBody": "We can't read your homework without camera access. Tap the button below to go to Settings and turn it on.",
+    "openSettings": "Open Settings"
   }
 }

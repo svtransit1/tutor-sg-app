@@ -227,7 +227,9 @@
   },
   "common": {
     "back": "返回",
+    "cancel": "取消",
     "goBack": "返回首页",
+    "loading": "加载中…",
     "retry": "重试"
   },
   "homeworkError": {
@@ -321,5 +323,38 @@
       "typeInput": "为第 {{number}} 项输入答案",
       "drawCanvas": "第 {{number}} 项的手写区域"
     }
+  },
+  "tutorial": {
+    "camera": {
+      "title": "拍下作业照片",
+      "body": "拍下你的作业，应用会帮你一步步解答每一道题。"
+    },
+    "help": {
+      "title": "获取提示和指导",
+      "body": "卡在题目上了？轻触获取提示、引导步骤或完整解答——就像身边有一位安静的小老师。"
+    },
+    "language": {
+      "title": "随时切换语言",
+      "body": "点击语言按钮可在英文和中文之间切换。你的老师两种语言都会说。"
+    },
+    "skip": "跳过",
+    "next": "下一步",
+    "gotIt": "知道了！",
+    "skipA11y": "跳过教程",
+    "skipHint": "跳过分步教程，直接开始使用应用",
+    "stepIndicator": "第 {{current}} 步，共 {{total}} 步"
+  },
+  "cameraPermission": {
+    "title": "需要相机权限",
+    "bodyLine1": "拍下作业照片，立即获得帮助",
+    "bodyLine2": "照片在本地处理，不会上传到任何地方",
+    "bodyLine3": "离线也能用——无需网络",
+    "reassurance": "孩子的作业内容在本设备上保密保存",
+    "allowButton": "允许相机权限",
+    "loading": "正在请求权限…",
+    "goBack": "稍后再说",
+    "deniedTitle": "相机权限已关闭",
+    "deniedBody": "没有相机权限，我们无法读取你的作业。点击下方按钮前往设置，开启相机权限。",
+    "openSettings": "前往设置"
   }
 }
