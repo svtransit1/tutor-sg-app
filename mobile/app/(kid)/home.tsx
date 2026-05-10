@@ -3,6 +3,7 @@ import { View, Text, Pressable, ScrollView, StyleSheet, useColorScheme, RefreshC
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { FirstUseWalkthrough } from '@/components/FirstUseWalkthrough';
+import { SubjectTileGrid } from '@/components/SubjectTileGrid';
 import { isTutorialShown, markTutorialShown } from '@/storage/tutorial-storage';
 import { getRecentSessions } from '@/storage/sessions';
 import type { KidSession } from '@/storage/sessions';
@@ -87,6 +88,14 @@ export default function KidHomeScreen() {
     router.push('/(kid)/history');
   };
 
+  const handleCameraPress = useCallback(() => {
+    router.push('/(kid)/photo-review');
+  }, []);
+
+  const handleSubjectPress = useCallback((subject: string) => {
+    router.push(`/(kid)/photo-review?subject=${subject}`);
+  }, []);
+
   const sessionList = (
     <View style={styles.recentSection}>
       <View style={styles.recentHeader}>
@@ -161,6 +170,11 @@ export default function KidHomeScreen() {
         <Text style={[styles.subtitle, { color: isDark ? '#AAAAAA' : '#6B7280' }]}>
           {t('kidHome.firstSession.ctaCamera')}
         </Text>
+
+        <SubjectTileGrid
+          onSubjectPress={handleSubjectPress}
+          onCameraPress={handleCameraPress}
+        />
 
         {sessionList}
 
