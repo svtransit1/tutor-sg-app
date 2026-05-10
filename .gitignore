@@ -5,6 +5,10 @@
 *.pem
 *.p12
 *.keystore
+**/GoogleService-Info.plist
+
+# Accidental CLI artifact
+--help/
 
 # OS
 .DS_Store
@@ -27,6 +31,10 @@ dist/
 *.apk
 *.aab
 *.app
+*.tsbuildinfo
+
+# Expo build artifacts
+.expo/
 
 # Local LLM model artefacts — never commit
 **/models/
