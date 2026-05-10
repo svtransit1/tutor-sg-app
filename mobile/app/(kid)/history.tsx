@@ -22,6 +22,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import type { TFunction } from 'i18next';
 import { getPaginatedSessions } from '../../src/storage/sessions';
 import type { KidSession } from '../../src/storage/sessions';
 
@@ -34,7 +35,7 @@ const SUBJECT_ICONS: Record<string, string> = {
 
 const PAGE_SIZE = 20;
 
-function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): string {
+function timeAgo(dateStr: string, t: TFunction): string {
   const now = Date.now();
   const then = new Date(dateStr).getTime();
   const diffMs = now - then;

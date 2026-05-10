@@ -147,7 +147,7 @@ export class ParentSessionRepository {
     const db = await getDb()
     return db.getAllAsync<FlagImprovementRow>('SELECT * FROM flag_improvement_analysis ORDER BY flag_count DESC')
   }
-  static async upsertFlagImprovement(row: Omit<FlagImprovementRow, 'last_analyzed'> & { last_analyzed?: string }): Promise<void> {
+  static async upsertFlagImprovement(row: Omit<FlagImprovementRow, 'last_analyzed'> & { last_analyzed: string | null }): Promise<void> {
     const db = await getDb()
     await db.runAsync(
       'INSERT OR REPLACE INTO flag_improvement_analysis (topic_id, subject, level, flag_count, avg_difficulty, common_reasons, suggestions, last_analyzed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',

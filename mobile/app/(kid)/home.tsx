@@ -6,6 +6,7 @@ import { FirstUseWalkthrough } from '@/components/FirstUseWalkthrough';
 import { isTutorialShown, markTutorialShown } from '@/storage/tutorial-storage';
 import { getRecentSessions } from '@/storage/sessions';
 import type { KidSession } from '@/storage/sessions';
+import type { TFunction } from 'i18next';
 
 const SUBJECT_ICONS: Record<string, string> = {
   math: '🧮',
@@ -14,7 +15,7 @@ const SUBJECT_ICONS: Record<string, string> = {
   chinese: '🀄',
 };
 
-function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): string {
+function timeAgo(dateStr: string, t: TFunction): string {
   const now = Date.now();
   const then = new Date(dateStr).getTime();
   const diffMs = now - then;

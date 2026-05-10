@@ -22,16 +22,18 @@ const mockT = (key: string, fallback?: string) => {
     'parentAuth.changePin.wrongOld': 'Current PIN is incorrect',
     'parentAuth.cancel': 'Cancel',
     'parent.dashboard.title': 'Parent Dashboard',
-    'parent.dashboard.placeholder': 'Session log and progress coming soon',
+    'parent.dashboard.empty.title': 'No learning sessions yet',
+    'parent.dashboard.empty.description': 'Your child\'s homework help sessions will appear here once they start using the app.',
+    'parent.dashboard.empty.cta': 'Go to Kid\'s App',
     'parent.changePin': 'Change PIN',
     'parent.backToKid': 'Back to Kid Area',
     'common.cancel': 'Cancel',
     'common.back': 'Back',
+    'common.retry': 'Retry',
     'kidHome.firstSession.ctaCamera': 'Snap your homework',
     'onboarding.done.parentArea': 'Parent area',
   };
   return m[key] ?? fallback ?? key;
 };
-
 export const useTranslation = () => ({ t: mockT, i18n: { language: 'en', changeLanguage: jest.fn() } });
 export const initReactI18next = { type: '3rdParty', init: jest.fn() };

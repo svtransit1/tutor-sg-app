@@ -161,7 +161,7 @@
       "lastAnalyzed": "上次分析：{{date}}",
       "noAnalysis": "运行分析以查看改进建议。",
       "analyzeNow": "运行分析",
-      "analyzing": "分析中\u2026",
+      "analyzing": "分析中…",
       "analysisComplete": "分析完成",
       "flaggedSubjects": "按科目标记情况",
       "totalFlagged": "标记了 {{count}} 次学习记录",

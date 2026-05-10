@@ -161,7 +161,7 @@
       "lastAnalyzed": "Last analyzed: {{date}}",
       "noAnalysis": "Run analysis to see improvement suggestions.",
       "analyzeNow": "Run Analysis",
-      "analyzing": "Analyzing\u2026",
+      "analyzing": "Analyzing…",
       "analysisComplete": "Analysis complete",
       "flaggedSubjects": "Flagged by subject",
       "totalFlagged": "{{count}} session flagged",
