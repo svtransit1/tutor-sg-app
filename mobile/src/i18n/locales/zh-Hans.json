@@ -2,8 +2,17 @@
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
-    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。", "continue": "继续" },
+    "welcome": {
+      "title": "欢迎！",
+      "subtitle": "你的个人学习伙伴",
+      "tagline": "聪明学习，快乐成长！",
+      "cta": "开始使用"
+    },
+    "langPick": {
+      "title": "选择语言",
+      "subtitle": "应用将使用此语言。",
+      "continue": "继续"
+    },
     "privacyPromise": {
       "title": "我们承诺保护您的隐私",
       "body": "孩子的作业永远不会离开这台设备。照片、答案和聊天内容都在设备上保密。只有您（家长）可以查看学习记录。",
@@ -68,7 +77,15 @@
         "subjectOff": "未选"
       }
     },
-    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
+    "done": {
+      "title": "准备好了！",
+      "subtitle": "让我们开始学习吧",
+      "greeting": "{{name}}，你好！准备好了吗？",
+      "cameraCta": "拍一下作业",
+      "cameraSubtitle": "拍张照片，立即获取帮助",
+      "practicePrompt": "或试试练习题",
+      "parentArea": "家长专区"
+    },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
@@ -111,8 +128,45 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
-    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+    "dashboard": {
+      "title": "家长面板",
+      "empty": {
+        "title": "还没有学习记录",
+        "description": "孩子开始使用应用后，作业辅导记录将显示在这里。",
+        "cta": "前往孩子专区"
+      }
+    },
+    "settings": {
+      "title": "设置",
+      "placeholder": "语言、质量、模型、隐私"
+    }
+  },
+  "flagged": {
+    "title": "已标记复核",
+    "empty": "暂无标记记录",
+    "flagReasonLabel": "为什么要标记这次学习？",
+    "flagReasonPlaceholder": "描述你发现的问题（可选）",
+    "flagReasonSaved": "原因：{{reason}}",
+    "flaggedAt": "标记于 {{date}}",
+    "flagSession": "标记复核",
+    "unflagSession": "取消标记",
+    "flagSuccess": "已标记复核",
+    "unflagSuccess": "已取消标记",
+    "analysis": {
+      "title": "题库改进建议",
+      "topicHeader": "知识点",
+      "flagCount": "{{count}} 次标记",
+      "flagCount_plural": "{{count}} 次标记",
+      "suggestionLabel": "建议",
+      "lastAnalyzed": "上次分析：{{date}}",
+      "noAnalysis": "运行分析以查看改进建议。",
+      "analyzeNow": "运行分析",
+      "analyzing": "分析中\u2026",
+      "analysisComplete": "分析完成",
+      "flaggedSubjects": "按科目标记情况",
+      "totalFlagged": "标记了 {{count}} 次学习记录",
+      "totalFlagged_plural": "标记了 {{count}} 次学习记录"
+    }
   },
   "deviceTierResult": {
     "title": "你的设备已就绪！",
