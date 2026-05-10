@@ -48,14 +48,15 @@ function getPrevTab(current: ScaffoldedHelpTab): ScaffoldedHelpTab | null {
   return null;
 }
 
-function TabDot({ active, label }: { active: boolean; label: string }) {
+function TabDot({ active }: { active: boolean }) {
   return (
     <View
       style={[
         cardStyles.dot,
         active ? cardStyles.dotActive : cardStyles.dotInactive,
       ]}
-      accessibilityLabel={label}
+      accessible={false}
+      importantForAccessibility="no"
     />
   );
 }
@@ -111,6 +112,8 @@ function AnimatedBody({
           opacity: anim,
         },
       ]}
+      accessibilityElementsHidden={!visible}
+      importantForAccessibility={visible ? undefined : 'no-hide-descendants'}
     >
       {children}
     </Animated.View>
@@ -146,7 +149,7 @@ function ErrorState({
     <View
       style={[
         cardStyles.errorWrap,
-        { backgroundColor: isDark ? '#2A1A1A' : '#FFF5F5', borderColor: isDark ? '#5A2A2A' : '#FECACA' },
+        { backgroundColor: isDark ? '#2A1A1A' : '#FEF2F2', borderColor: isDark ? '#5A2A2A' : '#FECACA' },
       ]}
       accessibilityRole="alert"
       accessibilityLabel={message}
@@ -155,7 +158,7 @@ function ErrorState({
       <Text
         style={[
           cardStyles.errorText,
-          { color: isDark ? '#FCA5A5' : '#DC2626' },
+          { color: isDark ? '#FCA5A5' : '#991B1B' },
         ]}
       >
         {message}
@@ -212,7 +215,7 @@ export default function HomeworkFeedbackCard({
   const prevTab = activeTab !== 'hint' ? getPrevTab(activeTab) : null;
 
   const textColor = isDark ? '#FFFFFF' : '#1A1A1A';
-  const mutedColor = isDark ? '#B0B0B0' : '#6B7280';
+  const mutedColor = isDark ? '#B0B0B0' : '#5B6570';
   const headingColor = isDark ? '#90CAF9' : '#2563EB';
   const cardBg = isDark ? '#1E1E1E' : '#FFFFFF';
   const borderColor = isDark ? '#333333' : '#E5E7EB';
@@ -227,8 +230,8 @@ export default function HomeworkFeedbackCard({
           { backgroundColor: cardBg, borderColor },
           style,
         ]}
-        accessibilityRole="summary"
-        accessibilityLabel={t('homeworkFeedback.accessibility.card')}
+        accessibilityRole="progressbar"
+        accessibilityLabel={t('homeworkFeedback.accessibility.loading')}
       >
         <LoadingSkeleton isDark={isDark} />
       </View>
@@ -254,27 +257,33 @@ export default function HomeworkFeedbackCard({
   }
 
   if (!help) return null;
+  const h = help;
 
   function renderLevelBody() {
-    if (!help) return null;
     switch (currentLevel) {
       case 'hint':
         return (
           <InlineMath
-            text={help!.hint || t('homeworkFeedback.hint.body')}
+            text={h.hint || t('homeworkFeedback.hint.body')}
             style={{ color: textColor }}
           />
         );
       case 'steps':
         return (
           <View style={cardStyles.stepsList} accessibilityRole="list">
-            {help!.guidedSteps.map((step, i) => (
-              <View key={i} style={cardStyles.stepRow}>
+            {h.guidedSteps.map((step, i) => (
+              <View
+                key={i}
+                style={cardStyles.stepRow}
+                accessibilityLabel={`${t('homeworkFeedback.steps.accessibility')} ${i + 1} ${t('homeworkFeedback.accessibility.of')} ${h.guidedSteps.length}: ${step}`}
+              >
                 <View
                   style={[
                     cardStyles.stepNumber,
                     { backgroundColor: primaryColor },
                   ]}
+                  accessible={false}
+                  importantForAccessibility="no"
                 >
                   <Text style={cardStyles.stepNumberText}>{i + 1}</Text>
                 </View>
@@ -289,7 +298,7 @@ export default function HomeworkFeedbackCard({
       case 'solution':
         return (
           <InlineMath
-            text={help!.workedSolution || t('homeworkFeedback.solution.body')}
+            text={h.workedSolution || t('homeworkFeedback.solution.body')}
             style={{ color: textColor }}
           />
         );
@@ -350,17 +359,9 @@ export default function HomeworkFeedbackCard({
           >
             {t(`homeworkFeedback.${LEVEL_LABELS[currentLevel]}.heading`)}
           </Text>
-          <View style={cardStyles.dotsRow}>
+          <View style={cardStyles.dotsRow} accessible={false} importantForAccessibility="no">
             {LEVEL_PROGRESS.map((tab) => (
-              <TabDot
-                key={tab}
-                active={tab === currentLevel}
-                label={
-                  tab === currentLevel
-                    ? `${t(`homeworkFeedback.${LEVEL_LABELS[tab]}.heading`)} - active`
-                    : t(`homeworkFeedback.${LEVEL_LABELS[tab]}.heading`)
-                }
-              />
+              <TabDot key={tab} active={tab === currentLevel} />
             ))}
           </View>
         </View>
@@ -489,8 +490,8 @@ const cardStyles = StyleSheet.create({
   } satisfies ViewStyle,
 
   questionText: {
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 22,
   } satisfies TextStyle,
 
   levelIndicator: {
@@ -500,7 +501,7 @@ const cardStyles = StyleSheet.create({
   } satisfies ViewStyle,
 
   levelLabel: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
   } satisfies TextStyle,
 
@@ -541,8 +542,8 @@ const cardStyles = StyleSheet.create({
   } satisfies ViewStyle,
 
   bodyText: {
-    fontSize: 15,
-    lineHeight: 22,
+    fontSize: 16,
+    lineHeight: 24,
   } satisfies TextStyle,
 
   stepsList: {
@@ -585,7 +586,7 @@ const cardStyles = StyleSheet.create({
 
   actionBtnText: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '600',
   } satisfies TextStyle,
 
@@ -597,7 +598,7 @@ const cardStyles = StyleSheet.create({
   } satisfies ViewStyle,
 
   actionBtnSecondaryText: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '600',
   } satisfies TextStyle,
 
@@ -625,8 +626,8 @@ const cardStyles = StyleSheet.create({
   } satisfies TextStyle,
 
   errorText: {
-    fontSize: 15,
-    lineHeight: 22,
+    fontSize: 16,
+    lineHeight: 24,
     textAlign: 'center',
   } satisfies TextStyle,
 
@@ -639,7 +640,7 @@ const cardStyles = StyleSheet.create({
 
   errorRetryText: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '600',
   } satisfies TextStyle,
 });

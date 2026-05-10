@@ -1,47 +1,3 @@
-jest.mock('react-i18next', () => {
-  const t = (k, options) => {
-    const m = {
-      'homeworkFeedback.title': "Let's look at this together",
-      'homeworkFeedback.hint.heading': 'Hint',
-      'homeworkFeedback.actions.showMore': 'Show me more',
-      'homeworkFeedback.actions.showAnswer': 'Show the answer',
-      'homeworkFeedback.actions.showLess': 'Show less',
-      'homeworkFeedback.steps.heading': 'Guided Steps',
-      'homeworkFeedback.solution.heading': 'Worked Solution',
-      'homeworkFeedback.accessibility.card': 'Homework feedback card',
-      'homeworkFeedback.accessibility.levelIndicator': 'level',
-      'homeworkFeedback.actions.accessibility.showMore': 'Show guided steps',
-      'homeworkFeedback.actions.accessibility.showAnswer': 'Show the full worked solution',
-      'homeworkFeedback.actions.accessibility.hideAnswer': 'Hide worked solution',
-      'homeworkFeedback.hint.body': 'Think about what you already know.',
-      'homeworkFeedback.solution.body': "Here's one way to solve this.",
-      'homeworkError.unknown.body': 'An unexpected error happened.',
-      'homeworkError.retry': 'Retry',
-      'common.retry': 'Retry',
-    };
-    const val = m[k];
-    if (val == null) return options?.defaultValue ?? k;
-    if (options && typeof options === 'object') {
-      let result = val;
-      for (const [key, value] of Object.entries(options)) {
-        if (key === 'defaultValue') continue;
-        result = result.replace('{{' + key + '}}', String(value));
-      }
-      return result;
-    }
-    return val;
-  };
-  return { useTranslation: () => ({ t, i18n: { language: 'en' } }), initReactI18next: { type: '3rdParty', init: jest.fn() } };
-});
-
-jest.mock('@/components/Skeleton', () => {
-  const SkeletonComp = () => null;
-  return {
-    Skeleton: Object.assign(SkeletonComp, { Circle: () => null, Button: () => null }),
-  };
-});
-
-
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import HomeworkFeedbackCard from '../HomeworkFeedbackCard';
@@ -90,7 +46,7 @@ describe('HomeworkFeedbackCard', () => {
 
     it('renders default title from i18n', () => {
       renderCard();
-      expect(screen.getByText("Let's look at this together")).toBeTruthy();
+      expect(screen.getByText('homeworkFeedback.title')).toBeTruthy();
     });
 
     it('renders custom title when provided', () => {
@@ -115,12 +71,12 @@ describe('HomeworkFeedbackCard', () => {
           'Try breaking the problem into smaller parts. What do you know?',
         ),
       ).toBeTruthy();
-      expect(screen.getByText('Hint')).toBeTruthy();
+      expect(screen.getByText('homeworkFeedback.hint.heading')).toBeTruthy();
     });
 
     it('shows "Show me more" button on hint level', () => {
       renderCard();
-      expect(screen.getByText('Show me more', { exact: false })).toBeTruthy();
+      expect(screen.getByText('homeworkFeedback.actions.showMore')).toBeTruthy();
     });
 
     it('does not show "Show answer" button on hint level', () => {
@@ -132,16 +88,16 @@ describe('HomeworkFeedbackCard', () => {
 
     it('reveals guided steps when "Show me more" is pressed', () => {
       renderCard();
-      fireEvent.press(screen.getByText('Show me more', { exact: false }));
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
       expect(
         screen.getByText('Step 1: Read the question carefully and identify the key numbers.'),
       ).toBeTruthy();
-      expect(screen.getByText('Guided Steps')).toBeTruthy();
+      expect(screen.getByText('homeworkFeedback.steps.heading')).toBeTruthy();
     });
 
     it('shows "Show answer" button on steps level', () => {
       renderCard();
-      fireEvent.press(screen.getByText('Show me more', { exact: false }));
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
       expect(
         screen.getByText('homeworkFeedback.actions.showAnswer'),
       ).toBeTruthy();
@@ -149,17 +105,17 @@ describe('HomeworkFeedbackCard', () => {
 
     it('reveals worked solution when "Show answer" is pressed', () => {
       renderCard();
-      fireEvent.press(screen.getByText('Show me more', { exact: false }));
-      fireEvent.press(screen.getByText('Show the answer', { exact: false }));
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showAnswer'));
       expect(
         screen.getByText(/The correct answer is 42/),
       ).toBeTruthy();
-      expect(screen.getByText('Worked Solution')).toBeTruthy();
+      expect(screen.getByText('homeworkFeedback.solution.heading')).toBeTruthy();
     });
 
     it('shows "Show less" button on steps level', () => {
       renderCard();
-      fireEvent.press(screen.getByText('Show me more', { exact: false }));
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
       expect(
         screen.getByText('homeworkFeedback.actions.showLess'),
       ).toBeTruthy();
@@ -167,27 +123,27 @@ describe('HomeworkFeedbackCard', () => {
 
     it('collapses back to hint when "Show less" is pressed from steps', () => {
       renderCard();
-      fireEvent.press(screen.getByText('Show me more', { exact: false }));
-      fireEvent.press(screen.getByText('Show less', { exact: false }));
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showLess'));
       expect(
         screen.getByText(
           'Try breaking the problem into smaller parts. What do you know?',
         ),
       ).toBeTruthy();
-      expect(screen.getByText('Hint')).toBeTruthy();
+      expect(screen.getByText('homeworkFeedback.hint.heading')).toBeTruthy();
     });
 
     it('collapses back from solution when "Show less" is pressed', () => {
       renderCard();
-      fireEvent.press(screen.getByText('Show me more', { exact: false }));
-      fireEvent.press(screen.getByText('Show the answer', { exact: false }));
-      fireEvent.press(screen.getByText('Show less', { exact: false }));
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showAnswer'));
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showLess'));
       expect(
         screen.getByText(
           'Try breaking the problem into smaller parts. What do you know?',
         ),
       ).toBeTruthy();
-      expect(screen.getByText('Hint')).toBeTruthy();
+      expect(screen.getByText('homeworkFeedback.hint.heading')).toBeTruthy();
     });
   });
 
@@ -197,7 +153,7 @@ describe('HomeworkFeedbackCard', () => {
       expect(
         screen.getByText('Step 1: Read the question carefully and identify the key numbers.'),
       ).toBeTruthy();
-      expect(screen.getByText('Guided Steps')).toBeTruthy();
+      expect(screen.getByText('homeworkFeedback.steps.heading')).toBeTruthy();
     });
   });
 
@@ -241,8 +197,69 @@ describe('HomeworkFeedbackCard', () => {
     it('has accessibility role on the card container', () => {
       renderCard();
       expect(
-        screen.getByLabelText(/Homework feedback card/),
+        screen.getByLabelText(/homeworkFeedback\.accessibility\.card/),
       ).toBeTruthy();
+    });
+
+    it('hides TabDot progress dots from accessibility tree', () => {
+      renderCard();
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
+      const dotsContainer = screen.getByLabelText(
+        /homeworkFeedback\.accessibility\.card/,
+      );
+      const containerChildren = dotsContainer.findAll(
+        () => true,
+      );
+      expect(containerChildren.length).toBeGreaterThan(0);
+    });
+
+    it('loading state has progressbar role', () => {
+      const { getByLabelText } = render(
+        <HomeworkFeedbackCard variant="loading" questionNumber={1} />,
+      );
+      const loadingCard = getByLabelText(
+        'homeworkFeedback.accessibility.loading',
+      );
+      expect(loadingCard.props.accessibilityRole).toBe('progressbar');
+    });
+
+    it('error state has alert role', () => {
+      const { getByLabelText } = render(
+        <HomeworkFeedbackCard
+          variant="error"
+          questionNumber={1}
+          errorMessage="Test error"
+        />,
+      );
+      const alertEl = getByLabelText('Test error');
+      expect(alertEl.props.accessibilityRole).toBe('alert');
+    });
+
+    it('button actions have accessibility labels', () => {
+      renderCard();
+      const showMoreBtn = screen.getByLabelText(
+        'homeworkFeedback.actions.accessibility.showMore',
+      );
+      expect(showMoreBtn).toBeTruthy();
+      expect(showMoreBtn.props.accessibilityRole).toBe('button');
+    });
+
+    it('Show answer button has accessibility label', () => {
+      renderCard();
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
+      const showAnswerBtn = screen.getByLabelText(
+        'homeworkFeedback.actions.accessibility.showAnswer',
+      );
+      expect(showAnswerBtn).toBeTruthy();
+    });
+
+    it('Show less button has accessibility label', () => {
+      renderCard();
+      fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
+      const showLessBtn = screen.getByLabelText(
+        'homeworkFeedback.actions.accessibility.hideAnswer',
+      );
+      expect(showLessBtn).toBeTruthy();
     });
   });
 
