@@ -1,9 +1,9 @@
-import { signInWithMagicLink, signInWithGoogle, signUp, signIn, handleAuthCallback, getCurrentSession, signOut, onAuthStateChange, AuthError } from '../auth';
+import { signInWithMagicLink, signInWithGoogle, signUp, signIn, loadSession, handleAuthCallback, getCurrentSession, signOut, onAuthStateChange, AuthError } from '../auth';
 import { supabase } from '../supabase';
 import * as SecureStore from 'expo-secure-store';
 
 jest.mock('../supabase', () => ({ supabase: { auth: { signInWithOtp: jest.fn(), signInWithOAuth: jest.fn(), signUp: jest.fn(), signInWithPassword: jest.fn(), exchangeCodeForSession: jest.fn(), getSession: jest.fn(), signOut: jest.fn(), onAuthStateChange: jest.fn() } } }));
-jest.mock('expo-web-browser', () => ({ maybeCompleteAuthSession: jest.fn(), openAuthSessionAsync: jest.fn() }));
+jest.mock('expo-web-browser');
 jest.mock('expo-auth-session', () => ({ makeRedirectUri: jest.fn(() => 'tutor-sg://auth/callback') }));
 jest.mock('expo-secure-store', () => { const m = new Map<string, string>(); return { getItemAsync: jest.fn(async (k: string) => m.get(k) ?? null), setItemAsync: jest.fn(async (k: string, v: string) => { m.set(k, v); }), deleteItemAsync: jest.fn(async (k: string) => { m.delete(k); }), isAvailableAsync: jest.fn(async () => true) }; });
 
@@ -25,6 +25,8 @@ describe('signUp', () => {
 });
 
 describe('signIn', () => {
+  it('throws invalid email', async () => { await expect(signIn('bad', 'password123')).rejects.toMatchObject({ code: 'invalid_email' }); });
+  it('throws short password', async () => { await expect(signIn('a@b.com', '12345')).rejects.toMatchObject({ code: 'invalid_password' }); });
   it('calls signInWithPassword', async () => { (supabase.auth.signInWithPassword as jest.Mock).mockResolvedValueOnce({ data: { user: sess.user, session: sess }, error: null }); expect((await signIn('parent@example.com', 'password123')).accessToken).toBe('tok'); });
   it('throws on wrong creds', async () => { (supabase.auth.signInWithPassword as jest.Mock).mockResolvedValueOnce({ data: null, error: new Error('invalid') }); await expect(signIn('parent@example.com', 'password123')).rejects.toMatchObject({ code: 'sign_in_failed' }); });
 });
@@ -48,4 +50,16 @@ describe('signOut', () => {
 
 describe('onAuthStateChange', () => {
   it('returns unsubscribe', () => { const unsub = jest.fn(); (supabase.auth.onAuthStateChange as jest.Mock).mockReturnValue({ data: { subscription: { unsubscribe: unsub } } }); const fn = onAuthStateChange(jest.fn()); fn(); expect(unsub).toHaveBeenCalled(); });
+});
+
+describe('loadSession', () => {
+  it('returns stored session via getItemAsync', async () => {
+    const stored = { accessToken: 'abc', refreshToken: 'def', user: { id: 'u' } };
+    (SecureStore.getItemAsync as jest.Mock).mockResolvedValueOnce(JSON.stringify(stored));
+    expect(await loadSession()).toEqual(stored);
+  });
+  it('returns null when no stored session', async () => {
+    (SecureStore.getItemAsync as jest.Mock).mockResolvedValueOnce(null);
+    expect(await loadSession()).toBeNull();
+  });
 });

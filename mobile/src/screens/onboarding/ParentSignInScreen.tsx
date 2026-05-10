@@ -76,7 +76,7 @@ export default function ParentSignInScreen({ onSignedIn, onSkip }: Props) {
     <SafeAreaView style={st.container}><ScrollView contentContainerStyle={st.scroll}><View style={st.content}>
       <View style={st.iconWrap}><Text style={st.icon}>✅</Text></View>
       <Text style={st.title}>{t('parentAuth.signIn.signedIn')}</Text>
-      <TouchableOpacity style={st.btn} onPress={onSignedIn} accessibilityRole="button"><Text style={st.btnText}>Continue</Text></TouchableOpacity>
+      <TouchableOpacity style={st.btn} onPress={onSignedIn} accessibilityRole="button"><Text style={st.btnText}>{t('parentAuth.signIn.continue')}</Text></TouchableOpacity>
     </View></ScrollView></SafeAreaView>
   );
 

@@ -87,6 +87,7 @@
     "attemptsRemaining": "{{count}} attempt remaining",
     "attemptsRemaining_plural": "{{count}} attempts remaining",
     "pinsDontMatch": "PINs don't match. Try again.",
+    "cancel": "Cancel",
     "setup": {
       "title": "Set Up Parent PIN",
       "enterPin": "Enter a 4-digit PIN",
@@ -114,39 +115,15 @@
       "signUpTab": "Sign Up",
       "passwordPlaceholder": "Enter your password",
       "signIn": "Sign in",
-      "signUp": "Create account"
+      "signUp": "Create account",
+      "continue": "Continue"
     }
   },
   "parent": {
     "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
-  },
-  "flagged": {
-    "title": "Flagged for Review",
-    "empty": "No flagged sessions",
-    "flagReasonLabel": "Why are you flagging this?",
-    "flagReasonPlaceholder": "Describe what seemed wrong (optional)",
-    "flagReasonSaved": "Reason: {{reason}}",
-    "flaggedAt": "Flagged {{date}}",
-    "flagSession": "Flag for review",
-    "unflagSession": "Remove flag",
-    "flagSuccess": "Session flagged for review",
-    "unflagSuccess": "Flag removed",
-    "analysis": {
-      "title": "Question Bank Insights",
-      "topicHeader": "Topic",
-      "flagCount": "{{count}} flag",
-      "flagCount_plural": "{{count}} flags",
-      "suggestionLabel": "Suggestion",
-      "lastAnalyzed": "Last analyzed: {{date}}",
-      "noAnalysis": "Run analysis to see improvement suggestions.",
-      "analyzeNow": "Run Analysis",
-      "analyzing": "Analyzing\u2026",
-      "analysisComplete": "Analysis complete",
-      "flaggedSubjects": "Flagged by subject",
-      "totalFlagged": "{{count}} session flagged",
-      "totalFlagged_plural": "{{count}} sessions flagged"
-    }
+    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" },
+    "changePin": "Change PIN",
+    "backToKid": "Back to kid's home"
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
