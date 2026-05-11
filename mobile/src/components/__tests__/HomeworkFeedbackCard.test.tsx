@@ -3,6 +3,11 @@ import { render, screen, fireEvent } from '@testing-library/react-native';
 import HomeworkFeedbackCard from '../HomeworkFeedbackCard';
 import type { ScaffoldedHelp } from '@/models/homework-feedback';
 
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (k: string) => k, i18n: { language: 'en', changeLanguage: jest.fn() } }),
+  initReactI18next: { type: '3rdParty', init: jest.fn() },
+}));
+
 const MOCK_HELP: ScaffoldedHelp = {
   hint: 'Try breaking the problem into smaller parts. What do you know?',
   guidedSteps: [
@@ -178,6 +183,39 @@ describe('HomeworkFeedbackCard', () => {
       expect(screen.getByText('Something went wrong')).toBeTruthy();
     });
 
+    it('uses default fallback when no errorMessage provided', () => {
+      render(
+        <HomeworkFeedbackCard variant="error" questionNumber={1} />,
+      );
+      expect(screen.getByText('homeworkFeedback.error.fallbackMessage')).toBeTruthy();
+    });
+
+    it('renders error container with accessibilityLabel matching the error message', () => {
+      render(
+        <HomeworkFeedbackCard
+          variant="error"
+          questionNumber={1}
+          errorMessage="Test error"
+        />,
+      );
+      expect(screen.getByLabelText('Test error')).toBeTruthy();
+    });
+
+    it('has retry button with accessibility label', () => {
+      const onRetry = jest.fn();
+      render(
+        <HomeworkFeedbackCard
+          variant="error"
+          questionNumber={1}
+          errorMessage="Error"
+          onRetry={onRetry}
+        />,
+      );
+      expect(
+        screen.getByLabelText('homeworkFeedback.error.retry'),
+      ).toBeTruthy();
+    });
+
     it('calls onRetry when retry button is pressed', () => {
       const onRetry = jest.fn();
       render(
@@ -188,7 +226,9 @@ describe('HomeworkFeedbackCard', () => {
           onRetry={onRetry}
         />,
       );
-      fireEvent.press(screen.getByText('common.retry'));
+      fireEvent.press(
+        screen.getByLabelText('homeworkFeedback.error.retry'),
+      );
       expect(onRetry).toHaveBeenCalledTimes(1);
     });
   });

@@ -166,7 +166,7 @@ function ErrorState({
           onPress={onRetry}
           activeOpacity={0.7}
           accessibilityRole="button"
-          accessibilityLabel={t('homeworkError.retry')}
+          accessibilityLabel={t('homeworkFeedback.error.retry')}
         >
           <Text style={cardStyles.errorRetryText}>{t('common.retry', 'Retry')}</Text>
         </TouchableOpacity>
@@ -245,7 +245,7 @@ export default function HomeworkFeedbackCard({
         ]}
       >
         <ErrorState
-          message={errorMessage ?? t('homeworkError.UNKNOWN.body')}
+          message={errorMessage ?? t('homeworkFeedback.error.fallbackMessage')}
           onRetry={onRetry}
           isDark={isDark}
         />
