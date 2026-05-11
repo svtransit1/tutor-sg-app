@@ -9,36 +9,50 @@ jest.mock('../../storage/pin-storage', () => ({
   savePin: jest.fn().mockResolvedValue(undefined),
 }));
 jest.mock('react-i18next', () => {
-  const t = (k: string) => ({
-    'onboarding.parentPinSetup.title': 'Set your parent PIN',
-    'onboarding.parentPinSetup.body': "Set a 6-digit PIN. You'll use this to see your child's learning log.",
-    'onboarding.parentPinSetup.enterPin': 'Enter a 6-digit PIN',
-    'onboarding.parentPinSetup.confirmPin': 'Confirm your PIN',
-    'onboarding.parentPinSetup.mismatch': "PINs don't match. Try again.",
-    'onboarding.parentPinSetup.skip': 'Skip — set up later',
-    'onboarding.parentPinSetup.accessibility.skipButton': 'Skip PIN setup',
-    'parentAuth.changePin.title': 'Change Parent PIN',
-    'parentAuth.changePin.enterOld': 'Enter your current PIN',
-    'parentAuth.changePin.enterNew': 'Enter a new 6-digit PIN',
-    'parentAuth.changePin.confirmNew': 'Confirm new PIN',
-    'parentAuth.changePin.success': 'PIN changed successfully',
-    'parentAuth.changePin.wrongOld': 'Current PIN is incorrect',
-    'parentAuth.cancel': 'Cancel',
-    'common.back': 'Back',
-  })[k] ?? k;
-  return { useTranslation: () => ({ t, i18n: { language: 'en' } }), initReactI18next: { type: '3rdParty', init: jest.fn() } };
+  const t = (k: string) =>
+    ({
+      'onboarding.parentPinSetup.title': 'Set your parent PIN',
+      'onboarding.parentPinSetup.body':
+        "Set a 6-digit PIN. You'll use this to see your child's learning log.",
+      'onboarding.parentPinSetup.enterPin': 'Enter a 6-digit PIN',
+      'onboarding.parentPinSetup.confirmPin': 'Confirm your PIN',
+      'onboarding.parentPinSetup.mismatch': "PINs don't match. Try again.",
+      'onboarding.parentPinSetup.skip': 'Skip — set up later',
+      'onboarding.parentPinSetup.accessibility.skipButton': 'Skip PIN setup',
+      'parentAuth.changePin.title': 'Change Parent PIN',
+      'parentAuth.changePin.enterOld': 'Enter your current PIN',
+      'parentAuth.changePin.enterNew': 'Enter a new 6-digit PIN',
+      'parentAuth.changePin.confirmNew': 'Confirm new PIN',
+      'parentAuth.changePin.success': 'PIN changed successfully',
+      'parentAuth.changePin.wrongOld': 'Current PIN is incorrect',
+      'parentAuth.cancel': 'Cancel',
+      'common.back': 'Back',
+    })[k] ?? k;
+  return {
+    useTranslation: () => ({ t, i18n: { language: 'en' } }),
+    initReactI18next: { type: '3rdParty', init: jest.fn() },
+  };
 });
 
-function press(d: string) { fireEvent.press(screen.getByLabelText(`Key ${d}`)); }
-function enter(d: string) { for (const c of d) press(c); }
+function press(d: string) {
+  fireEvent.press(screen.getByLabelText(`Key ${d}`));
+}
+function enter(d: string) {
+  for (const c of d) press(c);
+}
 
 describe('ParentPinSetupScreen — setup mode', () => {
-  beforeEach(() => { jest.clearAllMocks(); require('expo-secure-store').__resetStore(); });
+  beforeEach(() => {
+    jest.clearAllMocks();
+    require('expo-secure-store').__resetStore();
+  });
 
   it('renders title and body', () => {
     render(<ParentPinSetupScreen mode="setup" />);
     expect(screen.getByText('Set your parent PIN')).toBeTruthy();
-    expect(screen.getByText("Set a 6-digit PIN. You'll use this to see your child's learning log.")).toBeTruthy();
+    expect(
+      screen.getByText("Set a 6-digit PIN. You'll use this to see your child's learning log."),
+    ).toBeTruthy();
   });
 
   it('renders 6 digit slots', () => {
@@ -58,7 +72,9 @@ describe('ParentPinSetupScreen — setup mode', () => {
     render(<ParentPinSetupScreen mode="setup" onComplete={oc} />);
     enter('123456');
     enter('123456');
-    await act(async () => { jest.runAllTimers(); });
+    await act(async () => {
+      jest.runAllTimers();
+    });
     expect(pinStorage.savePin).toHaveBeenCalledWith('123456');
     jest.useRealTimers();
   });
@@ -69,7 +85,9 @@ describe('ParentPinSetupScreen — setup mode', () => {
     enter('123456');
     enter('654321');
     expect(screen.getByText("PINs don't match. Try again.")).toBeTruthy();
-    act(() => { jest.advanceTimersByTime(1000); });
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
     expect(screen.getByText('Enter a 6-digit PIN')).toBeTruthy();
     jest.useRealTimers();
   });
@@ -83,7 +101,11 @@ describe('ParentPinSetupScreen — setup mode', () => {
 });
 
 describe('ParentPinSetupScreen — change mode', () => {
-  beforeEach(() => { jest.clearAllMocks(); require('expo-secure-store').__resetStore(); pinStorage.savePin('123456'); });
+  beforeEach(() => {
+    jest.clearAllMocks();
+    require('expo-secure-store').__resetStore();
+    pinStorage.savePin('123456');
+  });
 
   it('shows old PIN entry first', () => {
     render(<ParentPinSetupScreen mode="change" />);
@@ -111,8 +133,11 @@ describe('ParentPinSetupScreen — change mode', () => {
     const vm = jest.fn().mockResolvedValue(true);
     const oc = jest.fn();
     render(<ParentPinSetupScreen mode="change" onVerifyOldPin={vm} onComplete={oc} />);
-    enter('123456'); await act(async () => {});
-    enter('654321'); enter('654321'); await act(async () => {});
+    enter('123456');
+    await act(async () => {});
+    enter('654321');
+    enter('654321');
+    await act(async () => {});
     expect(pinStorage.savePin).toHaveBeenCalledWith('654321');
   });
 

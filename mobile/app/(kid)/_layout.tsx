@@ -1,6 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { Stack, router } from 'expo-router';
-import { isPinSet } from '../../src/storage/pin-storage';
 import PinGateScreen from '../../src/screens/PinGateScreen';
 
 export default function KidLayout() {
@@ -14,7 +13,10 @@ export default function KidLayout() {
       </Stack>
       {showPinGate && (
         <PinGateScreen
-          onSuccess={() => { setShowPinGate(false); router.push('/(parent)'); }}
+          onSuccess={() => {
+            setShowPinGate(false);
+            router.push('/(parent)');
+          }}
           onDismiss={() => setShowPinGate(false)}
         />
       )}

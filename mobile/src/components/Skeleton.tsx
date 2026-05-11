@@ -21,13 +21,7 @@ interface SkeletonButtonProps {
   style?: ViewStyle;
 }
 
-function SkeletonBase({
-  width,
-  height = 20,
-  borderRadius = 6,
-  isDark,
-  style,
-}: SkeletonProps) {
+function SkeletonBase({ width, height = 20, borderRadius = 6, isDark, style }: SkeletonProps) {
   return (
     <View
       style={[

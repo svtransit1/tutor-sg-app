@@ -4,8 +4,8 @@ const mockDb = {
   getAllAsync: jest.fn().mockResolvedValue([]),
   getFirstAsync: jest.fn().mockResolvedValue(null),
   closeAsync: jest.fn().mockResolvedValue(undefined),
-}
+};
 
-const openDatabaseAsync = jest.fn(() => Promise.resolve(mockDb))
+const openDatabaseAsync = jest.fn(() => Promise.resolve(mockDb));
 
-export { mockDb, openDatabaseAsync }
+export { mockDb, openDatabaseAsync };

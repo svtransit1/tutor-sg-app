@@ -18,25 +18,25 @@
 
 ### What already exists (on AAAS-1185)
 
-| Feature | Status | Location |
-|---------|--------|----------|
-| Session detail view with metadata | Exists | `mobile/app/(parent)/session/[id].tsx` (AAAS-1185 branch) |
-| Flag/unflag toggle button | Exists | Same file — `handleFlag()` calls `setParentFlagged()` |
-| `parent_flagged` SQLite column | Exists | `parentSessions.ts` line 27 |
-| `setParentFlagged()` method | Exists | `parentSessions.ts` line 74 |
-| `getFlaggedSessions()` query | Exists | `parentSessions.ts` line 137 |
-| Bilingual flag strings (EN + zh-Hans) | Exists | `en.json` / `zh-Hans.json` on AAAS-1185 |
+| Feature                               | Status | Location                                                  |
+| ------------------------------------- | ------ | --------------------------------------------------------- |
+| Session detail view with metadata     | Exists | `mobile/app/(parent)/session/[id].tsx` (AAAS-1185 branch) |
+| Flag/unflag toggle button             | Exists | Same file — `handleFlag()` calls `setParentFlagged()`     |
+| `parent_flagged` SQLite column        | Exists | `parentSessions.ts` line 27                               |
+| `setParentFlagged()` method           | Exists | `parentSessions.ts` line 74                               |
+| `getFlaggedSessions()` query          | Exists | `parentSessions.ts` line 137                              |
+| Bilingual flag strings (EN + zh-Hans) | Exists | `en.json` / `zh-Hans.json` on AAAS-1185                   |
 
 ### What's MISSING vs AAAS-1188 acceptance criteria
 
-| Requirement | Status | Detail |
-|-------------|--------|--------|
-| Flag timestamp (`flag_timestamp`) | Missing | Not in schema, row type, or interface |
-| Optional short reason (`flag_reason`) | Missing | Not in schema. Per acceptance: "free text, on-device only" |
-| "Flagged Sessions" dashboard section | Missing | `getFlaggedSessions()` exists in data layer but dashboard never renders it |
-| Flag reason input UI | Missing | No text input for entering reason when flagging |
-| Branch commits | Missing | Zero commits on `feat/aaas-1188-parent-flag-mechanism` |
-| Verification evidence | Missing | No build output, screenshots, or test run logs |
+| Requirement                           | Status  | Detail                                                                     |
+| ------------------------------------- | ------- | -------------------------------------------------------------------------- |
+| Flag timestamp (`flag_timestamp`)     | Missing | Not in schema, row type, or interface                                      |
+| Optional short reason (`flag_reason`) | Missing | Not in schema. Per acceptance: "free text, on-device only"                 |
+| "Flagged Sessions" dashboard section  | Missing | `getFlaggedSessions()` exists in data layer but dashboard never renders it |
+| Flag reason input UI                  | Missing | No text input for entering reason when flagging                            |
+| Branch commits                        | Missing | Zero commits on `feat/aaas-1188-parent-flag-mechanism`                     |
+| Verification evidence                 | Missing | No build output, screenshots, or test run logs                             |
 
 ## Required changes
 
@@ -66,16 +66,16 @@ AAAS-1188 depends on AAAS-1186 (session detail view), which is BLOCKED — the s
 
 ## Quality gate assessment
 
-| Gate | Status | Notes |
-|------|--------|-------|
-| Tests pass | FAIL | No new tests on branch |
-| Bilingual completeness | PARTIAL | Flag strings exist on AAAS-1185; reason/dashboard section strings missing |
-| Accessibility | UNVERIFIED | No finished UI |
-| Privacy review | PASS | flag_reason is on-device SQLite only |
-| No restricted SDKs | PASS | No new dependencies |
-| Performance budget | UNVERIFIED | No build |
-| Branch hygiene | FAIL | Zero commits |
-| Verification evidence | FAIL | None provided |
+| Gate                   | Status     | Notes                                                                     |
+| ---------------------- | ---------- | ------------------------------------------------------------------------- |
+| Tests pass             | FAIL       | No new tests on branch                                                    |
+| Bilingual completeness | PARTIAL    | Flag strings exist on AAAS-1185; reason/dashboard section strings missing |
+| Accessibility          | UNVERIFIED | No finished UI                                                            |
+| Privacy review         | PASS       | flag_reason is on-device SQLite only                                      |
+| No restricted SDKs     | PASS       | No new dependencies                                                       |
+| Performance budget     | UNVERIFIED | No build                                                                  |
+| Branch hygiene         | FAIL       | Zero commits                                                              |
+| Verification evidence  | FAIL       | None provided                                                             |
 
 ## Escalation
 

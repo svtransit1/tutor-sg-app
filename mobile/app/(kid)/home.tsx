@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, Pressable, ScrollView, StyleSheet, useColorScheme, RefreshControl } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  useColorScheme,
+  RefreshControl,
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { FirstUseWalkthrough } from '@/components/FirstUseWalkthrough';
@@ -14,7 +22,10 @@ const SUBJECT_ICONS: Record<string, string> = {
   chinese: '🀄',
 };
 
-function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): string {
+function timeAgo(
+  dateStr: string,
+  t: (key: string, opts?: Record<string, unknown>) => string,
+): string {
   const now = Date.now();
   const then = new Date(dateStr).getTime();
   const diffMs = now - then;
@@ -29,7 +40,10 @@ function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): st
   return t('kidHome.recentSessions.timeAgo.daysAgo', { days: diffDays });
 }
 
-function formatTimeSpent(seconds: number, t: (key: string, opts?: object) => string): string {
+function formatTimeSpent(
+  seconds: number,
+  t: (key: string, opts?: Record<string, unknown>) => string,
+): string {
   const min = Math.floor(seconds / 60);
   const sec = seconds % 60;
   if (seconds < 60) return t('kidHome.recentSessions.timeSpent', { minutes: 0, seconds: sec });
@@ -125,9 +139,7 @@ export default function KidHomeScreen() {
                 questions: session.questionCount,
               })}
             >
-              <Text style={styles.sessionIcon}>
-                {SUBJECT_ICONS[session.subject] ?? '📚'}
-              </Text>
+              <Text style={styles.sessionIcon}>{SUBJECT_ICONS[session.subject] ?? '📚'}</Text>
               <View style={styles.sessionInfo}>
                 <Text style={[styles.sessionSubject, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}>
                   {t(`kidHome.subjects.${session.subject}`)}
@@ -164,7 +176,11 @@ export default function KidHomeScreen() {
 
         {sessionList}
 
-        <Pressable style={styles.parentButton} onPress={() => router.push('/(parent)')} accessibilityRole="button">
+        <Pressable
+          style={styles.parentButton}
+          onPress={() => router.push('/(parent)')}
+          accessibilityRole="button"
+        >
           <Text style={styles.parentButtonText}>{t('onboarding.done.parentArea')}</Text>
         </Pressable>
       </ScrollView>
@@ -183,15 +199,38 @@ const styles = StyleSheet.create({
   scrollContent: { paddingHorizontal: 24, paddingBottom: 32 },
   title: { fontSize: 32, fontWeight: '700', marginTop: 60, marginBottom: 8 },
   subtitle: { fontSize: 16, marginBottom: 24 },
-  parentButton: { marginTop: 32, paddingVertical: 14, paddingHorizontal: 32, backgroundColor: '#F3F4F6', borderRadius: 12, alignSelf: 'center' },
+  parentButton: {
+    marginTop: 32,
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    backgroundColor: '#F3F4F6',
+    borderRadius: 12,
+    alignSelf: 'center',
+  },
   parentButtonText: { fontSize: 16, fontWeight: '600', color: '#374151' },
   recentSection: { marginBottom: 8 },
-  recentHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 },
+  recentHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
   recentTitle: { fontSize: 18, fontWeight: '700' },
   viewAllLink: { fontSize: 16, fontWeight: '600' },
   emptyText: { fontSize: 16, textAlign: 'center', lineHeight: 24, paddingVertical: 32 },
   sessionList: { gap: 10 },
-  sessionCard: { flexDirection: 'row', alignItems: 'center', padding: 14, borderRadius: 12, gap: 12, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.06, shadowRadius: 3, elevation: 1 },
+  sessionCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 14,
+    borderRadius: 12,
+    gap: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 3,
+    elevation: 1,
+  },
   sessionIcon: { fontSize: 28, width: 40, textAlign: 'center' },
   sessionInfo: { flex: 1 },
   sessionSubject: { fontSize: 16, fontWeight: '600', marginBottom: 2 },

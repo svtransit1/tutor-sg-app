@@ -21,20 +21,21 @@
 
 ## Quality gates
 
-| Gate | Status | Evidence |
-|------|--------|----------|
-| Tests pass | N/A | Infrastructure-only change |
-| Bilingual | N/A | No UI strings |
-| Accessibility | N/A | No UI |
-| Privacy | N/A | No data paths |
-| No restricted SDKs | N/A | Dev tools only |
-| Performance | N/A | No runtime code |
-| Branch hygiene | PASS | Feature branch from `main`, descriptive commit, `[bee]` tag, no direct `main` push |
-| Verification evidence | PASS | See below |
+| Gate                  | Status | Evidence                                                                           |
+| --------------------- | ------ | ---------------------------------------------------------------------------------- |
+| Tests pass            | N/A    | Infrastructure-only change                                                         |
+| Bilingual             | N/A    | No UI strings                                                                      |
+| Accessibility         | N/A    | No UI                                                                              |
+| Privacy               | N/A    | No data paths                                                                      |
+| No restricted SDKs    | N/A    | Dev tools only                                                                     |
+| Performance           | N/A    | No runtime code                                                                    |
+| Branch hygiene        | PASS   | Feature branch from `main`, descriptive commit, `[bee]` tag, no direct `main` push |
+| Verification evidence | PASS   | See below                                                                          |
 
 ## Verification evidence
 
 1. **Hook exits 0 with no staged .ts/.tsx files:**
+
    ```
    $ npx lint-staged --concurrent false
    → lint-staged could not find any staged files matching configured tasks.
@@ -42,6 +43,7 @@
    ```
 
 2. **Hook exits 1 with type errors (intentional `const x: string = 42`):**
+
    ```
    ✖ bash -c 'pnpm --recursive typecheck':
    src/test-err.ts(1,14): error TS2322: Type 'number' is not assignable to type 'string'.

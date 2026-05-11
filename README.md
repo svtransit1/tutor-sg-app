@@ -31,17 +31,17 @@ Do not commit secrets, child data, or model weights. See `.gitignore`.
 
 ## Prerequisites
 
-| Tool | Version | Purpose |
-|------|---------|---------|
-| [Node.js](https://nodejs.org/) | 20.x | Runtime |
-| [pnpm](https://pnpm.io/) | 10.33.0 | Package manager (see `package.json` `packageManager` field) |
-| [Xcode](https://developer.apple.com/xcode/) | 16.x | iOS development (macOS only) |
-| [Xcode CLI tools](https://developer.apple.com/xcode/) | — | `xcode-select --install` |
-| [Android Studio](https://developer.android.com/studio) | Latest | Android development |
-| [Expo CLI](https://docs.expo.dev/) | Latest | `npm install -g eas-cli` |
-| [Expo account](https://expo.dev) | — | Required for EAS builds |
-| [Ruby](https://www.ruby-lang.org/) | 3.x | CocoaPods (bundled with macOS) |
-| [CocoaPods](https://cocoapods.org/) | Latest | `sudo gem install cocoapods` |
+| Tool                                                   | Version | Purpose                                                     |
+| ------------------------------------------------------ | ------- | ----------------------------------------------------------- |
+| [Node.js](https://nodejs.org/)                         | 20.x    | Runtime                                                     |
+| [pnpm](https://pnpm.io/)                               | 10.33.0 | Package manager (see `package.json` `packageManager` field) |
+| [Xcode](https://developer.apple.com/xcode/)            | 16.x    | iOS development (macOS only)                                |
+| [Xcode CLI tools](https://developer.apple.com/xcode/)  | —       | `xcode-select --install`                                    |
+| [Android Studio](https://developer.android.com/studio) | Latest  | Android development                                         |
+| [Expo CLI](https://docs.expo.dev/)                     | Latest  | `npm install -g eas-cli`                                    |
+| [Expo account](https://expo.dev)                       | —       | Required for EAS builds                                     |
+| [Ruby](https://www.ruby-lang.org/)                     | 3.x     | CocoaPods (bundled with macOS)                              |
+| [CocoaPods](https://cocoapods.org/)                    | Latest  | `sudo gem install cocoapods`                                |
 
 ### pnpm setup
 
@@ -131,16 +131,16 @@ tutor-sg-app/
 
 ### Monorepo packages
 
-| Package | Location | Description | Status |
-|---------|----------|-------------|--------|
-| `@tutor-sg/device-tier` | `packages/device-tier/` | RAM + NPU detection, device tier classification | Active |
-| `@tutor-sg/features` | `packages/features/` | Feature gate table (free/trial/paid) | Active |
-| `@tutor-sg/llm` | `packages/llm/` | Subject classifier, model routing, prompt templates | Active |
-| `@tutor-sg/shared` | `packages/shared/` | Env config, model registry, i18n keys, schemas | Active |
-| `@tutor-sg/database` | `packages/database/` | SQLite schema + migrations | Placeholder |
-| `@tutor-sg/i18n` | `packages/i18n/` | Shared i18n utilities | Placeholder |
-| `@tutor-sg/perf` | `packages/perf/` | Performance benchmarking harness | Placeholder |
-| `@tutor-sg/theme` | `packages/theme/` | Shared design tokens / theme | Placeholder |
+| Package                 | Location                | Description                                         | Status      |
+| ----------------------- | ----------------------- | --------------------------------------------------- | ----------- |
+| `@tutor-sg/device-tier` | `packages/device-tier/` | RAM + NPU detection, device tier classification     | Active      |
+| `@tutor-sg/features`    | `packages/features/`    | Feature gate table (free/trial/paid)                | Active      |
+| `@tutor-sg/llm`         | `packages/llm/`         | Subject classifier, model routing, prompt templates | Active      |
+| `@tutor-sg/shared`      | `packages/shared/`      | Env config, model registry, i18n keys, schemas      | Active      |
+| `@tutor-sg/database`    | `packages/database/`    | SQLite schema + migrations                          | Placeholder |
+| `@tutor-sg/i18n`        | `packages/i18n/`        | Shared i18n utilities                               | Placeholder |
+| `@tutor-sg/perf`        | `packages/perf/`        | Performance benchmarking harness                    | Placeholder |
+| `@tutor-sg/theme`       | `packages/theme/`       | Shared design tokens / theme                        | Placeholder |
 
 ---
 
@@ -183,11 +183,11 @@ cp .env.example .env.local
 
 ### Required variables
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `EXPO_PUBLIC_SUPABASE_URL` | Supabase project URL | `https://your-project.supabase.co` |
-| `EXPO_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key | — |
-| `EXPO_PUBLIC_EAS_PROJECT_ID` | EAS project ID | from expo.dev |
+| Variable                        | Description              | Example                            |
+| ------------------------------- | ------------------------ | ---------------------------------- |
+| `EXPO_PUBLIC_SUPABASE_URL`      | Supabase project URL     | `https://your-project.supabase.co` |
+| `EXPO_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key | —                                  |
+| `EXPO_PUBLIC_EAS_PROJECT_ID`    | EAS project ID           | from expo.dev                      |
 
 All public variables use the `EXPO_PUBLIC_` prefix. Never prefix real secrets (service keys, API secrets) with `EXPO_PUBLIC_` — doing so embeds them in the client binary.
 
@@ -199,12 +199,12 @@ Full EAS guide: [docs/EAS.md](docs/EAS.md)
 
 ### Profiles
 
-| Profile | iOS | Android | Use case |
-|---------|-----|---------|----------|
-| `development` | Simulator build | Debug APK | Local dev testing |
-| `preview` | TestFlight IPA | Signed APK | Internal testing |
-| `preview-aab` | — | Play Console AAB | Play Console internal track |
-| `production` | App Store IPA | Play Store AAB | Release |
+| Profile       | iOS             | Android          | Use case                    |
+| ------------- | --------------- | ---------------- | --------------------------- |
+| `development` | Simulator build | Debug APK        | Local dev testing           |
+| `preview`     | TestFlight IPA  | Signed APK       | Internal testing            |
+| `preview-aab` | —               | Play Console AAB | Play Console internal track |
+| `production`  | App Store IPA   | Play Store AAB   | Release                     |
 
 ### One-time EAS setup
 
@@ -315,11 +315,11 @@ See [docs/MODEL_DOWNLOAD.md](docs/MODEL_DOWNLOAD.md) for the full model download
 
 ### Branch naming
 
-| Pattern | Example | Purpose |
-|---------|---------|---------|
-| `main` | `main` | Shippable, protected |
-| `feat/<short-name>` | `feat/aaas-1148-repo-readme` | Features |
-| `fix/<short-name>` | `fix/aaas-1047-missing-locale-keys` | Bugfixes |
+| Pattern             | Example                             | Purpose              |
+| ------------------- | ----------------------------------- | -------------------- |
+| `main`              | `main`                              | Shippable, protected |
+| `feat/<short-name>` | `feat/aaas-1148-repo-readme`        | Features             |
+| `fix/<short-name>`  | `fix/aaas-1047-missing-locale-keys` | Bugfixes             |
 
 ### Commit tags
 
@@ -353,31 +353,31 @@ Review protocol: [docs/FLEET_REVIEW_PROTOCOL.md](docs/FLEET_REVIEW_PROTOCOL.md)
 
 ## Troubleshooting
 
-| Problem | Cause | Fix |
-|---------|-------|-----|
-| `pnpm install` fails | pnpm version mismatch | Check `packageManager` field, run `corepack enable && corepack prepare` |
-| Metro can't resolve modules | Missing deps or hoisting issue | Run `pnpm install` from root; verify `pnpm-workspace.yaml` |
-| iOS build fails at CocoaPods | Outdated Podfile.lock | `cd mobile/ios && pod install` |
-| `EAS project not found` | `eas init` not run | Run `eas init` in `mobile/` |
-| `EXPO_PUBLIC_*` values not loading | Missing `.env.local` | `cp .env.example .env.local` then fill in values |
-| `tsc --noEmit` type errors | Type mismatch | Check `tsconfig.base.json` extends in each package |
-| Model integrity check fails | Stale `integrity.json` | Re-run `scripts/compute-model-hashes.ts` |
-| Git hooks not running | Husky not installed | `pnpm prepare` (runs `husky`) |
-| Pre-commit hook fails | lint-staged / eslint error | Fix lint + typecheck issues in staged files |
+| Problem                            | Cause                          | Fix                                                                     |
+| ---------------------------------- | ------------------------------ | ----------------------------------------------------------------------- |
+| `pnpm install` fails               | pnpm version mismatch          | Check `packageManager` field, run `corepack enable && corepack prepare` |
+| Metro can't resolve modules        | Missing deps or hoisting issue | Run `pnpm install` from root; verify `pnpm-workspace.yaml`              |
+| iOS build fails at CocoaPods       | Outdated Podfile.lock          | `cd mobile/ios && pod install`                                          |
+| `EAS project not found`            | `eas init` not run             | Run `eas init` in `mobile/`                                             |
+| `EXPO_PUBLIC_*` values not loading | Missing `.env.local`           | `cp .env.example .env.local` then fill in values                        |
+| `tsc --noEmit` type errors         | Type mismatch                  | Check `tsconfig.base.json` extends in each package                      |
+| Model integrity check fails        | Stale `integrity.json`         | Re-run `scripts/compute-model-hashes.ts`                                |
+| Git hooks not running              | Husky not installed            | `pnpm prepare` (runs `husky`)                                           |
+| Pre-commit hook fails              | lint-staged / eslint error     | Fix lint + typecheck issues in staged files                             |
 
 ---
 
 ## Docs Reference
 
-| Doc | Description |
-|-----|-------------|
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | System topology, stack, data flow, security |
-| [docs/EAS.md](docs/EAS.md) | EAS build & submit guide |
-| [docs/GOVERNANCE.md](docs/GOVERNANCE.md) | Agent fleet, review rules, branch protection |
-| [docs/FLEET_REVIEW_PROTOCOL.md](docs/FLEET_REVIEW_PROTOCOL.md) | Review lifecycle, quality gates, escalation |
-| [docs/MODEL_DOWNLOAD.md](docs/MODEL_DOWNLOAD.md) | CDN config, integrity verification, model versioning |
-| [docs/SECRETS.md](docs/SECRETS.md) | Env vars, EAS secrets, rotation policy |
-| [docs/decisions/](docs/decisions/) | Locked technical decisions |
-| [docs/reviews/](docs/reviews/) | Review records |
-| [App Design Document](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fapp-design-document.md) | Authoritative product spec |
-| [Locked Decisions](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fdecisions-locked.md) | Never-override decisions |
+| Doc                                                                                                                 | Description                                          |
+| ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)                                                                        | System topology, stack, data flow, security          |
+| [docs/EAS.md](docs/EAS.md)                                                                                          | EAS build & submit guide                             |
+| [docs/GOVERNANCE.md](docs/GOVERNANCE.md)                                                                            | Agent fleet, review rules, branch protection         |
+| [docs/FLEET_REVIEW_PROTOCOL.md](docs/FLEET_REVIEW_PROTOCOL.md)                                                      | Review lifecycle, quality gates, escalation          |
+| [docs/MODEL_DOWNLOAD.md](docs/MODEL_DOWNLOAD.md)                                                                    | CDN config, integrity verification, model versioning |
+| [docs/SECRETS.md](docs/SECRETS.md)                                                                                  | Env vars, EAS secrets, rotation policy               |
+| [docs/decisions/](docs/decisions/)                                                                                  | Locked technical decisions                           |
+| [docs/reviews/](docs/reviews/)                                                                                      | Review records                                       |
+| [App Design Document](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fapp-design-document.md) | Authoritative product spec                           |
+| [Locked Decisions](obsidian://open?vault=Mua's%20Vault&file=wiki%2Fprojects%2Ftutor-sg%2Fdecisions-locked.md)       | Never-override decisions                             |

@@ -13,14 +13,14 @@ However, CHANGES REQUESTED on the source issue AAAS-581 for missing scope items.
 
 ## Evidence
 
-| Item | Status |
-|------|--------|
-| Component | `mobile/src/components/HomeworkFeedbackCard.tsx` (440 lines) — verified at commit `37d9dabcf` |
-| Tests | `mobile/src/__tests__/HomeworkFeedbackCard.test.tsx` (16 tests) — verified at commit `37d9dabcf` |
-| EN i18n | Complete `homeworkFeedback.*` tree |
-| zh-Hans i18n | Complete `homeworkFeedback.*` tree |
-| Total cost | $0.83 across 5 runs |
-| Branch | `feat/aaas-581-homework-feedback-card` — 1 commit ahead of main |
+| Item         | Status                                                                                           |
+| ------------ | ------------------------------------------------------------------------------------------------ |
+| Component    | `mobile/src/components/HomeworkFeedbackCard.tsx` (440 lines) — verified at commit `37d9dabcf`    |
+| Tests        | `mobile/src/__tests__/HomeworkFeedbackCard.test.tsx` (16 tests) — verified at commit `37d9dabcf` |
+| EN i18n      | Complete `homeworkFeedback.*` tree                                                               |
+| zh-Hans i18n | Complete `homeworkFeedback.*` tree                                                               |
+| Total cost   | $0.83 across 5 runs                                                                              |
+| Branch       | `feat/aaas-581-homework-feedback-card` — 1 commit ahead of main                                  |
 
 ## Issues found on AAAS-581
 

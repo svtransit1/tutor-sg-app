@@ -5,7 +5,10 @@ import { router } from 'expo-router';
 
 export default function RootIndexScreen() {
   const { t } = useTranslation();
-  useEffect(() => { const t = setTimeout(() => router.replace('/(onboarding)/parent-pin-setup'), 100); return () => clearTimeout(t); }, []);
+  useEffect(() => {
+    const t = setTimeout(() => router.replace('/(onboarding)/parent-pin-setup'), 100);
+    return () => clearTimeout(t);
+  }, []);
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color="#2563EB" />
@@ -15,6 +18,11 @@ export default function RootIndexScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFFFFF' },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+  },
   text: { marginTop: 16, fontSize: 16, color: '#6B7280' },
 });

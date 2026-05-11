@@ -10,14 +10,14 @@
 
 ## Verification
 
-| Check | Status |
-|-------|--------|
-| pr-check.yml (64 lines) | ✅ |
-| ci.yml PNPM_VERSION 9→10 | ✅ |
-| pnpm-lock.yaml added | ✅ |
-| Root lint script | ✅ |
-| lint+typecheck parallel, test serialized | ✅ |
-| Branch hygiene | ✅ |
+| Check                                    | Status |
+| ---------------------------------------- | ------ |
+| pr-check.yml (64 lines)                  | ✅     |
+| ci.yml PNPM_VERSION 9→10                 | ✅     |
+| pnpm-lock.yaml added                     | ✅     |
+| Root lint script                         | ✅     |
+| lint+typecheck parallel, test serialized | ✅     |
+| Branch hygiene                           | ✅     |
 
 ## Note
 

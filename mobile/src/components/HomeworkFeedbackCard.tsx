@@ -51,10 +51,7 @@ function getPrevTab(current: ScaffoldedHelpTab): ScaffoldedHelpTab | null {
 function TabDot({ active, label }: { active: boolean; label: string }) {
   return (
     <View
-      style={[
-        cardStyles.dot,
-        active ? cardStyles.dotActive : cardStyles.dotInactive,
-      ]}
+      style={[cardStyles.dot, active ? cardStyles.dotActive : cardStyles.dotInactive]}
       accessibilityLabel={label}
     />
   );
@@ -124,9 +121,27 @@ function LoadingSkeleton({ isDark }: { isDark: boolean }) {
         <Skeleton.Circle size={28} isDark={isDark} />
         <Skeleton width="60%" height={20} borderRadius={4} isDark={isDark} />
       </View>
-      <Skeleton width="100%" height={60} borderRadius={12} isDark={isDark} style={{ marginTop: 12 }} />
-      <Skeleton width="30%" height={14} borderRadius={4} isDark={isDark} style={{ marginTop: 16 }} />
-      <Skeleton width="100%" height={80} borderRadius={8} isDark={isDark} style={{ marginTop: 12 }} />
+      <Skeleton
+        width="100%"
+        height={60}
+        borderRadius={12}
+        isDark={isDark}
+        style={{ marginTop: 12 }}
+      />
+      <Skeleton
+        width="30%"
+        height={14}
+        borderRadius={4}
+        isDark={isDark}
+        style={{ marginTop: 16 }}
+      />
+      <Skeleton
+        width="100%"
+        height={80}
+        borderRadius={8}
+        isDark={isDark}
+        style={{ marginTop: 12 }}
+      />
       <Skeleton.Button height={44} isDark={isDark} style={{ marginTop: 16 }} />
     </View>
   );
@@ -146,18 +161,16 @@ function ErrorState({
     <View
       style={[
         cardStyles.errorWrap,
-        { backgroundColor: isDark ? '#2A1A1A' : '#FFF5F5', borderColor: isDark ? '#5A2A2A' : '#FECACA' },
+        {
+          backgroundColor: isDark ? '#2A1A1A' : '#FFF5F5',
+          borderColor: isDark ? '#5A2A2A' : '#FECACA',
+        },
       ]}
       accessibilityRole="alert"
       accessibilityLabel={message}
     >
       <Text style={cardStyles.errorIcon}>⚠️</Text>
-      <Text
-        style={[
-          cardStyles.errorText,
-          { color: isDark ? '#FCA5A5' : '#DC2626' },
-        ]}
-      >
+      <Text style={[cardStyles.errorText, { color: isDark ? '#FCA5A5' : '#DC2626' }]}>
         {message}
       </Text>
       {onRetry && (
@@ -222,11 +235,7 @@ export default function HomeworkFeedbackCard({
   if (variant === 'loading') {
     return (
       <View
-        style={[
-          cardStyles.container,
-          { backgroundColor: cardBg, borderColor },
-          style,
-        ]}
+        style={[cardStyles.container, { backgroundColor: cardBg, borderColor }, style]}
         accessibilityRole="summary"
         accessibilityLabel={t('homeworkFeedback.accessibility.card')}
       >
@@ -237,13 +246,7 @@ export default function HomeworkFeedbackCard({
 
   if (variant === 'error') {
     return (
-      <View
-        style={[
-          cardStyles.container,
-          { backgroundColor: cardBg, borderColor },
-          style,
-        ]}
-      >
+      <View style={[cardStyles.container, { backgroundColor: cardBg, borderColor }, style]}>
         <ErrorState
           message={errorMessage ?? t('homeworkError.UNKNOWN.body')}
           onRetry={onRetry}
@@ -270,18 +273,10 @@ export default function HomeworkFeedbackCard({
           <View style={cardStyles.stepsList} accessibilityRole="list">
             {h.guidedSteps.map((step, i) => (
               <View key={i} style={cardStyles.stepRow}>
-                <View
-                  style={[
-                    cardStyles.stepNumber,
-                    { backgroundColor: primaryColor },
-                  ]}
-                >
+                <View style={[cardStyles.stepNumber, { backgroundColor: primaryColor }]}>
                   <Text style={cardStyles.stepNumberText}>{i + 1}</Text>
                 </View>
-                <InlineMath
-                  text={step}
-                  style={{ color: textColor, flex: 1 }}
-                />
+                <InlineMath text={step} style={{ color: textColor, flex: 1 }} />
               </View>
             ))}
           </View>
@@ -300,11 +295,7 @@ export default function HomeworkFeedbackCard({
 
   return (
     <View
-      style={[
-        cardStyles.container,
-        { backgroundColor: cardBg, borderColor },
-        style,
-      ]}
+      style={[cardStyles.container, { backgroundColor: cardBg, borderColor }, style]}
       accessibilityRole="summary"
       accessibilityLabel={`${t('homeworkFeedback.accessibility.card')} ${t('homeworkFeedback.accessibility.levelIndicator', { level: t(`homeworkFeedback.${LEVEL_LABELS[currentLevel]}.heading`), total: 3 })}`}
     >
@@ -328,26 +319,15 @@ export default function HomeworkFeedbackCard({
         </View>
 
         {questionText && (
-          <View
-            style={[
-              cardStyles.questionBlock,
-              { backgroundColor: secondaryBg, borderColor },
-            ]}
-          >
-            <Text
-              style={[cardStyles.questionText, { color: mutedColor }]}
-              numberOfLines={4}
-            >
+          <View style={[cardStyles.questionBlock, { backgroundColor: secondaryBg, borderColor }]}>
+            <Text style={[cardStyles.questionText, { color: mutedColor }]} numberOfLines={4}>
               {questionText}
             </Text>
           </View>
         )}
 
         <View style={cardStyles.levelIndicator}>
-          <Text
-            style={[cardStyles.levelLabel, { color: headingColor }]}
-            accessibilityRole="header"
-          >
+          <Text style={[cardStyles.levelLabel, { color: headingColor }]} accessibilityRole="header">
             {t(`homeworkFeedback.${LEVEL_LABELS[currentLevel]}.heading`)}
           </Text>
           <View style={cardStyles.dotsRow}>
@@ -385,18 +365,13 @@ export default function HomeworkFeedbackCard({
               accessibilityRole="button"
               accessibilityLabel={t('homeworkFeedback.actions.accessibility.showMore')}
             >
-              <Text style={cardStyles.actionBtnText}>
-                {t('homeworkFeedback.actions.showMore')}
-              </Text>
+              <Text style={cardStyles.actionBtnText}>{t('homeworkFeedback.actions.showMore')}</Text>
             </TouchableOpacity>
           )}
 
           {nextTab === 'solution' && activeTab === 'steps' && (
             <TouchableOpacity
-              style={[
-                cardStyles.actionBtnSecondary,
-                { borderColor: primaryColor },
-              ]}
+              style={[cardStyles.actionBtnSecondary, { borderColor: primaryColor }]}
               onPress={handleShowAnswer}
               activeOpacity={0.7}
               accessibilityRole="button"

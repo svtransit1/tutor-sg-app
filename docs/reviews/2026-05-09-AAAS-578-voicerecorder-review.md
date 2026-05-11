@@ -11,6 +11,7 @@
 ## What passed (code review)
 
 The fix is structurally correct:
+
 - `stateRef` (useRef) guards timer callbacks against stale state
 - `clearAllTimers()` called on every state transition and unmount
 - `onStateChange.mockClear()` used in tests after initial render to reset call count

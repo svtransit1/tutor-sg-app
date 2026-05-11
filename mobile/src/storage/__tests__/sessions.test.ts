@@ -5,7 +5,12 @@
  * The moduleNameMapper in jest.config.js maps ^expo-sqlite$ to that mock.
  */
 import { openDatabaseAsync } from 'expo-sqlite';
-import { insertSession, getRecentSessions, getSessionCount, getPaginatedSessions } from '../sessions';
+import {
+  insertSession,
+  getRecentSessions,
+  getSessionCount,
+  getPaginatedSessions,
+} from '../sessions';
 
 // The mock from __mocks__/expo-sqlite.ts returns a shared mockDb object.
 // We import openDatabaseAsync which is a jest.fn(), then get the resolved
@@ -77,15 +82,39 @@ describe('getRecentSessions', () => {
 
   it('returns mapped session objects', async () => {
     const mockRows = [
-      { id: 1, subject: 'math', question_count: 5, time_spent: 120, created_at: '2026-05-07T10:00:00.000Z' },
-      { id: 2, subject: 'english', question_count: 3, time_spent: 90, created_at: '2026-05-07T09:00:00.000Z' },
+      {
+        id: 1,
+        subject: 'math',
+        question_count: 5,
+        time_spent: 120,
+        created_at: '2026-05-07T10:00:00.000Z',
+      },
+      {
+        id: 2,
+        subject: 'english',
+        question_count: 3,
+        time_spent: 90,
+        created_at: '2026-05-07T09:00:00.000Z',
+      },
     ];
     mockDb.getAllAsync.mockResolvedValue(mockRows);
 
     const sessions = await getRecentSessions(2);
     expect(sessions).toEqual([
-      { id: 1, subject: 'math', questionCount: 5, timeSpent: 120, createdAt: '2026-05-07T10:00:00.000Z' },
-      { id: 2, subject: 'english', questionCount: 3, timeSpent: 90, createdAt: '2026-05-07T09:00:00.000Z' },
+      {
+        id: 1,
+        subject: 'math',
+        questionCount: 5,
+        timeSpent: 120,
+        createdAt: '2026-05-07T10:00:00.000Z',
+      },
+      {
+        id: 2,
+        subject: 'english',
+        questionCount: 3,
+        timeSpent: 90,
+        createdAt: '2026-05-07T09:00:00.000Z',
+      },
     ]);
   });
 
@@ -108,8 +137,20 @@ describe('getPaginatedSessions', () => {
 
   it('returns first page with mapped sessions', async () => {
     const mockRows = [
-      { id: 1, subject: 'math', question_count: 5, time_spent: 120, created_at: '2026-05-07T10:00:00.000Z' },
-      { id: 2, subject: 'english', question_count: 3, time_spent: 90, created_at: '2026-05-07T09:00:00.000Z' },
+      {
+        id: 1,
+        subject: 'math',
+        question_count: 5,
+        time_spent: 120,
+        created_at: '2026-05-07T10:00:00.000Z',
+      },
+      {
+        id: 2,
+        subject: 'english',
+        question_count: 3,
+        time_spent: 90,
+        created_at: '2026-05-07T09:00:00.000Z',
+      },
     ];
     mockDb.getFirstAsync.mockResolvedValue({ count: 2 });
     mockDb.getAllAsync.mockResolvedValue(mockRows);
@@ -117,7 +158,13 @@ describe('getPaginatedSessions', () => {
     const result = await getPaginatedSessions(1, 20);
 
     expect(result.sessions).toHaveLength(2);
-    expect(result.sessions[0]).toEqual({ id: 1, subject: 'math', questionCount: 5, timeSpent: 120, createdAt: '2026-05-07T10:00:00.000Z' });
+    expect(result.sessions[0]).toEqual({
+      id: 1,
+      subject: 'math',
+      questionCount: 5,
+      timeSpent: 120,
+      createdAt: '2026-05-07T10:00:00.000Z',
+    });
     expect(result.total).toBe(2);
     expect(result.hasMore).toBe(false);
   });
@@ -188,7 +235,13 @@ describe('getPaginatedSessions', () => {
 
   it('maps subject enum and camelCase field names', async () => {
     const mockRows = [
-      { id: 1, subject: 'chinese', question_count: 10, time_spent: 60, created_at: '2026-05-01T00:00:00.000Z' },
+      {
+        id: 1,
+        subject: 'chinese',
+        question_count: 10,
+        time_spent: 60,
+        created_at: '2026-05-01T00:00:00.000Z',
+      },
     ];
     mockDb.getFirstAsync.mockResolvedValue({ count: 1 });
     mockDb.getAllAsync.mockResolvedValue(mockRows);

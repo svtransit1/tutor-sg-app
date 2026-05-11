@@ -21,10 +21,13 @@
 ## Changes
 
 ### `common` additions
+
 - `cancel` / `loading` — used by `camera.tsx` and other camera screens
 
 ### `tutorial.*` section (new)
+
 Used by `FirstUseWalkthrough.tsx` (already on `main`):
+
 - camera step: title + body
 - help step: title + body
 - language step: title + body
@@ -32,16 +35,18 @@ Used by `FirstUseWalkthrough.tsx` (already on `main`):
 - skipA11y, skipHint, stepIndicator accessibility labels
 
 ### `cameraPermission.*` section (new)
+
 Used by `CameraPermissionScreen.tsx` from `feat/aaas-923-camera-permission-screen`:
+
 - title, bodyLine1-3, reassurance — permission explanation
 - allowButton, loading, goBack — CTAs
 - deniedTitle, deniedBody, openSettings — denied/blocked state
 
 ## Quality gates
 
-| Gate | Status |
-|------|--------|
-| Tests pass | 2 pre-existing failures |
+| Gate                   | Status                            |
+| ---------------------- | --------------------------------- |
+| Tests pass             | 2 pre-existing failures           |
 | Bilingual completeness | All 25 new keys have EN + zh-Hans |
-| Privacy review | No new code paths |
-| Branch hygiene | Feature branch from main |
+| Privacy review         | No new code paths                 |
+| Branch hygiene         | Feature branch from main          |

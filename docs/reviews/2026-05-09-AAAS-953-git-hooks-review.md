@@ -10,13 +10,13 @@
 
 ## Verification
 
-| Check | Status |
-|-------|--------|
-| .husky/pre-commit hooks | ✅ |
-| lint-staged config | ✅ |
-| Husky prepare script | ✅ |
-| device-tier tsconfig | ✅ |
-| Branch hygiene | ⚠️ stray AAAS-969 file in diff |
+| Check                   | Status                         |
+| ----------------------- | ------------------------------ |
+| .husky/pre-commit hooks | ✅                             |
+| lint-staged config      | ✅                             |
+| Husky prepare script    | ✅                             |
+| device-tier tsconfig    | ✅                             |
+| Branch hygiene          | ⚠️ stray AAAS-969 file in diff |
 
 ## Nit
 

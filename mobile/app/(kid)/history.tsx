@@ -34,7 +34,10 @@ const SUBJECT_ICONS: Record<string, string> = {
 
 const PAGE_SIZE = 20;
 
-function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): string {
+function timeAgo(
+  dateStr: string,
+  t: (key: string, opts?: Record<string, unknown>) => string,
+): string {
   const now = Date.now();
   const then = new Date(dateStr).getTime();
   const diffMs = now - then;
@@ -49,7 +52,10 @@ function timeAgo(dateStr: string, t: (key: string, opts?: object) => string): st
   return t('kidHome.recentSessions.timeAgo.daysAgo', { days: diffDays });
 }
 
-function formatTimeSpent(seconds: number, t: (key: string, opts?: object) => string): string {
+function formatTimeSpent(
+  seconds: number,
+  t: (key: string, opts?: Record<string, unknown>) => string,
+): string {
   const min = Math.floor(seconds / 60);
   const sec = seconds % 60;
   if (seconds < 60) return t('kidHome.recentSessions.timeSpent', { minutes: 0, seconds: sec });
@@ -112,10 +118,7 @@ export default function KidHistoryScreen() {
   const renderSessionItem = useCallback(
     ({ item }: { item: KidSession }) => (
       <TouchableOpacity
-        style={[
-          styles.sessionCard,
-          { backgroundColor: isDark ? '#1E1E1E' : '#FFFFFF' },
-        ]}
+        style={[styles.sessionCard, { backgroundColor: isDark ? '#1E1E1E' : '#FFFFFF' }]}
         onPress={() => handleSessionPress(item)}
         accessibilityRole="button"
         accessibilityLabel={t('history.accessibility.sessionItem', {
@@ -125,9 +128,7 @@ export default function KidHistoryScreen() {
         })}
         activeOpacity={0.7}
       >
-        <Text style={styles.sessionIcon}>
-          {SUBJECT_ICONS[item.subject] ?? '📚'}
-        </Text>
+        <Text style={styles.sessionIcon}>{SUBJECT_ICONS[item.subject] ?? '📚'}</Text>
         <View style={styles.sessionInfo}>
           <Text
             style={[styles.sessionSubject, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
@@ -219,7 +220,10 @@ export default function KidHistoryScreen() {
                 &lt; {t('common.back')}
               </Text>
             </TouchableOpacity>
-            <Text style={[styles.headerTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]} accessibilityRole="header">
+            <Text
+              style={[styles.headerTitle, { color: isDark ? '#FFFFFF' : '#1A1A1A' }]}
+              accessibilityRole="header"
+            >
               {t('history.title')}
             </Text>
             <View style={styles.headerSpacer} />

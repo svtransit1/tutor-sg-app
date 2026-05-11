@@ -33,16 +33,16 @@
 
 ## Quality gates
 
-| Gate | Status |
-|------|--------|
-| Tests pass | ✅ 26/27 pass (1 pre-existing failure unrelated to this change) |
-| Bilingual | ✅ No new UI strings (skeleton is decorative) |
-| Accessibility | ✅ Hidden from screen readers (decorative skeleton placeholders) |
-| Privacy | ✅ No data flow changes |
-| No restricted SDKs | ✅ No SDKs added |
-| Performance | ✅ Static View — no animation overhead |
-| Branch hygiene | ✅ `feat/aaas-1020-loading-skeleton` from main, agent-tagged commit |
-| Verification evidence | ✅ Test output + typecheck attached in issue |
+| Gate                  | Status                                                              |
+| --------------------- | ------------------------------------------------------------------- |
+| Tests pass            | ✅ 26/27 pass (1 pre-existing failure unrelated to this change)     |
+| Bilingual             | ✅ No new UI strings (skeleton is decorative)                       |
+| Accessibility         | ✅ Hidden from screen readers (decorative skeleton placeholders)    |
+| Privacy               | ✅ No data flow changes                                             |
+| No restricted SDKs    | ✅ No SDKs added                                                    |
+| Performance           | ✅ Static View — no animation overhead                              |
+| Branch hygiene        | ✅ `feat/aaas-1020-loading-skeleton` from main, agent-tagged commit |
+| Verification evidence | ✅ Test output + typecheck attached in issue                        |
 
 ## Escalation
 

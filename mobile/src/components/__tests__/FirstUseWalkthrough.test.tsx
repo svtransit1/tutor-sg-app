@@ -7,11 +7,17 @@ describe('FirstUseWalkthrough', () => {
   const mockOnSkip = jest.fn();
 
   function renderOverlay(visible: boolean = true) {
-    return render(<FirstUseWalkthrough visible={visible} onComplete={mockOnComplete} onSkip={mockOnSkip} />);
+    return render(
+      <FirstUseWalkthrough visible={visible} onComplete={mockOnComplete} onSkip={mockOnSkip} />,
+    );
   }
 
-  beforeEach(() => { jest.clearAllMocks(); });
-  afterEach(() => { jest.useRealTimers(); });
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
   it('renders first step content when visible', () => {
     renderOverlay();
@@ -31,7 +37,9 @@ describe('FirstUseWalkthrough', () => {
 
   it('advances to step 2 when Next is pressed', () => {
     renderOverlay();
-    act(() => { fireEvent.press(screen.getByText('tutorial.next')); });
+    act(() => {
+      fireEvent.press(screen.getByText('tutorial.next'));
+    });
     expect(screen.getByText('tutorial.help.title')).toBeTruthy();
   });
 
@@ -68,22 +76,34 @@ describe('FirstUseWalkthrough', () => {
 
   it('calls onSkip when Skip is pressed', () => {
     renderOverlay();
-    act(() => { fireEvent.press(screen.getByText('tutorial.skip')); });
+    act(() => {
+      fireEvent.press(screen.getByText('tutorial.skip'));
+    });
     expect(mockOnSkip).toHaveBeenCalledTimes(1);
   });
 
   it('calls onSkip when backdrop is pressed', () => {
     renderOverlay();
-    act(() => { fireEvent.press(screen.getByLabelText('tutorial.skipA11y')); });
+    act(() => {
+      fireEvent.press(screen.getByLabelText('tutorial.skipA11y'));
+    });
     expect(mockOnSkip).toHaveBeenCalledTimes(1);
   });
 
   it('resets to step 1 when reopened', () => {
-    const { rerender } = render(<FirstUseWalkthrough visible={true} onComplete={mockOnComplete} onSkip={mockOnSkip} />);
-    act(() => { fireEvent.press(screen.getByText('tutorial.next')); });
+    const { rerender } = render(
+      <FirstUseWalkthrough visible={true} onComplete={mockOnComplete} onSkip={mockOnSkip} />,
+    );
+    act(() => {
+      fireEvent.press(screen.getByText('tutorial.next'));
+    });
     expect(screen.getByText('tutorial.help.title')).toBeTruthy();
-    rerender(<FirstUseWalkthrough visible={false} onComplete={mockOnComplete} onSkip={mockOnSkip} />);
-    rerender(<FirstUseWalkthrough visible={true} onComplete={mockOnComplete} onSkip={mockOnSkip} />);
+    rerender(
+      <FirstUseWalkthrough visible={false} onComplete={mockOnComplete} onSkip={mockOnSkip} />,
+    );
+    rerender(
+      <FirstUseWalkthrough visible={true} onComplete={mockOnComplete} onSkip={mockOnSkip} />,
+    );
     expect(screen.getByText('tutorial.camera.title')).toBeTruthy();
   });
 

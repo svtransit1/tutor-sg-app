@@ -26,14 +26,14 @@ in_progress → in_review → { APPROVED | CHANGES_REQUESTED | BLOCKED }
 
 ### 1.1 States
 
-| State | Meaning |
-|---|---|
-| `in_progress` | Owner is actively working. Do not review yet. |
-| `in_review` | Submitted for review. Reviewer picks up. |
-| `APPROVED` | Passes all quality bars. Ready to merge. |
+| State               | Meaning                                               |
+| ------------------- | ----------------------------------------------------- |
+| `in_progress`       | Owner is actively working. Do not review yet.         |
+| `in_review`         | Submitted for review. Reviewer picks up.              |
+| `APPROVED`          | Passes all quality bars. Ready to merge.              |
 | `CHANGES_REQUESTED` | Specific blockers found. Owner must fix and resubmit. |
-| `BLOCKED` | Cannot proceed without external input (see §6). |
-| `done` | Merged to `main`. |
+| `BLOCKED`           | Cannot proceed without external input (see §6).       |
+| `done`              | Merged to `main`.                                     |
 
 ---
 
@@ -58,6 +58,7 @@ Foxy Decision: ESCALATE TO USER
 ### 2.1 Verdict requirements
 
 Each verdict must include:
+
 1. **Verdict line** (exact format above)
 2. **What was checked** — branch name, commit hash, build output, asset path, or document path
 3. **Evidence of verification** — what was run, what was examined
@@ -71,6 +72,7 @@ Each verdict must include:
 **Before approving any implementation work, the reviewer MUST verify that the referenced artifact exists locally.**
 
 Check at minimum:
+
 - **Branch** exists locally (`git branch --list`) or remotely (`git branch -r`)
 - **Claimed files** exist at the stated paths
 - **Build output** or test evidence matches what was claimed
@@ -89,16 +91,16 @@ Then ask the owner to provide a valid branch, commit, file path, build path, or 
 
 Every review must check these **mandatory gates** (from ADD §9). A failure on any gate is a CHANGES_REQUESTED.
 
-| # | Gate | How to verify |
-|---|------|---------------|
-| 1 | **Tests pass** | Run test suite. New code has unit + integration + at least one full-flow scenario. |
-| 2 | **Bilingual completeness** | Every new UI string has `en` AND `zh-Hans` counterparts in locale files. |
-| 3 | **Accessibility** | Min 16pt body font, high contrast, icons+labels (no text-only), VoiceOver/TalkBack labels on all interactive elements. |
-| 4 | **Privacy review** | No new code path sends child photos, OCR text, or kid free-text off-device. No analytics SDKs in child-facing screens. |
-| 5 | **No restricted SDKs** | No behavioral-ad SDKs, no fingerprinting libraries, no analytics in Kids code paths. |
-| 6 | **Performance budget** | LLM operations don't block UI thread; camera preview >30 fps; cold start <3s on mid-tier. |
-| 7 | **Branch hygiene** | Feature branch from `main`, descriptive commits, agent-tagged (`[wolf]`, `[bee]`, etc.), no direct `main` pushes. |
-| 8 | **Verification evidence** | Build succeeded locally, smoke test ran, screenshot/log attached to PR or issue comment. |
+| #   | Gate                       | How to verify                                                                                                          |
+| --- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| 1   | **Tests pass**             | Run test suite. New code has unit + integration + at least one full-flow scenario.                                     |
+| 2   | **Bilingual completeness** | Every new UI string has `en` AND `zh-Hans` counterparts in locale files.                                               |
+| 3   | **Accessibility**          | Min 16pt body font, high contrast, icons+labels (no text-only), VoiceOver/TalkBack labels on all interactive elements. |
+| 4   | **Privacy review**         | No new code path sends child photos, OCR text, or kid free-text off-device. No analytics SDKs in child-facing screens. |
+| 5   | **No restricted SDKs**     | No behavioral-ad SDKs, no fingerprinting libraries, no analytics in Kids code paths.                                   |
+| 6   | **Performance budget**     | LLM operations don't block UI thread; camera preview >30 fps; cold start <3s on mid-tier.                              |
+| 7   | **Branch hygiene**         | Feature branch from `main`, descriptive commits, agent-tagged (`[wolf]`, `[bee]`, etc.), no direct `main` pushes.      |
+| 8   | **Verification evidence**  | Build succeeded locally, smoke test ran, screenshot/log attached to PR or issue comment.                               |
 
 ### 4.1 Architecture gate (Owl)
 
@@ -134,16 +136,17 @@ Any PR that touches model routing, inference pipeline, framework config, or arch
 
 When a review returns CHANGES_REQUESTED for the same artifact multiple times:
 
-| Attempt | Route to | Action |
-|---------|----------|--------|
-| 1st CHANGES_REQUESTED | Original owner with specific fixes | Owner fixes and resubmits |
-| 2nd CHANGES_REQUESTED | Senior owner for that area: Owl (CTO), Flutter (UX), or Foxy (PM) | Senior owner reviews the fixed work |
-| 3rd CHANGES_REQUESTED | Foxy for adjudication | Foxy decides from project docs, visual style guide, project scope, and this protocol |
-| BLOCKED → ESCALATE TO USER | Boss | Only for: spending, publishing, secrets, irreversible operations, legal/compliance, final public release, core product identity changes, or decisions the project docs cannot settle |
+| Attempt                    | Route to                                                          | Action                                                                                                                                                                               |
+| -------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1st CHANGES_REQUESTED      | Original owner with specific fixes                                | Owner fixes and resubmits                                                                                                                                                            |
+| 2nd CHANGES_REQUESTED      | Senior owner for that area: Owl (CTO), Flutter (UX), or Foxy (PM) | Senior owner reviews the fixed work                                                                                                                                                  |
+| 3rd CHANGES_REQUESTED      | Foxy for adjudication                                             | Foxy decides from project docs, visual style guide, project scope, and this protocol                                                                                                 |
+| BLOCKED → ESCALATE TO USER | Boss                                                              | Only for: spending, publishing, secrets, irreversible operations, legal/compliance, final public release, core product identity changes, or decisions the project docs cannot settle |
 
 ### 6.1 Blocked items
 
 When an issue is BLOCKED:
+
 1. Mark the issue status as `blocked` in Paperclip
 2. Name the unblock owner (who needs to act)
 3. Name the unblock action (what they need to do)
@@ -157,13 +160,13 @@ Review records, decisions, research, lessons, and asset specs go in `docs/` subd
 
 ### 7.1 Where things live
 
-| Artifact type | Directory | File naming | Retention |
-|---------------|-----------|-------------|-----------|
-| Review records | `docs/reviews/` | `YYYY-MM-DD-<ISSUE-ID>-<short-name>-review.md` | Permanent |
-| Locked decisions | `docs/decisions/` | `YYYY-MM-DD-<short-name>.md` | Permanent |
-| Research / investigations | `docs/research/` | `YYYY-MM-DD-<topic>.md` | Permanent |
-| Postmortems / gotchas | `docs/lessons/` | `YYYY-MM-DD-<topic>.md` | Permanent |
-| Screen-flow specs, UI handoff | `docs/assets/` | `YYYY-MM-DD-<component-or-feature>.md` | Until superseded |
+| Artifact type                 | Directory         | File naming                                    | Retention        |
+| ----------------------------- | ----------------- | ---------------------------------------------- | ---------------- |
+| Review records                | `docs/reviews/`   | `YYYY-MM-DD-<ISSUE-ID>-<short-name>-review.md` | Permanent        |
+| Locked decisions              | `docs/decisions/` | `YYYY-MM-DD-<short-name>.md`                   | Permanent        |
+| Research / investigations     | `docs/research/`  | `YYYY-MM-DD-<topic>.md`                        | Permanent        |
+| Postmortems / gotchas         | `docs/lessons/`   | `YYYY-MM-DD-<topic>.md`                        | Permanent        |
+| Screen-flow specs, UI handoff | `docs/assets/`    | `YYYY-MM-DD-<component-or-feature>.md`         | Until superseded |
 
 ### 7.2 Review record format
 
@@ -256,15 +259,15 @@ Review Drain Mode ends when `in_review` count drops below 10. Normal heartbeat p
 
 ## 10. Agent review ownership
 
-| Agent | Qualified to review | Review scope |
-|-------|-------------------|--------------|
-| 🦉 Owl | Any PR | Architecture, model routing, inference, framework config, platform code |
-| 🐺 Wolf | Code PRs | Mobile implementation, feature code, tests |
-| 🐝 Bee | Code PRs | Camera/OCR, parent log, IAP, shared packages |
-| 🦊 Foxy | Any PR | Product scope, merge approval, UX policy, escalation adjudication |
-| 🐢 Tortoise | All PRs (automated) | Quality gate enforcement per ADD §9 |
-| 🎨 Flutter | UI/UX PRs | Screen designs, accessibility, style guide adherence |
-| 🌿 Sage | Content PRs | Syllabus accuracy, bilingual content, Chinese MT |
+| Agent       | Qualified to review | Review scope                                                            |
+| ----------- | ------------------- | ----------------------------------------------------------------------- |
+| 🦉 Owl      | Any PR              | Architecture, model routing, inference, framework config, platform code |
+| 🐺 Wolf     | Code PRs            | Mobile implementation, feature code, tests                              |
+| 🐝 Bee      | Code PRs            | Camera/OCR, parent log, IAP, shared packages                            |
+| 🦊 Foxy     | Any PR              | Product scope, merge approval, UX policy, escalation adjudication       |
+| 🐢 Tortoise | All PRs (automated) | Quality gate enforcement per ADD §9                                     |
+| 🎨 Flutter  | UI/UX PRs           | Screen designs, accessibility, style guide adherence                    |
+| 🌿 Sage     | Content PRs         | Syllabus accuracy, bilingual content, Chinese MT                        |
 
 ---
 

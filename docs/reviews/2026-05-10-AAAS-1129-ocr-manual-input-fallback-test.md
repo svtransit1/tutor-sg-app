@@ -6,6 +6,7 @@
 **Assignee:** 🦜 Parrot
 
 ## What passes
+
 - Branch created from `main`, 1 new file
 - 66/66 tests pass in `mobile/src/__tests__/pipeline/manual-input-fallback.test.ts`
 - Pure logic integration tests — no runtime dependencies on native modules
@@ -15,20 +16,21 @@
 
 66 pipeline contract integration tests across 10 suites:
 
-| Suite | Description | Tests |
-|-------|-------------|-------|
-| MANFALL-01 | Confidence classification at threshold 0.6 | 10 |
-| MANFALL-02 | Manual input trigger detection | 6 |
-| MANFALL-03 | Manual input item extraction | 7 |
-| MANFALL-04 | Manual input merge into OCR pages | 10 |
-| MANFALL-05 | Post-merge fullText rebuild | 3 |
-| MANFALL-06 | Inference readiness after merge | 7 |
-| MANFALL-07 | PSLE heavy degradation scenario | 5 |
-| MANFALL-08 | Bilingual OCR fallback (Simplified Chinese) | 4 |
-| MANFALL-09 | Edge cases and robustness | 9 |
-| MANFALL-10 | Full flow simulation (OCR→fallback→merge→ready) | 5 |
+| Suite      | Description                                     | Tests |
+| ---------- | ----------------------------------------------- | ----- |
+| MANFALL-01 | Confidence classification at threshold 0.6      | 10    |
+| MANFALL-02 | Manual input trigger detection                  | 6     |
+| MANFALL-03 | Manual input item extraction                    | 7     |
+| MANFALL-04 | Manual input merge into OCR pages               | 10    |
+| MANFALL-05 | Post-merge fullText rebuild                     | 3     |
+| MANFALL-06 | Inference readiness after merge                 | 7     |
+| MANFALL-07 | PSLE heavy degradation scenario                 | 5     |
+| MANFALL-08 | Bilingual OCR fallback (Simplified Chinese)     | 4     |
+| MANFALL-09 | Edge cases and robustness                       | 9     |
+| MANFALL-10 | Full flow simulation (OCR→fallback→merge→ready) | 5     |
 
 Coverage:
+
 - OCR confidence classification (boundary at exactly 0.6)
 - Manual input trigger detection (per block, per page, multi-page)
 - Manual item extraction (ordering, indexing, page references)

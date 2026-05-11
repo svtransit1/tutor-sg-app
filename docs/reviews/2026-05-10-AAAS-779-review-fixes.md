@@ -20,11 +20,11 @@ Two of three requested changes are fixed. One item remains blocked on Foxy.
 
 **File:** `mobile/src/storage/parentSessions.ts`
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| SQL schema | `INTEGER NOT NULL DEFAULT 0` | `INTEGER DEFAULT NULL` |
-| TypeScript type | `questionsCorrect: number` | `questionsCorrect: number \| null` |
-| UPDATE in `logQuestionAttempt` | `questions_correct + ?` | `COALESCE(questions_correct, 0) + ?` |
+| Aspect                         | Before                       | After                                |
+| ------------------------------ | ---------------------------- | ------------------------------------ |
+| SQL schema                     | `INTEGER NOT NULL DEFAULT 0` | `INTEGER DEFAULT NULL`               |
+| TypeScript type                | `questionsCorrect: number`   | `questionsCorrect: number \| null`   |
+| UPDATE in `logQuestionAttempt` | `questions_correct + ?`      | `COALESCE(questions_correct, 0) + ?` |
 
 This matches the spec: "questions_correct (INTEGER, or NULL if ungraded)." The COALESCE ensures correct arithmetic after the first graded answer transitions from NULL.
 
@@ -33,6 +33,7 @@ This matches the spec: "questions_correct (INTEGER, or NULL if ungraded)." The C
 **File:** `mobile/src/screens/PhotoReviewScreen.tsx`
 
 Added session lifecycle via `useParentSession` hook:
+
 - **Session start:** When `phase === 'ready'` and questions are loaded, calls `startParentSession(subject, topic)` with subject mapped from `chinese_mt` → `chinese`
 - **Question logging:** Each question is logged via `logQuestionAttempt(questionNumber, false, 0, 0, false)` (initial display, no grading)
 - **Session end:** Cleanup effect calls `endParentSession('', false)` on unmount, guarded by `sessionEndedRef` to prevent double-end
@@ -70,6 +71,7 @@ Current implementation stores `boolean[]` (e.g., `[false, true]`) via SQL `||` c
 This was routed to Foxy by the original Tortoise review and remains unresolved.
 
 **Next action:** Foxy must decide:
+
 - Accept current boolean approach (simpler, already tested)
 - Change to topic-name array (requires schema migration + hook updates + test rewrites)
 

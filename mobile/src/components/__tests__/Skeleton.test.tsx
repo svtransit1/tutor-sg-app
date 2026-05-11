@@ -9,9 +9,7 @@ describe('Skeleton', () => {
   });
 
   it('renders with custom width and height', () => {
-    const { UNSAFE_root } = render(
-      <Skeleton width="60%" height={20} borderRadius={4} />,
-    );
+    const { UNSAFE_root } = render(<Skeleton width="60%" height={20} borderRadius={4} />);
     expect(UNSAFE_root).toBeTruthy();
   });
 

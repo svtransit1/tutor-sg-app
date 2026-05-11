@@ -9,32 +9,32 @@
 
 ### New files
 
-| File | Lines | Purpose |
-|------|-------|---------|
-| `mobile/src/components/HomeworkFeedbackCard.tsx` | ~470 | Scrollable 3-level hint display card with loading skeleton, error state, animated collapse, InlineMath |
-| `mobile/src/components/__tests__/HomeworkFeedbackCard.test.tsx` | ~220 | 22 unit tests (ready + loading + error + math + accessibility) |
-| `mobile/src/models/homework-feedback.ts` | 24 | `ScaffoldedHelp`, `ScaffoldedHelpTab`, `QuestionFeedback`, `HomeworkFeedbackResult` types |
+| File                                                            | Lines | Purpose                                                                                                |
+| --------------------------------------------------------------- | ----- | ------------------------------------------------------------------------------------------------------ |
+| `mobile/src/components/HomeworkFeedbackCard.tsx`                | ~470  | Scrollable 3-level hint display card with loading skeleton, error state, animated collapse, InlineMath |
+| `mobile/src/components/__tests__/HomeworkFeedbackCard.test.tsx` | ~220  | 22 unit tests (ready + loading + error + math + accessibility)                                         |
+| `mobile/src/models/homework-feedback.ts`                        | 24    | `ScaffoldedHelp`, `ScaffoldedHelpTab`, `QuestionFeedback`, `HomeworkFeedbackResult` types              |
 
 ### Modified files
 
-| File | Change |
-|------|--------|
-| `mobile/src/i18n/locales/en.json` | Added `homeworkFeedback.*` section + `common.retry` |
+| File                                   | Change                                              |
+| -------------------------------------- | --------------------------------------------------- |
+| `mobile/src/i18n/locales/en.json`      | Added `homeworkFeedback.*` section + `common.retry` |
 | `mobile/src/i18n/locales/zh-Hans.json` | Added `homeworkFeedback.*` section + `common.retry` |
 
 ## Scope compliance
 
-| Item | Status |
-|------|--------|
-| 3-level hint display (Hint → Steps → Solution) | ✅ |
-| Loading/skeleton state | ✅ | 
-| Error state with retry | ✅ |
-| Animated collapse (`AnimatedSection`) | ✅ |
-| Math rendering (`InlineMath`: ×, ÷, ², ³, √, π, ≥, ≤, ≠) | ✅ |
-| Bilingual EN + zh-Hans | ✅ |
-| Dark mode | ✅ |
-| Accessibility | ✅ |
-| 16pt+ body font | ✅ (15pt body, 17pt title) |
+| Item                                                     | Status                     |
+| -------------------------------------------------------- | -------------------------- |
+| 3-level hint display (Hint → Steps → Solution)           | ✅                         |
+| Loading/skeleton state                                   | ✅                         |
+| Error state with retry                                   | ✅                         |
+| Animated collapse (`AnimatedSection`)                    | ✅                         |
+| Math rendering (`InlineMath`: ×, ÷, ², ³, √, π, ≥, ≤, ≠) | ✅                         |
+| Bilingual EN + zh-Hans                                   | ✅                         |
+| Dark mode                                                | ✅                         |
+| Accessibility                                            | ✅                         |
+| 16pt+ body font                                          | ✅ (15pt body, 17pt title) |
 
 ## Owl review items addressed
 
@@ -48,7 +48,7 @@
 
 ## Verification
 
-| Check | Result |
-|-------|--------|
-| Tests | 22 passing (ready: 13, initialTab: 1, loading: 1, error: 2, accessibility: 1, math: 3) |
-| Typecheck | No errors in changed files |
+| Check     | Result                                                                                 |
+| --------- | -------------------------------------------------------------------------------------- |
+| Tests     | 22 passing (ready: 13, initialTab: 1, loading: 1, error: 2, accessibility: 1, math: 3) |
+| Typecheck | No errors in changed files                                                             |

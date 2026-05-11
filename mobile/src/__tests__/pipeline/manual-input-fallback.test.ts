@@ -16,13 +16,16 @@
 // ── Type Definitions (inline — mirroring actual contracts) ─────────
 
 interface OcrBoundingBox {
-  x: number; y: number; width: number; height: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 /** Single text block detected by OCR */
 interface OcrTextBlock {
   text: string;
-  confidence: number;       // 0–1
+  confidence: number; // 0–1
   bbox?: OcrBoundingBox;
   manuallyEntered?: boolean;
 }
@@ -78,7 +81,10 @@ function classifyBlocks(
 }
 
 /** Determine if manual input is needed for an OCR result */
-function needsManualInput(pages: OcrPageResult[], threshold: number = CONFIDENCE_THRESHOLD): boolean {
+function needsManualInput(
+  pages: OcrPageResult[],
+  threshold: number = CONFIDENCE_THRESHOLD,
+): boolean {
   return pages.some((p) => p.blocks.some((b) => b.confidence < threshold));
 }
 
@@ -137,9 +143,7 @@ function mergeManualInputs(
 
 /** Rebuild fullText from merged pages */
 function rebuildFullText(pages: OcrPageResult[]): string {
-  return pages
-    .flatMap((p) => p.blocks.map((b) => b.text))
-    .join('\n');
+  return pages.flatMap((p) => p.blocks.map((b) => b.text)).join('\n');
 }
 
 /** Check if any block is still below retake threshold after manual merge */
@@ -148,7 +152,10 @@ function stillNeedsRetake(pages: OcrPageResult[]): boolean {
 }
 
 /** Check if merged result is ready for inference (no blocks below threshold) */
-function isReadyForInference(pages: OcrPageResult[], threshold: number = CONFIDENCE_THRESHOLD): boolean {
+function isReadyForInference(
+  pages: OcrPageResult[],
+  threshold: number = CONFIDENCE_THRESHOLD,
+): boolean {
   return !needsManualInput(pages, threshold);
 }
 
@@ -157,27 +164,59 @@ function isReadyForInference(pages: OcrPageResult[], threshold: number = CONFIDE
 const P3_MATH_CLEAR_BLOCKS: OcrTextBlock[] = [
   { text: '1. 4 × 7 = ?', confidence: 0.92, bbox: { x: 0.05, y: 0.05, width: 0.5, height: 0.06 } },
   { text: '2. 6 × 8 = ?', confidence: 0.94, bbox: { x: 0.05, y: 0.14, width: 0.5, height: 0.06 } },
-  { text: '3. There are 5 bags. Each bag has 9 apples. How many apples are there altogether?', confidence: 0.88, bbox: { x: 0.05, y: 0.23, width: 0.85, height: 0.08 } },
+  {
+    text: '3. There are 5 bags. Each bag has 9 apples. How many apples are there altogether?',
+    confidence: 0.88,
+    bbox: { x: 0.05, y: 0.23, width: 0.85, height: 0.08 },
+  },
 ];
 
 const P3_MATH_MIXED_BLOCKS: OcrTextBlock[] = [
   { text: '1. 4 × 7 = ?', confidence: 0.91, bbox: { x: 0.05, y: 0.05, width: 0.4, height: 0.06 } },
   { text: '2. 6/ × 8 = ?', confidence: 0.48, bbox: { x: 0.05, y: 0.14, width: 0.4, height: 0.06 } }, // slashed through, low conf
-  { text: '3. There arie 5 bags.', confidence: 0.55, bbox: { x: 0.05, y: 0.23, width: 0.7, height: 0.08 } }, // typo + smudge, low conf
-  { text: '4. Each bag has 9 apples.', confidence: 0.93, bbox: { x: 0.05, y: 0.34, width: 0.7, height: 0.08 } },
-  { text: '5. How many apple?', confidence: 0.87, bbox: { x: 0.05, y: 0.45, width: 0.6, height: 0.08 } },
+  {
+    text: '3. There arie 5 bags.',
+    confidence: 0.55,
+    bbox: { x: 0.05, y: 0.23, width: 0.7, height: 0.08 },
+  }, // typo + smudge, low conf
+  {
+    text: '4. Each bag has 9 apples.',
+    confidence: 0.93,
+    bbox: { x: 0.05, y: 0.34, width: 0.7, height: 0.08 },
+  },
+  {
+    text: '5. How many apple?',
+    confidence: 0.87,
+    bbox: { x: 0.05, y: 0.45, width: 0.6, height: 0.08 },
+  },
 ];
 
 const P3_HANDWRITING_SCRAMBLED: OcrTextBlock[] = [
-  { text: '1. Wfiat is 3/4 0f 20z', confidence: 0.22, bbox: { x: 0.05, y: 0.05, width: 0.5, height: 0.06 } }, // barely legible
-  { text: '2. a ÷ b = 12', confidence: 0.31, bbox: { x: 0.05, y: 0.14, width: 0.4, height: 0.06 } },  // below retake threshold but above 0.3
+  {
+    text: '1. Wfiat is 3/4 0f 20z',
+    confidence: 0.22,
+    bbox: { x: 0.05, y: 0.05, width: 0.5, height: 0.06 },
+  }, // barely legible
+  { text: '2. a ÷ b = 12', confidence: 0.31, bbox: { x: 0.05, y: 0.14, width: 0.4, height: 0.06 } }, // below retake threshold but above 0.3
   { text: '3. Solve:', confidence: 0.82, bbox: { x: 0.05, y: 0.23, width: 0.2, height: 0.06 } },
 ];
 
 const P3_SCIENCE_LOW: OcrTextBlock[] = [
-  { text: '1. Water ___ when heated.', confidence: 0.42, bbox: { x: 0.05, y: 0.05, width: 0.6, height: 0.06 } },
-  { text: '2. A plants need ___ to grow.', confidence: 0.38, bbox: { x: 0.05, y: 0.14, width: 0.6, height: 0.06 } },
-  { text: '3. The sun is a ___.', confidence: 0.44, bbox: { x: 0.05, y: 0.23, width: 0.4, height: 0.06 } },
+  {
+    text: '1. Water ___ when heated.',
+    confidence: 0.42,
+    bbox: { x: 0.05, y: 0.05, width: 0.6, height: 0.06 },
+  },
+  {
+    text: '2. A plants need ___ to grow.',
+    confidence: 0.38,
+    bbox: { x: 0.05, y: 0.14, width: 0.6, height: 0.06 },
+  },
+  {
+    text: '3. The sun is a ___.',
+    confidence: 0.44,
+    bbox: { x: 0.05, y: 0.23, width: 0.4, height: 0.06 },
+  },
 ];
 
 const P4_CHINESE_MIXED: OcrTextBlock[] = [
@@ -188,14 +227,31 @@ const P4_CHINESE_MIXED: OcrTextBlock[] = [
 ];
 
 const P6_PSLE_HEAVY_LOW: OcrTextBlock[] = [
-  { text: 'The ratioP of boy1s to girls is 3:5.', confidence: 0.35, bbox: { x: 0.05, y: 0.05, width: 0.7, height: 0.08 } },
-  { text: 'There are 240 more girl', confidence: 0.41, bbox: { x: 0.05, y: 0.16, width: 0.5, height: 0.08 } },
+  {
+    text: 'The ratioP of boy1s to girls is 3:5.',
+    confidence: 0.35,
+    bbox: { x: 0.05, y: 0.05, width: 0.7, height: 0.08 },
+  },
+  {
+    text: 'There are 240 more girl',
+    confidence: 0.41,
+    bbox: { x: 0.05, y: 0.16, width: 0.5, height: 0.08 },
+  },
   { text: 'than boys.', confidence: 0.28, bbox: { x: 0.55, y: 0.16, width: 0.3, height: 0.08 } },
-  { text: 'How many students are there altogether?', confidence: 0.66, bbox: { x: 0.05, y: 0.27, width: 0.7, height: 0.08 } },
+  {
+    text: 'How many students are there altogether?',
+    confidence: 0.66,
+    bbox: { x: 0.05, y: 0.27, width: 0.7, height: 0.08 },
+  },
 ];
 
-function makePage(blocks: OcrTextBlock[], pageIndex: number = 0, threshold: number = CONFIDENCE_THRESHOLD): OcrPageResult {
-  const overall = blocks.length > 0 ? blocks.reduce((s, b) => s + b.confidence, 0) / blocks.length : 0;
+function makePage(
+  blocks: OcrTextBlock[],
+  pageIndex: number = 0,
+  threshold: number = CONFIDENCE_THRESHOLD,
+): OcrPageResult {
+  const overall =
+    blocks.length > 0 ? blocks.reduce((s, b) => s + b.confidence, 0) / blocks.length : 0;
   return {
     pageIndex,
     blocks,
@@ -204,11 +260,17 @@ function makePage(blocks: OcrTextBlock[], pageIndex: number = 0, threshold: numb
   };
 }
 
-function makeOcrResult(pages: OcrPageResult[], threshold: number = CONFIDENCE_THRESHOLD): OcrResult {
+function makeOcrResult(
+  pages: OcrPageResult[],
+  threshold: number = CONFIDENCE_THRESHOLD,
+): OcrResult {
   return {
     pages,
     fullText: pages.flatMap((p) => p.blocks.map((b) => b.text)).join('\n'),
-    lowConfidenceBlocks: pages.reduce((s, p) => s + p.blocks.filter((b) => b.confidence < threshold).length, 0),
+    lowConfidenceBlocks: pages.reduce(
+      (s, p) => s + p.blocks.filter((b) => b.confidence < threshold).length,
+      0,
+    ),
     needsManualInput: pages.some((p) => p.hasManualInput),
   };
 }
@@ -463,7 +525,11 @@ describe('MANFALL-04: Manual input merge into OCR pages', () => {
 
   it('merge on multi-page result', () => {
     // Page 0: no fallback. Page 1: 3 fallback blocks.
-    const inputs = ['1. Water boils when heated.', '2. A plant needs water to grow.', '3. The sun is a star.'];
+    const inputs = [
+      '1. Water boils when heated.',
+      '2. A plant needs water to grow.',
+      '3. The sun is a star.',
+    ];
     const { pages, mergedCount } = mergeManualInputs(multiPageResult.pages, inputs);
 
     expect(mergedCount).toBe(3);
@@ -578,11 +644,7 @@ describe('MANFALL-07: PSLE heavy degradation scenario', () => {
   });
 
   it('full correction makes it ready', () => {
-    const inputs = [
-      'The ratio of boys to girls is 3:5.',
-      'There are 240 more girls',
-      'than boys.',
-    ];
+    const inputs = ['The ratio of boys to girls is 3:5.', 'There are 240 more girls', 'than boys.'];
     const { pages, mergedCount } = mergeManualInputs([pslePage], inputs);
     expect(mergedCount).toBe(3);
     expect(isReadyForInference(pages)).toBe(true);
@@ -684,7 +746,11 @@ describe('MANFALL-09: Edge cases and robustness', () => {
   });
 
   it('merge does not affect blocks on other pages', () => {
-    const inputs = ['1. Water boils when heated.', '2. A plant needs water.', '3. The sun is a star.'];
+    const inputs = [
+      '1. Water boils when heated.',
+      '2. A plant needs water.',
+      '3. The sun is a star.',
+    ];
     const { pages } = mergeManualInputs(multiPageResult.pages, inputs);
     // Page 0 blocks should be completely untouched
     for (let i = 0; i < multiPageResult.pages[0].blocks.length; i++) {
@@ -784,7 +850,11 @@ describe('MANFALL-10: Full flow simulation (OCR→fallback→merge→ready)', ()
     const items = buildManualItems(ocrResult.pages);
     expect(items).toHaveLength(3);
 
-    const corrections = ['1. Water boils when heated.', '2. A plant needs water.', '3. The sun is a star.'];
+    const corrections = [
+      '1. Water boils when heated.',
+      '2. A plant needs water.',
+      '3. The sun is a star.',
+    ];
     const { pages, mergedCount } = mergeManualInputs(ocrResult.pages, corrections);
 
     expect(mergedCount).toBe(3);

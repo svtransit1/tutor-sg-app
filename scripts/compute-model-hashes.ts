@@ -70,7 +70,9 @@ async function main() {
   for (const file of files) {
     const { hash, size } = sha256File(file);
     entries.push({ file: path.basename(file), sha256: hash, sizeBytes: size });
-    process.stderr.write(`${path.basename(file)}: ${hash} (${(size / 1024 / 1024).toFixed(1)} MB)\n`);
+    process.stderr.write(
+      `${path.basename(file)}: ${hash} (${(size / 1024 / 1024).toFixed(1)} MB)\n`,
+    );
   }
 
   if (writeJson) {

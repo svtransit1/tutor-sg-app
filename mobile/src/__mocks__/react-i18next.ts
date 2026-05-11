@@ -2,7 +2,8 @@ const mockT = (key: string, fallback?: string) => {
   const m: Record<string, string> = {
     'app.loading': 'tutor-sg — loading...',
     'onboarding.parentPinSetup.title': 'Set your parent PIN',
-    'onboarding.parentPinSetup.body': "Set a 6-digit PIN. You'll use this to see your child's learning log.",
+    'onboarding.parentPinSetup.body':
+      "Set a 6-digit PIN. You'll use this to see your child's learning log.",
     'onboarding.parentPinSetup.enterPin': 'Enter a 6-digit PIN',
     'onboarding.parentPinSetup.confirmPin': 'Confirm your PIN',
     'onboarding.parentPinSetup.mismatch': "PINs don't match. Try again.",
@@ -33,5 +34,8 @@ const mockT = (key: string, fallback?: string) => {
   return m[key] ?? fallback ?? key;
 };
 
-export const useTranslation = () => ({ t: mockT, i18n: { language: 'en', changeLanguage: jest.fn() } });
+export const useTranslation = () => ({
+  t: mockT,
+  i18n: { language: 'en', changeLanguage: jest.fn() },
+});
 export const initReactI18next = { type: '3rdParty', init: jest.fn() };

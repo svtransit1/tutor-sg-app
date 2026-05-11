@@ -4,7 +4,9 @@
   "private": true,
   "license": "MIT",
   "main": "src/index.ts",
-  "scripts": { "test": "vitest --passWithNoTests" },
+  "scripts": {
+    "test": "vitest --passWithNoTests"
+  },
   "dependencies": {
     "react": "^19.1.0",
     "react-native": "^0.81.0"

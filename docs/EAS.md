@@ -22,21 +22,22 @@ eas secret:create --scope project --name EXPO_PUBLIC_EAS_PROJECT_ID --value "<id
 
 ## Build commands
 
-| Profile | Command | Output |
-|---|---|---|
-| **Development** | `pnpm eas:build:dev` | iOS simulator AP + Android debug APK |
-| **Development (iOS)** | `pnpm eas:build:dev:ios` | iOS simulator build |
-| **Development (Android)** | `pnpm eas:build:dev:android` | Android debug APK |
-| **Preview** | `pnpm eas:build:preview` | iOS TestFlight IPA + Android APK |
-| **Preview (AAB)** | `pnpm eas:build:preview:aab` | Android AAB (Play Console internal) |
-| **Production** | `pnpm eas:build:production` | App Store IPA + Play Store AAB |
-| **Submit** | `pnpm eas:submit:production` | Submit to both stores |
+| Profile                   | Command                      | Output                               |
+| ------------------------- | ---------------------------- | ------------------------------------ |
+| **Development**           | `pnpm eas:build:dev`         | iOS simulator AP + Android debug APK |
+| **Development (iOS)**     | `pnpm eas:build:dev:ios`     | iOS simulator build                  |
+| **Development (Android)** | `pnpm eas:build:dev:android` | Android debug APK                    |
+| **Preview**               | `pnpm eas:build:preview`     | iOS TestFlight IPA + Android APK     |
+| **Preview (AAB)**         | `pnpm eas:build:preview:aab` | Android AAB (Play Console internal)  |
+| **Production**            | `pnpm eas:build:production`  | App Store IPA + Play Store AAB       |
+| **Submit**                | `pnpm eas:submit:production` | Submit to both stores                |
 
 All commands run non-interactively. Run from the repo root (pnpm workspace commands) or from `mobile/` directly.
 
 ## Profile details
 
 ### `development`
+
 - iOS Simulator build + Android debug APK
 - Bundle ID: `com.aaas.tutorsg.development`
 - Display name: `tutor-sg (development)`
@@ -44,6 +45,7 @@ All commands run non-interactively. Run from the repo root (pnpm workspace comma
 - Channel: `development`
 
 ### `preview`
+
 - iOS: TestFlight-ready IPA (distribution: internal)
 - Android: signed APK for Play Console internal testing
 - Bundle ID: `com.aaas.tutorsg.preview`
@@ -52,10 +54,12 @@ All commands run non-interactively. Run from the repo root (pnpm workspace comma
 - Channel: `preview`
 
 ### `preview-aab`
+
 - Android-only: Play Console AAB for internal track
 - Same variant configuration as `preview`
 
 ### `production`
+
 - iOS: App Store IPA
 - Android: Play Store AAB
 - Bundle ID: `com.aaas.tutorsg`
@@ -65,9 +69,9 @@ All commands run non-interactively. Run from the repo root (pnpm workspace comma
 
 ## Environment variables by profile
 
-| Variable | `development` | `preview` | `production` |
-|---|---|---|---|
-| `APP_VARIANT` | `development` | `preview` | `production` |
+| Variable              | `development` | `preview` | `production` |
+| --------------------- | ------------- | --------- | ------------ |
+| `APP_VARIANT`         | `development` | `preview` | `production` |
 | `EXPO_PUBLIC_APP_ENV` | `development` | `staging` | `production` |
 
 Secrets (Supabase URL, anon key, EAS project ID) are injected via `eas secret:create` and shared across profiles in the same EAS project.
@@ -108,9 +112,9 @@ jobs:
 
 ## Troubleshooting
 
-| Problem | Likely cause | Fix |
-|---|---|---|
-| `EAS project not found` | `eas init` not run | Run `eas init` in `mobile/` |
-| `Credentials not found` | First build for this profile | EAS auto-creates on first build |
-| `Bundle ID mismatch` | `app.json` / `app.config.ts` changed | Verify variant config |
-| Build fails at `pod install` | iOS dependency issue | Run `cd ios && pod install` locally first |
+| Problem                      | Likely cause                         | Fix                                       |
+| ---------------------------- | ------------------------------------ | ----------------------------------------- |
+| `EAS project not found`      | `eas init` not run                   | Run `eas init` in `mobile/`               |
+| `Credentials not found`      | First build for this profile         | EAS auto-creates on first build           |
+| `Bundle ID mismatch`         | `app.json` / `app.config.ts` changed | Verify variant config                     |
+| Build fails at `pod install` | iOS dependency issue                 | Run `cd ios && pod install` locally first |

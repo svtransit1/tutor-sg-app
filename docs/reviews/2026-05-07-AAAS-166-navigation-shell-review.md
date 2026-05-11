@@ -4,7 +4,7 @@
 **Date:** 2026-05-07  
 **Branch:** `feat/aaas-166-navigation-shell`  
 **Commit:** `9858e07b2`  
-**Author:** Wolf 🐺  
+**Author:** Wolf 🐺
 
 **Verdict: CHANGES REQUESTED**
 
@@ -29,6 +29,7 @@
 Additionally, `app/_layout.tsx` imports `'../src/i18n'` which resolves to `src/i18n/` directory. Without an `index.ts` or `index.tsx`, standard module resolution will NOT find `config.ts`.
 
 **Fix needed:**
+
 1. Create `mobile/src/i18n/index.ts` (or rename `config.ts` → `index.ts`)
 2. Create `mobile/src/i18n/locales/en.json` with all required translation keys
 3. Create `mobile/src/i18n/locales/zh-Hans.json` with required translation keys
@@ -36,6 +37,7 @@ Additionally, `app/_layout.tsx` imports `'../src/i18n'` which resolves to `src/i
 ### 2. Missing `navigation.tabs.*` and `parent.profiles.title` i18n keys (AC-5 ❌)
 
 `app/(kid)/_layout.tsx` uses these keys that do not exist in any locale file:
+
 - `navigation.tabs.home`, `.camera`, `.history`, `.parent`
 - `navigation.tabs.homeA11y`, `.cameraA11y`, `.historyA11y`, `.parentA11y`
 - `parent.profiles.title` (used in `app/parent/_layout.tsx`)
@@ -45,6 +47,7 @@ Without these, i18next will display raw key names in the tab bar.
 ### 3. Scope creep (R4)
 
 Issue scope says "uses placeholder screens", but the diff includes:
+
 - `app/(kid)/home.tsx` (690 lines) — full home screen implementation
 - `app/(kid)/camera.tsx` (649 lines) — full camera capture + OCR + LLM flow
 - `app/camera-result.tsx` (430 lines) — full result screen

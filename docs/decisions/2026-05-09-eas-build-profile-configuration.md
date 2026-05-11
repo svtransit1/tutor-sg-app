@@ -6,41 +6,43 @@
 
 ## Profiles
 
-| Profile | Variant | Distribution | iOS build | Android build | Use case |
-|---|---|---|---|---|---|
-| `development` | `development` | internal (dev client) | simulator build | debug APK | Local dev on simulator/device |
-| `preview` | `preview` | internal | TestFlight IPA | internal APK | Internal testing (TestFlight / Play Console internal) |
-| `preview-aab` | `preview` | internal | — | internal AAB | Play Console internal track (bundle) |
-| `production` | `production` | store | App Store IPA | Play Store AAB | Public release |
+| Profile       | Variant       | Distribution          | iOS build       | Android build  | Use case                                              |
+| ------------- | ------------- | --------------------- | --------------- | -------------- | ----------------------------------------------------- |
+| `development` | `development` | internal (dev client) | simulator build | debug APK      | Local dev on simulator/device                         |
+| `preview`     | `preview`     | internal              | TestFlight IPA  | internal APK   | Internal testing (TestFlight / Play Console internal) |
+| `preview-aab` | `preview`     | internal              | —               | internal AAB   | Play Console internal track (bundle)                  |
+| `production`  | `production`  | store                 | App Store IPA   | Play Store AAB | Public release                                        |
 
 ## Dynamic app config (`app.config.ts`)
 
 The app name and bundle identifier/package name are derived from `APP_VARIANT`:
 
-| Variant | Display name | iOS bundle ID | Android package |
-|---|---|---|---|
+| Variant       | Display name             | iOS bundle ID                  | Android package                |
+| ------------- | ------------------------ | ------------------------------ | ------------------------------ |
 | `development` | `tutor-sg (development)` | `com.aaas.tutorsg.development` | `com.aaas.tutorsg.development` |
-| `preview` | `tutor-sg (preview)` | `com.aaas.tutorsg.preview` | `com.aaas.tutorsg.preview` |
-| `production` | `tutor-sg` | `com.aaas.tutorsg` | `com.aaas.tutorsg` |
+| `preview`     | `tutor-sg (preview)`     | `com.aaas.tutorsg.preview`     | `com.aaas.tutorsg.preview`     |
+| `production`  | `tutor-sg`               | `com.aaas.tutorsg`             | `com.aaas.tutorsg`             |
 
 ## Google Services files (Firebase)
 
 Firebase/Google services files are loaded per variant so each environment can have its own Firebase project:
+
 - `production` → `GoogleService-Info.plist` / `google-services.json`
 - `preview` → `GoogleService-Info-preview.plist` / `google-services-preview.json`
 - `development` → `GoogleService-Info-development.plist` / `google-services-development.json`
 
 ## Channels (EAS Update Over-the-Air)
 
-| Profile | Channel | Purpose |
-|---|---|---|
-| `development` | `development` | Local dev pushes |
-| `preview` | `preview` | Internal testers receive OTA updates |
-| `production` | `production` | Production OTA updates |
+| Profile       | Channel       | Purpose                              |
+| ------------- | ------------- | ------------------------------------ |
+| `development` | `development` | Local dev pushes                     |
+| `preview`     | `preview`     | Internal testers receive OTA updates |
+| `production`  | `production`  | Production OTA updates               |
 
 ## Environment variables
 
 Each profile injects `APP_VARIANT` and `EXPO_PUBLIC_APP_ENV`. Secrets (Supabase URL/anon key, EAS project ID) are provided via:
+
 - Local development: `.env.local` (gitignored)
 - EAS builds: `eas secret:create` or EAS project env variables
 - CI: GitHub Actions secrets
@@ -73,6 +75,7 @@ pnpm eas:submit:production
 ## CI integration (ADD §11 reference)
 
 GitHub Actions workflows use these profiles:
+
 - **PR checks**: typecheck + test (no EAS build)
 - **Merge to main**: automated preview build via `pnpm eas:build:preview`
 - **Tagged release**: automated production build via `pnpm eas:build:production`
@@ -83,6 +86,7 @@ CI must have `EAS_BUILD_PROFILE` set to match the target profile. Secrets are in
 ## EAS project setup (prerequisite)
 
 Before first build, run from `mobile/`:
+
 ```sh
 eas init                      # creates EAS project linked to this repo
 eas project:init              # configures app.json with EAS project ID

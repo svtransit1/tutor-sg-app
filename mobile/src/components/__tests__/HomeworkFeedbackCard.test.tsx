@@ -67,9 +67,7 @@ describe('HomeworkFeedbackCard', () => {
     it('shows hint text by default', () => {
       renderCard();
       expect(
-        screen.getByText(
-          'Try breaking the problem into smaller parts. What do you know?',
-        ),
+        screen.getByText('Try breaking the problem into smaller parts. What do you know?'),
       ).toBeTruthy();
       expect(screen.getByText('homeworkFeedback.hint.heading')).toBeTruthy();
     });
@@ -81,9 +79,7 @@ describe('HomeworkFeedbackCard', () => {
 
     it('does not show "Show answer" button on hint level', () => {
       renderCard();
-      expect(
-        screen.queryByText('homeworkFeedback.actions.showAnswer'),
-      ).toBeNull();
+      expect(screen.queryByText('homeworkFeedback.actions.showAnswer')).toBeNull();
     });
 
     it('reveals guided steps when "Show me more" is pressed', () => {
@@ -98,27 +94,21 @@ describe('HomeworkFeedbackCard', () => {
     it('shows "Show answer" button on steps level', () => {
       renderCard();
       fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
-      expect(
-        screen.getByText('homeworkFeedback.actions.showAnswer'),
-      ).toBeTruthy();
+      expect(screen.getByText('homeworkFeedback.actions.showAnswer')).toBeTruthy();
     });
 
     it('reveals worked solution when "Show answer" is pressed', () => {
       renderCard();
       fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
       fireEvent.press(screen.getByText('homeworkFeedback.actions.showAnswer'));
-      expect(
-        screen.getByText(/The correct answer is 42/),
-      ).toBeTruthy();
+      expect(screen.getByText(/The correct answer is 42/)).toBeTruthy();
       expect(screen.getByText('homeworkFeedback.solution.heading')).toBeTruthy();
     });
 
     it('shows "Show less" button on steps level', () => {
       renderCard();
       fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
-      expect(
-        screen.getByText('homeworkFeedback.actions.showLess'),
-      ).toBeTruthy();
+      expect(screen.getByText('homeworkFeedback.actions.showLess')).toBeTruthy();
     });
 
     it('collapses back to hint when "Show less" is pressed from steps', () => {
@@ -126,9 +116,7 @@ describe('HomeworkFeedbackCard', () => {
       fireEvent.press(screen.getByText('homeworkFeedback.actions.showMore'));
       fireEvent.press(screen.getByText('homeworkFeedback.actions.showLess'));
       expect(
-        screen.getByText(
-          'Try breaking the problem into smaller parts. What do you know?',
-        ),
+        screen.getByText('Try breaking the problem into smaller parts. What do you know?'),
       ).toBeTruthy();
       expect(screen.getByText('homeworkFeedback.hint.heading')).toBeTruthy();
     });
@@ -139,9 +127,7 @@ describe('HomeworkFeedbackCard', () => {
       fireEvent.press(screen.getByText('homeworkFeedback.actions.showAnswer'));
       fireEvent.press(screen.getByText('homeworkFeedback.actions.showLess'));
       expect(
-        screen.getByText(
-          'Try breaking the problem into smaller parts. What do you know?',
-        ),
+        screen.getByText('Try breaking the problem into smaller parts. What do you know?'),
       ).toBeTruthy();
       expect(screen.getByText('homeworkFeedback.hint.heading')).toBeTruthy();
     });
@@ -159,9 +145,7 @@ describe('HomeworkFeedbackCard', () => {
 
   describe('loading state', () => {
     it('renders skeleton when variant="loading"', () => {
-      const { UNSAFE_root } = render(
-        <HomeworkFeedbackCard variant="loading" questionNumber={1} />,
-      );
+      const { UNSAFE_root } = render(<HomeworkFeedbackCard variant="loading" questionNumber={1} />);
       expect(UNSAFE_root).toBeTruthy();
     });
   });
@@ -196,9 +180,7 @@ describe('HomeworkFeedbackCard', () => {
   describe('accessibility', () => {
     it('has accessibility role on the card container', () => {
       renderCard();
-      expect(
-        screen.getByLabelText(/homeworkFeedback\.accessibility\.card/),
-      ).toBeTruthy();
+      expect(screen.getByLabelText(/homeworkFeedback\.accessibility\.card/)).toBeTruthy();
     });
   });
 

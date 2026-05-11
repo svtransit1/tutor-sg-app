@@ -10,6 +10,7 @@
 ## Verification
 
 Branch `feat/aaas-692-eas-ios-sim` exists but contains no EAS iOS dev build profile changes:
+
 - No `mobile/eas.json` file exists on this branch
 - No commit references AAAS-692 or EAS iOS simulator profile
 - The branch's commits (103 files, 23088 lines) contain Owl review work and Flutter parent sign-in — not EAS build config
