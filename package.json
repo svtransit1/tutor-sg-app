@@ -9,6 +9,8 @@
     "prepare": "husky",
     "typecheck": "pnpm --recursive typecheck",
     "test": "pnpm --recursive test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "mobile:start": "pnpm --filter tutor-sg-mobile start",
     "mobile:ios": "pnpm --filter tutor-sg-mobile ios",
     "mobile:android": "pnpm --filter tutor-sg-mobile android",
@@ -22,8 +24,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --fix",
-      "bash -c 'pnpm --recursive typecheck'"
+      "eslint --fix"
     ]
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "eslint": "^10.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.3",
+    "prettier": "^3.8.3",
     "typescript-eslint": "^8.59.2"
   }
 }

@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+**/Pods/
+.gradle/
+
+# Build / dist
+build/
+dist/
+**/dist/
+**/build/
+**/coverage/
+**/.expo/
+mobile/android/
+mobile/ios/
+
+# Config files (auto-generated or framework-owned)
+*.config.*
+.eslintrc*
+.babelrc*
+.metro-health-check*
+
+# Lock files
+pnpm-lock.yaml
+
+# LLM model artefacts
+**/models/
+*.tflite
+*.litertlm
+*.gguf
+
+# E2E / test infra
+mobile/.maestro/
+mobile/e2e/
+
+# Secrets
+.env
+.env.*
+!.env.example
