@@ -2,8 +2,17 @@
   "app.loading": "tutor-sg — 加载中...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "欢迎！", "subtitle": "你的个人学习伙伴", "tagline": "聪明学习，快乐成长！", "cta": "开始使用" },
-    "langPick": { "title": "选择语言", "subtitle": "应用将使用此语言。", "continue": "继续" },
+    "welcome": {
+      "title": "欢迎！",
+      "subtitle": "你的个人学习伙伴",
+      "tagline": "聪明学习，快乐成长！",
+      "cta": "开始使用"
+    },
+    "langPick": {
+      "title": "选择语言",
+      "subtitle": "应用将使用此语言。",
+      "continue": "继续"
+    },
     "privacyPromise": {
       "title": "我们承诺保护您的隐私",
       "body": "孩子的作业永远不会离开这台设备。照片、答案和聊天内容都在设备上保密。只有您（家长）可以查看学习记录。",
@@ -68,7 +77,15 @@
         "subjectOff": "未选"
       }
     },
-    "done": { "title": "准备好了！", "subtitle": "让我们开始学习吧", "greeting": "{{name}}，你好！准备好了吗？", "cameraCta": "拍一下作业", "cameraSubtitle": "拍张照片，立即获取帮助", "practicePrompt": "或试试练习题", "parentArea": "家长专区" },
+    "done": {
+      "title": "准备好了！",
+      "subtitle": "让我们开始学习吧",
+      "greeting": "{{name}}，你好！准备好了吗？",
+      "cameraCta": "拍一下作业",
+      "cameraSubtitle": "拍张照片，立即获取帮助",
+      "practicePrompt": "或试试练习题",
+      "parentArea": "家长专区"
+    },
     "progress": {
       "step": "第 {{current}} 步，共 {{total}} 步",
       "accessibility": "第 {{current}} 步，共 {{total}} 步"
@@ -111,8 +128,36 @@
     }
   },
   "parent": {
-    "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
-    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+    "dashboard": {
+      "title": "家长面板",
+      "placeholder": "学习记录和进度即将上线"
+    },
+    "settings": {
+      "title": "设置",
+      "placeholder": "语言、质量、模型、隐私"
+    },
+    "sessionDetail": {
+      "title": "学习详情",
+      "notFound": "未找到学习记录。",
+      "infoCard": "学习信息",
+      "date": "日期",
+      "duration": "用时",
+      "questions": "题目数",
+      "correct": "正确",
+      "correctRate": "正确率",
+      "struggles": "遇到困难的题目",
+      "aiSummarySection": "AI 总结",
+      "timeline": "互动时间线",
+      "question": "题目",
+      "attemptResultCorrect": "正确",
+      "attemptResultWrong": "错误",
+      "hints": "提示",
+      "seconds": "秒",
+      "flagSession": "标记此记录",
+      "flagSessionHint": "标记此学习记录以供复查",
+      "flagRemoveHint": "取消标记",
+      "flaggedLabel": "已标记待复查"
+    }
   },
   "deviceTierResult": {
     "title": "你的设备已就绪！",

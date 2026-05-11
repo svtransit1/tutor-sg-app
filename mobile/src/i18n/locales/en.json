@@ -2,8 +2,17 @@
   "app.loading": "tutor-sg — loading...",
   "app.name": "tutor-sg",
   "onboarding": {
-    "welcome": { "title": "Welcome!", "subtitle": "Your personal learning companion", "tagline": "Smart learning, made fun!", "cta": "Get Started" },
-    "langPick": { "title": "Choose your language", "subtitle": "Your app will use this language.", "continue": "Continue" },
+    "welcome": {
+      "title": "Welcome!",
+      "subtitle": "Your personal learning companion",
+      "tagline": "Smart learning, made fun!",
+      "cta": "Get Started"
+    },
+    "langPick": {
+      "title": "Choose your language",
+      "subtitle": "Your app will use this language.",
+      "continue": "Continue"
+    },
     "privacyPromise": {
       "title": "Your privacy is our promise",
       "body": "Your child's homework never leaves this device. Photos, answers, and chat stay private. Only you (the parent) can see the learning log.",
@@ -68,7 +77,21 @@
         "subjectOff": "not selected"
       }
     },
-    "done": { "title": "All set!", "subtitle": "Let's start learning", "greeting": "Hi {{name}}! Ready to learn?", "cameraCta": "Snap your homework", "cameraSubtitle": "Take a photo to get help", "practicePrompt": "Or try a practice question", "parentArea": "Parent area" },
+    "done": {
+      "title": "All set!",
+      "subtitle": "Let's start learning",
+      "greeting": "Hi {{name}}! Ready to learn?",
+      "cameraCta": "Snap your homework",
+      "cameraSubtitle": "Take a photo to get help",
+      "practicePrompt": "Or try a practice question",
+      "parentArea": "Parent area"
+    },
+    "parentPinSetup": {
+      "accessibility": {
+        "backButton": "Go back to previous step",
+        "cancelButton": "Cancel PIN setup"
+      }
+    },
     "progress": {
       "step": "Step {{current}} of {{total}}",
       "accessibility": "Step {{current}} of {{total}}"
@@ -108,11 +131,88 @@
       "errorSignInFailed": "Sign-in failed. Please try again.",
       "errorAuthSession": "Authentication session was cancelled or failed.",
       "signedIn": "Signed in successfully"
+    },
+    "accessibility": {
+      "dismissOverlay": "Dismiss PIN screen",
+      "cancelButton": "Cancel PIN entry"
     }
   },
   "parent": {
-    "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "dashboard": {
+      "title": "Parent Dashboard",
+      "placeholder": "Session log and progress coming soon",
+      "thisWeek": "This Week"
+    },
+    "settings": {
+      "title": "Settings",
+      "placeholder": "Language, quality, model, privacy"
+    },
+    "backToKid": "Back to Kid Area",
+    "changePin": "Change PIN",
+    "manageKids": "Manage Children",
+    "kidSwitcher": {
+      "label": "Children",
+      "switchChild": "Switch to {{name}}"
+    },
+    "kidProfiles": {
+      "title": "Children",
+      "addKid": "Add Child",
+      "editKid": "Edit Child",
+      "deleteKid": "Remove Child",
+      "deleteConfirm": "Remove {{name}}? Their learning data will also be removed.",
+      "deleteConfirmAction": "Remove",
+      "cancel": "Cancel",
+      "nameLabel": "Name",
+      "namePlaceholder": "Enter child's name",
+      "nameError": "Name must be between 1 and 30 characters",
+      "gradeLabel": "Grade",
+      "gradeP1": "P1",
+      "gradeP2": "P2",
+      "gradeP3": "P3",
+      "gradeP4": "P4",
+      "gradeP5": "P5",
+      "gradeP6": "P6",
+      "avatarLabel": "Avatar",
+      "save": "Save",
+      "saveError": "Failed to save child profile.",
+      "saved": "Child profile saved",
+      "create": "Add Child",
+      "maxReached": "You can add up to 4 children.",
+      "listTitle": "Manage Children",
+      "empty": "No children added yet.",
+      "activeBadge": "Active",
+      "editA11y": "Edit {{name}}",
+      "deleteA11y": "Remove {{name}}",
+      "switchA11y": "Switch to {{name}}",
+      "selectAvatarA11y": "Select {{avatar}} avatar",
+      "gradeA11y": "Grade {{grade}}"
+    },
+    "sessionDetail": {
+      "title": "Session Detail",
+      "notFound": "Session not found.",
+      "infoCard": "Session information",
+      "date": "Date",
+      "duration": "Duration",
+      "questions": "Questions",
+      "correct": "Correct",
+      "correctRate": "Correct Rate",
+      "struggles": "Struggles",
+      "aiSummarySection": "AI Summary",
+      "timeline": "Interaction Timeline",
+      "question": "Question",
+      "attemptResultCorrect": "Correct",
+      "attemptResultWrong": "Wrong",
+      "hints": "Hints",
+      "seconds": "s",
+      "flagSession": "Flag Session",
+      "flagSessionHint": "Mark this session for review",
+      "flagRemoveHint": "Remove flag",
+      "flaggedLabel": "Flagged for review"
+    },
+    "accessibility": {
+      "changePinButton": "Change parent PIN",
+      "backToKidButton": "Back to kid's home"
+    }
   },
   "deviceTierResult": {
     "title": "Your device is ready!",
@@ -182,7 +282,8 @@
       "dismissHint": "Hide this welcome message and explore the app",
       "viewAllHint": "See all your past homework sessions",
       "switchLanguageHint": "Switch between English and Chinese",
-      "sessionCardHint": "View details of this {{subject}} session"
+      "sessionCardHint": "View details of this {{subject}} session",
+      "parentAreaButton": "Open parent area"
     },
     "firstSession": {
       "welcomeTitle": "Welcome to tutor-sg!",
@@ -356,5 +457,10 @@
     "deniedTitle": "Camera access is turned off",
     "deniedBody": "We can't read your homework without camera access. Tap the button below to go to Settings and turn it on.",
     "openSettings": "Open Settings"
+  },
+  "photoReview": {
+    "accessibility": {
+      "goHome": "Go to home screen"
+    }
   }
 }

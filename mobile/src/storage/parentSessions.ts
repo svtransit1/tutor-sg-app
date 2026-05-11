@@ -30,6 +30,17 @@ export interface ParentSession {
   parentFlagged: boolean
 }
 
+export interface QuestionAttempt {
+  id: number
+  sessionId: string
+  questionId: string
+  correct: boolean
+  hintsUsed: number
+  timeSeconds: number
+  struggleDetected: boolean
+  loggedAt: string
+}
+
 const DB_NAME = 'tutorSG.db'
 
 let _db: SQLiteDatabase | null = null
@@ -87,5 +98,17 @@ export class ParentSessionRepository {
   static async setParentFlagged(sessionId: string, flagged: boolean): Promise<void> {
     const db = await getDb()
     await db.runAsync('UPDATE parent_sessions SET parent_flagged = ? WHERE id = ?', flagged ? 1 : 0, sessionId)
+  }
+  static async getQuestionAttempts(sessionId: string): Promise<QuestionAttempt[]> {
+    const db = await getDb()
+    const rows = await db.getAllAsync<{
+      id: number; session_id: string; question_id: string; correct: number;
+      hints_used: number; time_seconds: number; struggle_detected: number; logged_at: string;
+    }>('SELECT * FROM question_attempts WHERE session_id = ? ORDER BY logged_at ASC', sessionId)
+    return rows.map(r => ({
+      id: r.id, sessionId: r.session_id, questionId: r.question_id,
+      correct: r.correct === 1, hintsUsed: r.hints_used, timeSeconds: r.time_seconds,
+      struggleDetected: r.struggle_detected === 1, loggedAt: r.logged_at,
+    }))
   }
 }

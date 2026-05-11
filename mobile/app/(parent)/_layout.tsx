@@ -6,6 +6,7 @@ export default function ParentLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="change-pin" />
+      <Stack.Screen name="session-detail" />
     </Stack>
   );
 }
