@@ -87,6 +87,14 @@
     "attemptsRemaining": "还剩 {{count}} 次机会",
     "attemptsRemaining_plural": "还剩 {{count}} 次机会",
     "pinsDontMatch": "PIN 码不匹配，请重试。",
+    "accessibility": {
+      "dismissOverlay": "关闭PIN屏幕",
+      "cancelButton": "取消PIN输入",
+      "digitSlot": "第{{n}}位数字",
+      "digitSlotFilled": "已输入第{{n}}位数字",
+      "keypadKey": "按键{{key}}",
+      "keypadBackspace": "删除"
+    },
     "setup": {
       "title": "设置家长 PIN 码",
       "enterPin": "输入 4 位数字 PIN 码",
@@ -112,7 +120,24 @@
   },
   "parent": {
     "dashboard": { "title": "家长面板", "placeholder": "学习记录和进度即将上线" },
-    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" }
+    "settings": { "title": "设置", "placeholder": "语言、质量、模型、隐私" },
+    "sessionDetail": {
+      "notFound": "未找到学习记录",
+      "date": "日期",
+      "duration": "时长",
+      "questions": "题目数",
+      "correct": "答对",
+      "correctRate": "正确率",
+      "struggles": "困难题数",
+      "infoCard": "学习记录信息",
+      "aiSummarySection": "AI 总结",
+      "timeline": "交互时间线",
+      "question": "题",
+      "attemptResultCorrect": "正确",
+      "attemptResultWrong": "错误",
+      "hints": "提示",
+      "seconds": "秒"
+    }
   },
   "deviceTierResult": {
     "title": "你的设备已就绪！",

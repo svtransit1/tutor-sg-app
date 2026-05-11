@@ -87,6 +87,14 @@
     "attemptsRemaining": "{{count}} attempt remaining",
     "attemptsRemaining_plural": "{{count}} attempts remaining",
     "pinsDontMatch": "PINs don't match. Try again.",
+    "accessibility": {
+      "dismissOverlay": "Dismiss PIN screen",
+      "cancelButton": "Cancel PIN entry",
+      "digitSlot": "Digit {{n}}",
+      "digitSlotFilled": "Digit {{n}} entered",
+      "keypadKey": "Key {{key}}",
+      "keypadBackspace": "Delete"
+    },
     "setup": {
       "title": "Set Up Parent PIN",
       "enterPin": "Enter a 4-digit PIN",
@@ -112,7 +120,24 @@
   },
   "parent": {
     "dashboard": { "title": "Parent Dashboard", "placeholder": "Session log and progress coming soon" },
-    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" }
+    "settings": { "title": "Settings", "placeholder": "Language, quality, model, privacy" },
+    "sessionDetail": {
+      "notFound": "Session not found",
+      "date": "Date",
+      "duration": "Duration",
+      "questions": "Questions",
+      "correct": "Correct",
+      "correctRate": "Correct rate",
+      "struggles": "Struggles",
+      "infoCard": "Session info",
+      "aiSummarySection": "AI Summary",
+      "timeline": "Interaction Timeline",
+      "question": "Q",
+      "attemptResultCorrect": "Correct",
+      "attemptResultWrong": "Wrong",
+      "hints": "Hints",
+      "seconds": "s"
+    }
   },
   "deviceTierResult": {
     "title": "Your device is ready!",

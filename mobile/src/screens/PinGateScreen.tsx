@@ -9,16 +9,19 @@ import {
 interface Props { onSuccess: () => void; onDismiss: () => void; }
 
 function Slot({ filled, i }: { filled: boolean; i: number }) {
+  const { t } = useTranslation();
   return (
-    <View style={[s.digitSlot, filled && s.digitSlotFilled]} accessibilityLabel={filled ? `Digit ${i + 1} entered` : `Digit ${i + 1}`}>
+    <View style={[s.digitSlot, filled && s.digitSlotFilled]} accessibilityLabel={filled ? t('parentAuth.accessibility.digitSlotFilled', { n: i + 1 }) : t('parentAuth.accessibility.digitSlot', { n: i + 1 })}>
       <Text style={[s.digitText, filled && s.digitTextFilled]}>{filled ? '\u25CF' : ''}</Text>
     </View>
   );
 }
 
 function KBtn({ v, onPress, disabled }: { v: string; onPress: (v: string) => void; disabled?: boolean }) {
+  const { t } = useTranslation();
+  const a11y = v === '\u232B' ? t('parentAuth.accessibility.keypadBackspace') : t('parentAuth.accessibility.keypadKey', { key: v });
   return (
-    <Pressable style={({ pressed }) => [s.keypadBtn, pressed && s.keypadBtnPressed, disabled && s.keypadBtnDisabled]} onPress={() => onPress(v)} disabled={disabled} accessibilityRole="button" accessibilityLabel={`Key ${v}`}>
+    <Pressable style={({ pressed }) => [s.keypadBtn, pressed && s.keypadBtnPressed, disabled && s.keypadBtnDisabled]} onPress={() => onPress(v)} disabled={disabled} accessibilityRole="button" accessibilityLabel={a11y}>
       <Text style={[s.keypadBtnText, v === '\u232B' && s.keypadBackspace, disabled && s.keypadBtnTextDisabled]}>{v}</Text>
     </Pressable>
   );
@@ -68,14 +71,14 @@ export default function PinGateScreen({ onSuccess, onDismiss }: Props) {
 
   return (
     <View style={s.overlay}><View style={s.container}>
-      <Pressable style={s.dismissArea} onPress={dismiss} />
+      <Pressable style={s.dismissArea} onPress={dismiss} accessibilityRole="button" accessibilityLabel={t('parentAuth.accessibility.dismissOverlay')} />
       <View style={s.content}>
-        <View style={s.iconWrap}><Text style={s.icon}>{'\uD83D\uDD12'}</Text></View>
-        <Text style={s.title}>{t('parentAuth.title')}</Text>
+        <View style={s.iconWrap} accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"><Text style={s.icon}>{'\uD83D\uDD12'}</Text></View>
+        <Text style={s.title} accessibilityRole="header">{t('parentAuth.title')}</Text>
         <Text style={s.body}>{t('parentAuth.enterPin')}</Text>
-        <Text style={s.attemptsLabel}>{attemptsLeft > 0 && attemptsLeft <= 3 ? t('parentAuth.attemptsRemaining', { count: attemptsLeft }) : ''}</Text>
+        <Text style={s.attemptsLabel} accessibilityRole={attemptsLeft > 0 && attemptsLeft <= 3 ? 'alert' : undefined}>{attemptsLeft > 0 && attemptsLeft <= 3 ? t('parentAuth.attemptsRemaining', { count: attemptsLeft }) : ''}</Text>
         {cooldown > 0 ? (
-          <View style={s.cooldownContainer}><Text style={s.cooldownText} accessibilityRole="alert">{t('parentAuth.cooldown', { seconds: cooldown })}</Text></View>
+          <View style={s.cooldownContainer}><Text style={s.cooldownText} accessibilityRole="alert">{t('parentAuth.cooldownTimer', { seconds: cooldown })}</Text></View>
         ) : (
           <>
             {error ? <Text style={s.errorText} accessibilityRole="alert">{error}</Text> : null}
@@ -88,7 +91,7 @@ export default function PinGateScreen({ onSuccess, onDismiss }: Props) {
             </View>
           </>
         )}
-        <Pressable style={s.cancelBtn} onPress={dismiss} accessibilityRole="button"><Text style={s.cancelBtnText}>{t('parentAuth.cancel')}</Text></Pressable>
+        <Pressable style={s.cancelBtn} onPress={dismiss} accessibilityRole="button" accessibilityLabel={t('parentAuth.accessibility.cancelButton')}><Text style={s.cancelBtnText}>{t('parentAuth.cancel')}</Text></Pressable>
       </View>
     </View></View>
   );
